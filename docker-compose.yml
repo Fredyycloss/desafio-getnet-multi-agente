@@ -1,0 +1,39 @@
+services:
+  api:
+    build:
+      context: ./backend
+    environment:
+      APP_ENV: ${APP_ENV:-production}
+      CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173,http://localhost:8080}
+      OLLAMA_ENABLED: ${OLLAMA_ENABLED:-false}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://localhost:11434}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen2.5:3b}
+      KNOWLEDGE_URLS: ${KNOWLEDGE_URLS:-https://www.getnet.net/,https://www.getnet.net/en}
+      REQUEST_TIMEOUT_SECONDS: ${REQUEST_TIMEOUT_SECONDS:-8}
+    ports:
+      - "${API_PORT:-8000}:8000"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health', timeout=3)"]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+  web:
+    build:
+      context: ./frontend
+    ports:
+      - "${FRONTEND_PORT:-8080}:80"
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
+# Ollama é opcional. Para ativar, adicione um serviço Ollama e use OLLAMA_BASE_URL=http://ollama:11434.
+# Para ativar inferência local, acrescente o serviço abaixo e configure OLLAMA_ENABLED=true:
+#  ollama:
+#    image: ollama/ollama:latest
+#    volumes:
+#      - ollama_data:/root/.ollama
+#    ports:
+#      - "11434:11434"
+#    restart: unless-stopped
+# E declare também ao final: volumes:\n#   ollama_data:
