@@ -1,0 +1,963 @@
+{
+  "label": "etapa1-rotas",
+  "generated_at": "2026-11-02T20:01:57",
+  "host": {
+    "cpu": "Intel(R) Core(TM) i3-10110U CPU @ 2.10GHz",
+    "cores": 4
+  },
+  "health": {
+    "mode": "supervisor_tool_calling",
+    "llm_available": true,
+    "llm_required": true,
+    "llm": {
+      "available": true,
+      "chat_model_loaded": true,
+      "embedding_model_loaded": true,
+      "models": [
+        "nomic-embed-text:latest",
+        "qwen3:1.7b"
+      ]
+    }
+  },
+  "note": "Stage 1 re-check after clarifying the payments_specialist routing description (general rule, no scenario phrases). Only the 12 scenarios with an expected agent. Warm. REQUEST_LLM_BUDGET_SECONDS=300.",
+  "method": "Wall-clock latency of POST /api/chat, fresh session per latency request, user_id cliente1988. cold = all Ollama models unloaded before each request; warm = models resident. Latency mean/p95 use llm_complete responses only; fallbacks and errors are not successes.",
+  "outcome_definition": "llm_complete | fallback_budget | fallback_error | http_error.\n\n    Only llm_complete counts as success: every model step the route needs ran\n    and returned a valid result. Deterministic policy outcomes (clarification,\n    handoff, safety) after a successful contextual model call are complete.",
+  "scenario_kinds": {
+    "latency": [
+      "product_compare",
+      "weather_porto_alegre",
+      "yesterday_settlement",
+      "pix_bank_account",
+      "terminal_offline",
+      "receivables_advance",
+      "euro_rate",
+      "declined_transaction",
+      "crediario_installments",
+      "payment_link_whatsapp"
+    ],
+    "latency_and_functional": [
+      "D1_product",
+      "D2_customer_lookup"
+    ],
+    "functional_pass_fail_only": []
+  },
+  "latency_summary": {
+    "warm": {
+      "requests": 12,
+      "outcomes": {
+        "llm_complete": 9,
+        "fallback_budget": 0,
+        "fallback_error": 3,
+        "http_error": 0
+      },
+      "success_rate": 0.75,
+      "fallback_rate": 0.25,
+      "error_rate": 0.0,
+      "route_correct": "7/12",
+      "llm_complete_latency": {
+        "n": 9,
+        "mean_s": 52.36,
+        "p95_s": 83.41,
+        "max_s": 83.41,
+        "mean_llm_calls": 2.89,
+        "mean_prompt_tokens": 1696.6,
+        "mean_output_tokens": 215.7
+      },
+      "llm_complete_and_correct_route_latency": {
+        "n": 6,
+        "mean_s": 67.99,
+        "p95_s": 83.41,
+        "max_s": 83.41,
+        "mean_llm_calls": 3.33,
+        "mean_prompt_tokens": 2089.8,
+        "mean_output_tokens": 251.3
+      },
+      "all_requests_wall_clock_reference_only": {
+        "n": 12,
+        "mean_s": 48.91,
+        "p95_s": 83.41,
+        "max_s": 83.41,
+        "mean_llm_calls": 3.17,
+        "mean_prompt_tokens": 1644.7,
+        "mean_output_tokens": 219.8
+      },
+      "by_category": {
+        "complex": {
+          "n": 6,
+          "llm_complete": 6,
+          "target_s": 25,
+          "mean_s": 59.33,
+          "p95_s": 83.41,
+          "mean_llm_calls": 2.83,
+          "llm_complete_within_target": 1
+        },
+        "tools": {
+          "n": 6,
+          "llm_complete": 3,
+          "target_s": 15,
+          "mean_s": 38.41,
+          "p95_s": 57.5,
+          "mean_llm_calls": 3,
+          "llm_complete_within_target": 0
+        }
+      }
+    }
+  },
+  "acceptance_summary": {
+    "D1_product": "PASS",
+    "D2_customer_lookup": "FAIL"
+  },
+  "acceptance": {
+    "D1_product": {
+      "kind": "latency+functional",
+      "pass": true,
+      "checks": [
+        {
+          "check": "http_200",
+          "pass": true,
+          "detail": 200
+        },
+        {
+          "check": "context_intelligence_first",
+          "pass": true
+        },
+        {
+          "check": "knowledge_agent_used",
+          "pass": true
+        },
+        {
+          "check": "rag_evidence_present",
+          "pass": true,
+          "detail": 4
+        },
+        {
+          "check": "sources_in_answer_payload",
+          "pass": true
+        },
+        {
+          "check": "not_degraded",
+          "pass": true
+        },
+        {
+          "check": "critic_model_review_approved",
+          "pass": true,
+          "detail": {
+            "approved": true,
+            "mode": "ollama_critic",
+            "issues": []
+          }
+        }
+      ],
+      "turns": [
+        {
+          "id": "D1_product",
+          "group": "dossier",
+          "category": "complex",
+          "trace_id": "115fb6e0d5dd4fd38d0ee864d67bbe0d",
+          "message": "A Get Lite tem aluguel mensal?",
+          "user_id": "cliente1988",
+          "session_id": null,
+          "latency_s": 73.2,
+          "http_status": 200,
+          "orchestration_mode": "context_directed_dispatch",
+          "intent": "product_information",
+          "degraded": false,
+          "degraded_reason": null,
+          "agents": [
+            "knowledge_agent"
+          ],
+          "handoff": false,
+          "handoff_protocol": null,
+          "trace": [
+            "context_intelligence",
+            "ollama_context_intelligence",
+            "policy_gate:continue",
+            "supervisor_agent",
+            "context_directed_dispatch",
+            "tool:knowledge_specialist",
+            "critic_agent_final_review",
+            "supervisor_final"
+          ],
+          "critic_approved": true,
+          "critic_mode": "ollama_critic",
+          "critic_issues": [],
+          "grounding_check": null,
+          "assessment_mode": "ollama_context_intelligence",
+          "answer_preview": "A Get Lite não oferece aluguel mensal. A página oficial brasileira indica que a Get Lite é uma maquininha sem aluguel mensal, onde o cliente paga uma taxa de adesão uma única vez e pode usar o equipamento. A oferta é sujeita à elegibilidade",
+          "sources": [
+            "https://site.getnet.com.br/get-lite/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/"
+          ],
+          "clarification_options": [],
+          "llm_calls": 3,
+          "llm_purposes": [
+            "context_intelligence",
+            "knowledge",
+            "critic"
+          ],
+          "embed_calls": 1,
+          "prompt_tokens": 2403,
+          "output_tokens": 213,
+          "usage_source": "response",
+          "load_ms": 3.2,
+          "outcome": "llm_complete",
+          "route_ok": true,
+          "acceptance_pass": true
+        }
+      ]
+    },
+    "D2_customer_lookup": {
+      "kind": "latency+functional",
+      "pass": false,
+      "checks": [
+        {
+          "check": "http_200",
+          "pass": true,
+          "detail": 200
+        },
+        {
+          "check": "payments_agent_used",
+          "pass": false,
+          "detail": [
+            "context_intelligence",
+            "ollama_context_intelligence",
+            "policy_gate:continue",
+            "supervisor_agent",
+            "context_directed_dispatch",
+            "tool:customer_support_specialist",
+            "critic_agent_final_review",
+            "supervisor_final"
+          ]
+        },
+        {
+          "check": "db_tool_executed_ok",
+          "pass": true,
+          "detail": [
+            "get_customer_profile"
+          ]
+        },
+        {
+          "check": "not_degraded",
+          "pass": false,
+          "detail": "model_selected_no_tool"
+        },
+        {
+          "check": "answer_written_by_llm",
+          "pass": true
+        },
+        {
+          "check": "critic_grounding_check_passed",
+          "pass": true,
+          "detail": {
+            "approved": true,
+            "mode": "ollama_critic",
+            "issues": [],
+            "grounding_check": "passed"
+          }
+        }
+      ],
+      "turns": [
+        {
+          "id": "D2_customer_lookup",
+          "group": "dossier",
+          "category": "tools",
+          "trace_id": "dafb972964d344c5955421cf8bd306e5",
+          "message": "Quando cai o dinheiro das vendas de ontem?",
+          "user_id": "cliente1988",
+          "session_id": null,
+          "latency_s": 42.95,
+          "http_status": 200,
+          "orchestration_mode": "context_directed_dispatch",
+          "intent": "customer_support",
+          "degraded": true,
+          "degraded_reason": "model_selected_no_tool",
+          "agents": [
+            "customer_support_agent"
+          ],
+          "handoff": false,
+          "handoff_protocol": null,
+          "trace": [
+            "context_intelligence",
+            "ollama_context_intelligence",
+            "policy_gate:continue",
+            "supervisor_agent",
+            "context_directed_dispatch",
+            "tool:customer_support_specialist",
+            "critic_agent_final_review",
+            "supervisor_final"
+          ],
+          "critic_approved": true,
+          "critic_mode": "ollama_critic",
+          "critic_issues": [],
+          "grounding_check": "passed",
+          "assessment_mode": "ollama_context_intelligence",
+          "answer_preview": "O dinheiro das vendas de ontem foi cedido para o comércio \"Comércio Demo 1988\". O status da conta é ativo e a segmentação é pequena empresa. Os registros são sintéticos e não correspondem a contas reais. Se houver dúvidas sobre o valor ou d",
+          "sources": [],
+          "clarification_options": [],
+          "llm_calls": 4,
+          "llm_purposes": [
+            "context_intelligence",
+            "customer_support_agent:tool_selection",
+            "customer_support_agent:answer",
+            "critic"
+          ],
+          "embed_calls": 0,
+          "prompt_tokens": 1485,
+          "output_tokens": 257,
+          "usage_source": "response",
+          "load_ms": 5.0,
+          "outcome": "fallback_error",
+          "route_ok": false,
+          "acceptance_pass": false
+        }
+      ]
+    }
+  },
+  "rounds": {
+    "warm": [
+      {
+        "id": "product_compare",
+        "group": "official",
+        "category": "complex",
+        "trace_id": "c2248dcc6bd846ed81f7d2b07655af10",
+        "message": "What's the difference between the Get Clássica and the Get Smart?",
+        "user_id": "cliente1988",
+        "session_id": null,
+        "latency_s": 81.54,
+        "http_status": 200,
+        "orchestration_mode": "context_directed_dispatch",
+        "intent": "product_information",
+        "degraded": false,
+        "degraded_reason": null,
+        "agents": [
+          "knowledge_agent"
+        ],
+        "handoff": false,
+        "handoff_protocol": null,
+        "trace": [
+          "context_intelligence",
+          "ollama_context_intelligence",
+          "policy_gate:continue",
+          "supervisor_agent",
+          "context_directed_dispatch",
+          "tool:knowledge_specialist",
+          "critic_agent_final_review",
+          "supervisor_final"
+        ],
+        "critic_approved": true,
+        "critic_mode": "ollama_critic",
+        "critic_issues": [],
+        "grounding_check": null,
+        "assessment_mode": "ollama_context_intelligence",
+        "answer_preview": "The difference between Get Clássica and Get Smart lies in their features and connectivity:\n\n- **Get Smart** supports Wi-Fi, 3G, and 4G connectivity with up to 12 hours of battery life, includes business-management apps and a sales simulator",
+        "sources": [
+          "https://site.getnet.com.br/taxas/",
+          "https://site.getnet.com.br/taxas/",
+          "https://site.getnet.com.br/taxas/",
+          "https://site.getnet.com.br/get-lite/"
+        ],
+        "clarification_options": [],
+        "llm_calls": 3,
+        "llm_purposes": [
+          "context_intelligence",
+          "knowledge",
+          "critic"
+        ],
+        "embed_calls": 1,
+        "prompt_tokens": 2261,
+        "output_tokens": 282,
+        "usage_source": "response",
+        "load_ms": 3.3,
+        "outcome": "llm_complete",
+        "route_ok": true
+      },
+      {
+        "id": "weather_porto_alegre",
+        "group": "official",
+        "category": "tools",
+        "trace_id": "a1665898ced84b748f56b3a1e891e2df",
+        "message": "What's the weather forecast in Porto Alegre tomorrow?",
+        "user_id": "cliente1988",
+        "session_id": null,
+        "latency_s": 57.5,
+        "http_status": 200,
+        "orchestration_mode": "context_directed_dispatch",
+        "intent": "general_information",
+        "degraded": false,
+        "degraded_reason": null,
+        "agents": [
+          "web_research_agent"
+        ],
+        "handoff": false,
+        "handoff_protocol": null,
+        "trace": [
+          "context_intelligence",
+          "ollama_context_intelligence",
+          "policy_gate:continue",
+          "supervisor_agent",
+          "context_directed_dispatch",
+          "tool:web_research_specialist",
+          "critic_agent_final_review",
+          "supervisor_final"
+        ],
+        "critic_approved": true,
+        "critic_mode": "ollama_critic",
+        "critic_issues": [],
+        "grounding_check": "passed",
+        "assessment_mode": "ollama_context_intelligence",
+        "answer_preview": "The weather forecast for Porto Alegre, Brazil, on November 3, 2026, is expected to be between 19.5°C and 27.4°C with a precipitation probability of 59%. The weather code indicates partly cloudy conditions. The source for this information is",
+        "sources": [
+          "https://open-meteo.com/"
+        ],
+        "clarification_options": [],
+        "llm_calls": 4,
+        "llm_purposes": [
+          "context_intelligence",
+          "web_parameter_extraction",
+          "web_answer",
+          "critic"
+        ],
+        "embed_calls": 0,
+        "prompt_tokens": 1665,
+        "output_tokens": 254,
+        "usage_source": "response",
+        "load_ms": 6.2,
+        "outcome": "llm_complete",
+        "route_ok": true
+      },
+      {
+        "id": "yesterday_settlement",
+        "group": "official",
+        "category": "tools",
+        "trace_id": "641e3a8f361f4ba0b75e3a2559ec3a18",
+        "message": "When will the money from yesterday's sales be deposited?",
+        "user_id": "cliente1988",
+        "session_id": null,
+        "latency_s": 34.73,
+        "http_status": 200,
+        "orchestration_mode": "context_directed_dispatch",
+        "intent": "customer_support",
+        "degraded": true,
+        "degraded_reason": "model_selected_no_tool",
+        "agents": [
+          "customer_support_agent"
+        ],
+        "handoff": false,
+        "handoff_protocol": null,
+        "trace": [
+          "context_intelligence",
+          "ollama_context_intelligence",
+          "policy_gate:continue",
+          "supervisor_agent",
+          "context_directed_dispatch",
+          "tool:customer_support_specialist",
+          "critic_agent_final_review",
+          "supervisor_final"
+        ],
+        "critic_approved": true,
+        "critic_mode": "ollama_critic",
+        "critic_issues": [],
+        "grounding_check": "passed",
+        "assessment_mode": "ollama_context_intelligence",
+        "answer_preview": "The money from yesterday's sales should be deposited shortly after the transaction was processed. The account status is active, and the merchant name is Comércio Demo 1988. The records are synthetic demo data, not real Getnet accounts. Plea",
+        "sources": [],
+        "clarification_options": [],
+        "llm_calls": 4,
+        "llm_purposes": [
+          "context_intelligence",
+          "customer_support_agent:tool_selection",
+          "customer_support_agent:answer",
+          "critic"
+        ],
+        "embed_calls": 0,
+        "prompt_tokens": 1463,
+        "output_tokens": 218,
+        "usage_source": "response",
+        "load_ms": 6.4,
+        "outcome": "fallback_error",
+        "route_ok": false
+      },
+      {
+        "id": "pix_bank_account",
+        "group": "official",
+        "category": "complex",
+        "trace_id": "318235a1169f47d5b0cd2a2a81c23075",
+        "message": "Do I need a bank account to receive my sales via Pix?",
+        "user_id": "cliente1988",
+        "session_id": null,
+        "latency_s": 33.06,
+        "http_status": 200,
+        "orchestration_mode": "context_directed_dispatch",
+        "intent": "customer_support",
+        "degraded": false,
+        "degraded_reason": null,
+        "agents": [
+          "customer_support_agent"
+        ],
+        "handoff": false,
+        "handoff_protocol": null,
+        "trace": [
+          "context_intelligence",
+          "ollama_context_intelligence",
+          "policy_gate:continue",
+          "supervisor_agent",
+          "context_directed_dispatch",
+          "tool:customer_support_specialist",
+          "critic_agent_final_review",
+          "supervisor_final"
+        ],
+        "critic_approved": true,
+        "critic_mode": "ollama_critic",
+        "critic_issues": [],
+        "grounding_check": "passed",
+        "assessment_mode": "ollama_context_intelligence",
+        "answer_preview": "The observation shows that your account is active and suitable for receiving sales via Pix. There is no requirement for a bank account to receive sales via Pix. The records are synthetic demo data, not real Getnet accounts. You may want to ",
+        "sources": [],
+        "clarification_options": [],
+        "llm_calls": 4,
+        "llm_purposes": [
+          "context_intelligence",
+          "customer_support_agent:tool_selection",
+          "customer_support_agent:answer",
+          "critic"
+        ],
+        "embed_calls": 0,
+        "prompt_tokens": 1456,
+        "output_tokens": 206,
+        "usage_source": "response",
+        "load_ms": 4.8,
+        "outcome": "llm_complete",
+        "route_ok": false
+      },
+      {
+        "id": "terminal_offline",
+        "group": "official",
+        "category": "tools",
+        "trace_id": "d6c3e17a30204e1baac255b5322f573b",
+        "message": "My card machine won't connect to the internet, what should I do?",
+        "user_id": "cliente1988",
+        "session_id": null,
+        "latency_s": 42.5,
+        "http_status": 200,
+        "orchestration_mode": "context_directed_dispatch",
+        "intent": "customer_support",
+        "degraded": false,
+        "degraded_reason": null,
+        "agents": [
+          "customer_support_agent"
+        ],
+        "handoff": false,
+        "handoff_protocol": null,
+        "trace": [
+          "context_intelligence",
+          "ollama_context_intelligence",
+          "policy_gate:continue",
+          "supervisor_agent",
+          "context_directed_dispatch",
+          "tool:customer_support_specialist",
+          "critic_agent_final_review",
+          "supervisor_final"
+        ],
+        "critic_approved": true,
+        "critic_mode": "ollama_critic",
+        "critic_issues": [],
+        "grounding_check": "passed",
+        "assessment_mode": "ollama_context_intelligence",
+        "answer_preview": "The card machine terminal (TERM-1988) is currently offline and experiencing a connectivity issue. The error code NET-001 indicates a loss of internet connection. You should check your Wi-Fi settings, ensure the terminal is powered on, and t",
+        "sources": [],
+        "clarification_options": [],
+        "llm_calls": 4,
+        "llm_purposes": [
+          "context_intelligence",
+          "customer_support_agent:tool_selection",
+          "customer_support_agent:answer",
+          "critic"
+        ],
+        "embed_calls": 0,
+        "prompt_tokens": 1658,
+        "output_tokens": 239,
+        "usage_source": "response",
+        "load_ms": 5.4,
+        "outcome": "llm_complete",
+        "route_ok": true
+      },
+      {
+        "id": "receivables_advance",
+        "group": "official",
+        "category": "complex",
+        "trace_id": "52b0c00abc6344098c78c6b3f91f7f04",
+        "message": "How does receivables advance (antecipação) work with Getnet?",
+        "user_id": "cliente1988",
+        "session_id": null,
+        "latency_s": 83.41,
+        "http_status": 200,
+        "orchestration_mode": "context_directed_dispatch",
+        "intent": "product_information",
+        "degraded": false,
+        "degraded_reason": null,
+        "agents": [
+          "knowledge_agent"
+        ],
+        "handoff": false,
+        "handoff_protocol": null,
+        "trace": [
+          "context_intelligence",
+          "ollama_context_intelligence",
+          "policy_gate:continue",
+          "supervisor_agent",
+          "context_directed_dispatch",
+          "tool:knowledge_specialist",
+          "critic_agent_final_review",
+          "supervisor_final"
+        ],
+        "critic_approved": true,
+        "critic_mode": "ollama_critic",
+        "critic_issues": [],
+        "grounding_check": null,
+        "assessment_mode": "ollama_context_intelligence",
+        "answer_preview": "Receivables advance (antecipação) with Getnet works through the Getnet Brazil app and customer portal as follows:\n\n1. **Eligibility and Process**:\n   - One-time or installment credit sales may be eligible for receivables advance through the",
+        "sources": [
+          "https://site.getnet.com.br/get-ajuda-antecipacao-de-venda/como-antecipar-sua-vendas-pelo-app/",
+          "https://site.getnet.com.br/get-ajuda-configuracoes/funcionalidades-portal-minha-conta-e-app-getnet-brasil/",
+          "https://site.getnet.com.br/taxas/",
+          "https://site.getnet.com.br/crediario/"
+        ],
+        "clarification_options": [],
+        "llm_calls": 3,
+        "llm_purposes": [
+          "context_intelligence",
+          "knowledge",
+          "critic"
+        ],
+        "embed_calls": 1,
+        "prompt_tokens": 2359,
+        "output_tokens": 283,
+        "usage_source": "response",
+        "load_ms": 5.3,
+        "outcome": "llm_complete",
+        "route_ok": true
+      },
+      {
+        "id": "euro_rate",
+        "group": "official",
+        "category": "tools",
+        "trace_id": "fea3483e94aa42388a6590b2bad9bfba",
+        "message": "What's the euro exchange rate today?",
+        "user_id": "cliente1988",
+        "session_id": null,
+        "latency_s": 38.01,
+        "http_status": 200,
+        "orchestration_mode": "context_directed_dispatch",
+        "intent": "general_information",
+        "degraded": true,
+        "degraded_reason": "model_selected_no_tool",
+        "agents": [
+          "web_research_agent"
+        ],
+        "handoff": false,
+        "handoff_protocol": null,
+        "trace": [
+          "context_intelligence",
+          "ollama_context_intelligence",
+          "policy_gate:continue",
+          "supervisor_agent",
+          "context_directed_dispatch",
+          "tool:web_research_specialist",
+          "critic_agent_final_review",
+          "supervisor_final"
+        ],
+        "critic_approved": true,
+        "critic_mode": "ollama_critic",
+        "critic_issues": [],
+        "grounding_check": "passed",
+        "assessment_mode": "ollama_context_intelligence",
+        "answer_preview": "The euro exchange rate today is 6.099 Brazilian Real (BRL) per Euro. The date is 2026-11-02. The provider is Frankfurter — referência cambial. The URL is https://www.frankfurter.dev/.",
+        "sources": [
+          "https://www.frankfurter.dev/"
+        ],
+        "clarification_options": [],
+        "llm_calls": 4,
+        "llm_purposes": [
+          "context_intelligence",
+          "web_parameter_extraction",
+          "web_answer",
+          "critic"
+        ],
+        "embed_calls": 0,
+        "prompt_tokens": 1519,
+        "output_tokens": 222,
+        "usage_source": "response",
+        "load_ms": 4.1,
+        "outcome": "fallback_error",
+        "route_ok": true
+      },
+      {
+        "id": "declined_transaction",
+        "group": "official",
+        "category": "tools",
+        "trace_id": "760d3ae959c440fe99fe0764c22f904d",
+        "message": "My card machine is showing a transaction decline error.",
+        "user_id": "cliente1988",
+        "session_id": null,
+        "latency_s": 15.24,
+        "http_status": 200,
+        "orchestration_mode": "safety_override",
+        "intent": "physical_safety",
+        "degraded": false,
+        "degraded_reason": null,
+        "agents": [],
+        "handoff": true,
+        "handoff_protocol": "GET-20261102-88FD21",
+        "trace": [
+          "supervisor_agent",
+          "context_intelligence",
+          "ollama_context_intelligence",
+          "policy_gate:contextual_safety_handoff",
+          "human_escalation_agent",
+          "human_handoff_agent",
+          "persistent_ticket_created"
+        ],
+        "critic_approved": true,
+        "critic_mode": "deterministic_policy",
+        "critic_issues": null,
+        "grounding_check": null,
+        "assessment_mode": "ollama_context_intelligence",
+        "answer_preview": "Your description may indicate physical danger. Do not continue using or attempt to repair the device until this is clarified. If there is smoke, fire, sparks, or immediate danger, move away and contact local emergency services. This protoco",
+        "sources": [
+          "https://www.getnet.net/en/contact"
+        ],
+        "clarification_options": [],
+        "llm_calls": 1,
+        "llm_purposes": [
+          "context_intelligence"
+        ],
+        "embed_calls": 0,
+        "prompt_tokens": 637,
+        "output_tokens": 115,
+        "usage_source": "response",
+        "load_ms": 1.1,
+        "outcome": "llm_complete",
+        "route_ok": false
+      },
+      {
+        "id": "crediario_installments",
+        "group": "official",
+        "category": "complex",
+        "trace_id": "ac8d3a3a24c74ea5baee9927bfb8dd5d",
+        "message": "How many installments can I split a sale into with the crediário?",
+        "user_id": "cliente1988",
+        "session_id": null,
+        "latency_s": 69.81,
+        "http_status": 200,
+        "orchestration_mode": "context_directed_dispatch",
+        "intent": "product_information",
+        "degraded": false,
+        "degraded_reason": null,
+        "agents": [
+          "knowledge_agent"
+        ],
+        "handoff": false,
+        "handoff_protocol": null,
+        "trace": [
+          "context_intelligence",
+          "ollama_context_intelligence",
+          "policy_gate:continue",
+          "supervisor_agent",
+          "context_directed_dispatch",
+          "tool:knowledge_specialist",
+          "critic_agent_final_review",
+          "supervisor_final"
+        ],
+        "critic_approved": true,
+        "critic_mode": "ollama_critic",
+        "critic_issues": [],
+        "grounding_check": null,
+        "assessment_mode": "ollama_context_intelligence",
+        "answer_preview": "According to the evidence, the Crediário payment option may allow the cardholder to split a purchase into up to 48 installments, but the exact number of installments is determined by the issuer and is not guaranteed. The merchant can simula",
+        "sources": [
+          "https://site.getnet.com.br/crediario/",
+          "https://site.getnet.com.br/pix/",
+          "https://site.getnet.com.br/get-lite/",
+          "https://site.getnet.com.br/get-ajuda-configuracoes/funcionalidades-portal-minha-conta-e-app-getnet-brasil/"
+        ],
+        "clarification_options": [],
+        "llm_calls": 3,
+        "llm_purposes": [
+          "context_intelligence",
+          "knowledge",
+          "critic"
+        ],
+        "embed_calls": 1,
+        "prompt_tokens": 2193,
+        "output_tokens": 237,
+        "usage_source": "response",
+        "load_ms": 3.6,
+        "outcome": "llm_complete",
+        "route_ok": true
+      },
+      {
+        "id": "payment_link_whatsapp",
+        "group": "official",
+        "category": "complex",
+        "trace_id": "61b3bd99cdd74dc7913819175fac6b01",
+        "message": "Can I sell through WhatsApp using the Payment Link?",
+        "user_id": "cliente1988",
+        "session_id": null,
+        "latency_s": 14.96,
+        "http_status": 200,
+        "orchestration_mode": "context_policy_clarification",
+        "intent": "clarification_required",
+        "degraded": false,
+        "degraded_reason": null,
+        "agents": [],
+        "handoff": false,
+        "handoff_protocol": null,
+        "trace": [
+          "supervisor_agent",
+          "context_intelligence",
+          "ollama_context_intelligence",
+          "policy_gate:clarify",
+          "routine_tools_blocked"
+        ],
+        "critic_approved": true,
+        "critic_mode": "deterministic_policy",
+        "critic_issues": null,
+        "grounding_check": null,
+        "assessment_mode": "ollama_context_intelligence",
+        "answer_preview": "Which topic would you like help with?\n\nChoose a topic:\n1. Sale or payment status\n2. When a sale will be settled\n3. Declined transaction\n4. Getnet products, fees, or services\n5. I want human support\n\nReply with an option name or number. Choo",
+        "sources": [],
+        "clarification_options": [
+          "payment_status",
+          "settlement_timing",
+          "declined_transaction",
+          "products_fees",
+          "human_support"
+        ],
+        "llm_calls": 1,
+        "llm_purposes": [
+          "context_intelligence"
+        ],
+        "embed_calls": 0,
+        "prompt_tokens": 637,
+        "output_tokens": 112,
+        "usage_source": "response",
+        "load_ms": 1.1,
+        "outcome": "llm_complete",
+        "route_ok": false
+      },
+      {
+        "id": "D1_product",
+        "group": "dossier",
+        "category": "complex",
+        "trace_id": "115fb6e0d5dd4fd38d0ee864d67bbe0d",
+        "message": "A Get Lite tem aluguel mensal?",
+        "user_id": "cliente1988",
+        "session_id": null,
+        "latency_s": 73.2,
+        "http_status": 200,
+        "orchestration_mode": "context_directed_dispatch",
+        "intent": "product_information",
+        "degraded": false,
+        "degraded_reason": null,
+        "agents": [
+          "knowledge_agent"
+        ],
+        "handoff": false,
+        "handoff_protocol": null,
+        "trace": [
+          "context_intelligence",
+          "ollama_context_intelligence",
+          "policy_gate:continue",
+          "supervisor_agent",
+          "context_directed_dispatch",
+          "tool:knowledge_specialist",
+          "critic_agent_final_review",
+          "supervisor_final"
+        ],
+        "critic_approved": true,
+        "critic_mode": "ollama_critic",
+        "critic_issues": [],
+        "grounding_check": null,
+        "assessment_mode": "ollama_context_intelligence",
+        "answer_preview": "A Get Lite não oferece aluguel mensal. A página oficial brasileira indica que a Get Lite é uma maquininha sem aluguel mensal, onde o cliente paga uma taxa de adesão uma única vez e pode usar o equipamento. A oferta é sujeita à elegibilidade",
+        "sources": [
+          "https://site.getnet.com.br/get-lite/",
+          "https://site.getnet.com.br/taxas/",
+          "https://site.getnet.com.br/taxas/",
+          "https://site.getnet.com.br/taxas/"
+        ],
+        "clarification_options": [],
+        "llm_calls": 3,
+        "llm_purposes": [
+          "context_intelligence",
+          "knowledge",
+          "critic"
+        ],
+        "embed_calls": 1,
+        "prompt_tokens": 2403,
+        "output_tokens": 213,
+        "usage_source": "response",
+        "load_ms": 3.2,
+        "outcome": "llm_complete",
+        "route_ok": true,
+        "acceptance_pass": true
+      },
+      {
+        "id": "D2_customer_lookup",
+        "group": "dossier",
+        "category": "tools",
+        "trace_id": "dafb972964d344c5955421cf8bd306e5",
+        "message": "Quando cai o dinheiro das vendas de ontem?",
+        "user_id": "cliente1988",
+        "session_id": null,
+        "latency_s": 42.95,
+        "http_status": 200,
+        "orchestration_mode": "context_directed_dispatch",
+        "intent": "customer_support",
+        "degraded": true,
+        "degraded_reason": "model_selected_no_tool",
+        "agents": [
+          "customer_support_agent"
+        ],
+        "handoff": false,
+        "handoff_protocol": null,
+        "trace": [
+          "context_intelligence",
+          "ollama_context_intelligence",
+          "policy_gate:continue",
+          "supervisor_agent",
+          "context_directed_dispatch",
+          "tool:customer_support_specialist",
+          "critic_agent_final_review",
+          "supervisor_final"
+        ],
+        "critic_approved": true,
+        "critic_mode": "ollama_critic",
+        "critic_issues": [],
+        "grounding_check": "passed",
+        "assessment_mode": "ollama_context_intelligence",
+        "answer_preview": "O dinheiro das vendas de ontem foi cedido para o comércio \"Comércio Demo 1988\". O status da conta é ativo e a segmentação é pequena empresa. Os registros são sintéticos e não correspondem a contas reais. Se houver dúvidas sobre o valor ou d",
+        "sources": [],
+        "clarification_options": [],
+        "llm_calls": 4,
+        "llm_purposes": [
+          "context_intelligence",
+          "customer_support_agent:tool_selection",
+          "customer_support_agent:answer",
+          "critic"
+        ],
+        "embed_calls": 0,
+        "prompt_tokens": 1485,
+        "output_tokens": 257,
+        "usage_source": "response",
+        "load_ms": 5.0,
+        "outcome": "fallback_error",
+        "route_ok": false,
+        "acceptance_pass": false
+      }
+    ]
+  },
+  "verdict": "REJECTED VARIANT: route correctness fell from 8/12 (docs/RELATORIO_LATENCIA_2026-11-02_etapa1.json) to 7/12; settlement questions moved from Payments to Support. The routing description was reverted to the stage-1 version. Kept as evidence that qwen3:1.7b routing is sensitive to prompt wording."
+}

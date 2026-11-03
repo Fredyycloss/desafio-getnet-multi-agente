@@ -1,12 +1,236 @@
 [
-  {"title":"Máquinas de cartão Getnet","url":"https://www.getnet.net/","content":"A Getnet oferece soluções de pagamento para negócios, incluindo máquinas de cartão e soluções digitais. Modelos, preços, taxas, disponibilidade e condições comerciais podem variar; consulte o site e os canais oficiais da Getnet para informações atualizadas."},
-  {"title":"Get Clássica e Get Smart","url":"https://www.getnet.net/","content":"A comparação entre modelos de maquininhas deve considerar conectividade, recursos, mobilidade, comprovante, integração e condições comerciais vigentes. Como características e ofertas podem mudar, confirme as especificações atuais diretamente na página oficial de produtos da Getnet."},
-  {"title":"Recebimento de vendas e recebíveis","url":"https://www.getnet.net/","content":"Prazos de recebimento dependem do produto contratado, modalidade de venda, agenda de recebíveis e condições da conta. O assistente não acessa agenda financeira real. Para consultar valores ou datas de depósito, utilize o portal ou aplicativo oficial autenticado da Getnet."},
-  {"title":"Pix e meios de pagamento","url":"https://www.getnet.net/","content":"As opções de recebimento por Pix e os requisitos para liquidação dependem da solução contratada e das condições vigentes. Não informe dados bancários ou credenciais no chat; consulte os canais oficiais para verificar requisitos aplicáveis ao seu negócio."},
-  {"title":"Antecipação de recebíveis","url":"https://www.getnet.net/","content":"A antecipação permite, quando disponível e contratada, receber antes valores de vendas futuras elegíveis, sujeita a condições, taxas, disponibilidade e análise. Não há como confirmar elegibilidade, taxa ou valor individual sem consultar a conta autenticada."},
-  {"title":"Link de pagamento","url":"https://www.getnet.net/","content":"Soluções de link de pagamento podem permitir cobrar à distância compartilhando um link com o comprador, conforme funcionalidades e condições do produto contratado. Verifique disponibilidade, tarifas e opções de parcelamento nos canais oficiais."},
-  {"title":"Crediário e parcelamento","url":"https://www.getnet.net/","content":"O parcelamento e as opções de crediário dependem da modalidade de pagamento, produto, emissor e condições contratadas. A quantidade de parcelas e as taxas devem ser confirmadas na documentação atual da Getnet ou no canal de atendimento."},
-  {"title":"Solução de problemas da maquininha","url":"https://www.getnet.net/","content":"Se a maquininha não conectar: verifique se o equipamento está ligado e carregado; confira Wi-Fi ou sinal móvel; confirme se o modo avião está desativado; reinicie o equipamento e tente novamente. Não compartilhe senha, dados de cartão ou códigos de autenticação. Se persistir, procure o suporte oficial."},
-  {"title":"Transação recusada","url":"https://www.getnet.net/","content":"Uma transação pode ser recusada por motivos relacionados ao emissor, cartão, limite, autenticação, conectividade ou regras antifraude. Confira a mensagem apresentada e a conectividade. Não tente contornar controles de segurança; oriente o titular a consultar o emissor e contate o suporte oficial se o erro persistir."},
-  {"title":"Atendimento e segurança","url":"https://www.getnet.net/","content":"Nunca compartilhe senhas, tokens, códigos de autenticação ou o número completo do cartão no assistente. Consultas de conta, vendas e recebíveis exigem autenticação nos canais oficiais. Este protótipo não possui acesso aos sistemas internos da Getnet e não pode executar alterações em contas."}
+  {
+    "title": "Get Lite — oferta e funcionalidades",
+    "language": "pt",
+    "url": "https://site.getnet.com.br/get-lite/",
+    "content": "A página oficial brasileira apresenta a Get Lite como uma maquininha sem aluguel mensal: o cliente paga uma taxa de adesão uma única vez e pode usar o equipamento; quando não precisar mais dele, deve devolvê-lo conforme os termos da oferta. A página informa pagamento da adesão em até 12 vezes no cartão de crédito ou via Pix e descreve comprovante impresso e digital, aproximação NFC, Wi-Fi, chip 4G, bateria de longa duração e manutenção vitalícia. A oferta é sujeita à elegibilidade e às condições vigentes. Não prometa preço, taxa, prazo de recebimento ou elegibilidade sem consultar a página e o contrato atuais. Fonte: página oficial Get Lite, Brasil.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Get Lite — offer and features",
+    "language": "en",
+    "url": "https://site.getnet.com.br/get-lite/",
+    "content": "The Brazilian official Get Lite page describes the device as having no monthly rental: the customer pays a one-time enrollment/activation fee and may use the terminal; when it is no longer needed, it must be returned under the offer terms. The page says the fee can be paid in up to 12 credit-card installments or via Pix and lists printed and digital receipts, NFC contactless, Wi-Fi, 4G SIM, long battery life and lifetime maintenance. The offer is subject to eligibility and current terms. Do not promise a price, fee, settlement timing or eligibility without checking the current page and contract. Source: Getnet Brazil official Get Lite page; this is an English rendering of Brazilian source material.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Get Clássica — recursos e conectividade",
+    "language": "pt",
+    "url": "https://site.getnet.com.br/taxas/",
+    "content": "A página oficial brasileira de taxas lista a Get Clássica como terminal presencial que aceita aproximação, Pix e QR Code; oferece comprovante impresso ou por SMS; reposição de bobina grátis e automática; e conexão Wi-Fi, chip 3G e plano de dados gratuitos. Também apresenta venda por Link de Pagamento e possibilidade de contratação de antecipação, conforme elegibilidade e contrato. Valores de aluguel, adesão, tarifas e condições promocionais variam e precisam ser confirmados na tabela oficial e no contrato do estabelecimento.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Get Clássica — features and connectivity",
+    "language": "en",
+    "url": "https://site.getnet.com.br/taxas/",
+    "content": "The Brazilian Getnet fees page lists Get Clássica as an in-person payment terminal accepting contactless, Pix and QR Code; it supports printed or SMS receipts, free automatic paper-roll replacement, Wi-Fi, a 3G SIM and a free data plan. The page also references Payment Link and receivables advance subject to eligibility and contract. Rental, enrollment, transaction fees and promotions vary and must be checked on the current official fee page and merchant agreement. English rendering of Brazilian official source material.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Get Smart — recursos e conectividade",
+    "language": "pt",
+    "url": "https://site.getnet.com.br/taxas/",
+    "content": "A página oficial brasileira de taxas lista a Get Smart com aceitação de aproximação, Pix e QR Code; comprovante impresso ou por SMS; conexão Wi-Fi, 3G e 4G com plano de dados; bateria com duração de até 12 horas; aplicativos para gestão do negócio e simulador de vendas. As funcionalidades podem variar por modelo, oferta ou contrato. Não confunda a oferta promocional exibida na página com uma condição garantida para todo cliente.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Get Smart — features and connectivity",
+    "language": "en",
+    "url": "https://site.getnet.com.br/taxas/",
+    "content": "The Brazilian official Getnet fees page lists Get Smart as supporting contactless, Pix and QR Code; printed or SMS receipts; Wi-Fi, 3G and 4G connectivity with a data plan; up to 12 hours of battery life; business-management apps and a sales simulator. Features may vary by model, offer or contract. Do not present a promotion shown on the page as a guaranteed condition for every merchant. English rendering of Brazilian official source material.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Diferenças entre Get Clássica e Get Smart",
+    "language": "pt",
+    "url": "https://site.getnet.com.br/taxas/",
+    "content": "Segundo a página oficial brasileira de taxas, Get Clássica e Get Smart aceitam pagamentos presenciais por aproximação, Pix e QR Code, oferecem comprovante impresso ou SMS e têm conectividade Wi-Fi e dados móveis. A Get Smart é descrita com Wi-Fi, 3G e 4G, bateria de até 12 horas, aplicativos de gestão e simulador de vendas. A Get Clássica é descrita com Wi-Fi e chip 3G, reposição de bobina grátis e automática. A melhor escolha depende do uso, da conectividade, dos recursos de gestão e da oferta vigente. Confirme especificações e preço no site oficial antes de contratar.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Get Clássica vs Get Smart",
+    "language": "en",
+    "url": "https://site.getnet.com.br/taxas/",
+    "content": "According to the Brazilian official fees page, both Get Clássica and Get Smart accept in-person contactless, Pix and QR Code payments, provide printed or SMS receipts, and support Wi-Fi/mobile data. Get Smart is described with Wi-Fi, 3G and 4G, up to 12 hours of battery life, business-management apps and a sales simulator. Get Clássica is described with Wi-Fi and a 3G SIM plus free automatic paper-roll replacement. The right choice depends on usage, connectivity, management features and the current offer. Confirm specifications and price on the official page before contracting. English rendering of Brazilian official source material.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Crediário Getnet — funcionamento e parcelamento",
+    "language": "pt",
+    "url": "https://site.getnet.com.br/crediario/",
+    "content": "A Getnet descreve o Crediário como uma modalidade que permite ao portador parcelar a compra em até 48 vezes, mas o limite e os juros dependem do emissor do cartão e da análise de crédito. O lojista pode simular as parcelas e encargos na maquininha antes de contratar; a simulação não garante aprovação. A página informa que as vendas aprovadas no Crediário são pagas ao estabelecimento em até 2 dias úteis após a captura, em parcela única, descontada a taxa contratual. A habilitação depende de análise pela Getnet e pode ser consultada no App Getnet Brasil ou Portal do Cliente. Consulte contrato e página atual para taxas e disponibilidade.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Getnet Crediário — instalments and settlement",
+    "language": "en",
+    "url": "https://site.getnet.com.br/crediario/",
+    "content": "Getnet describes Crediário as a payment option that may allow the cardholder to split a purchase into up to 48 installments, but the issuer sets the available limit and interest and the transaction is subject to credit approval. The merchant can simulate installments and charges on the terminal before contracting; a simulation is not an approval guarantee. The official page says approved Crediário sales are paid to the merchant in one amount within up to 2 business days after capture, minus the contract discount fee. Activation is subject to Getnet analysis and can be checked in the Getnet Brazil app or customer portal. Check current terms for fees and availability. English rendering of Brazilian official source material.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Link de Pagamento — vendas online e WhatsApp",
+    "language": "pt",
+    "url": "https://site.getnet.com.br/link-de-pagamento/",
+    "content": "O Link de Pagamento Getnet permite cobrar à distância sem precisar de site próprio ou maquininha física. O link pode ser criado no App Getnet Brasil ou Portal do Cliente, configurado com descrição/valor e opções disponíveis (como débito, crédito à vista ou parcelado, Pix e carteiras digitais) e compartilhado por WhatsApp, SMS, e-mail ou redes sociais. A página apresenta planos e preços, que podem mudar; confirme condições, tarifas, limites e métodos aceitos no contrato e na página oficial atual.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Getnet Payment Link — online and WhatsApp sales",
+    "language": "en",
+    "url": "https://site.getnet.com.br/link-de-pagamento/",
+    "content": "Getnet Payment Link lets a merchant collect payments remotely without a personal website or physical terminal. A link can be created in the Getnet Brazil app or customer portal, configured with product description/amount and available payment methods (such as debit, one-time or instalment credit, Pix and digital wallets), then shared by WhatsApp, SMS, email or social networks. The page displays plans and prices that may change; confirm current terms, fees, limits and accepted methods on the official page and contract. English rendering of Brazilian official source material.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Pix com Getnet",
+    "language": "pt",
+    "url": "https://site.getnet.com.br/pix/",
+    "content": "Para receber vendas via Pix pela Getnet, não basta apenas perguntar se é necessário ter conta: o estabelecimento precisa habilitar o serviço no App Getnet Brasil ou Portal Minha Conta e selecionar/vincular a instituição financeira em que deseja receber. No aplicativo, o fluxo indicado pela página oficial é Serviços > Ativações > Pix > Habilitar; depois, selecione a instituição financeira, siga as instruções e aceite os termos. O recebimento é normalmente rápido, mas o horário pode variar em até um dia corrido conforme o modelo de Pix para o qual o cliente é elegível e o horário de aprovação. Uma tarifa por transação aprovada pode ser aplicável, conforme o modelo contratado. A instituição elegível, tarifas e condições devem ser confirmadas no app/portal e nos termos do produto. Fonte oficial: https://site.getnet.com.br/pix/.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Pix with Getnet",
+    "language": "en",
+    "url": "https://site.getnet.com.br/pix/",
+    "content": "To receive sales through Getnet Pix, the merchant must enable the service in the Getnet Brazil app or Minha Conta portal and select/link the financial institution where the proceeds should be received. The official app flow is Services > Activations > Pix > Enable; then select the financial institution, follow the instructions and accept the terms. Settlement is generally fast, but timing may vary by up to one calendar day depending on the Pix model for which the merchant is eligible and the sale approval time. A fee per approved transaction may apply depending on the contracted Pix model. Confirm eligible institutions, fees and terms in the authenticated app/portal and product terms. Official source: https://site.getnet.com.br/pix/.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Antecipação de recebíveis pelo aplicativo",
+    "language": "pt",
+    "url": "https://site.getnet.com.br/get-ajuda-antecipacao-de-venda/como-antecipar-sua-vendas-pelo-app/",
+    "content": "A Getnet informa que vendas de crédito à vista ou parceladas podem ser elegíveis à antecipação pelo App Getnet Brasil. O fluxo publicado é: entrar no app, abrir Serviços, selecionar Antecipação de Vendas, conferir valor disponível e conta cadastrada, simular valores/bandeiras/taxas, aceitar os termos e confirmar. A página informa valor mínimo de R$ 50 para antecipação. A disponibilidade depende da agenda elegível e das condições contratuais; taxas e valor líquido devem ser vistos na simulação autenticada. Não prometa aprovação ou valor sem consultar a conta.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Receivables advance in the Getnet app",
+    "language": "en",
+    "url": "https://site.getnet.com.br/get-ajuda-antecipacao-de-venda/como-antecipar-sua-vendas-pelo-app/",
+    "content": "Getnet states that one-time or instalment credit sales may be eligible for receivables advance through the Getnet Brazil app. The published flow is: sign in, open Services, choose Sales Advance, review the amount available and registered bank account, simulate amounts/brands/fees, accept terms and confirm. The page states a BRL 50 minimum advance amount. Availability depends on eligible receivables and contract conditions; fees and net proceeds must be checked in the authenticated simulation. Do not promise approval or an amount without accessing the account.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Consultar vendas, taxas e conta no App/Portal",
+    "language": "pt",
+    "url": "https://site.getnet.com.br/get-ajuda-configuracoes/funcionalidades-portal-minha-conta-e-app-getnet-brasil/",
+    "content": "A página oficial informa que App Getnet Brasil e Portal Minha Conta permitem consultar contrato e taxas, gerir maquininhas, consultar vendas, solicitar/cancelar serviços e equipamentos, habilitar antecipação automática, cancelar venda, cadastrar ou alterar conta bancária e habilitar Pix, conforme permissões do estabelecimento. Informações financeiras específicas e alterações exigem login. O assistente não deve afirmar que consultou uma conta real sem integração autenticada.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Getnet app and customer portal capabilities",
+    "language": "en",
+    "url": "https://site.getnet.com.br/get-ajuda-configuracoes/funcionalidades-portal-minha-conta-e-app-getnet-brasil/",
+    "content": "The official page says the Getnet Brazil app and customer portal can show contract and fees, manage terminals, review sales, request/cancel services and equipment, enable automatic receivables advance, cancel a sale, register or change a bank account and enable Pix, subject to merchant permissions. Account-specific financial information and changes require sign-in. This assistant must not claim to have accessed a real account without an authenticated integration. English rendering of Brazilian official source material.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Erros e comunicação da maquininha",
+    "language": "pt",
+    "url": "https://site.getnet.com.br/get-ajuda-erros-maquininha/",
+    "content": "A central oficial Get Ajuda lista códigos de erro de terminais e descrições resumidas. Entre os exemplos publicados estão ADQ 1-19 (erro de conexão), ADQ 1-84 (problema de conexão), ADQ 4-30 (falha de comunicação na maquininha), ADQ 4-27 (comunicação dos sistemas), ADQ 1-07 (maquininha não inicializada) e ADQ 1-87 (registro do chip). O código deve ser conferido no manual e na página oficial; não deduza uma correção específica somente pelo código. Para falhas persistentes, use o suporte oficial.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Terminal error codes and communication issues",
+    "language": "en",
+    "url": "https://site.getnet.com.br/get-ajuda-erros-maquininha/",
+    "content": "The official Getnet Help Center lists terminal error codes with short descriptions. Published examples include ADQ 1-19 (connection error), ADQ 1-84 (connection issue), ADQ 4-30 (terminal communication failure), ADQ 4-27 (systems communication), ADQ 1-07 (terminal not initialized) and ADQ 1-87 (SIM registration). Verify a code in the device manual and official help page; do not infer a precise fix from the code alone. For persistent failures, use official support. English rendering of Brazilian official source material.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Suporte oficial Getnet Brasil",
+    "language": "pt",
+    "url": "https://site.getnet.com.br/get-ajuda-maquininha/",
+    "content": "A página de suporte brasileira lista canais de atendimento e materiais de ajuda para maquininhas, incluindo configuração de Wi-Fi, manuais navegáveis e orientações por telefone e WhatsApp. A página consultada informa atendimento de relacionamento das 6h às 22h e publica os números 4002-4000/4003-4000 para capitais e regiões metropolitanas, 0800-648-8000 para interior e demais localidades e WhatsApp 11 97694-6815. Canais e horários podem mudar; confirme diretamente na página oficial antes de usar. Este chatbot é uma demonstração e não abre chamado real da Getnet.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Official Getnet Brazil support",
+    "language": "en",
+    "url": "https://site.getnet.com.br/get-ajuda-maquininha/",
+    "content": "The Brazilian support page lists help materials for terminals, including Wi-Fi setup, navigable manuals, phone and WhatsApp support. The page checked lists relationship service from 6:00 to 22:00 and phone numbers 4002-4000/4003-4000 for capitals/metropolitan areas, 0800-648-8000 for other locations and WhatsApp +55 11 97694-6815. Channels and hours can change; verify directly on the official page before use. This chatbot is a demo and does not create a real Getnet support case.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Taxas, tarifas e condições contratuais",
+    "language": "pt",
+    "url": "https://site.getnet.com.br/taxas/",
+    "content": "A Getnet publica tabelas de taxas para maquininhas, Link de Pagamento e Get Tap. A própria página alerta que taxas estão sujeitas a alteração conforme as condições dos produtos e serviços contratados. O valor efetivo pode depender de faturamento, bandeira, modalidade, prazo de recebimento, plano e contrato do estabelecimento. O assistente deve explicar os fatores e apontar a página oficial, mas não garantir taxa individual sem consultar o contrato ou simulador autenticado.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Fees, rates and merchant contract terms",
+    "language": "en",
+    "url": "https://site.getnet.com.br/taxas/",
+    "content": "Getnet publishes fee tables for terminals, Payment Link and Get Tap. The page itself warns that fees are subject to change according to the terms of the contracted products and services. The effective rate may depend on processing volume, card brand, payment type, settlement timing, plan and the merchant agreement. The assistant may explain these factors and link to the official page, but must not guarantee an individual merchant's rate without the contract or authenticated simulator.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "Descontinuação dos pagamentos via WhatsApp Business",
+    "language": "pt",
+    "url": "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/",
+    "content": "A página oficial da Getnet informa que, por decisão da Meta, os pagamentos nativos via WhatsApp Business foram descontinuados em 15/01/2026. Para clientes Getnet que tinham pacote de pagamentos pelo WhatsApp Business, a migração é para o pacote de Link de Pagamento. Isso não significa que vendas pelo WhatsApp deixaram de ser possíveis: o lojista pode criar um Link de Pagamento no App Getnet Brasil ou Portal do Cliente, configurar os meios habilitados (como débito, crédito à vista ou parcelado, Pix e carteiras digitais) e compartilhar o link por WhatsApp, SMS, e-mail ou outro canal. A página informa, para o pacote citado, cobrança de R$ 1,00 por link efetivamente pago; planos, elegibilidade e condições devem ser confirmados na página e no contrato atuais. Fonte oficial: https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  },
+  {
+    "title": "WhatsApp Business native payments discontinuation",
+    "language": "en",
+    "url": "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/",
+    "content": "Getnet states that, following Meta’s decision, native payments through WhatsApp Business were discontinued on 15 January 2026. Getnet merchants who had the WhatsApp Business payments package are migrated to the Payment Link package. This does not mean merchants can no longer sell through WhatsApp: they can create a Getnet Payment Link in the Getnet Brazil app or customer portal, configure the payment methods enabled for their account (such as debit, one-time or instalment credit, Pix and digital wallets), and share the link through WhatsApp, SMS, email or another channel. The cited package page states a R$1.00 charge per link that is actually paid; confirm current plans, eligibility and contract terms on the official page. English rendering of the official Brazilian source. Source: https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/.",
+    "source_type": "curated_official_summary",
+    "source_region": "Brazil",
+    "reviewed_at": "2026-11-01"
+  }
 ]

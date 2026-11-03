@@ -2,38 +2,151 @@ services:
   api:
     build:
       context: ./backend
+      dockerfile: Dockerfile
     environment:
-      APP_ENV: ${APP_ENV:-production}
+      APP_ENV: ${APP_ENV:-demo}
+      DATABASE_PATH: /data/getnet_assist.sqlite3
       CORS_ORIGINS: ${CORS_ORIGINS:-http://localhost:5173,http://localhost:8080}
+      # auto: GETNET_ANTHROPIC_API_KEY present -> anthropic (cloud); otherwise ollama when
+      # OLLAMA_ENABLED=true; otherwise deterministic fallback. Embeddings are always local.
+      LLM_PROVIDER: ${LLM_PROVIDER:-auto}
+      GETNET_ANTHROPIC_API_KEY: ${GETNET_ANTHROPIC_API_KEY:-}
+      ANTHROPIC_MODEL: ${ANTHROPIC_MODEL:-claude-haiku-5-5}
+      ANTHROPIC_TIMEOUT_SECONDS: ${ANTHROPIC_TIMEOUT_SECONDS:-20}
+      ANTHROPIC_MAX_RETRIES: ${ANTHROPIC_MAX_RETRIES:-1}
+      ANTHROPIC_EFFORT: ${ANTHROPIC_EFFORT:-low}
+      ANTHROPIC_THINKING: ${ANTHROPIC_THINKING:-disabled}
+      ANTHROPIC_MIN_OUTPUT_TOKENS: ${ANTHROPIC_MIN_OUTPUT_TOKENS:-1024}
+      ANTHROPIC_INPUT_USD_PER_MTOK: ${ANTHROPIC_INPUT_USD_PER_MTOK:-0.10}
+      ANTHROPIC_OUTPUT_USD_PER_MTOK: ${ANTHROPIC_OUTPUT_USD_PER_MTOK:-0.50}
+      CLOUD_LLM_BUDGET_SECONDS: ${CLOUD_LLM_BUDGET_SECONDS:-30}
+      LOCAL_LLM_BUDGET_SECONDS: ${LOCAL_LLM_BUDGET_SECONDS:-150}
+      AUTH_SECRET: ${AUTH_SECRET:-}
+      AUTH_TOKEN_TTL_SECONDS: ${AUTH_TOKEN_TTL_SECONDS:-3600}
       OLLAMA_ENABLED: ${OLLAMA_ENABLED:-false}
-      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://localhost:11434}
-      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen2.5:3b}
-      KNOWLEDGE_URLS: ${KNOWLEDGE_URLS:-https://www.getnet.net/,https://www.getnet.net/en}
+      OLLAMA_REQUIRED: ${OLLAMA_REQUIRED:-false}
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://ollama:11434}
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen3:1.7b}
+      OLLAMA_EMBEDDING_MODEL: ${OLLAMA_EMBEDDING_MODEL:-nomic-embed-text}
+      OLLAMA_TIMEOUT_SECONDS: ${OLLAMA_TIMEOUT_SECONDS:-90}
+      OLLAMA_STARTUP_TIMEOUT_SECONDS: ${OLLAMA_STARTUP_TIMEOUT_SECONDS:-900}
+      OLLAMA_CONTEXT_LENGTH: ${OLLAMA_CONTEXT_LENGTH:-4096}
+      OLLAMA_MAX_OUTPUT_TOKENS: ${OLLAMA_MAX_OUTPUT_TOKENS:-256}
+      OLLAMA_CONTEXT_MAX_OUTPUT_TOKENS: ${OLLAMA_CONTEXT_MAX_OUTPUT_TOKENS:-180}
+      OLLAMA_KNOWLEDGE_MAX_OUTPUT_TOKENS: ${OLLAMA_KNOWLEDGE_MAX_OUTPUT_TOKENS:-160}
+      OLLAMA_CRITIC_MAX_OUTPUT_TOKENS: ${OLLAMA_CRITIC_MAX_OUTPUT_TOKENS:-60}
+      OLLAMA_SUPPORT_MAX_OUTPUT_TOKENS: ${OLLAMA_SUPPORT_MAX_OUTPUT_TOKENS:-80}
+      OLLAMA_SUPPORT_ANSWER_MAX_OUTPUT_TOKENS: ${OLLAMA_SUPPORT_ANSWER_MAX_OUTPUT_TOKENS:-180}
+      OLLAMA_WEB_TOOL_MAX_OUTPUT_TOKENS: ${OLLAMA_WEB_TOOL_MAX_OUTPUT_TOKENS:-60}
+      OLLAMA_WEB_ANSWER_MAX_OUTPUT_TOKENS: ${OLLAMA_WEB_ANSWER_MAX_OUTPUT_TOKENS:-150}
+      OLLAMA_SUPERVISOR_MAX_OUTPUT_TOKENS: ${OLLAMA_SUPERVISOR_MAX_OUTPUT_TOKENS:-200}
+      OLLAMA_KEEP_ALIVE: ${OLLAMA_KEEP_ALIVE:-30m}
+      OLLAMA_THINK: ${OLLAMA_THINK:-false}
+      # Empty = provider profile (cloud 30 s, local 150 s); a number overrides it.
+      REQUEST_LLM_BUDGET_SECONDS: ${REQUEST_LLM_BUDGET_SECONDS:-}
+      OLLAMA_NUM_THREAD: ${OLLAMA_NUM_THREAD:-}
+      SUPERVISOR_FAST_PATH_MIN_CONFIDENCE: ${SUPERVISOR_FAST_PATH_MIN_CONFIDENCE:-0.75}
+      KNOWLEDGE_CRAWL_ENABLED: "false"
       REQUEST_TIMEOUT_SECONDS: ${REQUEST_TIMEOUT_SECONDS:-8}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      OPERATOR_API_KEY: ${OPERATOR_API_KEY:-}
     ports:
       - "${API_PORT:-8000}:8000"
+    volumes:
+      - getnet_data:/data
+    depends_on:
+      ollama:
+        condition: service_healthy
     restart: unless-stopped
     healthcheck:
-      test: ["CMD", "python", "-c", "import urllib.request; urllib.request.urlopen('http://localhost:8000/api/health', timeout=3)"]
-      interval: 30s
+      test: ["CMD", "python", "-c", "import urllib.request; r=urllib.request.urlopen('http://localhost:8000/api/health', timeout=3); assert r.status == 200"]
+      interval: 15s
       timeout: 5s
-      retries: 3
+      retries: 5
+      start_period: 20s
+
   web:
     build:
       context: ./frontend
+      dockerfile: Dockerfile
     ports:
       - "${FRONTEND_PORT:-8080}:80"
     depends_on:
       api:
         condition: service_healthy
     restart: unless-stopped
-# Ollama é opcional. Para ativar, adicione um serviço Ollama e use OLLAMA_BASE_URL=http://ollama:11434.
-# Para ativar inferência local, acrescente o serviço abaixo e configure OLLAMA_ENABLED=true:
-#  ollama:
-#    image: ollama/ollama:latest
-#    volumes:
-#      - ollama_data:/root/.ollama
-#    ports:
-#      - "11434:11434"
-#    restart: unless-stopped
-# E declare também ao final: volumes:\n#   ollama_data:
+
+  tests:
+    profiles: ["test"]
+    build:
+      context: ./backend
+      dockerfile: Dockerfile.test
+    environment:
+      DATABASE_PATH: /tmp/getnet-tests.sqlite3
+      OLLAMA_ENABLED: "false"
+      KNOWLEDGE_CRAWL_ENABLED: "false"
+    command: ["python", "-m", "pytest", "-q", "tests"]
+
+  # Local model runtime: always serves the nomic embeddings; serves Qwen in offline mode.
+  # The named volume preserves models across restarts.
+  ollama:
+    image: ollama/ollama:0.40.13
+    environment:
+      OLLAMA_NUM_PARALLEL: ${OLLAMA_NUM_PARALLEL:-1}
+      # 2 = chat + embedding model stay resident; with 1 every embed call evicted Qwen.
+      OLLAMA_MAX_LOADED_MODELS: ${OLLAMA_MAX_LOADED_MODELS:-2}
+    volumes:
+      - ollama_data:/root/.ollama
+    ports:
+      - "${OLLAMA_PORT:-11434}:11434"
+    restart: unless-stopped
+    healthcheck:
+      test: ["CMD", "ollama", "list"]
+      interval: 10s
+      timeout: 5s
+      retries: 12
+      start_period: 20s
+
+  # Embedding model used in every mode. `ollama pull` is idempotent.
+  ollama-embeddings:
+    image: ollama/ollama:0.40.13
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+      OLLAMA_EMBEDDING_MODEL: ${OLLAMA_EMBEDDING_MODEL:-nomic-embed-text}
+    entrypoint: ["sh", "-c"]
+    command: ["ollama pull \"$${OLLAMA_EMBEDDING_MODEL}\""]
+    restart: "no"
+
+  # Offline mode only (profile ai): local chat model. Existing layers in ollama_data are reused.
+  ollama-models:
+    image: ollama/ollama:0.40.13
+    profiles: ["ai"]
+    depends_on:
+      ollama:
+        condition: service_healthy
+    environment:
+      OLLAMA_HOST: http://ollama:11434
+      OLLAMA_MODEL: ${OLLAMA_MODEL:-qwen3:1.7b}
+      OLLAMA_EMBEDDING_MODEL: ${OLLAMA_EMBEDDING_MODEL:-nomic-embed-text}
+    entrypoint: ["sh", "-c"]
+    command: ["ollama pull \"$${OLLAMA_MODEL}\" && ollama pull \"$${OLLAMA_EMBEDDING_MODEL}\""]
+    restart: "no"
+
+  knowledge-refresh:
+    profiles: ["tools"]
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_PATH: /tmp/knowledge-refresh.sqlite3
+    volumes:
+      - ./backend/app/knowledge:/app/app/knowledge:rw
+    entrypoint: ["python", "-m", "app.knowledge.ingest_cli"]
+    command: ["--max-pages", "24"]
+
+volumes:
+  getnet_data:
+  ollama_data:

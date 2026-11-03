@@ -6,3 +6,17 @@ __pycache__/
 node_modules/
 dist/
 .DS_Store
+*.sqlite3
+*.db
+live-evaluation-report.json
+context-evaluation-report.json
+*.log
+
+# Internal working notes (kept out of the repository)
+CLAUDE.md
+docs/DOSSIE_*
+docs/MISSAO_*
+docs/DIAGNOSTICO_*
+# Browser test artifacts
+frontend/test-results/
+frontend/playwright-report/

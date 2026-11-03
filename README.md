@@ -1,423 +1,274 @@
-# Getnet Multi-Agent Support System
+# Getnet Assist — multi-agent support for Getnet merchants
 
-Sistema de atendimento inteligente desenvolvido para o desafio **AI Hardcore Engineer — Multi-Agent Support System**. A aplicação organiza o fluxo de atendimento por meio de agentes especializados, com uma API em FastAPI e uma interface web construída com React e TypeScript.
+A FastAPI service in which LLM agents answer Getnet product, payment, terminal and public-information questions for merchants.
 
-O projeto busca demonstrar uma arquitetura modular de atendimento, separando a identificação da intenção do usuário, a consulta à base de conhecimento, o suporte ao cliente e o encaminhamento de casos que exigem atendimento especializado.
+- Answers are built from real tools and retrieved evidence.
+- An independent Critic reviews every automated answer and can reject it.
+- Physical-risk reports, ambiguous messages and explicit requests for a person are handled by deterministic policies.
+- The service hands off to a simulated human queue with a protocol number.
 
-## Sumário
+It runs with Docker Compose in two modes:
 
-- [Visão geral](#visão-geral)
-- [Funcionalidades](#funcionalidades)
-- [Arquitetura](#arquitetura)
-- [Tecnologias utilizadas](#tecnologias-utilizadas)
-- [Estrutura do projeto](#estrutura-do-projeto)
-- [Pré-requisitos](#pré-requisitos)
-- [Configuração e execução](#configuração-e-execução)
-- [Endpoints da API](#endpoints-da-api)
-- [Fluxo de atendimento](#fluxo-de-atendimento)
-- [Base de conhecimento](#base-de-conhecimento)
-- [Testes e validação](#testes-e-validação)
-- [Qualidade de código e limitações conhecidas](#qualidade-de-código-e-limitações-conhecidas)
-- [CI — Integração contínua](#ci--integração-contínua)
-- [Demonstração](#demonstração)
-- [Melhorias futuras](#melhorias-futuras)
-- [Licença](#licença)
+| Mode | When | Chat model | Embeddings | Request budget |
+|---|---|---|---|---|
+| **Cloud (default when a key is set)** | `GETNET_ANTHROPIC_API_KEY` in `.env` | Claude Haiku 5.5 (`claude-haiku-5-5`) | local `nomic-embed-text` | 30 s |
+| **Offline (no key)** | `bash scripts/start-ai.sh -d` | local `qwen3:1.7b` on Ollama | local `nomic-embed-text` | 150 s |
 
-## Visão geral
+Both modes run the same code through one provider layer (`backend/app/infra/llm/`). Every number below comes from a report file in `docs/`.
 
-O sistema recebe mensagens de usuários e direciona cada solicitação para o fluxo de atendimento mais adequado.
+All customer records are **synthetic demo fixtures**. Nothing connects to real Getnet systems.
 
-A solução foi estruturada em agentes especializados e componentes auxiliares, com o objetivo de facilitar a manutenção, a evolução e a avaliação de cada parte da aplicação.
+---
 
-O backend disponibiliza endpoints HTTP para interação com o sistema e consulta às fontes de conhecimento. A interface web permite que o usuário interaja com o atendimento por meio de uma aplicação visual.
+## Quick start
 
-## Funcionalidades
+Requirements: Docker with Compose v2. The commands are for Linux and macOS.
 
-- **Roteamento de intenções:** identifica a categoria da solicitação e direciona o processamento para o agente apropriado.
-- **Consulta à base de conhecimento:** recupera informações relevantes para apoiar as respostas.
-- **Suporte ao cliente:** processa solicitações relacionadas ao atendimento.
-- **Escalonamento:** identifica situações que podem exigir encaminhamento para atendimento humano ou especializado.
-- **Guardrails:** aplica verificações de entrada e regras de segurança definidas pela aplicação.
-- **Rastreabilidade:** inclui informações de fluxo e de agente na resposta, conforme o processamento realizado.
-- **API REST:** disponibiliza endpoints para comunicação com o backend.
-- **Interface web:** oferece uma interface de interação com o sistema.
-- **Containerização:** utiliza Docker e Docker Compose para facilitar a execução e a validação do ambiente.
+```bash
+git clone <this repository> getnet-assist && cd getnet-assist
+cp .env.example .env
+```
 
-## Arquitetura
+**Cloud mode.** Put your key in `.env` as `GETNET_ANTHROPIC_API_KEY=...`, then start the stack:
 
-A aplicação é organizada em duas partes principais:
+```bash
+docker compose up -d --build
+curl -s localhost:8000/api/health | python3 -m json.tool   # "llm_provider": {"provider": "anthropic", ...}
+```
 
-### Frontend
+The key is read only from `GETNET_ANTHROPIC_API_KEY`, never from `ANTHROPIC_API_KEY`. It is passed to the SDK explicitly and never logged, traced, returned or stored; a test enforces this.
 
-Interface web construída com React, TypeScript e Vite. O Nginx é utilizado na configuração de container do frontend para servir os arquivos da aplicação e encaminhar as chamadas de API conforme a configuração do projeto.
+**Offline mode.** No key is needed. The first run downloads about 1.7 GB of models into the `ollama_data` volume.
 
-### Backend
+```bash
+bash scripts/start-ai.sh -d
+curl -s localhost:8000/api/health | python3 -m json.tool   # "provider": "ollama", "model": "qwen3:1.7b"
+```
 
-API construída com FastAPI e Python. O backend contém os agentes, as regras de validação, os recursos de consulta à base de conhecimento e o serviço que coordena o atendimento.
+Open <http://localhost:8080> and sign in with a listed demo account:
 
-### Agentes e componentes
-
-| Componente | Responsabilidade |
+| User | PIN |
 |---|---|
-| `RouterAgent` | Determina o fluxo de atendimento com base na intenção identificada. |
-| `KnowledgeAgent` | Apoia as respostas utilizando a base de conhecimento disponível. |
-| `SupportAgent` | Processa solicitações relacionadas ao suporte ao cliente. |
-| `EscalationAgent` | Trata casos que exigem escalonamento. |
-| `Guardrails` | Executa verificações e aplica regras de proteção definidas na aplicação. |
-| `SupportTools` | Reúne ferramentas auxiliares utilizadas no fluxo de suporte. |
-| `ChatService` | Coordena os componentes e consolida o resultado do atendimento. |
+| `cliente1988` | `1988` |
+| `demo-user-001` | `0001` |
+| `demo-merchant-001` | `0002` |
 
-Os nomes acima refletem a organização dos componentes do projeto; o comportamento específico de cada agente depende de sua implementação.
+The PINs are public on purpose because this is demonstration identity. With neither a key nor Ollama, the API still starts. In that case every answer is a labelled deterministic fallback (`degraded: true`).
 
-## Tecnologias utilizadas
+Stop the stack with `docker compose down`. **Never add `-v`**: it would delete the model and data volumes.
 
-### Backend
-- Python
-- FastAPI
-- Pydantic
-- Uvicorn
-- Requests
-- Beautiful Soup
-
-### Frontend
-- React
-- TypeScript
-- Vite
-- Nginx
-
-### Infraestrutura e qualidade
-- Docker
-- Docker Compose
-- Git e GitHub
-- GitHub Actions
-- Pytest, para a execução da suíte automatizada de testes
-
-## Estrutura do projeto
-
-```text
-.
-├── .github/
-│   └── workflows/
-│       └── build.yml
-├── backend/
-│   ├── app/
-│   │   ├── agents/
-│   │   │   ├── escalation_agent.py
-│   │   │   ├── guardrails.py
-│   │   │   ├── knowledge_agent.py
-│   │   │   ├── router_agent.py
-│   │   │   ├── support_agent.py
-│   │   │   └── support_tools.py
-│   │   ├── knowledge/
-│   │   │   ├── corpus.json
-│   │   │   └── ingest.py
-│   │   ├── main.py
-│   │   └── service.py
-│   ├── Dockerfile
-│   └── requirements.txt
-├── frontend/
-│   ├── src/
-│   │   ├── App.tsx
-│   │   ├── main.tsx
-│   │   └── styles.css
-│   ├── Dockerfile
-│   ├── index.html
-│   ├── nginx.conf
-│   ├── package.json
-│   └── vite.config.ts
-├── .env.example
-├── .gitignore
-├── docker-compose.yml
-├── LICENSE
-└── README.md
-```
-
-A estrutura acima resume os arquivos principais da aplicação. Arquivos adicionais de configuração podem existir no projeto.
-
-## Pré-requisitos
-
-Para executar a aplicação em containers, são necessários:
-
-- Docker Desktop instalado e em execução.
-- Docker Compose disponível por meio do comando `docker compose`.
-- Git, caso deseje clonar o repositório.
-
-A execução por Docker reduz a necessidade de instalar manualmente as dependências Python e JavaScript na máquina local.
-
-## Configuração e execução
-
-### 1. Obter o código
-
-Clone o repositório:
+### API in one call
 
 ```bash
-git clone https://github.com/SEU-USUARIO/getnet-multi-agent.git
-cd getnet-multi-agent
+TOKEN=$(curl -s -X POST localhost:8000/api/auth/demo-login -H 'Content-Type: application/json' \
+  -d '{"user_id":"cliente1988","pin":"1988"}' | python3 -c 'import sys,json;print(json.load(sys.stdin)["access_token"])')
+curl -s -X POST localhost:8000/api/chat -H "Authorization: Bearer $TOKEN" -H 'Content-Type: application/json' \
+  -d '{"message":"Quando cai o dinheiro das vendas de ontem?","user_id":"cliente1988"}' | python3 -m json.tool
 ```
 
-Substitua `SEU-USUARIO` pelo nome de usuário ou organização responsável pelo repositório.
+`POST /api/chat` takes `message` and `user_id`, as the challenge requires, plus an optional `session_id`. The identity comes from the bearer token. A body `user_id` that differs from the token returns 403, and a missing or invalid token returns 401.
 
-### 2. Configurar as variáveis de ambiente
+The response contains:
+- `answer`, `language`, `intent`, `agent`, `sources`;
+- `trace`, `orchestration_mode`, `context_assessment`;
+- `critic {approved, mode, issues}`;
+- `specialist_observations`, `tool_calls`;
+- `degraded` and `degraded_reason`;
+- `model_usage` (calls, tokens, cost) and `stage_timings`;
+- handoff fields when a protocol was created.
 
-Consulte o arquivo `.env.example` para identificar as variáveis de configuração disponíveis.
+---
 
-Se o projeto exigir um arquivo `.env`, crie-o localmente com os valores adequados. Não publique credenciais, tokens ou outras informações sensíveis no repositório.
+## Architecture
 
-### 3. Construir e iniciar os serviços
+```mermaid
+flowchart TD
+    U[Merchant / UI] -->|Bearer token| G[Gateway<br/>auth, limits, secret-data guard,<br/>explicit human request]
+    G --> CI[Context Intelligence<br/>LLM, JSON schema]
+    CI --> R[RiskAssessment<br/>deterministic hazards]
+    R --> P{PolicyGate}
+    P -->|hazard or model 'critical'| S[Safety instructions<br/>+ priority protocol]
+    P -->|possible danger / ambiguous| M[Clarification menu<br/>incl. 'real physical risk' and 'attendant']
+    P -->|human request| H[Human handoff<br/>simulated queue + protocol]
+    P -->|continue| SUP[Supervisor]
+    SUP -->|one clear specialist: fast path| SPEC
+    SUP -->|several / unsure: function-calling plan| SPEC
+    subgraph SPEC[Specialists - each writes its own answer with the LLM]
+      K[Knowledge<br/>hybrid RAG + citations]
+      CS[Customer Support<br/>profile, terminal status]
+      PA[Payments<br/>settlement, declines]
+      W[Web Research<br/>weather, FX, search]
+    end
+    SPEC --> C{Critic}
+    C -->|approved| A[Answer + sources + trace]
+    C -->|rejected| RP[One re-plan] --> C2{Critic}
+    C2 -->|approved| A
+    C2 -->|rejected again| H
+```
+
+1. **Gateway.** It is deterministic.
+   - It blocks passwords, tokens and card numbers before any model sees them.
+   - An explicit request for a person goes straight to handoff.
+2. **Context Intelligence** (`agents/context_intelligence.py`). One LLM call returns a compact JSON object validated by pydantic. The object holds intent, risk level, ambiguity, figurative language, recommended agents, action and confidence. Two general conservative floors apply:
+   - a danger word with an explicit retraction becomes a clarification;
+   - a danger word the model calls "safe" without a figurative reading also becomes a clarification.
+3. **RiskAssessment** (`agents/risk_assessment_agent.py`). Regular expressions detect concrete hazards: fire, smoke, sparks, shock, swollen battery, overheating and burning smell. The model can never downgrade them.
+4. **PolicyGate** (`agents/policy_gate.py`) decides in this order:
+   1. a deterministic hazard raises an alert;
+   2. a model "critical" without a deterministic hazard raises an alert;
+   3. a model "potentially dangerous" or "ambiguous" shows a menu that offers "real physical risk" and "attendant";
+   4. other uncertainty shows a topic menu;
+   5. a human request creates a handoff;
+   6. otherwise the turn continues.
+5. **Supervisor** (`agents/supervisor_agent.py`) has two paths.
+   - **Fast path:** when the Context Intelligence recommends exactly one routine specialist with confidence ≥ 0.75, the Supervisor dispatches to it with no extra model call.
+   - **Planning loop:** otherwise, function calling chooses specialists for up to 3 rounds and 4 tools. A `FINAL` marker reuses the specialists' answers instead of generating a new one.
+6. **Critic** (`agents/critic_agent.py`) checks every automated answer.
+   - **Always, without a model:**
+     - no request for a secret;
+     - every `[n]` citation exists;
+     - every ID, date, amount and status in the answer appears in the tool observations (`agents/grounding.py`).
+   - **Then, with the model:** support, language, contradictions and unsafe guidance. It rejects only material problems.
+   - A rejection triggers one re-plan. A second rejection hands off to a human.
+7. **Request budget.** All model calls in one request share a deadline (`REQUEST_LLM_BUDGET_SECONDS`, default from the provider profile). When the budget is spent, the answer is a labelled deterministic fallback with `degraded: true`, not a 503.
+
+### Agents and tools
+
+| Agent | Responsibility | Tools / data | LLM calls |
+|---|---|---|---|
+| Context Intelligence | Interpret the turn with history (6 messages × 400 chars) | — | 1 (JSON schema) |
+| RiskAssessment | Concrete physical hazards, also from history | regex over message and history | 0 |
+| Supervisor | Fast path or planning loop; one re-plan after a Critic rejection | specialists exposed as tools | 0 on the fast path, 1–3 when planning |
+| Knowledge | Getnet products, fees, Pix, receivables advance, crediário, Payment Link | hybrid RAG over the versioned corpus | 1 |
+| Customer Support | Account profile and terminal status | `get_customer_profile`, `get_terminal_status` (SQLite) | 2: choose tools, then write |
+| Payments | Settlement dates, sales, declined transactions | `lookup_payment_status`, `find_declined_transactions` (SQLite) | 2: choose tools, then write |
+| Web Research | Weather, exchange rates, general public search | Open-Meteo, Frankfurter, DuckDuckGo (real HTTP) | 2: extract parameters, then write |
+| Human Handoff | Protocol, queue, status, history, operator API | SQLite tickets | 0 |
+| Critic | Deterministic checks, then model review | tool observations and evidence | 0–1 |
+
+The tools never receive `user_id` from the model. Closures bind the authenticated server-side id, and a test proves that a model passing another customer's id still gets only the caller's data.
+
+### RAG pipeline
+
+1. **Ingestion.** `backend/app/knowledge/corpus.json` holds reviewed summaries of 10 official Getnet pages in PT and EN, for 26 chunks in total.
+   - Startup never crawls the web.
+   - An optional refresh (`docker compose --profile tools run --rm knowledge-refresh`) crawls only allowlisted Getnet hosts, for human review.
+2. **Storage.** Text is chunked at 1,100 characters with 150 of overlap and keeps title, URL and language. Dense embeddings from `nomic-embed-text` are cached in SQLite.
+3. **Retrieval.** BM25 over the language-matched corpus is combined with cosine similarity, returning top-4. When the best relevance is below 0.12, the agent abstains and the Supervisor shows a topic menu.
+4. **Generation.** The model receives only the evidence, at most 500 characters per item and marked as untrusted data. It must cite `[n]`, answer in the customer's language and not guess fees or eligibility.
+5. **Review.** The Critic checks that every citation exists and that the answer is supported. Without a model, the agent returns labelled extractive snippets (`degraded: true`).
+
+### Fixed-text policy
+
+Product, support, payment and research answers are always **written by an LLM agent** from tool or evidence data and reviewed by the Critic. Fixed text exists only for:
+
+1. emergency and physical-risk instructions;
+2. the sensitive-data block notice;
+3. clarification menus (the options) and protocol confirmations;
+4. explicit fallbacks when the model is disabled, unavailable or out of budget, always marked `degraded: true` and counted as failures by the benchmark.
+
+The full inventory is in [docs/INVENTARIO_TEMPLATES.md](docs/INVENTARIO_TEMPLATES.md).
+
+---
+
+## Tests
 
 ```bash
-docker compose up --build -d
+cd backend && python3 -m venv .venv && . .venv/bin/activate && pip install -r requirements-dev.txt
+PYTHONPATH=. OLLAMA_ENABLED=false python -m pytest -q        # no key, no internet, no model
+cd ../frontend && npm ci && npx playwright install chromium
+E2E_PYTHON=../backend/.venv/bin/python npm run test:e2e    # real UI + real API, scripted LLM
 ```
 
-Esse comando solicita ao Docker Compose a construção das imagens e a inicialização dos serviços definidos no arquivo `docker-compose.yml`.
+Each suite covers:
 
-### 4. Verificar a inicialização
-
-Consulte o estado dos containers:
-
-```bash
-docker compose ps
-```
-
-Consulte os logs, se necessário:
-
-```bash
-docker compose logs --tail=100
-```
-
-O endereço e a porta de acesso à interface dependem do mapeamento definido no `docker-compose.yml`. Verifique também se as portas necessárias estão disponíveis na máquina.
-
-### 5. Encerrar os serviços
-
-```bash
-docker compose down
-```
-
-Esse comando encerra e remove os containers criados pelo Compose, sem remover automaticamente as imagens.
-
-## Endpoints da API
-
-### `GET /api/health`
-
-Endpoint de verificação de saúde da aplicação.
-
-Exemplo:
-
-```bash
-curl http://localhost:8000/api/health
-```
-
-O endpoint foi utilizado na validação do ambiente Docker e respondeu com **HTTP 200**.
-
-### `GET /api/knowledge/sources`
-
-Endpoint para consultar as fontes de conhecimento disponibilizadas pela aplicação.
-
-Exemplo:
-
-```bash
-curl http://localhost:8000/api/knowledge/sources
-```
-
-O formato exato da resposta depende da implementação atual do endpoint.
-
-### `POST /api/chat`
-
-Endpoint para enviar uma mensagem ao sistema de atendimento.
-
-Exemplo de requisição:
-
-```bash
-curl -X POST http://localhost:8000/api/chat \
-  -H "Content-Type: application/json" \
-  -d '{
-    "message": "Preciso de ajuda com meu atendimento",
-    "user_id": "user-001"
-  }'
-```
-
-O payload inclui:
-
-| Campo | Descrição |
+| Suite | What it proves |
 |---|---|
-| `message` | Mensagem enviada pelo usuário. O tamanho permitido é de 1 a 2.000 caracteres. |
-| `user_id` | Identificador do usuário. Quando não informado, o sistema utiliza o valor padrão definido pela API. |
+| `test_agents_and_orchestration.py` | fast path vs planning loop; Supervisor uses the real specialists; Critic rejection → one re-plan → handoff; budget exhaustion → labelled fallback |
+| `test_policy_and_datasets.py` | PolicyGate order; D3 menu with "real physical risk" and human; D4 subject change; decline error → Payments without an alert; zero safety false negatives; datasets disjoint; no 4-word dataset phrase in the routing code |
+| `test_auth_and_isolation.py` | demo login, token tampering and expiry, 403 on a different `user_id`, A × B isolation (data, session, protocol, "show customer X's sales"), prompt injection in the message and inside a RAG document |
+| `test_llm_providers.py` | adapter contracts without key or internet, provider selection, the key never appears in logs/responses/metrics/DB, no agent imports a provider client |
+| `test_critic_agent.py`, `test_grounding.py` | the Critic rejects invented values, missing citations and requests for secrets, and approves grounded answers |
+| `test_real_database_tools.py`, `test_real_knowledge_retrieval.py`, `test_web_research_tools.py` | real SQLite tools, real retrieval over the committed corpus, and web adapters (HTTP stubbed) |
+| `frontend/e2e/support-flow.spec.ts` | login → product question → ambiguous menu → numeric selection → attendant → protocol status |
 
-A resposta pode incluir informações como a mensagem de atendimento, a intenção identificada, o agente responsável, a confiança, as fontes consultadas, a necessidade de encaminhamento e os dados de rastreabilidade do fluxo, conforme a implementação.
+The browser test runs the API with `LLM_PROVIDER=fixture`. That scripted provider is selected only explicitly and reports itself in `/api/health`.
 
-## Fluxo de atendimento
+CI (`.github/workflows/build.yml`) runs:
+- backend tests and the offline evaluation;
+- `npm ci` and the frontend build;
+- the Playwright flow;
+- a Docker Compose smoke test (`docker compose down` without `-v`).
 
-O processamento de uma mensagem segue, em linhas gerais, as seguintes etapas:
+---
 
-1. **Recepção:** a API recebe e valida a requisição.
-2. **Verificações iniciais:** os guardrails executam as validações previstas.
-3. **Identificação e roteamento:** o componente de roteamento determina o caminho de atendimento.
-4. **Processamento especializado:** o agente selecionado executa sua responsabilidade.
-5. **Consulta de conhecimento:** quando aplicável, são utilizadas informações da base disponível.
-6. **Escalonamento:** casos que atendem às regras definidas podem ser encaminhados para tratamento especializado.
-7. **Resposta:** o serviço consolida os resultados e devolve a resposta pela API.
+## Evaluation and observability
 
-O fluxo exato depende das regras e condições implementadas nos componentes do backend.
+- **Context Intelligence datasets** ([backend/app/evaluation/DATASETS.md](backend/app/evaluation/DATASETS.md)):
+  - `dev` (24 cases) was used during development;
+  - `heldout` (44 new cases, including continuation, subject change, irony, prompt injection and contradiction) was written before the prompt rewrite and **never used for tuning**.
+  - Run: `docker compose exec api python -m app.evaluation.run_context_eval --split heldout`.
+- **End-to-end benchmark:** `python3 scripts/benchmark_latency.py --label <name> --rounds warm --warmup [--llm-down]`. It covers:
+  - the 10 challenge questions, the dossier scenarios and the acceptance scenarios, with real HTTP and demo tokens;
+  - each response classified as `llm_complete` or as a fallback or error;
+  - latency computed over complete answers only;
+  - route correctness, Critic rejections and escalations, degraded rate, LLM calls, tokens and cost per turn.
+- **Per request.** `stage_timings` covers every stage (gateway, Context Intelligence, policy, Supervisor, each agent and tool, RAG, Critic, persistence). `model_usage` gives, for each call, its purpose, provider, model, tokens, latency and cost.
+- **Aggregates.** `GET /api/metrics` gives tool calls and failures, stage timings and timeouts, and model calls, tokens and cost per provider and purpose.
 
-## Base de conhecimento
+---
 
-O projeto mantém uma base de conhecimento em `backend/app/knowledge/corpus.json` e utiliza o módulo `ingest.py` para carregar os documentos.
+## Measured results (2 Nov 2026)
 
-Durante a inicialização do backend no ambiente Docker validado, os logs indicaram o carregamento de **28 unidades de conhecimento**.
+Host: Intel i3 with 4 threads, 8 GB RAM and no GPU. Warm round with a pause between requests. Reports:
+- Cloud benchmark: [RELATORIO_LATENCIA_2026-11-02_anthropic.json](docs/RELATORIO_LATENCIA_2026-11-02_anthropic.json). The earlier run, before the Critic calibration, is [anthropic-critic-v1](docs/RELATORIO_LATENCIA_2026-11-02_anthropic-critic-v1.json).
+- Local benchmark: [RELATORIO_LATENCIA_2026-11-02_ollama.json](docs/RELATORIO_LATENCIA_2026-11-02_ollama.json).
+- Context Intelligence evaluation: [docs/eval/](docs/eval/).
+- Summary of both modes: [docs/RELATORIO_FINAL_2026-11-02.md](docs/RELATORIO_FINAL_2026-11-02.md).
 
-Esse resultado confirma o carregamento registrado no ambiente testado. Ele não representa, isoladamente, uma avaliação da precisão ou da cobertura das respostas produzidas pelo sistema.
-
-## Testes e validação
-
-A validação foi realizada com foco na execução da aplicação em containers, na suíte automatizada disponível e na verificação básica da API.
-
-### 1. Execução da suíte automatizada
-
-O comando utilizado para executar os testes no ambiente Docker foi:
-
-```bash
-docker compose --profile test run --build --rm tests
-```
-
-O comando solicita ao Docker Compose que construa a imagem necessária, quando aplicável, execute o serviço `tests` definido no perfil `test` e remova o container de teste ao final.
-
-**Resultado registrado: 25 testes automatizados aprovados.**
-
-A suíte foi executada no ambiente Docker, evitando depender diretamente da versão de Python instalada na máquina do desenvolvedor.
-
-O resultado confirma a aprovação dos testes executados nessa rodada. Para uma avaliação completa, é importante verificar no código da suíte quais cenários estão cobertos, incluindo validações de entrada, roteamento, respostas dos agentes, guardrails, escalonamento e tratamento de erros.
-
-### 2. Verificação de saúde da API
-
-Foi realizada uma chamada ao endpoint:
-
-```http
-GET /api/health
-```
-
-Resultado observado:
-
-- Status HTTP: `200 OK`
-- API acessível no ambiente local: `http://localhost:8000`
-
-O resultado confirma que o endpoint de saúde respondeu com sucesso naquele ambiente e momento. Não comprova, por si só, que todas as funcionalidades da API estejam operacionais.
-
-### 3. Carregamento da base de conhecimento
-
-Durante a inicialização do backend, os logs indicaram:
-
-```text
-knowledge_loaded=28
-```
-
-Esse resultado indica que 28 unidades de conhecimento foram carregadas pelo processo de inicialização observado.
-
-A quantidade carregada não deve ser confundida com uma métrica de precisão, relevância ou qualidade das respostas.
-
-### 4. Construção dos containers
-
-As imagens Docker foram construídas durante o processo de validação.
-
-A construção das imagens permite verificar parte da configuração de empacotamento e das dependências necessárias para executar a aplicação. A construção bem-sucedida, isoladamente, não garante que todos os fluxos de negócio funcionem corretamente.
-
-### 5. Validação da interface web
-
-A validação integrada da interface web permaneceu pendente durante a rodada registrada, pois a inicialização do serviço web encontrou conflito na porta `8080`: a porta já estava alocada por outro processo.
-
-Esse problema de ambiente não deve ser apresentado como uma falha funcional confirmada da interface, mas também não permite afirmar que a interface foi validada integralmente no navegador.
-
-Para concluir essa verificação, é necessário liberar a porta ocupada ou ajustar o mapeamento de portas no Docker Compose e, em seguida, abrir a interface no navegador e testar o fluxo completo de atendimento.
-
-### 6. Resumo dos resultados
-
-| Verificação | Resultado registrado | Interpretação |
+| | Cloud — Claude Haiku 5.5 | Offline — Qwen3 1.7B (CPU) |
 |---|---|---|
-| Suíte automatizada no Docker | 25 testes aprovados | Os testes executados passaram. |
-| `GET /api/health` | HTTP 200 | O endpoint de saúde respondeu com sucesso. |
-| Carregamento do conhecimento | 28 unidades | O carregamento foi registrado nos logs. |
-| Construção das imagens Docker | Executada | As imagens foram construídas no ambiente de validação. |
-| Interface no navegador | Pendente | A validação foi impedida pelo conflito na porta 8080. |
-| Fluxo integrado completo pela interface | Pendente de confirmação | É necessário concluir a validação no navegador. |
+| **Context Intelligence, held-out (44, never tuned)**: risk / action / route accuracy | 90.9% / 88.6% / 90.5% | 77.3% / 40.9% / 4.8% |
+| Held-out safety false negatives | **0** | **0** |
+| Context Intelligence latency, mean (held-out) | 1.5 s | 14.8 s |
+| **End-to-end, 17 latency requests**: complete by LLM / fallback | 17 / 0 | 16 / 1 |
+| Route correct (challenge questions + D1/D2) | 12/12 | 2/12 (most went to a clarification menu) |
+| Mean / p95 latency (complete answers) | 5.4 s / 15.3 s | 18.1 s / 65.3 s |
+| Within target (simple ≤10 s, tools ≤15 s, complex ≤25 s) | 16/17 (one tools case at 15.3 s) | 11/16 (the fast "tools" cases mostly got a menu, not the tool) |
+| Critic rejections → human escalations | 0/14 (first run before calibration: 3/14) | 0/3 |
+| Cost per turn | US$ 0.00071 | US$ 0 |
+| Acceptance scenarios run | all PASS (D9 runs in offline mode only) | FAIL: D2, A4, D4 (routing); D9 LLM down: PASS |
 
-### 7. Estratégia de testes recomendada
+What these numbers mean:
+- **Cloud mode** meets the routing and latency goals in this sample of 17 requests.
+- **Offline Qwen 1.7B** is safe (no missed hazard) but over-asks for clarification. That is its real accuracy without dataset phrases in the code, and it is why the cloud mode is the demonstration mode.
+- **Details:** every scenario, failure and trace is in [RELATORIO_FINAL_2026-11-02.md](docs/RELATORIO_FINAL_2026-11-02.md).
 
-Para fortalecer a cobertura e a confiabilidade do sistema, recomenda-se manter ou ampliar testes automatizados para os seguintes cenários:
+---
 
-- **API:** códigos HTTP, validação de payloads, campos obrigatórios e mensagens inválidas.
-- **Roteamento:** seleção do agente esperado para diferentes tipos de solicitação.
-- **Base de conhecimento:** carregamento dos documentos, fontes disponíveis e ausência de resultados relevantes.
-- **Guardrails:** entradas vazias, mensagens fora dos limites permitidos e tentativas de contornar as regras do sistema.
-- **Suporte:** respostas para solicitações previstas e tratamento de situações não reconhecidas.
-- **Escalonamento:** identificação dos casos que devem ser encaminhados e sinalização correta dessa necessidade.
-- **Erros e dependências:** falhas de processamento, exceções e indisponibilidade de recursos.
-- **Frontend:** envio de mensagens, exibição de respostas, estados de carregamento e apresentação de erros.
-- **Integração:** comunicação real entre frontend, API e base de conhecimento.
-- **Regressão:** execução da suíte a cada alteração relevante do código.
+## Limitations
 
-Esses itens representam uma estratégia recomendada. Não devem ser interpretados como testes individualmente aprovados sem evidências da execução correspondente.
+- **Synthetic data and simulated humans.** The customer records are fixtures, and no real operator is connected; responses state `real_agent_connected: false`. The operator API (`X-Operator-Key`) only demonstrates the workflow.
+- **Demo identity.** PIN login with HMAC tokens binds the identity to the token, but it is not production authentication: the PINs are public, there is no rate limiting, and an empty `AUTH_SECRET` uses a per-process secret.
+- **Small knowledge base.** It has 10 official pages and 26 chunks, so questions outside it get an abstention and a topic menu, not an answer.
+- **Slow local CPU.** On this machine `qwen3:1.7b` prefills about 25 tokens/s and generates about 5 tokens/s. A full local turn takes tens of seconds, so the offline mode misses the latency targets. The cloud mode is the demonstration mode.
+- **Model-dependent classification.** Context Intelligence accuracy depends on the model; see the held-out results. Concrete warning signs that the regex does not recognise, but the model rates "potentially dangerous", get the safety menu, not an immediate alert. The menu always offers "real physical risk".
+- **Public data providers.** The weather, FX and search providers are unauthenticated public services and can rate-limit. The agent then says the provider is unavailable and never invents a value.
 
-## Qualidade de código e limitações conhecidas
+## Local vs cloud
 
-O projeto está organizado em módulos que separam a API, os agentes, as ferramentas auxiliares, a base de conhecimento e a interface web. Essa separação facilita a manutenção e permite evoluir componentes de forma mais independente.
+| | Local (Ollama, Qwen3 1.7B) | Cloud (Claude Haiku 5.5) |
+|---|---|---|
+| Key / cost | none / US$ 0 | Anthropic key / ~US$ 0.0007 per turn (measured) |
+| Data leaving the machine | none | the prompt (message, history, tool observations, evidence) goes to the Anthropic API |
+| Latency on this host (measured mean) | 18 s, p95 65 s | 5.4 s, p95 15.3 s |
+| Classification quality | lower (see held-out) | higher (see held-out) |
+| Embeddings | local nomic | local nomic |
 
-A avaliação de qualidade deve considerar, além da organização dos arquivos:
+The default `LLM_PROVIDER=auto` uses the cloud when a key is present. `LLM_PROVIDER=ollama` (set by `scripts/start-ai.sh`) forces offline mode.
 
-- clareza e consistência das responsabilidades;
-- tratamento de erros e validação de entradas;
-- testes unitários e de integração;
-- segurança na configuração e no tratamento de dados;
-- logs úteis para diagnóstico;
-- documentação atualizada;
-- facilidade de instalação e reprodução do ambiente.
+## Repository map
 
-### Limitações conhecidas da validação
+`backend/app/agents/` holds the agents, policy and grounding. `backend/app/infra/llm/` holds the provider layer. `backend/app/infra/database.py` holds SQLite (sessions, tickets, fixtures, audit). `backend/app/knowledge/` holds the corpus and ingestion. `backend/app/evaluation/` holds the datasets and runners. `frontend/` holds the React UI and Playwright test. `scripts/` holds the benchmark and the offline start script. `docs/` holds the architecture, audit and measurement reports.
 
-- A validação automatizada registrada corresponde a 25 testes aprovados na execução via Docker.
-- A cobertura exata de cada requisito deve ser confirmada pela leitura dos casos de teste.
-- A validação completa da interface no navegador não foi concluída na rodada registrada.
-- O conflito na porta `8080` precisa ser resolvido para repetir o teste integrado da interface.
-- O carregamento de documentos não constitui, sozinho, uma avaliação de qualidade das respostas.
-- A operação de integrações externas, quando existentes, deve ser validada separadamente e não é presumida apenas pela aprovação dos testes.
-
-## CI — Integração contínua
-
-O projeto inclui um workflow em `.github/workflows/build.yml`, configurado para ser executado em eventos de `push` e `pull_request` direcionados à branch `main`.
-
-O workflow define verificações para o backend e o frontend:
-
-- instalação das dependências do backend e compilação dos módulos Python;
-- instalação das dependências do frontend e execução do build de produção.
-
-Essas etapas verificam aspectos importantes da integridade do código, mas **não substituem automaticamente a suíte de 25 testes executada no Docker**, a menos que o workflow também execute os testes.
-
-A execução bem-sucedida do workflow no GitHub deve ser confirmada na aba **Actions** do repositório após o envio do código.
-
-## Demonstração
-
-Vídeo de demonstração: **[ADICIONE AQUI O LINK DO VÍDEO]**
-
-A demonstração deve apresentar, preferencialmente:
-
-1. Inicialização da aplicação.
-2. Interface web aberta no navegador.
-3. Envio de uma mensagem pelo usuário.
-4. Resposta gerada pelo sistema.
-5. Exemplos de diferentes intenções ou agentes, quando disponíveis.
-6. Consulta à base de conhecimento e encaminhamento, quando aplicáveis.
-7. Verificação dos endpoints da API.
-8. Execução dos testes automatizados e apresentação do resultado.
-
-## Melhorias futuras
-
-- Ampliar a cobertura dos testes unitários, de integração e de interface.
-- Executar a suíte automatizada também no pipeline de CI.
-- Concluir e documentar a validação integrada no navegador.
-- Aprimorar a avaliação da precisão do roteamento e da relevância das respostas.
-- Adicionar métricas de qualidade, latência e taxa de escalonamento.
-- Melhorar a observabilidade e o tratamento de falhas.
-- Documentar exemplos reais de requisições e respostas da API.
-- Revisar continuamente os guardrails e a segurança do fluxo de atendimento.
-
-## Licença
-
-Consulte o arquivo [`LICENSE`](LICENSE) para obter as condições de uso e distribuição deste projeto.
+See also [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), [docs/TESTING.md](docs/TESTING.md), [docs/SECURITY.md](docs/SECURITY.md) and [docs/AUDITORIA_V4.md](docs/AUDITORIA_V4.md).

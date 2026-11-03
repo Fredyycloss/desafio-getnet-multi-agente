@@ -1,25 +1,105 @@
-import { useEffect, useRef, useState } from 'react'
-import { ArrowUpRight, Bot, Check, ChevronDown, CircleHelp, Clock3, Headphones, Menu, MessageCircle, Plus, Send, ShieldCheck, Sparkles, X, Zap } from 'lucide-react'
+import { useEffect, useRef, useState, type KeyboardEvent } from 'react'
+import { ArrowUpRight, ChevronDown, CircleHelp, Headphones, LogOut, Menu, MessageCircle, Plus, Send, ShieldCheck, Sparkles, X, Zap } from 'lucide-react'
 
 type Source = { title: string; url: string }
-type Reply = { answer: string; intent: string; agent: string; confidence: number; sources: Source[]; handoff: boolean; trace: string[] }
+type ClarificationOption = { id: string; label: string }
+type Reply = {
+  answer: string
+  language?: 'pt' | 'en'
+  intent: string
+  agent: string
+  confidence: number
+  sources?: Source[]
+  handoff: boolean
+  trace: string[]
+  retrieved_chunks?: number
+  handoff_protocol?: string
+  handoff_status?: string
+  handoff_severity?: string
+  risk_level?: string
+  real_agent_connected?: boolean
+  orchestration_mode?: string
+  tool_calls?: number
+  trace_id?: string
+  clarification_options?: ClarificationOption[]
+  critic?: { approved?: boolean; mode?: string; issues?: string[] }
+  context_assessment?: { intent?: string; confidence?: number; ambiguity_level?: string; risk_level?: string; recommended_action?: string; recommended_destination?: string; operational_reason?: string }
+}
 type Message = { id: string; role: 'assistant' | 'user'; text: string; meta?: Reply; time: string }
+
 const suggestions = [
   { icon: '▣', title: 'Máquinas Getnet', text: 'Qual a diferença entre a Get Clássica e a Get Smart?' },
   { icon: '↗', title: 'Recebimento de vendas', text: 'Quando recebo o dinheiro das minhas vendas?' },
   { icon: '⌁', title: 'Problemas de conexão', text: 'Minha maquininha não conecta à internet. O que faço?' },
   { icon: '◈', title: 'Link de pagamento', text: 'Posso vender pelo WhatsApp usando link de pagamento?' },
 ]
+type Auth = { token: string; userId: string }
+type DemoUser = { user_id: string; merchant_name: string; demo_pin: string }
+const AUTH_KEY = 'getnet-assist-auth'
+function loadAuth(): Auth | null {
+  try { const raw = sessionStorage.getItem(AUTH_KEY); return raw ? JSON.parse(raw) as Auth : null } catch { return null }
+}
+function saveAuth(auth: Auth | null) {
+  try { if (auth) sessionStorage.setItem(AUTH_KEY, JSON.stringify(auth)); else sessionStorage.removeItem(AUTH_KEY) } catch { /* storage unavailable */ }
+}
+
+function LoginScreen({ onLogin }: { onLogin: (auth: Auth) => void }) {
+  const [users, setUsers] = useState<DemoUser[]>([])
+  const [userId, setUserId] = useState('')
+  const [pin, setPin] = useState('')
+  const [error, setError] = useState('')
+  const [busy, setBusy] = useState(false)
+  useEffect(() => {
+    fetch('/api/auth/demo-users').then(r => r.json()).then(body => {
+      setUsers(body.users || [])
+      if (body.users?.length) setUserId(body.users[0].user_id)
+    }).catch(() => setError('Não consegui conectar à API.'))
+  }, [])
+  async function submit() {
+    setBusy(true); setError('')
+    try {
+      const response = await fetch('/api/auth/demo-login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user_id: userId, pin }) })
+      if (!response.ok) { setError('Usuário ou PIN inválido.'); return }
+      const body = await response.json()
+      onLogin({ token: body.access_token, userId: body.user_id })
+    } catch { setError('Não consegui conectar à API.') } finally { setBusy(false) }
+  }
+  return <div className="login-shell"><form className="login-card" onSubmit={e => { e.preventDefault(); void submit() }} aria-label="Login demo">
+    <div className="brand-row"><div className="brand-mark"><span>g</span></div><div className="brand-name">getnet<span>assist</span></div></div>
+    <h1>Entrar na demonstração</h1>
+    <p className="login-note">Contas sintéticas. O PIN de cada conta está listado de propósito: isto é uma demonstração, não autenticação de produção.</p>
+    <div className="login-users" role="radiogroup" aria-label="Usuário sintético">
+      {users.map(u => <label key={u.user_id} className={`login-user ${userId === u.user_id ? 'selected' : ''}`}>
+        <input type="radio" name="user" value={u.user_id} checked={userId === u.user_id} onChange={() => setUserId(u.user_id)}/>
+        <span><strong>{u.user_id}</strong><small>{u.merchant_name} · PIN {u.demo_pin}</small></span>
+      </label>)}
+    </div>
+    <label className="login-pin">PIN<input value={pin} onChange={e => setPin(e.target.value)} inputMode="numeric" autoComplete="off" maxLength={16} aria-label="PIN"/></label>
+    {error && <div className="login-error" role="alert">{error}</div>}
+    <button className="login-submit" type="submit" disabled={!userId || !pin || busy}>{busy ? 'Entrando…' : 'Entrar'}</button>
+  </form></div>
+}
+
 const formatTime = () => new Intl.DateTimeFormat('pt-BR', { hour: '2-digit', minute: '2-digit' }).format(new Date())
 
 export default function App() {
+  const [auth, setAuth] = useState<Auth | null>(() => loadAuth())
+  if (!auth) return <LoginScreen onLogin={a => { saveAuth(a); setAuth(a) }}/>
+  return <Assistant auth={auth} onLogout={() => { saveAuth(null); setAuth(null) }}/>
+}
+
+function Assistant({ auth, onLogout }: { auth: Auth; onLogout: () => void }) {
   const [messages, setMessages] = useState<Message[]>([])
   const [input, setInput] = useState('')
   const [busy, setBusy] = useState(false)
   const [showDetails, setShowDetails] = useState<string | null>(null)
   const [apiOnline, setApiOnline] = useState<boolean | null>(null)
   const [mobileMenu, setMobileMenu] = useState(false)
-  const [userId] = useState(() => `visitante-${Math.random().toString(36).slice(2, 8)}`)
+  const userId = auth.userId
+  const authHeaders = { 'Content-Type': 'application/json', Authorization: `Bearer ${auth.token}` }
+  function checkAuth(response: Response) { if (response.status === 401) onLogout() }
+  const [sessionId, setSessionId] = useState<string>(() => crypto.randomUUID())
+  const [activeHandoff, setActiveHandoff] = useState<{ protocol: string; language: 'pt' | 'en'; status: string } | null>(null)
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -28,29 +108,100 @@ export default function App() {
   }, [])
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }) }, [messages, busy])
 
-  async function sendMessage(value = input) {
+  async function sendMessage(value = input, options: { humanRequest?: boolean } = {}) {
     const message = value.trim()
     if (!message || busy) return
-    const userMessage: Message = { id: crypto.randomUUID(), role: 'user', text: message, time: formatTime() }
-    setMessages(prev => [...prev, userMessage])
+    const humanRequest = options.humanRequest === true
+    setMessages(prev => [...prev, { id: crypto.randomUUID(), role: 'user', text: message, time: formatTime() }])
     setInput('')
     setBusy(true)
     try {
-      const response = await fetch('/api/chat', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ message, user_id: userId }) })
-      if (!response.ok) throw new Error(`A API respondeu com status ${response.status}.`)
-      const data: Reply = await response.json()
+      if (activeHandoff && !humanRequest) {
+        const response = await fetch(`/api/handoffs/${encodeURIComponent(activeHandoff.protocol)}/messages`, {
+          method: 'POST', headers: authHeaders, body: JSON.stringify({ message, user_id: userId }),
+        })
+        checkAuth(response)
+        if (response.status === 422) {
+          const body = await response.json().catch(() => ({}))
+          setMessages(prev => [...prev, { id: crypto.randomUUID(), role: 'assistant', text: typeof body.detail === 'string' ? body.detail : 'Por segurança, não envie informações secretas por aqui.', time: formatTime() }])
+          return
+        }
+        if (!response.ok) throw new Error(`handoff:${response.status}`)
+        setMessages(prev => [...prev, {
+          id: crypto.randomUUID(), role: 'assistant',
+          text: activeHandoff.language === 'en'
+            ? `Your follow-up was added to simulated support protocol ${activeHandoff.protocol}. Status: ${activeHandoff.status}. No real human attendant is connected to this demo.`
+            : `Sua mensagem foi adicionada ao protocolo simulado ${activeHandoff.protocol}. Status: ${activeHandoff.status}. Nenhum atendente real está conectado a esta demonstração.`,
+          time: formatTime(),
+        }])
+        setApiOnline(true)
+        return
+      }
+
+      const response = await fetch('/api/chat', {
+        method: 'POST', headers: authHeaders,
+        body: JSON.stringify({ message, user_id: userId, session_id: sessionId }),
+      })
+      checkAuth(response)
+      if (!response.ok) throw new Error(`${humanRequest ? 'handoff' : 'chat'}:${response.status}`)
+      const data: Reply & { session_id?: string } = await response.json()
+      if (data.session_id) setSessionId(data.session_id)
       setMessages(prev => [...prev, { id: crypto.randomUUID(), role: 'assistant', text: data.answer, meta: data, time: formatTime() }])
+      if (data.handoff_protocol) {
+        setActiveHandoff({ protocol: data.handoff_protocol, language: data.language === 'en' ? 'en' : 'pt', status: data.handoff_status || 'queued' })
+      }
       setApiOnline(true)
-    } catch {
+    } catch (error) {
       setApiOnline(false)
-      setMessages(prev => [...prev, { id: crypto.randomUUID(), role: 'assistant', text: 'Não consegui conectar ao serviço agora. Confira se a API está em execução e tente novamente. Se estiver usando Docker, execute `docker compose up --build` na pasta do projeto.', time: formatTime() }])
+      const failedHandoff = humanRequest || (error instanceof Error && error.message.startsWith('handoff:'))
+      setMessages(prev => [...prev, {
+        id: crypto.randomUUID(), role: 'assistant',
+        text: failedHandoff
+          ? 'Não consegui confirmar o registro da solicitação de atendimento. Ela pode não ter sido registrada; tente novamente ou use os canais oficiais da Getnet.'
+          : 'Não consegui conectar ao serviço agora. Confira se a API está em execução e tente novamente.',
+        time: formatTime(),
+      }])
     } finally {
       setBusy(false)
       setTimeout(() => inputRef.current?.focus(), 30)
     }
   }
-  function newConversation() { setMessages([]); setInput(''); setMobileMenu(false); inputRef.current?.focus() }
-  function onKeyDown(e: React.KeyboardEvent<HTMLTextAreaElement>) { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); sendMessage() } }
+
+  async function requestHuman() {
+    if (activeHandoff) {
+      setBusy(true)
+      try {
+        const response = await fetch(`/api/handoffs/${encodeURIComponent(activeHandoff.protocol)}`, { headers: authHeaders })
+        checkAuth(response)
+        if (!response.ok) throw new Error(`handoff:${response.status}`)
+        const ticket = await response.json()
+        const status = String(ticket.status || activeHandoff.status)
+        setActiveHandoff({ ...activeHandoff, status })
+        setMessages(prev => [...prev, {
+          id: crypto.randomUUID(), role: 'assistant',
+          text: activeHandoff.language === 'en'
+            ? `Support request ${activeHandoff.protocol} status: ${status}. ${ticket.real_agent_connected ? 'An attendant is connected.' : 'No live human attendant is connected to this demo.'}`
+            : `Status da solicitação ${activeHandoff.protocol}: ${status === 'queued' ? 'aguardando atendimento' : status}. ${ticket.real_agent_connected ? 'Um atendente está conectado.' : 'Nenhum atendente real está conectado a esta demonstração.'}`,
+          time: formatTime(),
+        }])
+        setApiOnline(true)
+      } catch {
+        setMessages(prev => [...prev, { id: crypto.randomUUID(), role: 'assistant', text: 'Não consegui consultar o status desta solicitação agora. O protocolo permanece registrado; tente novamente em instantes.', time: formatTime() }])
+        setApiOnline(false)
+      } finally {
+        setBusy(false)
+      }
+      return
+    }
+    await sendMessage('Quero falar com atendimento humano.', { humanRequest: true })
+  }
+
+  function newConversation() {
+    setMessages([]); setInput(''); setActiveHandoff(null); setSessionId(crypto.randomUUID()); setMobileMenu(false); inputRef.current?.focus()
+  }
+  function onKeyDown(e: KeyboardEvent<HTMLTextAreaElement>) {
+    if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); void sendMessage() }
+  }
 
   return <div className="app-shell">
     <aside className={`sidebar ${mobileMenu ? 'sidebar-open' : ''}`}>
@@ -58,20 +209,58 @@ export default function App() {
       <button className="new-chat" onClick={newConversation}><Plus size={17}/><span>Nova conversa</span><span className="shortcut">⌘ K</span></button>
       <div className="side-label">SEU ESPAÇO</div>
       <button className="side-link active"><MessageCircle size={17}/><span>Assistente</span><span className="active-dot"/></button>
-      <button className="side-link" onClick={() => sendMessage('Quais soluções de pagamento a Getnet oferece?')}><Sparkles size={17}/><span>Explorar soluções</span><ArrowUpRight size={14} className="side-arrow"/></button>
+      <button className="side-link" onClick={() => void sendMessage('Quais soluções de pagamento a Getnet oferece?')}><Sparkles size={17}/><span>Explorar soluções</span><ArrowUpRight size={14} className="side-arrow"/></button>
       <div className="side-label help-label">COMO PODEMOS AJUDAR?</div>
-      <button className="topic-link" onClick={() => sendMessage('Quero saber sobre as maquininhas Getnet.')}><span className="topic-icon red">▣</span>Máquinas e equipamentos</button>
-      <button className="topic-link" onClick={() => sendMessage('Como funcionam os recebimentos das vendas?')}><span className="topic-icon navy">↗</span>Vendas e recebimentos</button>
-      <button className="topic-link" onClick={() => sendMessage('Quais são as soluções digitais da Getnet?')}><span className="topic-icon gold">◈</span>Soluções digitais</button>
-      <div className="sidebar-bottom"><div className="support-card"><div className="support-icon"><Headphones size={18}/></div><div><strong>Precisa de mais ajuda?</strong><p>Estamos aqui para orientar.</p><a href="https://www.getnet.net/" target="_blank" rel="noreferrer">Acesse a Getnet oficial <ArrowUpRight size={12}/></a></div></div><div className="profile-row"><div className="avatar">G</div><div className="profile-copy"><strong>Visitante</strong><span>Assistente virtual</span></div><span className="profile-menu">•••</span></div></div>
+      <button className="topic-link" onClick={() => void sendMessage('Quero saber sobre as maquininhas Getnet.')}><span className="topic-icon red">▣</span>Máquinas e equipamentos</button>
+      <button className="topic-link" onClick={() => void sendMessage('Como funcionam os recebimentos das vendas?')}><span className="topic-icon navy">↗</span>Vendas e recebimentos</button>
+      <button className="topic-link" onClick={() => void sendMessage('Quais são as soluções digitais da Getnet?')}><span className="topic-icon gold">◈</span>Soluções digitais</button>
+      <div className="sidebar-bottom"><div className="support-card"><div className="support-icon"><Headphones size={18}/></div><div><strong>Precisa de mais ajuda?</strong><p>Estamos aqui para orientar.</p><a href="https://www.getnet.net/" target="_blank" rel="noreferrer">Acesse a Getnet oficial <ArrowUpRight size={12}/></a></div></div><div className="profile-row"><div className="avatar">G</div><div className="profile-copy"><strong>{userId}</strong><span>Conta sintética de demonstração</span></div><button className="icon-btn logout-btn" onClick={onLogout} aria-label="Sair"><LogOut size={15}/></button></div></div>
     </aside>
     {mobileMenu && <button className="mobile-backdrop" onClick={() => setMobileMenu(false)} aria-label="Fechar menu"/>}
     <main className="main-area">
-      <header className="topbar"><div className="top-left"><button className="icon-btn mobile-menu-btn" onClick={() => setMobileMenu(true)} aria-label="Abrir menu"><Menu size={20}/></button><div className="breadcrumb">Assistente <span>/</span> <strong>Nova conversa</strong></div></div><div className="top-actions"><div className={`status-pill ${apiOnline === false ? 'offline' : ''}`}><span className="status-dot"/>{apiOnline === null ? 'Conectando' : apiOnline ? 'Sistema operacional' : 'API desconectada'}</div><button className="top-help" onClick={() => sendMessage('Como você pode me ajudar?')}><CircleHelp size={16}/><span>Ajuda</span></button></div></header>
+      <header className="topbar">
+        <div className="top-left"><button className="icon-btn mobile-menu-btn" onClick={() => setMobileMenu(true)} aria-label="Abrir menu"><Menu size={20}/></button><div className="breadcrumb">Assistente <span>/</span> <strong>Nova conversa</strong></div></div>
+        <div className="top-actions">
+          <button className={`human-request-btn ${activeHandoff ? 'registered' : ''}`} onClick={requestHuman} disabled={busy} aria-label={activeHandoff ? 'Consultar solicitação de atendimento' : 'Falar com atendente'}>
+            <Headphones size={15}/>{activeHandoff ? 'Status do atendimento' : 'Falar com atendente'}
+          </button>
+          <div className={`status-pill ${apiOnline === false ? 'offline' : ''}`}><span className="status-dot"/>{apiOnline === null ? 'Conectando' : apiOnline ? 'Sistema operacional' : 'API desconectada'}</div>
+          <button className="top-help" onClick={() => void sendMessage('Como você pode me ajudar?')}><CircleHelp size={16}/><span>Ajuda</span></button>
+        </div>
+      </header>
       <section className={`workspace ${messages.length ? 'workspace-chatting' : ''}`}>
-        {messages.length === 0 ? <div className="welcome-wrap"><div className="eyebrow"><span className="eyebrow-line"/><Sparkles size={13}/><span>INTELIGÊNCIA QUE MOVE NEGÓCIOS</span></div><div className="welcome-heading"><h1>Seu negócio tem<br/>muito a <span>conquistar.</span></h1><p>Oi! Eu sou o assistente Getnet.<br/>Como posso facilitar o seu dia hoje?</p></div><div className="suggestion-grid">{suggestions.map((s, i) => <button className="suggestion-card" key={s.title} onClick={() => sendMessage(s.text)}><div className={`suggestion-icon tone-${i}`}>{s.icon}</div><div className="suggestion-copy"><strong>{s.title}</strong><span>{s.text}</span></div><ArrowUpRight size={16} className="suggestion-arrow"/></button>)}</div><div className="trust-row"><div className="trust-icon"><ShieldCheck size={17}/></div><div><strong>Informação com responsabilidade</strong><span>Respostas orientativas, com base em fontes disponíveis.</span></div><div className="trust-divider"/><div className="trust-icon"><Zap size={16}/></div><div><strong>Feito para você</strong><span>Entende o contexto da sua pergunta.</span></div></div></div> : <div className="conversation"><div className="conversation-intro"><div className="conversation-spark"><Sparkles size={15}/></div><div><strong>Vamos resolver juntos.</strong><span>Conversa com Getnet Assist</span></div><button className="new-small" onClick={newConversation}><Plus size={14}/> Nova conversa</button></div>{messages.map(msg => <div className={`message-row ${msg.role}`} key={msg.id}>{msg.role === 'assistant' ? <div className="message-avatar"><span>g</span></div> : <div className="user-avatar">V</div>}<div className="message-content"><div className="message-meta"><strong>{msg.role === 'assistant' ? 'Getnet Assist' : 'Você'}</strong><span>{msg.time}</span></div><div className={`message-bubble ${msg.role}`}>{msg.text.split('\n').map((line, i) => line ? <p key={i}>{line}</p> : <div key={i} className="line-space"/> )}</div>{msg.meta && <><button className="detail-toggle" onClick={() => setShowDetails(showDetails === msg.id ? null : msg.id)}><Sparkles size={13}/>{msg.meta.agent.replaceAll('_', ' ')}<ChevronDown size={13} className={showDetails === msg.id ? 'rotate' : ''}/></button>{showDetails === msg.id && <div className="agent-details"><div><span>Intenção identificada</span><strong>{msg.meta.intent.replaceAll('_', ' ')}</strong></div><div><span>Confiança estimada</span><strong>{Math.round(msg.meta.confidence * 100)}%</strong></div><div className="trace-row"><span>Fluxo de agentes</span><div>{msg.meta.trace.map((t, i) => <span className="trace-chip" key={`${t}-${i}`}>{t.replaceAll('_', ' ')}</span>)}</div></div>{msg.meta.sources.length > 0 && <div className="source-list"><span>Fontes consultadas</span>{msg.meta.sources.map(s => <a href={s.url} target="_blank" rel="noreferrer" key={s.url+s.title}>{s.title}<ArrowUpRight size={12}/></a>)}</div>}{msg.meta.handoff && <div className="handoff-note"><Headphones size={14}/> Recomendado atendimento humano</div>}</div>}</>}</div></div>)}{busy && <div className="message-row assistant"><div className="message-avatar"><span>g</span></div><div className="message-content"><div className="message-meta"><strong>Getnet Assist</strong><span>pensando</span></div><div className="typing-bubble"><span/><span/><span/></div></div></div>}<div ref={bottomRef}/></div>}
+        {messages.length === 0 ? <div className="welcome-wrap"><div className="eyebrow"><span className="eyebrow-line"/><Sparkles size={13}/><span>INTELIGÊNCIA QUE MOVE NEGÓCIOS</span></div><div className="welcome-heading"><h1>Seu negócio tem<br/>muito a <span>conquistar.</span></h1><p>Oi! Eu sou o assistente Getnet.<br/>Como posso facilitar o seu dia hoje?</p></div><div className="suggestion-grid">{suggestions.map((s, i) => <button className="suggestion-card" key={s.title} onClick={() => void sendMessage(s.text)}><div className={`suggestion-icon tone-${i}`}>{s.icon}</div><div className="suggestion-copy"><strong>{s.title}</strong><span>{s.text}</span></div><ArrowUpRight size={16} className="suggestion-arrow"/></button>)}</div><div className="trust-row"><div className="trust-icon"><ShieldCheck size={17}/></div><div><strong>Informação com responsabilidade</strong><span>Respostas orientativas, com base em fontes disponíveis.</span></div><div className="trust-divider"/><div className="trust-icon"><Zap size={16}/></div><div><strong>Feito para você</strong><span>Entende o contexto da sua pergunta.</span></div></div></div> : <div className="conversation">
+          <div className="conversation-intro"><div className="conversation-spark"><Sparkles size={15}/></div><div><strong>Vamos resolver juntos.</strong><span>Conversa com Getnet Assist</span></div><button className="new-small" onClick={newConversation}><Plus size={14}/> Nova conversa</button></div>
+          {messages.map(msg => <div className={`message-row ${msg.role}`} key={msg.id}>
+            {msg.role === 'assistant' ? <div className="message-avatar"><span>g</span></div> : <div className="user-avatar">V</div>}
+            <div className="message-content">
+              <div className="message-meta"><strong>{msg.role === 'assistant' ? 'Getnet Assist' : 'Você'}</strong><span>{msg.time}</span></div>
+              <div className={`message-bubble ${msg.role}`}>{msg.text.split('\n').map((line, i) => line ? <p key={i}>{line}</p> : <div key={i} className="line-space"/>)}</div>
+              {msg.meta?.clarification_options && <div className="clarification-actions" aria-label="Opções para continuar">{msg.meta.clarification_options.map((option, index) => <button key={option.id} className="clarification-option" onClick={() => void sendMessage(option.label)} disabled={busy}>{index + 1}. {option.label}</button>)}</div>}
+              {(msg.meta?.sources?.length ?? 0) > 0 && <div className="inline-sources"><span>Fontes consultadas</span>{msg.meta?.sources?.slice(0, 3).map(source => <a href={source.url} target="_blank" rel="noreferrer" key={source.url + source.title}>{source.title}<ArrowUpRight size={12}/></a>)}</div>}
+              {msg.meta && <>
+                <button className="detail-toggle" onClick={() => setShowDetails(showDetails === msg.id ? null : msg.id)}><Sparkles size={13}/>{msg.meta.agent.replace(/_/g, ' ')}<ChevronDown size={13} className={showDetails === msg.id ? 'rotate' : ''}/></button>
+                {showDetails === msg.id && <div className="agent-details">
+                  <div><span>Idioma da resposta</span><strong>{msg.meta.language === 'en' ? 'English' : 'Português'}</strong></div>
+                  <div><span>Intenção identificada</span><strong>{msg.meta.intent.replace(/_/g, ' ')}</strong></div>
+                  <div><span>Confiança estimada</span><strong>{Math.round(msg.meta.confidence * 100)}%</strong></div>
+                  {msg.meta.context_assessment?.recommended_destination && <div><span>Direcionamento</span><strong>{msg.meta.context_assessment.recommended_destination.replace(/_/g, ' ')}</strong></div>}
+                  {msg.meta.orchestration_mode && <div><span>Orquestração</span><strong>{msg.meta.orchestration_mode.replace(/_/g, ' ')}</strong></div>}
+                  {typeof msg.meta.tool_calls === 'number' && <div><span>Chamadas de ferramentas</span><strong>{msg.meta.tool_calls}</strong></div>}
+                  {msg.meta.critic && <div><span>Revisão independente</span><strong>{msg.meta.critic.approved ? 'Aprovada' : 'Requer revisão'} · {msg.meta.critic.mode}</strong></div>}
+                  {typeof msg.meta.retrieved_chunks === 'number' && <div><span>Trechos recuperados</span><strong>{msg.meta.retrieved_chunks}</strong></div>}
+                  <div className="trace-row"><span>Fluxo de agentes</span><div>{msg.meta.trace.map((t, i) => <span className="trace-chip" key={`${t}-${i}`}>{t.replace(/_/g, ' ')}</span>)}</div></div>
+                  {(msg.meta.sources?.length ?? 0) > 0 && <div className="source-list"><span>Fontes consultadas</span>{msg.meta.sources?.map(s => <a href={s.url} target="_blank" rel="noreferrer" key={s.url+s.title}>{s.title}<ArrowUpRight size={12}/></a>)}</div>}
+                  {msg.meta.handoff && <div className={`handoff-note ${msg.meta.handoff_severity === 'critical' || msg.meta.handoff_severity === 'high' ? 'handoff-critical' : ''}`}><Headphones size={15}/><div className="handoff-copy"><strong>{msg.meta.language === 'en' ? 'Human-support request registered' : 'Solicitação de atendimento registrada'}</strong>{msg.meta.handoff_protocol && <p><b>Protocolo: {msg.meta.handoff_protocol}</b></p>}<p>{msg.meta.handoff_status === 'queued' ? 'Status: aguardando atendimento.' : `Status: ${msg.meta.handoff_status || 'registrado'}.`} {msg.meta.real_agent_connected === false ? 'Nenhum atendente real está conectado a esta demonstração.' : 'Encaminhamento informado pelo serviço.'}</p>{msg.meta.handoff_protocol && <button className="link-btn" onClick={() => void requestHuman()} disabled={busy}>Consultar protocolo <ArrowUpRight size={12}/></button>}</div></div>}
+                </div>}
+              </>}
+            </div>
+          </div>)}
+          {busy && <div className="message-row assistant"><div className="message-avatar"><span>g</span></div><div className="message-content"><div className="message-meta"><strong>Getnet Assist</strong><span>pensando</span></div><div className="typing-bubble"><span/><span/><span/></div></div></div>}
+          <div ref={bottomRef}/>
+        </div>}
       </section>
-      <footer className={`composer-area ${messages.length ? 'composer-chatting' : ''}`}><div className="composer"><textarea ref={inputRef} value={input} onChange={e => setInput(e.target.value)} onKeyDown={onKeyDown} placeholder="Escreva sua pergunta aqui..." rows={1} maxLength={2000} aria-label="Sua pergunta"/><div className="composer-bottom"><div className="composer-hint"><span className="keyboard-enter">↵</span><span>Enter para enviar</span><span className="hint-divider">·</span><span>Shift + Enter para nova linha</span></div><div className="composer-right"><span className="char-count">{input.length}/2000</span><button className="send-btn" onClick={() => sendMessage()} disabled={!input.trim() || busy} aria-label="Enviar mensagem">{busy ? <span className="send-spinner"/> : <Send size={16}/>}</button></div></div></div><div className="disclaimer"><ShieldCheck size={12}/><span>Assistente demonstrativo. Não compartilhe dados pessoais, senhas ou informações de cartão.</span></div></footer>
+      <footer className={`composer-area ${messages.length ? 'composer-chatting' : ''}`}><div className="composer"><textarea ref={inputRef} value={input} onChange={e => setInput(e.target.value)} onKeyDown={onKeyDown} placeholder={activeHandoff ? 'Escreva uma atualização para a solicitação...' : 'Escreva sua pergunta aqui...'} rows={1} maxLength={2000} aria-label="Sua pergunta"/><div className="composer-bottom"><div className="composer-hint"><span className="keyboard-enter">↵</span><span>Enter para enviar</span><span className="hint-divider">·</span><span>Shift + Enter para nova linha</span></div><div className="composer-right"><span className="char-count">{input.length}/2000</span><button className="send-btn" onClick={() => void sendMessage()} disabled={!input.trim() || busy} aria-label="Enviar mensagem">{busy ? <span className="send-spinner"/> : <Send size={16}/>}</button></div></div></div><div className="disclaimer"><ShieldCheck size={12}/><span>Demonstração técnica: a conta {userId} e os registros são sintéticos. Não compartilhe senhas ou dados de cartão.</span></div></footer>
     </main>
   </div>
 }
