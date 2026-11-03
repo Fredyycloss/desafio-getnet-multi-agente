@@ -17,7 +17,7 @@ from typing import Any, Callable
 from uuid import uuid4
 
 from ..infra.database import Database
-from ..infra.llm import LLMBudgetExceeded, LLMProvider, LLMTimeout, LLMUnavailable
+from ..infra.llm import LLMAuthError, LLMBudgetExceeded, LLMProvider, LLMTimeout, LLMUnavailable
 from ..observability import stage
 
 
@@ -47,6 +47,8 @@ def specialist_result(*, agent: str, task: str, answer: str, confidence: float, 
 def degraded_reason_for(exc: BaseException | None, llm_present: bool) -> str:
     if not llm_present:
         return "llm_disabled"
+    if isinstance(exc, LLMAuthError):
+        return exc.reason
     if isinstance(exc, LLMBudgetExceeded):
         return "llm_budget_exhausted"
     if isinstance(exc, LLMTimeout):

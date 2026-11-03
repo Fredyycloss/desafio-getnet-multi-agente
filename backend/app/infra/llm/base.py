@@ -37,6 +37,17 @@ class LLMBudgetExceeded(LLMTimeout):
     """The request-wide LLM budget is exhausted."""
 
 
+class LLMAuthError(LLMUnavailable):
+    """The provider refused the credentials: key rejected (401), forbidden (403) or no credit.
+
+    ``reason`` is one of llm_key_rejected, llm_key_forbidden, llm_no_credit. Never holds the key.
+    """
+
+    def __init__(self, reason: str, message: str = ""):
+        super().__init__(message or reason)
+        self.reason = reason
+
+
 def call_timeout(per_call_seconds: float, purpose: str) -> float:
     """Per-call timeout bounded by what is left of the request budget."""
     remaining = llm_time_remaining()

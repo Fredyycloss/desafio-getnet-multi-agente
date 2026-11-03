@@ -26,6 +26,8 @@ This scheme is demonstration identity, not production authentication. It has no 
 - It is passed explicitly to the SDK client and is not kept in any object the API returns. `repr()` of the provider omits it.
 - It is never logged, traced, persisted or returned. `test_api_key_never_appears_in_logs_responses_or_metrics` checks the logs, the `/api/health`, `/api/chat` and `/api/metrics` responses, and the SQLite file.
 - `.env` is git-ignored; `.env.example` has the field empty.
+- `scripts/set-api-key.sh` stores the key with hidden input, writing only that line with mode 600 and never echoing it.
+- A refused (401/403) or out-of-credit key is reported in `/api/health` → `cloud_status` and as `degraded_reason`, without the key. The SDK error body is classified and never logged.
 
 ## Prompt injection
 

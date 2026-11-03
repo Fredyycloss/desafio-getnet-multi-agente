@@ -13,7 +13,7 @@ import time
 from typing import Any
 
 from ...observability import record_model_usage, stage
-from .base import LLMProvider, LLMTimeout, LLMUnavailable, call_timeout, normalised_response
+from .base import LLMAuthError, LLMProvider, LLMTimeout, LLMUnavailable, call_timeout, normalised_response
 
 logger = logging.getLogger(__name__)
 
@@ -21,6 +21,27 @@ KEY_ENV = "GETNET_ANTHROPIC_API_KEY"
 # JSON-schema keywords outside the structured-output subset; values are validated by pydantic afterwards.
 _UNSUPPORTED_SCHEMA_KEYS = {"title", "default", "maxLength", "minLength", "maximum", "minimum",
                             "maxItems", "minItems", "exclusiveMaximum", "exclusiveMinimum", "pattern"}
+
+
+KEY_STATE_MESSAGES = {
+    "llm_key_rejected": "modo nuvem configurado, mas a chave foi recusada (401)",
+    "llm_key_forbidden": "modo nuvem configurado, mas a chave não tem permissão (403)",
+    "llm_no_credit": "modo nuvem configurado, mas a conta está sem crédito",
+}
+
+
+def classify_auth_failure(exc: BaseException) -> str | None:
+    """Map an SDK error to a key/credit failure reason (None = other error)."""
+    status = getattr(exc, "status_code", None)
+    body = getattr(exc, "body", None)
+    detail = json.dumps(body, default=str) if body is not None else str(exc)
+    if "credit balance" in detail.lower() or "billing" in detail.lower() or status == 402:
+        return "llm_no_credit"
+    if status == 401:
+        return "llm_key_rejected"
+    if status == 403:
+        return "llm_key_forbidden"
+    return None
 
 
 def anthropic_key_configured() -> bool:
@@ -135,6 +156,8 @@ class AnthropicProvider(LLMProvider):
             client = anthropic.Anthropic(api_key=key, timeout=self.timeout, max_retries=self.max_retries)
             del key
         self._client = client
+        # Last observed key state: unchecked | ok | llm_key_rejected | llm_key_forbidden | llm_no_credit.
+        self.key_state = "unchecked"
 
     def __repr__(self) -> str:  # never expose the client (it holds the key)
         return f"AnthropicProvider(model={self.model!r})"
@@ -182,9 +205,15 @@ class AnthropicProvider(LLMProvider):
             raise LLMTimeout(f"Anthropic chat timed out ({purpose}, {timeout:.0f}s)") from exc
         except base_error as exc:
             status = getattr(exc, "status_code", None)
+            auth_reason = classify_auth_failure(exc)
+            if auth_reason:
+                self.key_state = auth_reason
+                logger.warning("anthropic_key_unusable purpose=%s reason=%s status=%s", purpose, auth_reason, status)
+                raise LLMAuthError(auth_reason, f"Anthropic refused the key ({auth_reason})") from exc
             logger.warning("anthropic_chat_failed purpose=%s error_type=%s status=%s", purpose, type(exc).__name__, status)
             raise LLMUnavailable(f"Anthropic chat failed: {type(exc).__name__} status={status}") from exc
         latency_ms = (time.perf_counter() - started) * 1000
+        self.key_state = "ok"
         if getattr(response, "stop_reason", None) == "refusal":
             raise LLMUnavailable("Anthropic model refused the request")
         texts, tool_calls, raw_blocks = [], [], []
@@ -207,6 +236,28 @@ class AnthropicProvider(LLMProvider):
             extra_message={"provider_content": raw_blocks},
         )
 
+    @property
+    def key_failure_reason(self) -> str | None:
+        return self.key_state if self.key_state in KEY_STATE_MESSAGES else None
+
+    def check_key(self) -> str:
+        """One minimal request (max 1 output token, ~US$ 0.00001) to learn whether the key works."""
+        try:
+            self._client.messages.create(model=self.model, max_tokens=1, thinking={"type": "disabled"},
+                                         messages=[{"role": "user", "content": "ping"}], timeout=min(self.timeout, 10))
+            self.key_state = "ok"
+        except Exception as exc:  # noqa: BLE001 - any failure is reported, never raised at startup
+            reason = classify_auth_failure(exc)
+            self.key_state = reason or "unreachable"
+            logger.warning("anthropic_startup_check state=%s error_type=%s", self.key_state, type(exc).__name__)
+        return self.key_state
+
+    def cloud_status(self) -> dict:
+        state = self.key_state
+        return {"cloud_mode": "configured", "key_state": state,
+                "message": KEY_STATE_MESSAGES.get(state, {"ok": "modo nuvem ativo", "unchecked": "modo nuvem configurado (chave ainda não verificada)",
+                                                           "unreachable": "modo nuvem configurado, mas a API não respondeu"}.get(state, state))}
+
     def embed(self, texts: list[str]) -> list[list[float]]:
         if self.embedder is None:
             raise LLMUnavailable("No local embedding model configured")
@@ -215,8 +266,9 @@ class AnthropicProvider(LLMProvider):
     def health(self) -> dict:
         embedding = self.embedder.health() if self.embedder else {"available": False}
         return {
-            "available": True,
-            "chat_model_loaded": True,  # hosted model; reachability is checked per call
+            "available": self.key_failure_reason is None,
+            "chat_model_loaded": self.key_failure_reason is None,  # hosted model; key state from the last call/check
+            **self.cloud_status(),
             "embedding_model_loaded": bool(embedding.get("embedding_model_loaded")),
             "embedding_runtime_available": bool(embedding.get("available")),
             "models": [self.model, *([self.embedding_model] if self.embedding_model else [])],

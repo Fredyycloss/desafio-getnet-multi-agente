@@ -33,6 +33,12 @@ For the overview and the Mermaid diagram, see the [README](../README.md#architec
 1. **Session.** FastAPI authenticates the bearer token, checks session ownership and loads 12 messages of history from SQLite.
 2. **Gateway.** A secret, token or card number is blocked and stored as a placeholder. An explicit human request becomes a handoff after the context pass.
 3. **Context Intelligence.** It returns a compact JSON object of 11 fields, validated by pydantic. The three routing fields are mandatory, and invalid output raises `LLMUnavailable`. Neutral defaults fill the rest of `ContextAssessment`. Two general floors apply: a retracted danger reference → clarify; danger vocabulary the model calls safe without a figurative reading → clarify.
+   - **Modes (`CONTEXT_MODE`).**
+     - `llm` (default) calls the model every turn.
+     - `hybrid` uses a kNN over local embeddings of `intent_examples.json` for clear turns and calls the model on mandatory triggers: danger vocabulary, figurative or retraction marker, possible injection, short history-dependent message, low confidence, margin or similarity.
+     - `embedding` never calls the model.
+     - The measured comparison and the decision to keep `llm` as default are in the README.
+   - **Annotations.** `decided_by`, `embedding_match` and `llm_trigger` are returned in `context_assessment`.
 4. **RiskAssessment.** Deterministic hazards from the current message and the user's own history win over the model. Activity idioms are stripped first ("pegando fogo de tanto movimento"). An explicit retraction removes a non-concrete hazard.
 5. **PolicyGate.** Order: deterministic hazard → alert; model `critical` → alert; model `potentially_dangerous`/`ambiguous` → **safety menu** (literal hazard first, human last); uncertainty → topic menu; human → handoff; else continue.
 6. **Menus.**

@@ -20,6 +20,30 @@ All customer records are **synthetic demo fixtures**. Nothing connects to real G
 
 ---
 
+## For the evaluator (Para o avaliador)
+
+The **main mode is the cloud**. It needs an Anthropic API key, which is sent to you separately, not in this repository. The key has a spending limit and will be replaced after the evaluation.
+
+1. `git clone https://github.com/Fredyycloss/desafio-getnet-multi-agente.git && cd desafio-getnet-multi-agente`
+2. `bash scripts/set-api-key.sh`. The script:
+   - asks for the key with hidden input and accepts only keys that start with the Anthropic prefix;
+   - creates `.env` from `.env.example` if it does not exist;
+   - writes only the `GETNET_ANTHROPIC_API_KEY` line, keeping every other line;
+   - never prints the key.
+3. `docker compose up -d --build`
+4. `curl -s localhost:8000/api/health | python3 -m json.tool`. Expect:
+   - `"llm_provider": {"provider": "anthropic", ...}`;
+   - `"cloud_status": {"key_state": "ok", "message": "modo nuvem ativo"}`.
+
+   If the key is refused (401/403) or the account has no credit, `cloud_status` says so, without showing the key. Answers are then marked `degraded: true` with `degraded_reason` = `llm_key_rejected`, `llm_key_forbidden` or `llm_no_credit`. To fall back to the local model instead, uncomment `LLM_FALLBACK_PROVIDER=ollama` in `.env`; see `.env.example`.
+5. Open <http://localhost:8080> and sign in with a listed demo user: `cliente1988` / `1988`, `demo-user-001` / `0001` or `demo-merchant-001` / `0002`.
+
+**Without a key**, the same code runs in offline mode with `bash scripts/start-ai.sh -d` (local Qwen3 1.7B, no cost). Measured results for both modes are in [docs/RELATORIO_FINAL_2026-11-02.md](docs/RELATORIO_FINAL_2026-11-02.md) and in [Measured results](#measured-results-2-nov-2026) below.
+
+**Measured cost:** about **US$ 0.0007 per question** in cloud mode, averaged over the 17 benchmark questions (`mean_cost_usd_per_turn` = 0.000711). That is about 1,400 questions per US$ 1.
+
+---
+
 ## Quick start
 
 Requirements: Docker with Compose v2. The commands are for Linux and macOS.
@@ -245,6 +269,30 @@ What these numbers mean:
 - **Details:** every scenario, failure and trace is in [RELATORIO_FINAL_2026-11-02.md](docs/RELATORIO_FINAL_2026-11-02.md).
 
 ---
+
+### Offline Context Intelligence: embeddings vs Qwen vs hybrid
+
+The hybrid mode (`CONTEXT_MODE=hybrid`) answers clear turns with a kNN over local `nomic-embed-text` embeddings of labelled examples (`backend/app/agents/intent_examples.json`, written from scratch). It calls Qwen on mandatory triggers:
+- danger vocabulary;
+- a figurative or retraction marker;
+- possible injection;
+- a short message that depends on the history;
+- low confidence, margin or similarity.
+
+Thresholds were fixed before measuring. Each mode was measured once on the held-out set (44 cases).
+
+| Mode | Risk | Action | Route | Safety false negatives | Qwen calls | Mean latency |
+|---|---|---|---|---|---|---|
+| A — embeddings only | 86.4% | 56.8% | 42.9% | **23.1%** | 0% | 0.1 s |
+| **B — Qwen only (offline default)** | 77.3% | 40.9% | 4.8% | **0%** | 100% | 14.8 s |
+| C — hybrid | 77.3% | 59.1% | 47.6% | **7.7%** | 66% | 10.5 s |
+
+**Decision.** The rule was that hybrid replaces Qwen-only only if it adds no safety false negatives. It did not pass. C is better on action, route and latency, but it missed one dangerous case that B catches: "the terminal charger is too hot to hold", which the kNN matched to terminal support.
+
+- **Offline default:** `CONTEXT_MODE=llm` (B).
+- **Hybrid:** available behind the flag.
+- **Embeddings only (A):** rejected.
+- **No post-hoc tuning:** adding trigger words for this case after seeing it would be tuning on the held-out set.
 
 ## Limitations
 

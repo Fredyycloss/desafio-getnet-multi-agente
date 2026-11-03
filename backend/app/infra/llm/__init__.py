@@ -4,11 +4,11 @@ from __future__ import annotations
 import logging
 import os
 
-from .base import LLMBudgetExceeded, LLMProvider, LLMTimeout, LLMUnavailable, call_timeout
+from .base import LLMAuthError, LLMBudgetExceeded, LLMProvider, LLMTimeout, LLMUnavailable, call_timeout
 
 logger = logging.getLogger(__name__)
 
-__all__ = ["LLMProvider", "LLMUnavailable", "LLMTimeout", "LLMBudgetExceeded", "call_timeout",
+__all__ = ["LLMProvider", "LLMUnavailable", "LLMTimeout", "LLMBudgetExceeded", "LLMAuthError", "call_timeout",
            "create_llm", "resolve_provider_name"]
 
 
@@ -40,7 +40,11 @@ def create_llm() -> LLMProvider | None:
     if name == "anthropic":
         from .anthropic_provider import AnthropicProvider
         # Embeddings are always the local nomic model.
-        return AnthropicProvider(embedder=OllamaProvider())
+        cloud = AnthropicProvider(embedder=OllamaProvider())
+        if os.getenv("LLM_FALLBACK_PROVIDER", "").strip().lower() == "ollama":
+            from .fallback import FallbackProvider
+            return FallbackProvider(cloud, OllamaProvider())
+        return cloud
     if name == "ollama":
         return OllamaProvider()
     if os.getenv("LLM_PROVIDER", "auto").strip().lower() == "anthropic":

@@ -147,7 +147,7 @@ def classify(record: dict) -> str:
     if record.get("degraded"):
         return "fallback_error"
     if (mode.startswith("deterministic_fallback")
-            or record.get("assessment_mode") not in (None, "llm_context_intelligence")
+            or record.get("assessment_mode") not in (None, "llm_context_intelligence", "embedding_context_intelligence")
             or record.get("critic_mode") in LLM_ERROR_CRITIC_MODES
             or any(marker in trace for marker in FALLBACK_TRACE_MARKERS)):
         return "fallback_error"

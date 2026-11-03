@@ -25,6 +25,9 @@ Web providers are stubbed at HTTP level. The Anthropic adapter is tested with a 
 | `test_policy_and_datasets.py` | PolicyGate order, D3/D4 flows, decline error → Payments, zero safety false negatives, dataset disjointness and the n-gram leak check |
 | `test_auth_and_isolation.py` | demo login/token, 401/403/404 boundaries, A × B isolation, prompt injection in the message and in a RAG document |
 | `test_llm_providers.py`, `test_llm_ollama_adapter.py` | provider contracts, selection, budget, key never leaked, no direct provider imports in agents |
+| `test_cloud_key_failures.py` | real Anthropic SDK over a simulated HTTP transport: 401/403/no credit → health message, `degraded_reason`, optional offline fallback in the trace; the key never shows |
+| `test_intent_classifier.py` | hybrid Context Intelligence: kNN decides clear turns without the LLM; mandatory triggers call it; intent examples share no phrase with datasets or benchmark |
+| `test_set_api_key_script.py` | `scripts/set-api-key.sh` in temporary directories only: creates `.env` from the example, replaces only the key line, rejects invalid prefixes, never prints the key |
 | `test_critic_agent.py`, `test_grounding.py` | Critic approves grounded answers and rejects invented values, missing citations and secret requests |
 | `test_context_intelligence.py`, `test_risk_assessment_context.py`, `test_clarification.py`, `test_human_request_guardrail.py` | schema validation, deterministic hazards, menus, human priority |
 | `test_real_database_tools.py`, `test_real_knowledge_retrieval.py`, `test_web_research_tools.py`, `test_api_integration.py`, `test_security_and_memory.py` | real tools, retrieval, API wiring, memory, redaction, audit |

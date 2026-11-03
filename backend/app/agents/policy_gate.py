@@ -19,7 +19,8 @@ class PolicyGate:
     """
 
     def apply(self, assessment: dict, deterministic_risk: dict, *, contextual_model_available: bool = True) -> dict:
-        parsed = ContextAssessment.model_validate(assessment)
+        # Extra annotations (decided_by, embedding_match, model, ...) are not policy inputs.
+        parsed = ContextAssessment.model_validate({k: v for k, v in assessment.items() if k in ContextAssessment.model_fields})
         if deterministic_risk.get("requires_handoff"):
             if deterministic_risk.get("severity") == "critical":
                 return {

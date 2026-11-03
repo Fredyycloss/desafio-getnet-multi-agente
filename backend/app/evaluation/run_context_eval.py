@@ -27,9 +27,11 @@ def main() -> int:
     parser.add_argument("--model", help="Optional Ollama model tag; otherwise use OLLAMA_MODEL.")
     parser.add_argument("--split", choices=["dev", "heldout"], default="heldout",
                         help="dev = scenarios used while developing; heldout = never used for tuning.")
+    parser.add_argument("--mode", choices=["llm", "embedding", "hybrid"], default="llm",
+                        help="llm = model every turn (B); embedding = kNN only (A); hybrid = kNN + model on triggers (C).")
     parser.add_argument("--output", default=None)
     args = parser.parse_args()
-    args.output = args.output or f"context-evaluation-{args.split}.json"
+    args.output = args.output or f"context-evaluation-{args.split}-{args.mode}.json"
     llm = create_llm()
     if llm is None:
         raise SystemExit("No LLM provider configured: set GETNET_ANTHROPIC_API_KEY or OLLAMA_ENABLED=true.")
@@ -41,7 +43,14 @@ def main() -> int:
 
     dataset_path = Path(__file__).with_name(f"context_scenarios_{args.split}.json")
     scenarios = json.loads(dataset_path.read_text(encoding="utf-8"))
-    context = ContextIntelligence(llm)
+    classifier = None
+    if args.mode != "llm":
+        import tempfile
+        from app.agents.intent_classifier import EmbeddingIntentClassifier
+        from app.infra.database import Database
+        classifier = EmbeddingIntentClassifier(llm, Database(str(Path(tempfile.gettempdir()) / "context-eval-embeddings.sqlite3")))
+        classifier.classify("warm-up")  # embed and cache the examples before timing
+    context = ContextIntelligence(llm, classifier=classifier, mode=args.mode)
     policy = PolicyGate()
     deterministic_risk = RiskAssessmentAgent()
     cases = []
@@ -125,6 +134,8 @@ def main() -> int:
             "output_tokens": usage_by_case[scenario["id"]]["output_tokens"],
             "cost_usd": usage_by_case[scenario["id"]]["cost_usd"],
             "assessment_mode": mode,
+            "decided_by": assessment.get("decided_by"),
+            "llm_trigger": assessment.get("llm_trigger"),
             "json_valid": True,
         }
         cases.append(case)
@@ -205,6 +216,9 @@ def main() -> int:
                      and item["actual_action"] not in {"safety_handoff", "clarify"}]
     report = {
         "split": args.split,
+        "context_mode": args.mode,
+        "decided_by": dict(Counter(item.get("decided_by") or "llm" for item in cases)),
+        "llm_call_rate": round(sum(1 for item in cases if (item.get("decided_by") or "llm") == "llm") / max(len(cases), 1), 4),
         "tuning_note": ("held-out: written before the stage-2 prompt rewrite and never used to tune prompts, rules or thresholds"
                         if args.split == "heldout" else "dev: used while developing the prompt and rules"),
         "dataset_size": len(cases),
@@ -238,7 +252,7 @@ def main() -> int:
         "json_valid_count": sum(item.get("json_valid", False) for item in cases),
         "json_invalid_count": sum(not item.get("json_valid", False) for item in cases),
         "assessment_modes": dict(modes),
-        "all_cases_used_live_llm": len(cases) == len(scenarios) and modes == {"llm_context_intelligence": len(scenarios)},
+        "all_cases_used_live_llm": len(cases) == len(scenarios) and set(modes) <= {"llm_context_intelligence", "embedding_context_intelligence"},
         "high_confidence_error_rate": round(overconfident_errors / len(cases), 4),
         "figurative_language_accuracy": round(figurative_accuracy, 4),
         "mean_latency_ms": round(statistics.mean(latencies), 2),

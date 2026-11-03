@@ -35,6 +35,9 @@ async def lifespan(app: FastAPI):
     llm_enabled = llm is not None
     if llm_required and not llm_enabled:
         raise RuntimeError("OLLAMA_REQUIRED=true requires a configured LLM provider")
+    if llm is not None and hasattr(llm, "check_key") and os.getenv("ANTHROPIC_STARTUP_CHECK", "true").lower() == "true":
+        # One minimal request so /api/health can say if the cloud key is refused or out of credit.
+        llm.check_key()
     if llm is not None:
         set_default_llm_budget(llm.default_budget_seconds)
     if llm_required and llm and llm.provider == "ollama":
@@ -150,6 +153,8 @@ def health():
             "knowledge_chunks": len(state["documents"]), "llm_enabled": bool(service.llm), "llm_available": model_ready, "llm": llm_status,
             "context_intelligence": service.llm.provider if service.llm else "deterministic_fallback",
             "llm_provider": service.llm.describe() if service.llm else {"provider": None},
+            "cloud_status": {k: llm_status.get(k) for k in ("cloud_mode", "key_state", "message", "fallback_active", "fallback_reason")
+                             if k in llm_status} or None,
             "llm_provider_setting": os.getenv("LLM_PROVIDER", "auto"),
             "request_llm_budget_seconds": llm_budget_seconds(),
             "llm_required": os.getenv("OLLAMA_REQUIRED", "false").lower() == "true",

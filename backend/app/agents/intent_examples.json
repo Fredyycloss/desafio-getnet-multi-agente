@@ -1,0 +1,127 @@
+{
+  "_note": "Labelled intent examples for the embedding kNN classifier. Written from scratch on 2026-11-02; no sentence is taken from context_scenarios_dev/heldout or from the benchmark scenarios (checked by tests/test_intent_classifier.py).",
+  "intents": {
+    "knowledge": {
+      "agent": "knowledge_specialist",
+      "examples": [
+        "Quais modelos de maquininha a Getnet oferece para quem está começando?",
+        "A Get Smart aceita pagamento por aproximação com o celular?",
+        "Quanto a Getnet cobra no débito de um microempreendedor?",
+        "Como eu ativo o recebimento por Pix na minha conta Getnet?",
+        "O dinheiro do Pix cai na hora ou demora algum dia?",
+        "Como funciona o adiantamento de recebíveis das vendas parceladas no crédito?",
+        "Existe custo para antecipar as vendas que vão cair no mês que vem?",
+        "O que é o crediário da Getnet e quem pode oferecer para o cliente?",
+        "Dá para gerar um link de cobrança e mandar para o cliente pagar à distância?",
+        "O link de pagamento tem validade ou fica ativo para sempre?",
+        "Preciso pagar mensalidade para usar a máquina da Getnet?",
+        "Quais bandeiras de cartão a maquininha aceita?",
+        "A Getnet tem aplicativo para acompanhar as vendas pelo celular?",
+        "What payment terminals does Getnet sell for small shops?",
+        "How much is the credit card fee on Getnet machines?",
+        "Can my customers pay me through a payment link sent by message?",
+        "How do I start receiving instant payments with Pix?",
+        "Is there a monthly fee to keep the card reader?"
+      ]
+    },
+    "support_terminal": {
+      "agent": "customer_support_specialist",
+      "examples": [
+        "A tela da máquina fica preta e não acende mais.",
+        "O aparelho perde o sinal do Wi-Fi o tempo todo.",
+        "A maquininha não imprime o comprovante para o cliente.",
+        "Aparece uma mensagem de erro de comunicação quando passo o cartão.",
+        "O terminal não liga mesmo depois de carregar a noite inteira.",
+        "A máquina está desconectada da rede desde ontem.",
+        "O teclado da maquininha não responde quando aperto os números.",
+        "Como faço para atualizar o software do meu terminal?",
+        "Meu terminal aparece como inativo, o que pode ser?",
+        "A leitura por aproximação parou de funcionar no aparelho.",
+        "The card reader keeps disconnecting from the internet.",
+        "My terminal screen is frozen on the logo.",
+        "The device does not read contactless cards anymore.",
+        "Can you check whether my terminal is online?"
+      ]
+    },
+    "support_account": {
+      "agent": "customer_support_specialist",
+      "examples": [
+        "Quero conferir os dados cadastrais da minha loja.",
+        "Minha conta está ativa ou bloqueada?",
+        "Qual é o nome da empresa registrado no meu cadastro?",
+        "Preciso saber em qual segmento minha conta está cadastrada.",
+        "Is my merchant account active?",
+        "Show me the business details registered on my account."
+      ]
+    },
+    "payments": {
+      "agent": "payments_specialist",
+      "examples": [
+        "Em que dia vou receber o valor das vendas de hoje no crédito?",
+        "Quanto entra na minha conta pelas vendas feitas ontem?",
+        "Uma compra do cliente foi negada, por que isso aconteceu?",
+        "Apareceu transação não autorizada na tela, o que significa?",
+        "Quero ver quais vendas foram recusadas hoje.",
+        "Qual o status do pagamento daquela venda de duzentos reais?",
+        "O valor das vendas no débito já foi depositado?",
+        "Por que o cartão do cliente foi rejeitado na minha máquina?",
+        "Minhas vendas de ontem já foram liquidadas?",
+        "When will I get the money from today's card sales?",
+        "A customer's payment was refused, can you check why?",
+        "Show me the declined transactions from yesterday.",
+        "Has the payout for my debit sales arrived?"
+      ]
+    },
+    "web_weather": {
+      "agent": "web_research_specialist",
+      "examples": [
+        "Como vai estar o tempo em Recife no fim de semana?",
+        "Vai fazer frio amanhã em São Paulo?",
+        "Qual a previsão de chuva para Belo Horizonte hoje?",
+        "Will it be sunny in Salvador tomorrow?",
+        "What is the temperature forecast for Brasília?"
+      ]
+    },
+    "web_fx": {
+      "agent": "web_research_specialist",
+      "examples": [
+        "Quanto está o euro em reais hoje?",
+        "Qual a cotação da libra esterlina?",
+        "Me diga o valor do peso argentino em real.",
+        "How many reais is one US dollar today?",
+        "What is the current exchange rate between euro and dollar?"
+      ]
+    },
+    "web_general": {
+      "agent": "web_research_specialist",
+      "examples": [
+        "Procure na internet o que é a Nota Fiscal de Consumidor Eletrônica.",
+        "Quais são os feriados nacionais deste mês?",
+        "Pesquise as regras gerais do MEI para emitir nota.",
+        "Search the web for small business tips in Brazil."
+      ]
+    },
+    "human": {
+      "agent": "human_escalation_specialist",
+      "examples": [
+        "Prefiro conversar com um atendente.",
+        "Me transfere para uma pessoa da central.",
+        "Quero ser atendido por um humano agora.",
+        "Tem algum funcionário que possa me ajudar?",
+        "Please connect me with a support agent.",
+        "I need to speak with someone from customer service."
+      ]
+    },
+    "greeting": {
+      "agent": null,
+      "examples": [
+        "Oi, tudo bem?",
+        "Bom dia!",
+        "Boa noite!",
+        "Olá, quem é você?",
+        "Hello there",
+        "Hi, good afternoon"
+      ]
+    }
+  }
+}

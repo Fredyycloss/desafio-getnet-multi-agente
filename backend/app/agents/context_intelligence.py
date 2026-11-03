@@ -3,6 +3,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import re
 from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
@@ -49,6 +50,10 @@ class ContextAssessment(BaseModel):
     recommended_action: ContextAction
     operational_reason: str = Field(min_length=1, max_length=160)
     blocked_tools: list[str] = Field(default_factory=list, max_length=20)
+    # Which component decided the turn (hybrid mode) and why the LLM was or was not called.
+    decided_by: Literal["embedding", "llm", "rule"] | None = None
+    embedding_match: dict | None = None
+    llm_trigger: str | None = None
 
 
 class ContextModelOutput(BaseModel):
@@ -96,11 +101,69 @@ def expand_model_output(model_data: dict) -> dict:
     }
 
 
-class ContextIntelligence:
-    """Interprets the current turn and bounded history using the shared local model."""
+CONTEXT_MODES = {"llm_context_intelligence", "embedding_context_intelligence"}
+_INJECTION = re.compile(
+    r"\b(ignore|ignor[ea]|esque[cç]a|instru[cç]\w*|prompt|system|developer|desenvolvedor|risk_level|needs_human)\b",
+    re.IGNORECASE)
+_CONTINUATION_START = re.compile(r"^\s*(e|mas|ainda|agora|and|but|still|now)\b", re.IGNORECASE)
 
-    def __init__(self, llm: LLMProvider | None):
+
+class ContextIntelligence:
+    """Interprets the current turn and bounded history.
+
+    mode (CONTEXT_MODE): ``llm`` = model for every turn; ``embedding`` = kNN only
+    (no generation); ``hybrid`` = kNN for clear, low-risk turns and the model whenever
+    a mandatory trigger fires (see ``needs_llm``).
+    """
+
+    def __init__(self, llm: LLMProvider | None, *, classifier=None, mode: str | None = None):
         self.llm = llm
+        self.classifier = classifier
+        self.mode = (mode or os.getenv("CONTEXT_MODE", "llm")).strip().lower()
+        self.min_confidence = float(os.getenv("CONTEXT_EMBEDDING_MIN_CONFIDENCE", "0.6"))
+        self.min_margin = float(os.getenv("CONTEXT_EMBEDDING_MIN_MARGIN", "0.2"))
+        self.min_similarity = float(os.getenv("CONTEXT_EMBEDDING_MIN_SIMILARITY", "0.55"))
+
+    def needs_llm(self, message: str, history: list[dict], knn: dict | None) -> str | None:
+        """Mandatory reasons to ask the LLM (None = the kNN result may decide)."""
+        if knn is None:
+            return "no_embedding_result"
+        if RiskAssessmentAgent.danger_vocabulary(message, history):
+            return "danger_vocabulary"
+        if RiskAssessmentAgent.explicit_figurative(message):
+            return "figurative_or_retraction_marker"
+        if _INJECTION.search(message):
+            return "possible_instruction_injection"
+        prior_user_turns = [m for m in history if m.get("role") == "user"]
+        if prior_user_turns and (len(message.split()) <= 5 or _CONTINUATION_START.search(message)):
+            return "history_dependent_message"
+        if not knn.get("agent"):
+            return "no_specialist_intent"
+        if knn["confidence"] < self.min_confidence:
+            return "low_confidence"
+        if knn["margin"] < self.min_margin:
+            return "small_margin"
+        if knn["top_similarity"] < self.min_similarity:
+            return "far_from_examples"
+        return None
+
+    @staticmethod
+    def _assessment_from_knn(knn: dict, *, clarify: bool) -> dict:
+        human = knn["intent"] == "human"
+        agent = knn.get("agent")
+        if clarify or not agent:
+            data = {"intent": f"unclear {knn['intent']}"[:40], "risk_level": "safe", "ambiguity_level": "high",
+                    "figurative_language": False, "needs_clarification": True, "needs_human": False,
+                    "recommended_agents": [agent] if agent and not human else [], "recommended_action": "clarify",
+                    "recommended_destination": "clarification", "confidence": min(knn["confidence"], 0.5),
+                    "operational_reason": "embedding match not decisive"}
+        else:
+            data = {"intent": knn["intent"][:40], "risk_level": "safe", "ambiguity_level": "low",
+                    "figurative_language": False, "needs_clarification": False, "needs_human": human,
+                    "recommended_agents": [agent], "recommended_action": "human_handoff" if human else "route_to_agent",
+                    "recommended_destination": "human_handoff" if human else agent,
+                    "confidence": round(knn["confidence"], 2), "operational_reason": "embedding kNN intent match"}
+        return ContextAssessment.model_validate(expand_model_output(data)).model_dump()
 
     def assess(
         self,
@@ -111,6 +174,20 @@ class ContextIntelligence:
         *,
         selected_option: str | None = None,
     ) -> tuple[dict, str]:
+        knn = None
+        if self.mode in {"embedding", "hybrid"} and self.classifier is not None:
+            try:
+                knn = self.classifier.classify(message)
+            except LLMUnavailable as exc:
+                logger.warning("context_embedding_unavailable trace_id=%s error=%s", trace_id, type(exc).__name__)
+            reason = self.needs_llm(message, history, knn)
+            if knn is not None and (self.mode == "embedding" or reason is None or self.llm is None):
+                assessment = self._assessment_from_knn(knn, clarify=reason is not None)
+                calibrated = self._apply_deterministic_context_controls(assessment, message, history, language)
+                calibrated.update(decided_by="embedding", embedding_match=knn, llm_trigger=reason)
+                return calibrated, "embedding_context_intelligence"
+        else:
+            reason = None
         if self.llm is None:
             return self._deterministic_assessment(), "deterministic_fallback"
 
@@ -195,6 +272,9 @@ class ContextIntelligence:
             calibrated["ambiguity_level"],
             calibrated["confidence"],
         )
+        calibrated["decided_by"] = "llm"
+        if knn is not None:
+            calibrated.update(embedding_match=knn, llm_trigger=reason)
         return calibrated, "llm_context_intelligence"
 
     @staticmethod

@@ -10,7 +10,7 @@ from ..infra.database import Database
 from ..infra.llm import LLMProvider, LLMTimeout, LLMUnavailable
 from ..observability import stage
 from .clarification import clarification_result
-from .context_intelligence import ContextIntelligence
+from .context_intelligence import ContextIntelligence, CONTEXT_MODES
 from .critic_agent import CriticAgent
 from .escalation_agent import EscalationAgent
 from .knowledge_agent import KnowledgeAgent
@@ -69,6 +69,12 @@ class SupervisorAgent:
             result["degraded_reason"] = "context_llm_unavailable"
         result.setdefault("degraded", False)
         result.setdefault("degraded_reason", None)
+        # Name the real cause when the cloud key was refused or ran out of credit.
+        key_reason = getattr(self.llm, "key_failure_reason", None) if self.llm else None
+        if key_reason and result["degraded"]:
+            result["degraded_reason"] = key_reason
+        if getattr(self.llm, "fallback_active", False):
+            result["trace"] = [*result.get("trace", []), f"llm_fallback_provider:{self.llm.fallback.provider}:{self.llm.fallback_reason}"]
         return result
 
     def _run(self, *, message: str, user_id: str, session_id: str, language: str, history: list[dict], trace_id: str) -> dict:
@@ -185,7 +191,7 @@ class SupervisorAgent:
         with stage("policy_gate", "guardrail"):
             decision = self.policy_gate.apply(
                 assessment, risk,
-                contextual_model_available=assessment_mode == "llm_context_intelligence",
+                contextual_model_available=assessment_mode in CONTEXT_MODES,
             )
         action_map = {
             "clarify": ("clarify", "clarification"),
@@ -331,7 +337,7 @@ class SupervisorAgent:
 
     def _fast_path_agent(self, assessment: dict, assessment_mode: str, decision: dict) -> str | None:
         """Return the single routine specialist to dispatch directly, if any."""
-        if assessment_mode != "llm_context_intelligence" or decision.get("action") != "continue":
+        if assessment_mode not in CONTEXT_MODES or decision.get("action") != "continue":
             return None
         agents = list(dict.fromkeys(assessment.get("recommended_agents") or []))
         if len(agents) != 1 or agents[0] not in FAST_PATH_AGENTS:

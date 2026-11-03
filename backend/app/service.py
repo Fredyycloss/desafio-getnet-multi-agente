@@ -20,7 +20,7 @@ class ChatService:
                  *, llm_required: bool = False):
         self.db = db
         self.llm = llm
-        self.context_intelligence = ContextIntelligence(llm)
+        self.context_intelligence = ContextIntelligence(llm, classifier=self._intent_classifier(llm, db))
         self.knowledge = KnowledgeAgent(documents, db=db, llm=llm)
         self.support = CustomerSupportAgent(db, llm)
         self.payments = PaymentsAgent(db, llm)
@@ -33,6 +33,15 @@ class ChatService:
                                           web=self.web, risk=self.risk, escalation=self.escalation, critic=self.critic,
                                           context_intelligence=self.context_intelligence, llm_required=llm_required,
                                           payments=self.payments)
+
+    @staticmethod
+    def _intent_classifier(llm, db):
+        """kNN intent classifier for CONTEXT_MODE=embedding|hybrid (local nomic embeddings)."""
+        import os
+        if llm is None or os.getenv("CONTEXT_MODE", "llm").strip().lower() not in {"embedding", "hybrid"}:
+            return None
+        from .agents.intent_classifier import EmbeddingIntentClassifier
+        return EmbeddingIntentClassifier(llm, db)
 
     def answer(self, message: str, user_id: str, session_id: str, history: list[dict] | None = None, trace_id: str | None = None) -> dict:
         from uuid import uuid4

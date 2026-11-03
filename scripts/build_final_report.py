@@ -42,6 +42,24 @@ def eval_rows(date: str) -> list[str]:
     return rows
 
 
+def abc_rows(date: str) -> list[str]:
+    """Offline Context Intelligence: A = embeddings only, B = Qwen only, C = hybrid."""
+    files = {"A embedding": "ollama-embedding", "B llm": "ollama", "C hybrid": "ollama-hybrid"}
+    rows = ["| Mode | Split | Risk acc. | Action acc. | Route acc. | Safety FN rate | Safety misses | LLM call rate | Mean / p95 latency |",
+            "|---|---|---|---|---|---|---|---|---|"]
+    for split in ("dev", "heldout"):
+        for name, suffix in files.items():
+            r = load(DOCS / "eval" / f"CONTEXT_EVAL_{split}_{suffix}_{date}.json")
+            if not r:
+                rows.append(f"| {name} | {split} | not measured | | | | | | |")
+                continue
+            route = pct(r.get("route_accuracy")) if r.get("route_cases") else "n/a"
+            rows.append(f"| {name} | {split} | {pct(r['risk_accuracy'])} | {pct(r['action_accuracy'])} | {route} | "
+                        f"{pct(r['safety_false_negative_rate'])} | {len(r.get('safety_misses', []))} | {pct(r.get('llm_call_rate', 1.0))} | "
+                        f"{r['mean_latency_ms'] / 1000:.1f} / {r['p95_latency_ms'] / 1000:.1f} s |")
+    return rows
+
+
 def eval_failures(date: str) -> list[str]:
     out = []
     for mode in ("anthropic", "ollama"):
@@ -118,6 +136,12 @@ def main() -> None:
              "## 1. Context Intelligence (dev vs held-out)", "",
              "The held-out set (44 cases) was written before the stage-A prompt rewrite and never used for tuning.", "",
              *eval_rows(args.date), "", *eval_failures(args.date),
+             "### Offline: embeddings (A) vs Qwen only (B) vs hybrid (C)", "",
+             "A uses only the kNN classifier over `backend/app/agents/intent_examples.json` (written from scratch; a test checks "
+             "no 4-word overlap with any dataset or benchmark message). C calls Qwen only on mandatory triggers (danger vocabulary, "
+             "figurative/retraction marker, possible injection, short history-dependent message, low confidence/margin/similarity). "
+             "Thresholds were fixed before measuring (k=5, confidence ≥0.6, margin ≥0.2, similarity ≥0.55); held-out measured once.", "",
+             *abc_rows(args.date), "",
              "## 2. End-to-end benchmark (real HTTP, demo tokens, warm round)", "",
              "Latency mean/p95 use `llm_complete` responses only; fallbacks and errors are failures. Targets: simple ≤10 s, tools ≤15 s, complex ≤25 s.", "",
              *bench_section(f"{args.date}_anthropic"),
