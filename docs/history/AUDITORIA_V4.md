@@ -1,3 +1,5 @@
+> **Histórico — não reflete o código atual.** Relatório de uma versão anterior, mantido para rastreabilidade. O estado atual está em [docs/README.md](../README.md).
+
 # Audit: Feedback V4 and pending items → current version
 
 The Feedback V4 (score 2.6/10) evaluated an earlier version. This table maps each criticism to evidence in **this** repository. The evidence is the file that implements it plus a test or measured report.

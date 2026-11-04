@@ -1,0 +1,13 @@
+global:
+  scrape_interval: 15s
+  evaluation_interval: 30s
+rule_files:
+  - /etc/prometheus/alerts.yml
+scrape_configs:
+  - job_name: getnet-assist-api
+    metrics_path: /metrics
+    # Docker DNS returns every replica of the api service (docker compose up --scale api=2).
+    dns_sd_configs:
+      - names: ["api"]
+        type: A
+        port: 8000

@@ -29,6 +29,13 @@ DEMO_USERS = {
 _process_secret = secrets.token_bytes(32)
 
 
+def set_shared_secret(secret: bytes) -> None:
+    """Demo mode without AUTH_SECRET: a secret generated once and stored in the shared database,
+    so every API replica (docker compose --scale api=2) and restart accepts the same tokens."""
+    global _process_secret
+    _process_secret = secret
+
+
 def _secret() -> bytes:
     configured = os.getenv("AUTH_SECRET", "").strip()
     return configured.encode() if configured else _process_secret

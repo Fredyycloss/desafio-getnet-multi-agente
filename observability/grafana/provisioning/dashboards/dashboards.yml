@@ -1,0 +1,7 @@
+apiVersion: 1
+providers:
+  - name: getnet-assist
+    folder: Getnet Assist
+    type: file
+    options:
+      path: /var/lib/grafana/dashboards

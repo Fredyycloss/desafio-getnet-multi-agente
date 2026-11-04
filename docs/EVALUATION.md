@@ -55,4 +55,4 @@ Multi-turn scenarios use fixed sessions; isolation uses two demo tokens.
 
 ## 4. Results
 
-See [RELATORIO_FINAL_2026-11-02.md](RELATORIO_FINAL_2026-11-02.md) and the JSON reports it links.
+See [history/RELATORIO_FINAL_2026-11-02.md](history/RELATORIO_FINAL_2026-11-02.md) and the JSON reports it links.

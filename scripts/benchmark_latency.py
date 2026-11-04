@@ -46,7 +46,7 @@ from pathlib import Path
 from typing import Callable
 
 ROOT = Path(__file__).resolve().parents[1]
-COMPOSE = ["docker", "compose", "-f", str(ROOT / "docker-compose.yml"), "-f", str(ROOT / "docker-compose.ai.yml"), "--profile", "ai"]
+COMPOSE = ["docker", "compose", "-f", str(ROOT / "docker-compose.yml"), "--profile", "offline"]
 USER_A = "cliente1988"
 USER_B = "demo-user-001"
 DEMO_PINS = {USER_A: "1988", USER_B: "0001"}

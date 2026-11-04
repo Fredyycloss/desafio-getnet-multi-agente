@@ -1,3 +1,5 @@
+> **Histórico — não reflete o código atual.** Relatório de uma versão anterior, mantido para rastreabilidade. O estado atual está em [docs/README.md](../README.md).
+
 # Relatório de validação — Context Intelligence com Qwen3 1.7B
 
 **Data:** 2 de novembro de 2026  

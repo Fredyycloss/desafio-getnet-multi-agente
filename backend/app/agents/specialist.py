@@ -78,6 +78,41 @@ def parse_tool_calls(response: dict, limit: int = 4) -> list[tuple[str, dict]]:
     return parsed
 
 
+IDENTITY_ARGUMENTS = {"user_id", "customer_id", "merchant_id", "session_id", "account_id"}
+_TYPES = {"string": str, "integer": int, "number": (int, float), "boolean": bool, "object": dict, "array": list}
+
+
+def check_arguments(schema: dict | None, args: dict) -> tuple[dict, list[str], str | None]:
+    """Schema check for model-chosen tool arguments -> (clean args, dropped names, error).
+
+    Identity arguments and arguments the schema does not declare are dropped (identity always
+    comes from the server). Wrong types, values outside an enum or range, and missing required
+    arguments are an error: the tool is not executed."""
+    params = (schema or {}).get("parameters") or {}
+    props = params.get("properties") or {}
+    clean, dropped = {}, []
+    for key, value in (args or {}).items():
+        if key in IDENTITY_ARGUMENTS or key not in props:
+            dropped.append(key)
+            continue
+        spec = props[key]
+        expected = _TYPES.get(spec.get("type", ""))
+        if expected is not None and (not isinstance(value, expected) or (spec.get("type") in ("integer", "number") and isinstance(value, bool))):
+            return {}, dropped, f"invalid_type:{key}"
+        if "enum" in spec and value not in spec["enum"]:
+            return {}, dropped, f"not_allowed_value:{key}"
+        if isinstance(value, (int, float)) and not isinstance(value, bool):
+            if ("minimum" in spec and value < spec["minimum"]) or ("maximum" in spec and value > spec["maximum"]):
+                return {}, dropped, f"out_of_range:{key}"
+        if isinstance(value, str) and len(value) > 500:
+            return {}, dropped, f"too_long:{key}"
+        clean[key] = value
+    missing = [r for r in params.get("required", []) if r not in clean]
+    if missing:
+        return {}, dropped, f"missing:{missing[0]}"
+    return clean, dropped, None
+
+
 class ToolSpecialist:
     """The model selects typed tools, code executes them, the model writes the answer.
 
@@ -144,9 +179,18 @@ class ToolSpecialist:
         def invoke(name: str, args: dict) -> None:
             t0 = time.monotonic()
             status = "error"
+            schema = next((s["function"] for s in self._schemas() if s["function"]["name"] == name), None)
+            args, dropped, arg_error = check_arguments(schema, args) if schema else (args, [], None)
+            if dropped:
+                trace.append(f"dropped_arguments:{name}:{','.join(sorted(dropped))}")
             try:
                 with stage(f"{self.name}_tool:{name}", "tool"):
-                    result = raw_tools[name](args) if name in raw_tools else {"ok": False, "error": "unknown_tool", "tool": name}
+                    if name not in raw_tools:
+                        result = {"ok": False, "error": "unknown_tool", "tool": name}  # not in this agent's allowlist
+                    elif arg_error:
+                        result = {"ok": False, "error": "invalid_arguments", "detail": arg_error, "tool": name}
+                    else:
+                        result = raw_tools[name](args)
                 status = "ok" if result.get("ok") else "error"
             finally:
                 duration = int((time.monotonic() - t0) * 1000)

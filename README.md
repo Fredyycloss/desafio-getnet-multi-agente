@@ -48,7 +48,7 @@ Cloud mode with your own key:
    If the key is refused (401/403) or the account has no credit, `cloud_status` says so, without showing the key. Answers are then marked `degraded: true` with `degraded_reason` = `llm_key_rejected`, `llm_key_forbidden` or `llm_no_credit`. To fall back to the local model instead, uncomment `LLM_FALLBACK_PROVIDER=ollama` in `.env`; see `.env.example`.
 5. Open <http://localhost:8080> and sign in with a listed demo user: `cliente1988` / `1988`, `demo-user-001` / `0001` or `demo-merchant-001` / `0002`.
 
-**Without a key**, the same code runs in offline mode with `bash scripts/start-ai.sh -d` (local Qwen3 1.7B, no cost). Measured results for both modes are in [docs/RELATORIO_FINAL_2026-11-02.md](docs/RELATORIO_FINAL_2026-11-02.md) and in [Measured results](#measured-results-2-nov-2026) below.
+**Without a key**, the same code runs in offline mode with `bash scripts/start-ai.sh -d` (local Qwen3 1.7B, no cost). Measured results for both modes are in [docs/history/RELATORIO_FINAL_2026-11-02.md](docs/history/RELATORIO_FINAL_2026-11-02.md) and in [Measured results](#measured-results-2-nov-2026) below.
 
 **Measured cost:** about **US$ 0.0007 per question** in cloud mode, averaged over the 17 benchmark questions (`mean_cost_usd_per_turn` = 0.000711). That is about 1,400 questions per US$ 1.
 
@@ -340,10 +340,10 @@ CI (`.github/workflows/build.yml`) runs:
 ## Measured results (2 Nov 2026)
 
 Host: Intel i3 with 4 threads, 8 GB RAM and no GPU. Warm round with a pause between requests. Reports:
-- Cloud benchmark: [RELATORIO_LATENCIA_2026-11-02_anthropic.json](docs/RELATORIO_LATENCIA_2026-11-02_anthropic.json). The earlier run, before the Critic calibration, is [anthropic-critic-v1](docs/RELATORIO_LATENCIA_2026-11-02_anthropic-critic-v1.json).
-- Local benchmark: [RELATORIO_LATENCIA_2026-11-02_ollama.json](docs/RELATORIO_LATENCIA_2026-11-02_ollama.json).
+- Cloud benchmark: [RELATORIO_LATENCIA_2026-11-02_anthropic.json](docs/history/RELATORIO_LATENCIA_2026-11-02_anthropic.json). The earlier run, before the Critic calibration, is [anthropic-critic-v1](docs/history/RELATORIO_LATENCIA_2026-11-02_anthropic-critic-v1.json).
+- Local benchmark: [RELATORIO_LATENCIA_2026-11-02_ollama.json](docs/history/RELATORIO_LATENCIA_2026-11-02_ollama.json).
 - Context Intelligence evaluation: [docs/eval/](docs/eval/).
-- Summary of both modes: [docs/RELATORIO_FINAL_2026-11-02.md](docs/RELATORIO_FINAL_2026-11-02.md).
+- Summary of both modes: [docs/history/RELATORIO_FINAL_2026-11-02.md](docs/history/RELATORIO_FINAL_2026-11-02.md).
 
 | | Cloud — Claude Haiku 5.5 | Offline — Qwen3 1.7B (CPU) |
 |---|---|---|
@@ -361,7 +361,7 @@ Host: Intel i3 with 4 threads, 8 GB RAM and no GPU. Warm round with a pause betw
 What these numbers mean:
 - **Cloud mode** meets the routing and latency goals in this sample of 17 requests.
 - **Offline Qwen 1.7B** is safe (no missed hazard) but over-asks for clarification. That is its real accuracy without dataset phrases in the code, and it is why the cloud mode is the demonstration mode.
-- **Details:** every scenario, failure and trace is in [RELATORIO_FINAL_2026-11-02.md](docs/RELATORIO_FINAL_2026-11-02.md).
+- **Details:** every scenario, failure and trace is in [RELATORIO_FINAL_2026-11-02.md](docs/history/RELATORIO_FINAL_2026-11-02.md).
 
 ---
 
@@ -414,4 +414,4 @@ The default `LLM_PROVIDER=auto` uses the cloud when a key is present. `LLM_PROVI
 
 `backend/app/agents/` holds the agents, policy and grounding. `backend/app/infra/llm/` holds the provider layer. `backend/app/infra/database.py` holds SQLite (sessions, tickets, fixtures, audit). `backend/app/knowledge/` holds the corpus and ingestion. `backend/app/evaluation/` holds the datasets and runners. `frontend/` holds the React UI and Playwright test. `scripts/` holds the benchmark and the offline start script. `docs/` holds the architecture, audit and measurement reports.
 
-See also [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), [docs/TESTING.md](docs/TESTING.md), [docs/SECURITY.md](docs/SECURITY.md) and [docs/AUDITORIA_V4.md](docs/AUDITORIA_V4.md).
+See also [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md), [docs/TESTING.md](docs/TESTING.md), [docs/SECURITY.md](docs/SECURITY.md) and [docs/history/AUDITORIA_V4.md](docs/history/AUDITORIA_V4.md).

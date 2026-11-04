@@ -1,0 +1,45 @@
+groups:
+  - name: getnet-assist
+    rules:
+      - alert: ChatLatencyP95High
+        expr: histogram_quantile(0.95, sum(rate(getnet_http_request_seconds_bucket{path="/api/chat"}[10m])) by (le)) > 25
+        for: 10m
+        labels: {severity: warning}
+        annotations:
+          summary: "p95 of /api/chat above 25 s (complex-question target) for 10 min"
+      - alert: DegradedAnswersHigh
+        expr: sum(increase(getnet_degraded_total[30m])) / clamp_min(sum(increase(getnet_chat_turns_total[30m])), 1) > 0.10
+        for: 15m
+        labels: {severity: warning}
+        annotations:
+          summary: "More than 10% of answers degraded (fallback, budget or provider problems) in 30 min"
+      - alert: CriticRejectionsHigh
+        expr: sum(increase(getnet_critic_reviews_total{approved="false"}[30m])) / clamp_min(sum(increase(getnet_critic_reviews_total[30m])), 1) > 0.20
+        for: 15m
+        labels: {severity: warning}
+        annotations:
+          summary: "Critic rejects more than 20% of drafts (model, prompt or corpus regression)"
+      - alert: LLMProviderErrors
+        expr: sum(increase(getnet_llm_provider_errors_total[5m])) > 3
+        for: 5m
+        labels: {severity: critical}
+        annotations:
+          summary: "Model provider errors/timeouts (key, credit, outage or budget)"
+      - alert: HumanQueueStalled
+        expr: getnet_human_queue_oldest_seconds > 900
+        for: 5m
+        labels: {severity: critical}
+        annotations:
+          summary: "A hand-off has waited more than 15 min without an attendant"
+      - alert: HumanQueueGrowing
+        expr: max(getnet_human_queue_size) > 10
+        for: 15m
+        labels: {severity: warning}
+        annotations:
+          summary: "More than 10 tickets waiting for an attendant"
+      - alert: ApiDown
+        expr: up{job="getnet-assist-api"} == 0
+        for: 2m
+        labels: {severity: critical}
+        annotations:
+          summary: "An API replica is not answering /metrics"

@@ -97,6 +97,8 @@ def finish_timeline(token: Token) -> list[dict]:
 
 def record_model_usage(**fields) -> None:
     """Attach token/duration counters reported by the model runtime (no content)."""
+    from .telemetry import observe_model_call
+    observe_model_call(fields)
     timeline = current_timeline()
     if timeline is None:
         return
@@ -117,16 +119,22 @@ def _status_for_exception(exc: BaseException) -> str:
 @contextmanager
 def stage(name: str, component: str):
     """Record duration and outcome for one pipeline stage when tracing is active."""
+    from .telemetry import observe_stage, stage_span
     timeline = current_timeline()
     started = time.perf_counter()
     status = "ok"
+    span_cm = stage_span(name, component)
+    span = span_cm.__enter__()
     try:
         yield
     except BaseException as exc:
         status = _status_for_exception(exc)
+        span.set_attribute("getnet.status", status)
         raise
     finally:
+        span_cm.__exit__(None, None, None)
         duration_ms = round((time.perf_counter() - started) * 1000, 2)
+        observe_stage(name, component, status, duration_ms / 1000)
         if timeline is not None:
             event = {
                 "stage": name,

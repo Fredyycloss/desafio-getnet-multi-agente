@@ -5,3 +5,7 @@ requests==2.32.3
 beautifulsoup4==4.13.3
 anthropic==2.3.0
 numpy==2.3.4
+prometheus-client==0.25.0
+opentelemetry-api==1.44.0
+opentelemetry-sdk==1.44.0
+opentelemetry-exporter-otlp-proto-http==1.44.0

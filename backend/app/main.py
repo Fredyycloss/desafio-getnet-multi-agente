@@ -31,7 +31,12 @@ state: dict = {"service": None, "db": None, "documents": [], "metrics": {"reques
 async def lifespan(app: FastAPI):
     started = time.monotonic()
     check_production_settings()
+    from .telemetry import setup_tracing
+    setup_tracing()
     db = Database()
+    if not os.getenv("AUTH_SECRET", "").strip():
+        from .auth import set_shared_secret
+        set_shared_secret(db.shared_secret("auth_hmac"))
     llm_required = os.getenv("OLLAMA_REQUIRED", "false").lower() == "true"
     llm = create_llm()
     llm_enabled = llm is not None
@@ -135,8 +140,11 @@ async def observability(request: Request, call_next):
     trace_id = request.headers.get("X-Request-ID") or uuid4().hex
     request.state.trace_id = trace_id
     start = time.monotonic()
+    from .telemetry import observe_http, request_span
     try:
-        response = await call_next(request)
+        with request_span(trace_id, f"{request.method} {request.url.path}"):
+            response = await call_next(request)
+        observe_http(request.url.path, response.status_code, time.monotonic() - start)
         state["metrics"]["requests"] += 1
         if response.status_code >= 500: state["metrics"]["errors"] += 1
         elapsed = int((time.monotonic()-start)*1000)
@@ -161,6 +169,10 @@ def health():
             "context_intelligence": service.llm.provider if service.llm else "deterministic_fallback",
             "llm_provider": service.llm.describe() if service.llm else {"provider": None},
             "ablation": sorted(__import__("app.ablation", fromlist=["active"]).active()) or None,
+            "security": {"demo_mode": auth_demo_mode(), "warnings": [w for w, on in (
+                ("DEMO_MODE=true: public demo PINs and demo operators are enabled (not for production)", auth_demo_mode()),
+                ("AUTH_SECRET not set: tokens are signed with a secret generated in the database", not os.getenv("AUTH_SECRET", "").strip()),
+            ) if on]},
             "cloud_status": {k: llm_status.get(k) for k in ("cloud_mode", "key_state", "message", "fallback_active", "fallback_reason")
                              if k in llm_status} or None,
             "llm_provider_setting": os.getenv("LLM_PROVIDER", "auto"),
@@ -290,6 +302,8 @@ def chat(payload: ChatRequest, request: Request, background: BackgroundTasks, au
             db.save_message(session_id, auth_user, "user", stored_message)
         result = service.answer(payload.message, auth_user, session_id, history, request.state.trace_id,
                                 selected_topic=payload.selected_topic)
+        from .output_filter import redact_foreign
+        result = redact_foreign(db, auth_user, result)
         with stage("assistant_message_persistence", "persistence"):
             db.save_message(session_id, auth_user, "assistant", result["answer"], _without_action_token(result))
         gap = service.improvement.gap_kind(result)
@@ -304,6 +318,8 @@ def chat(payload: ChatRequest, request: Request, background: BackgroundTasks, au
         result["session_id"] = session_id
         result["authenticated"] = auth_user != ANONYMOUS
         result["memory"] = memory_stats
+        from .telemetry import observe_turn
+        observe_turn(result)
         background.add_task(service.memory.update, session_id, result.get("language", "pt"))
         result["last_message_id"] = db.last_message_id(session_id)
         logger.info("chat_done trace_id=%s session_id=%s intent=%s language=%s mode=%s tools=%s handoff=%s",
@@ -426,6 +442,18 @@ def list_actions(auth_user: str = Depends(require_user)):
     if service is None:
         raise HTTPException(status_code=503, detail="Service is starting")
     return service.actions.list_for_user(auth_user)
+
+
+@app.get("/metrics")
+def prometheus_metrics():
+    """Prometheus exposition (latency per stage/agent/tool, tokens, cost, degraded, Critic, hand-offs,
+    human queue, corpus version). No message text, user or session ids in labels."""
+    from .telemetry import refresh_gauges, render
+    service, db = state.get("service"), state.get("db")
+    if db is not None:
+        refresh_gauges(db, getattr(getattr(service, "improvement", None), "corpus_version", None))
+    body, content_type = render()
+    return Response(content=body, media_type=content_type)
 
 
 @app.get("/api/sessions/{session_id}/messages")

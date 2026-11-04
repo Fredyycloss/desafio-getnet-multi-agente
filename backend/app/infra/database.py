@@ -180,6 +180,15 @@ class Database:
             self.conn.execute("INSERT INTO messages(session_id,role,content,metadata_json,created_at) VALUES(?,?,?,?,?)", (session_id, role, content[:4000], json.dumps(metadata or {}, ensure_ascii=False), self._now()))
             self.conn.commit()
 
+    def shared_secret(self, name: str) -> bytes:
+        """Random secret created once per database (INSERT OR IGNORE: replicas starting together agree)."""
+        with self.lock:
+            self.conn.execute("CREATE TABLE IF NOT EXISTS app_secrets (name TEXT PRIMARY KEY, value TEXT NOT NULL)")
+            self.conn.execute("INSERT OR IGNORE INTO app_secrets(name, value) VALUES(?, ?)", (name, secrets.token_hex(32)))
+            self.conn.commit()
+            row = self.conn.execute("SELECT value FROM app_secrets WHERE name=?", (name,)).fetchone()
+        return bytes.fromhex(row["value"])
+
     def get_session_owner(self, session_id: str) -> str | None:
         with self.lock:
             row = self.conn.execute("SELECT user_id FROM sessions WHERE session_id=?", (session_id,)).fetchone()
