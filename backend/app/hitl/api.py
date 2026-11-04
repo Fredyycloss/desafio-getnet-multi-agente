@@ -189,3 +189,43 @@ def resume_if_pending(ticket: dict | None) -> dict | None:
                     {**{k: result[k] for k in ("trace", "sources", "critic", "agent") if k in result},
                      "author": "assistant_resume", "handoff_protocol": ticket["protocol"]})
     return result
+
+
+# ---------------------------------------------------------------- knowledge-gap review (V6 block 6)
+
+class GapDecision(BaseModel):
+    action: str = Field(pattern="^(dismiss|promote_kb|promote_classifier)$")
+    answer: str | None = Field(default=None, max_length=2000)
+    source_url: str | None = Field(default=None, max_length=300)
+    intent: str | None = Field(default=None, max_length=60)
+    note: str | None = Field(default=None, max_length=300)
+
+
+@router.get("/knowledge-gaps")
+def knowledge_gaps(status: str = "open", operator: dict = Depends(require_operator)):
+    """Abstentions, clarification menus, Critic rejections and 👎 waiting for human review."""
+    service = _state()["service"]
+    if service is None:
+        raise HTTPException(status_code=503, detail="Service is starting")
+    return {"items": service.improvement.list_gaps(None if status == "all" else status)}
+
+
+@router.post("/knowledge-gaps/{gap_id}/decision")
+def decide_knowledge_gap(gap_id: int, payload: GapDecision, operator: dict = Depends(require_operator)):
+    """dismiss: any operator. promote_kb / promote_classifier: supervisor only (nothing enters by itself)."""
+    service = _state()["service"]
+    if service is None:
+        raise HTTPException(status_code=503, detail="Service is starting")
+    if payload.action != "dismiss" and operator["role"] != "supervisor":
+        raise HTTPException(status_code=403, detail="Supervisor role required to promote")
+    import json as _json
+    from ..agents.intent_classifier import EXAMPLES_PATH
+    known = set(_json.loads(EXAMPLES_PATH.read_text(encoding="utf-8"))["intents"])
+    out = service.improvement.decide_gap(gap_id, operator["username"], payload.action, answer=payload.answer,
+                                         source_url=payload.source_url, intent=payload.intent, note=payload.note,
+                                         known_intents=known)
+    ops.audit(service.db, operator["username"], "console", f"gap_{payload.action}", str(gap_id), "ok" if out["ok"] else out["error"])
+    if not out["ok"]:
+        code = {"not_found": 404, "already_decided": 409, "overlaps_evaluation_dataset": 409}.get(out["error"], 422)
+        raise HTTPException(status_code=code, detail=out["error"])
+    return out

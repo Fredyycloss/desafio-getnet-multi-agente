@@ -10,6 +10,7 @@ from collections import Counter
 import numpy as np
 from typing import Any
 
+from ..memory import memory_limit
 from ..infra.database import Database
 from ..infra.llm import LLMProvider, LLMUnavailable
 from ..language import normalize
@@ -90,8 +91,9 @@ class KnowledgeAgent:
     QUERY_PREFIX = "search_query: "
 
     def __init__(self, documents: list[dict], db: Database | None = None, llm: LLMProvider | None = None,
-                 *, vectors: dict[str, list[float]] | None = None, vector_model: str | None = None, web=None):
+                 *, vectors: dict[str, list[float]] | None = None, vector_model: str | None = None, web=None, validated=None):
         self.documents = documents
+        self.validated = validated  # ImprovementLoop: answers validated by the Critic and a customer 👍
         self.web = web  # WebResearchAgent used as the module of the web/weather/FX tools
         self.db = db
         self.llm = llm
@@ -259,7 +261,7 @@ class KnowledgeAgent:
         messages = [{"role": "system", "content": system}]
         for item in history[-4:]:
             if item.get("role") in {"user", "assistant"}:
-                messages.append({"role": item["role"], "content": str(item.get("content", ""))[:300]})
+                messages.append({"role": item["role"], "content": str(item.get("content", ""))[:memory_limit(item, 300)]})
         messages.append({"role": "user", "content": f"Question: {query[:800]}"})
         response = self.llm.chat(messages, KNOWLEDGE_TOOLS, max_tokens=int(os.getenv("OLLAMA_KNOWLEDGE_TOOL_MAX_OUTPUT_TOKENS", "100")),
                                  purpose="knowledge:tool_selection")
@@ -301,6 +303,15 @@ class KnowledgeAgent:
         failure: BaseException | None = None
         no_tool_fallback = False
         selected: list[tuple[str, dict]] | None = None
+        if self.validated is not None:
+            hit = self.validated.lookup(query, language, self._embedding)
+            if hit:
+                # Same question, same corpus version: reuse the validated answer (the Critic still reviews it).
+                return specialist_result(
+                    agent=self.name, task=query, answer=hit["answer"], confidence=0.9, started=started,
+                    evidence=hit["evidence"], sources=hit["sources"], trace=[*trace, "validated_answer_hit"],
+                    retrieved_chunks=len(hit["evidence"]), retrieval_mode="validated_answer",
+                    validated_answer={"id": hit["validated_id"], "similarity": hit["similarity"], "corpus_version": hit["corpus_version"]})
         if self.llm:
             try:
                 selected = self._select_tools(query, history)
@@ -390,7 +401,7 @@ class KnowledgeAgent:
             "Preserve official product names. Be concise. "
             + ("Answer only in English." if language == "en" else "Responda somente em português brasileiro.")
         )
-        history_block = "\n".join(f"{m.get('role')}: {str(m.get('content',''))[:300]}" for m in history[-4:])
+        history_block = "\n".join(f"{m.get('role')}: {str(m.get('content',''))[:memory_limit(m, 300)]}" for m in history[-4:])
         evidence_block = "\n\n".join(
             f"[{i+1}] {d['title']} — {d.get('section') or ''} | {d['url']}\n{d['content'][:EVIDENCE_PROMPT_CHARS]}" for i, d in enumerate(evidence)
         ) or "(none)"

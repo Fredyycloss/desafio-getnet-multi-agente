@@ -56,6 +56,9 @@ class SupervisorAgent(FastPathMixin, PlannerMixin, ReplanMixin, ComposerMixin, M
                            history=history, trace_id=trace_id, selected_topic=selected_topic)
         # A configured model whose contextual pass failed means the turn was not
         # interpreted by the LLM: the response is degraded even if it is safe.
+        from .. import ablation
+        if ablation.active():
+            result["trace"] = [*result.get("trace", []), "ablation:" + ",".join(sorted(ablation.active()))]
         if (self.llm and not result.get("degraded")
                 and (result.get("context_assessment") or {}).get("assessment_mode") == "deterministic_fallback"):
             result["degraded"] = True
@@ -83,11 +86,16 @@ class SupervisorAgent(FastPathMixin, PlannerMixin, ReplanMixin, ComposerMixin, M
         # Secret disclosure is stopped by a deterministic privacy guard before any model sees it.
         selected_option = self._selected_clarification_option(message, history)
         assessment_error: LLMUnavailable | None = None
+        from .. import ablation
         try:
             with stage("context_intelligence", "agent"):
-                assessment, assessment_mode = self.context_intelligence.assess(
-                    message, history, language, trace_id, selected_option=selected_option or selected_topic
-                )
+                if ablation.on("no_context_intelligence"):
+                    assessment, assessment_mode = ContextIntelligence(None).assess(message, history, language, trace_id)
+                    assessment_mode = "ablation_no_context_intelligence"
+                else:
+                    assessment, assessment_mode = self.context_intelligence.assess(
+                        message, history, language, trace_id, selected_option=selected_option or selected_topic
+                    )
         except LLMUnavailable as exc:
             assessment_error = exc
             with stage("context_intelligence_fallback", "agent"):
@@ -97,7 +105,8 @@ class SupervisorAgent(FastPathMixin, PlannerMixin, ReplanMixin, ComposerMixin, M
         if selected_option == "figurative_expression":
             risk_message += " [customer confirmed a figurative expression]"
         with stage("risk_assessment", "agent"):
-            risk = self.risk.assess(risk_message, history, language)
+            risk = ({"requires_handoff": False, "severity": "normal", "trace": ["ablation_no_risk_assessment"]}
+                    if ablation.on("no_policy_gate") else self.risk.assess(risk_message, history, language))
         if risk.get("requires_handoff"):
             with stage("human_handoff", "agent"):
                 result = self.escalation.run(
@@ -196,10 +205,8 @@ class SupervisorAgent(FastPathMixin, PlannerMixin, ReplanMixin, ComposerMixin, M
             assessment["operational_reason"] = "Customer selected a topic; route with the preserved request context."
 
         with stage("policy_gate", "guardrail"):
-            decision = self.policy_gate.apply(
-                assessment, risk,
-                contextual_model_available=assessment_mode in CONTEXT_MODES,
-            )
+            decision = ({"action": "continue", "reason": "ablation_no_policy_gate"} if ablation.on("no_policy_gate") else
+                        self.policy_gate.apply(assessment, risk, contextual_model_available=assessment_mode in CONTEXT_MODES))
         action_map = {
             "clarify": ("clarify", "clarification"),
             "human_handoff": ("human_handoff", "human_handoff"),

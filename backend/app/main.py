@@ -8,7 +8,7 @@ from contextlib import asynccontextmanager
 from uuid import uuid4
 import hmac
 
-from fastapi import Depends, FastAPI, HTTPException, Request, Response, Header
+from fastapi import BackgroundTasks, Depends, FastAPI, HTTPException, Request, Response, Header
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, field_validator
 
@@ -160,6 +160,7 @@ def health():
             "knowledge_chunks": len(state["documents"]), "llm_enabled": bool(service.llm), "llm_available": model_ready, "llm": llm_status,
             "context_intelligence": service.llm.provider if service.llm else "deterministic_fallback",
             "llm_provider": service.llm.describe() if service.llm else {"provider": None},
+            "ablation": sorted(__import__("app.ablation", fromlist=["active"]).active()) or None,
             "cloud_status": {k: llm_status.get(k) for k in ("cloud_mode", "key_state", "message", "fallback_active", "fallback_reason")
                              if k in llm_status} or None,
             "llm_provider_setting": os.getenv("LLM_PROVIDER", "auto"),
@@ -223,7 +224,7 @@ def demo_login(payload: DemoLogin, request: Request):
 
 
 @app.post("/api/chat")
-def chat(payload: ChatRequest, request: Request, auth_user: str = Depends(optional_user)):
+def chat(payload: ChatRequest, request: Request, background: BackgroundTasks, auth_user: str = Depends(optional_user)):
     # Identity comes from the token; the body user_id is kept for the challenge contract and must match.
     # Without a token (the literal challenge payload) the turn is anonymous: the body user_id is never
     # used to read data; customer-data tools answer login_required.
@@ -254,9 +255,11 @@ def chat(payload: ChatRequest, request: Request, auth_user: str = Depends(option
                 db.ensure_session(session_id, auth_user)
             except PermissionError as exc:
                 raise HTTPException(status_code=404, detail="Session not found") from exc
-            history = db.get_history(session_id, limit=12)
+            history = db.get_history(session_id, limit=max(40, service.memory.after + service.memory.recent))
             if not history and payload.history:
                 history = [item.model_dump() for item in payload.history[-10:]]
+            # Long conversations: older turns are replaced by the session summary + structured facts.
+            history, memory_stats = service.memory.context(session_id, history, detect_language(payload.message, history))
         from .agents.guardrails import inspect_message
         active = service.hitl.active_ticket_for_session(session_id)
         if active:
@@ -289,6 +292,9 @@ def chat(payload: ChatRequest, request: Request, auth_user: str = Depends(option
                                 selected_topic=payload.selected_topic)
         with stage("assistant_message_persistence", "persistence"):
             db.save_message(session_id, auth_user, "assistant", result["answer"], _without_action_token(result))
+        gap = service.improvement.gap_kind(result)
+        if gap:  # review queue for operators; nothing is learned automatically
+            service.improvement.record_gap(request.state.trace_id, gap, stored_message, result.get("language", "pt"))
         timeline = current_timeline()
         result["stage_timings"] = timeline.snapshot() if timeline else []
         result["model_usage"] = timeline.model_usage() if timeline else {"llm_calls": 0, "prompt_tokens": 0, "output_tokens": 0, "calls": []}
@@ -297,6 +303,8 @@ def chat(payload: ChatRequest, request: Request, auth_user: str = Depends(option
         state["metrics"]["chats"] += 1
         result["session_id"] = session_id
         result["authenticated"] = auth_user != ANONYMOUS
+        result["memory"] = memory_stats
+        background.add_task(service.memory.update, session_id, result.get("language", "pt"))
         result["last_message_id"] = db.last_message_id(session_id)
         logger.info("chat_done trace_id=%s session_id=%s intent=%s language=%s mode=%s tools=%s handoff=%s",
                     result["trace_id"], session_id, result["intent"], result["language"], result["orchestration_mode"], result["tool_calls"], result["handoff"])
@@ -363,6 +371,25 @@ def _decide_pending_action(service, db, message: str, user_id: str, session_id: 
     db.save_message(session_id, user_id, "user", message)
     outcome = service.actions.decide(pending["action_id"], user_id, session_id, decision, typed=message if reinforced else None, channel="chat")
     return _action_reply(service, db, outcome, pending["language"], user_id, session_id, trace_id, "chat")
+
+
+class Feedback(BaseModel):
+    trace_id: str = Field(min_length=8, max_length=64)
+    rating: str = Field(pattern="^(up|down)$")
+    reason: str | None = Field(default=None, max_length=20)
+
+
+@app.post("/api/feedback")
+def feedback(payload: Feedback, auth_user: str = Depends(optional_user)):
+    """👍/👎 on an answer of the caller's own conversation. Stores ids, rating and a reason code only."""
+    service = state.get("service")
+    if service is None:
+        raise HTTPException(status_code=503, detail="Service is starting")
+    out = service.improvement.feedback(payload.trace_id, auth_user, payload.rating, payload.reason,
+                                       embed=service.knowledge._embedding)
+    if not out["ok"]:
+        raise HTTPException(status_code=404, detail="Answer not found")
+    return out
 
 
 class ActionDecision(BaseModel):

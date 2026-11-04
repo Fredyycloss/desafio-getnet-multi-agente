@@ -145,6 +145,14 @@ function Assistant({ auth, onLogout }: { auth: Auth; onLogout: () => void }) {
     return () => clearInterval(id)
   }, [activeHandoff, sessionId]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  const [rated, setRated] = useState<Record<string, 'up' | 'down'>>({})
+  async function rate(msgId: string, traceId: string | undefined, rating: 'up' | 'down') {
+    if (!traceId || rated[msgId]) return
+    setRated(prev => ({ ...prev, [msgId]: rating }))
+    try {
+      await fetch('/api/feedback', { method: 'POST', headers: authHeaders, body: JSON.stringify({ trace_id: traceId, rating }) })
+    } catch { /* feedback is best effort */ }
+  }
   const [typed, setTyped] = useState('')
   const [decided, setDecided] = useState<Record<string, boolean>>({})
   async function decideAction(action: PendingAction, decision: 'confirm' | 'cancel') {
@@ -285,6 +293,11 @@ function Assistant({ auth, onLogout }: { auth: Auth; onLogout: () => void }) {
               </div>}
               {msg.meta?.action_protocol && <div className="action-done">Protocolo da ação: <b>{msg.meta.action_protocol}</b></div>}
               {(msg.meta?.sources?.length ?? 0) > 0 && <div className="inline-sources"><span>Fontes consultadas</span>{msg.meta?.sources?.slice(0, 3).map(source => <a href={source.url} target="_blank" rel="noreferrer" key={source.url + source.title}>{source.title}<ArrowUpRight size={12}/></a>)}</div>}
+              {msg.meta?.trace_id && msg.role === 'assistant' && <div className="feedback-row" aria-label="Avaliar resposta">
+                <button className={`feedback-btn ${rated[msg.id] === 'up' ? 'on' : ''}`} onClick={() => void rate(msg.id, msg.meta?.trace_id, 'up')} disabled={!!rated[msg.id]} aria-label="Resposta útil">👍</button>
+                <button className={`feedback-btn ${rated[msg.id] === 'down' ? 'on' : ''}`} onClick={() => void rate(msg.id, msg.meta?.trace_id, 'down')} disabled={!!rated[msg.id]} aria-label="Resposta não ajudou">👎</button>
+                {rated[msg.id] && <span className="feedback-thanks">Obrigado pela avaliação.</span>}
+              </div>}
               {msg.meta && <>
                 <button className="detail-toggle" onClick={() => setShowDetails(showDetails === msg.id ? null : msg.id)}><Sparkles size={13}/>{msg.meta.agent.replace(/_/g, ' ')}<ChevronDown size={13} className={showDetails === msg.id ? 'rotate' : ''}/></button>
                 {showDetails === msg.id && <div className="agent-details">

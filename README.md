@@ -255,6 +255,39 @@ Product, support, payment and research answers are always **written by an LLM ag
 
 The full inventory is in [docs/INVENTARIO_TEMPLATES.md](docs/INVENTARIO_TEMPLATES.md).
 
+### Long conversations: session memory
+
+The agents see only the last messages: Context Intelligence and Supervisor see 6.
+- **When it starts.** Once a session passes `SESSION_SUMMARY_AFTER_MESSAGES` (default 12), the older messages are folded into a short summary written by the LLM. The update runs in the background after the response, so it adds no latency.
+- **Facts.** The identifiers later turns refer to (terminal, transactions, attendance and action protocols, language) are extracted by code into structured session facts.
+- **What the agents receive.** The facts and the summary in one memory message, followed by the last 5 messages.
+- **Privacy.** E-mails, card numbers and credentials are redacted from the summary's input and output.
+- **Scope.** The memory belongs to the session, which belongs to one customer.
+- **Switch:** `SESSION_MEMORY=off`.
+- **Tests:** `backend/tests/test_session_memory.py` (a 30-turn conversation, redaction, isolation).
+
+### How the system improves over time
+
+The model does not learn by itself. Improvement comes from a refreshed knowledge base, validated answers and human review.
+
+1. **Refresh.** `knowledge-refresh` (see [Knowledge base](#knowledge-base-and-rag-pipeline)) re-crawls the official sites, reuses cached pages and embeddings by content hash, and writes a new versioned snapshot. To run it periodically, use a host cron line, for example `0 3 * * 1 docker compose --profile tools run --rm knowledge-refresh`.
+2. **Feedback.** Each answer in the chat has 👍/👎 (`POST /api/feedback` with the `trace_id`). Only ids, the rating and a reason code are stored, never message text.
+3. **Validated answers.** A Knowledge answer qualifies when all of these hold:
+   - no customer data was used;
+   - the model Critic approved it;
+   - it has sources;
+   - the customer rated it 👍.
+
+   It is stored with its sources and the corpus version. A semantically equal question reuses it (trace `validated_answer_hit`, still reviewed by the Critic) until the corpus changes. A 👎 withdraws it.
+4. **Knowledge gaps.** Abstentions, clarification menus, Critic rejections and 👎 enter a review queue: `GET /api/operator/knowledge-gaps`, with an operator token.
+   - Any operator can dismiss a gap.
+   - Only a supervisor can promote one:
+     - to the knowledge base, with an answer and an official source URL, loaded at the next start;
+     - or to the classifier examples, with a known intent.
+   - Text that overlaps any evaluation dataset is refused (409). Every decision is audited.
+
+Tests: `backend/tests/test_improvement_loop.py`.
+
 ---
 
 ## Tests

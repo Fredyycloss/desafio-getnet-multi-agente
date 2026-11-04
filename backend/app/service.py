@@ -20,11 +20,19 @@ class ChatService:
                  *, llm_required: bool = False, vectors: dict | None = None, vector_model: str | None = None):
         self.db = db
         self.llm = llm
-        self.context_intelligence = ContextIntelligence(llm, classifier=self._intent_classifier(llm, db))
+        from .improvement import ImprovementLoop, corpus_version
+        self.improvement = ImprovementLoop(db)
+        curated = self.improvement.curated_documents()
+        documents = documents + curated  # operator-promoted entries (knowledge-gap review)
+        self.improvement.corpus_version = corpus_version(documents, len(curated))
+        self.context_intelligence = ContextIntelligence(llm, classifier=self._intent_classifier(llm, db, self.improvement.extra_examples()))
         self.web = WebResearchAgent(llm=llm)  # module of the Knowledge agent's web/weather/FX tools
-        self.knowledge = KnowledgeAgent(documents, db=db, llm=llm, vectors=vectors, vector_model=vector_model, web=self.web)
+        self.knowledge = KnowledgeAgent(documents, db=db, llm=llm, vectors=vectors, vector_model=vector_model, web=self.web,
+                                        validated=self.improvement)
         from .actions.service import ActionService
+        from .memory import SessionMemory
         self.actions = ActionService(db)
+        self.memory = SessionMemory(db, llm)
         self.support = CustomerSupportAgent(db, llm, actions=self.actions)
         self.payments = PaymentsAgent(db, llm, actions=self.actions)
         self.risk = RiskAssessmentAgent()
@@ -39,13 +47,13 @@ class ChatService:
                                           payments=self.payments)
 
     @staticmethod
-    def _intent_classifier(llm, db):
+    def _intent_classifier(llm, db, extra_examples=None):
         """kNN intent classifier for CONTEXT_MODE=embedding|hybrid (local nomic embeddings)."""
         import os
         if llm is None or os.getenv("CONTEXT_MODE", "llm").strip().lower() not in {"embedding", "hybrid"}:
             return None
         from .agents.intent_classifier import EmbeddingIntentClassifier
-        return EmbeddingIntentClassifier(llm, db)
+        return EmbeddingIntentClassifier(llm, db, extra_examples=extra_examples)
 
     def answer(self, message: str, user_id: str, session_id: str, history: list[dict] | None = None, trace_id: str | None = None,
                *, selected_topic: str | None = None) -> dict:

@@ -8,6 +8,7 @@ from typing import Literal
 
 from pydantic import BaseModel, ConfigDict, Field, ValidationError
 
+from ..memory import memory_limit
 from ..infra.llm import LLMProvider, LLMUnavailable
 from ..language import normalize
 from .guardrails import inspect_message
@@ -194,7 +195,7 @@ class ContextIntelligence:
         payload = {
             "current_message": message,
             "recent_history": [
-                {"role": item["role"], "content": str(item.get("content", ""))[:HISTORY_CHARS]}
+                {"role": item["role"], "content": str(item.get("content", ""))[:memory_limit(item, HISTORY_CHARS)]}
                 for item in history[-HISTORY_MESSAGES:]
                 if item.get("role") in {"user", "assistant"}
             ],

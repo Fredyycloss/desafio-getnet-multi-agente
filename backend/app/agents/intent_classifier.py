@@ -29,13 +29,15 @@ def _cosine(a: list[float], b: list[float]) -> float:
 
 
 class EmbeddingIntentClassifier:
-    def __init__(self, embedder: LLMProvider, db=None, *, k: int | None = None):
+    def __init__(self, embedder: LLMProvider, db=None, *, k: int | None = None, extra_examples: list[tuple[str, str]] | None = None):
         self.embedder = embedder
         self.db = db
         self.k = k or int(os.getenv("CONTEXT_EMBEDDING_K", "5"))
         data = json.loads(EXAMPLES_PATH.read_text(encoding="utf-8"))["intents"]
         self.agents = {intent: spec.get("agent") for intent, spec in data.items()}
         self.examples = [(intent, text) for intent, spec in data.items() for text in spec["examples"]]
+        # Operator-promoted examples (knowledge-gap review); never added automatically.
+        self.examples += [(intent, text) for intent, text in extra_examples or [] if intent in self.agents]
         self._vectors: list[list[float]] | None = None
 
     def _cache_key(self, text: str) -> str:

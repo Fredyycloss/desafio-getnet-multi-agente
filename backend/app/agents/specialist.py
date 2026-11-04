@@ -16,6 +16,7 @@ import time
 from typing import Any, Callable
 from uuid import uuid4
 
+from ..memory import memory_limit
 from ..infra.database import Database
 from ..infra.llm import LLMAuthError, LLMBudgetExceeded, LLMProvider, LLMTimeout, LLMUnavailable
 from ..observability import stage
@@ -220,7 +221,7 @@ class ToolSpecialist:
         messages: list[dict] = [{"role": "system", "content": self.selection_prompt + (" " + self.action_prompt if self.actions and self.action_prompt else "")}]
         for item in history[-4:]:
             if item.get("role") in {"user", "assistant"}:
-                messages.append({"role": item["role"], "content": str(item.get("content", ""))[:300]})
+                messages.append({"role": item["role"], "content": str(item.get("content", ""))[:memory_limit(item, 300)]})
         messages.append({"role": "user", "content": f"Task: {task[:600]}"})
         response = self.llm.chat(messages, self._schemas(),
                                  max_tokens=int(os.getenv("OLLAMA_SUPPORT_MAX_OUTPUT_TOKENS", "80")),

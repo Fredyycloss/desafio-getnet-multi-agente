@@ -8,6 +8,7 @@ import os
 import time
 from typing import Any
 
+from ...memory import memory_limit
 from .constants import FINAL_MARKER, PLANNER_CONTEXT_KEYS, SUPERVISOR_TOOLS, canonical_agent
 
 logger = logging.getLogger("app.agents.supervisor_agent")
@@ -38,7 +39,7 @@ class PlannerMixin:
         })
         for item in history[-self.HISTORY_MESSAGES:]:
             if item.get("role") in {"user", "assistant"}:
-                messages.append({"role": item["role"], "content": str(item.get("content", ""))[:self.HISTORY_CHARS]})
+                messages.append({"role": item["role"], "content": str(item.get("content", ""))[:memory_limit(item, self.HISTORY_CHARS)]})
         messages.append({"role": "user", "content": f"Request: {message}"})
         observations: list[dict] = []
         trace = ["supervisor_agent", "llm_function_calling"]

@@ -144,6 +144,8 @@ def run_live(args, items):
         started = time.perf_counter()
         try:
             result = service.answer(item["question"], item["user_id"], f"q-{item['id']}-{uuid4().hex[:6]}", [])
+            from app.observability import current_timeline
+            usage = current_timeline().model_usage()
         finally:
             finish_timeline(token)
         latency = time.perf_counter() - started
@@ -155,7 +157,8 @@ def run_live(args, items):
                   "sources": [{"title": s.get("title"), "url": s.get("url")} for s in result.get("sources") or []][:6],
                   "evidence": [{"title": e.get("title"), "url": e.get("url"), "section": e.get("section"), "content": e.get("content", "")[:900]}
                                for e in evidence[:6]],
-                  "tool_data": tools[:6], "checks": checks}
+                  "tool_data": tools[:6], "checks": checks,
+                  "llm_calls": usage.get("llm_calls"), "cost_usd": usage.get("cost_usd", 0.0)}
         if judge_llm is not None:
             try:
                 record["judge"] = judge(judge_llm, item, result["answer"], evidence, tools)
@@ -169,29 +172,35 @@ def run_live(args, items):
                      "judge_model": getattr(judge_llm, "model", None)}
 
 
+def aggregate(rows: list[dict]) -> dict:
+    ans = [r for r in rows if r["checks"]["kind"] == "answer"]
+    abst = [r for r in rows if r["checks"]["kind"] == "abstain"]
+    judged = [r["judge"] for r in rows if isinstance(r.get("judge"), dict) and "verdict" in r["judge"]]
+    mean = lambda xs: round(statistics.mean(xs), 4) if xs else None  # noqa: E731
+    return {
+        "n": len(rows),
+        "coverage_mean": mean([r["checks"]["coverage"] for r in ans if r["checks"]["coverage"] is not None]),
+        "full_coverage_rate": mean([1.0 if r["checks"]["coverage"] == 1 else 0.0 for r in ans if r["checks"]["coverage"] is not None]),
+        "forbidden_absent_rate": mean([1.0 if r["checks"]["forbidden_absent"] else 0.0 for r in rows]),
+        "numbers_supported_rate": mean([1.0 if r["checks"]["numbers_supported"] else 0.0 for r in ans]),
+        "citation_correct_rate": mean([1.0 if r["checks"]["citation_correct"] else 0.0 for r in ans if r["checks"]["citation_correct"] is not None]),
+        "language_ok_rate": mean([1.0 if r["checks"]["language_ok"] else 0.0 for r in rows]),
+        "abstention_correct_rate": mean([1.0 if r["checks"]["abstention_correct"] else 0.0 for r in abst]),
+        "degraded_rate": mean([1.0 if r["degraded"] else 0.0 for r in rows]),
+        "critic_rejection_rate": mean([1.0 if (r.get("critic") or {}).get("approved") is False else 0.0 for r in rows]),
+        "judge_correct_rate": mean([1.0 if j["verdict"] == "correct" else 0.0 for j in judged]),
+        "judge_grounded_rate": mean([1.0 if j.get("grounded") else 0.0 for j in judged]),
+        "judge_usefulness_mean": mean([j["usefulness"] for j in judged if isinstance(j.get("usefulness"), int)]),
+        "latency_mean_s": mean([r["latency_s"] for r in rows]),
+    "latency_p95_s": sorted(r["latency_s"] for r in rows)[max(0, int(round(0.95 * len(rows))) - 1)] if rows else None,
+    "llm_calls_mean": mean([r["llm_calls"] for r in rows if r.get("llm_calls") is not None]),
+    "cost_mean_usd": mean([r["cost_usd"] for r in rows if r.get("cost_usd") is not None]),
+    }
+
+
 def finish(args, records, meta):
 
-    def agg(rows):
-        ans = [r for r in rows if r["checks"]["kind"] == "answer"]
-        abst = [r for r in rows if r["checks"]["kind"] == "abstain"]
-        judged = [r["judge"] for r in rows if isinstance(r.get("judge"), dict) and "verdict" in r["judge"]]
-        mean = lambda xs: round(statistics.mean(xs), 4) if xs else None  # noqa: E731
-        return {
-            "n": len(rows),
-            "coverage_mean": mean([r["checks"]["coverage"] for r in ans if r["checks"]["coverage"] is not None]),
-            "full_coverage_rate": mean([1.0 if r["checks"]["coverage"] == 1 else 0.0 for r in ans if r["checks"]["coverage"] is not None]),
-            "forbidden_absent_rate": mean([1.0 if r["checks"]["forbidden_absent"] else 0.0 for r in rows]),
-            "numbers_supported_rate": mean([1.0 if r["checks"]["numbers_supported"] else 0.0 for r in ans]),
-            "citation_correct_rate": mean([1.0 if r["checks"]["citation_correct"] else 0.0 for r in ans if r["checks"]["citation_correct"] is not None]),
-            "language_ok_rate": mean([1.0 if r["checks"]["language_ok"] else 0.0 for r in rows]),
-            "abstention_correct_rate": mean([1.0 if r["checks"]["abstention_correct"] else 0.0 for r in abst]),
-            "degraded_rate": mean([1.0 if r["degraded"] else 0.0 for r in rows]),
-            "critic_rejection_rate": mean([1.0 if (r.get("critic") or {}).get("approved") is False else 0.0 for r in rows]),
-            "judge_correct_rate": mean([1.0 if j["verdict"] == "correct" else 0.0 for j in judged]),
-            "judge_grounded_rate": mean([1.0 if j.get("grounded") else 0.0 for j in judged]),
-            "judge_usefulness_mean": mean([j["usefulness"] for j in judged if isinstance(j.get("usefulness"), int)]),
-            "latency_mean_s": mean([r["latency_s"] for r in rows]),
-        }
+    agg = aggregate
     by_cat = defaultdict(list)
     for r in records:
         by_cat[r["category"]].append(r)

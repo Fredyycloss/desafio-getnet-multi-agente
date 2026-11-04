@@ -15,9 +15,13 @@ logger = logging.getLogger("app.agents.supervisor_agent")
 class FastPathMixin:
     def _fast_path_agent(self, assessment: dict, assessment_mode: str, decision: dict) -> str | None:
         """Return the single routine specialist to dispatch directly, if any."""
-        if assessment_mode not in CONTEXT_MODES or decision.get("action") != "continue":
+        from ... import ablation
+        if ablation.on("planning_only") or assessment_mode not in CONTEXT_MODES or decision.get("action") != "continue":
             return None
         agents = list(dict.fromkeys(canonical_agent(a) for a in assessment.get("recommended_agents") or []))
+        if ablation.on("fast_path_only"):
+            routine = [a for a in agents if a in FAST_PATH_AGENTS]
+            return routine[0] if routine else None
         if len(agents) != 1 or agents[0] not in FAST_PATH_AGENTS:
             return None
         try:

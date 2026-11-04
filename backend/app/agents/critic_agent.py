@@ -7,6 +7,7 @@ from datetime import date, datetime, timezone
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from ..memory import memory_limit
 from ..clock import today as clock_today
 from ..infra.llm import LLMProvider, LLMTimeout, LLMUnavailable
 from ..language import detect_language
@@ -157,6 +158,9 @@ class CriticAgent:
         grounding_observations: list | None = None,
     ) -> dict:
         evidence = evidence or []
+        from .. import ablation
+        if ablation.on("no_critic"):
+            return {"approved": True, "mode": "ablation_no_critic", "issues": []}
         with stage("critic_review", "agent"):
             if high_risk:
                 return {"approved": True, "mode": "safety_policy", "issues": [], "reason": "Emergency instructions are governed by deterministic safety policy."}
@@ -179,7 +183,7 @@ class CriticAgent:
                         "language": language,
                         "customer_request": (user_message or "")[:600],
                         "recent_conversation": [
-                            {"role": item.get("role"), "content": str(item.get("content", ""))[:300]}
+                            {"role": item.get("role"), "content": str(item.get("content", ""))[:memory_limit(item, 300)]}
                             for item in (conversation_context or [])[-4:]
                             if item.get("role") in {"user", "assistant"}
                         ],
