@@ -21,6 +21,10 @@ services:
       ANTHROPIC_OUTPUT_USD_PER_MTOK: ${ANTHROPIC_OUTPUT_USD_PER_MTOK:-0.50}
       ANTHROPIC_STARTUP_CHECK: ${ANTHROPIC_STARTUP_CHECK:-true}
       LLM_FALLBACK_PROVIDER: ${LLM_FALLBACK_PROVIDER:-}
+      GETNET_ANTHROPIC_BASE_URL: ${GETNET_ANTHROPIC_BASE_URL:-}
+      # Test-only adversarial first drafts (benchmark --orchestration). Keep false outside measurements.
+      CRITIC_CHALLENGE_MODE: ${CRITIC_CHALLENGE_MODE:-false}
+      CRITIC_STRICTNESS: ${CRITIC_STRICTNESS:-material}
       # llm | embedding | hybrid (Context Intelligence); offline mode overrides it in docker-compose.ai.yml
       CONTEXT_MODE: ${CONTEXT_MODE:-llm}
       CLOUD_LLM_BUDGET_SECONDS: ${CLOUD_LLM_BUDGET_SECONDS:-30}

@@ -205,6 +205,10 @@ def chat(payload: ChatRequest, request: Request, auth_user: str = Depends(requir
     db: Database | None = state.get("db")
     if service is None or db is None: raise HTTPException(status_code=503, detail="Service is starting")
     trace_token = start_timeline(request.state.trace_id)
+    from .agents import critic_challenge
+    challenge = request.headers.get("X-Critic-Challenge", "").strip()
+    if challenge and critic_challenge.enabled() and challenge in critic_challenge.KINDS:
+        current_timeline().critic_challenge = challenge  # test-only; ignored unless CRITIC_CHALLENGE_MODE=true
     session_id = payload.session_id or uuid4().hex
     try:
         with stage("session_read_and_validation", "persistence"):

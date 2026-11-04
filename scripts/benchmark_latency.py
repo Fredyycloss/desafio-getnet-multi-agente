@@ -97,8 +97,9 @@ class Api:
             self.tokens[user_id] = body["access_token"]
         return {"Authorization": f"Bearer {self.tokens[user_id]}"}
 
-    def chat(self, message: str, user_id: str = USER_A, session_id: str | None = None, *, as_user: str | None = None) -> dict:
-        """as_user: whose token is sent (defaults to user_id)."""
+    def chat(self, message: str, user_id: str = USER_A, session_id: str | None = None, *, as_user: str | None = None,
+             headers: dict | None = None) -> dict:
+        """as_user: whose token is sent (defaults to user_id). headers: extra request headers."""
         if self.pause:
             time.sleep(self.pause)
         trace_id = uuid.uuid4().hex
@@ -108,7 +109,7 @@ class Api:
         started = time.perf_counter()
         try:
             status, body = http_json("POST", f"{self.base}/api/chat", payload,
-                                     {"X-Request-ID": trace_id, **self.auth(as_user or user_id)}, self.timeout)
+                                     {"X-Request-ID": trace_id, **self.auth(as_user or user_id), **(headers or {})}, self.timeout)
         except Exception as exc:  # noqa: BLE001 - a client timeout is a result
             status, body = None, {"detail": f"{type(exc).__name__}: {exc}"[:300]}
         return {"trace_id": trace_id, "message": message, "user_id": user_id, "session_id": session_id,
@@ -306,10 +307,10 @@ OFFICIAL = [
 # Specialist each official scenario must reach (route correctness is reported separately
 # from llm_complete: a fast but wrongly routed answer is not a success).
 EXPECTED_AGENT = {
-    "product_compare": "knowledge_specialist", "weather_porto_alegre": "web_research_specialist",
+    "product_compare": "knowledge_specialist", "weather_porto_alegre": "knowledge_specialist",
     "yesterday_settlement": "payments_specialist", "pix_bank_account": "knowledge_specialist",
     "terminal_offline": "customer_support_specialist", "receivables_advance": "knowledge_specialist",
-    "euro_rate": "web_research_specialist", "declined_transaction": "payments_specialist",
+    "euro_rate": "knowledge_specialist", "declined_transaction": "payments_specialist",
     "crediario_installments": "knowledge_specialist", "payment_link_whatsapp": "knowledge_specialist",
     "D1_product": "knowledge_specialist", "D2_customer_lookup": "payments_specialist",
 }
@@ -435,6 +436,61 @@ def compose(*args: str) -> subprocess.CompletedProcess:
     return subprocess.run([*COMPOSE, *args], capture_output=True, text=True, timeout=300, cwd=ROOT)
 
 
+def scenario_d9_cloud(api: Api) -> dict:
+    """LLM unavailable, cloud provider: the API is recreated with GETNET_ANTHROPIC_BASE_URL pointing to a closed
+    port (no traffic leaves the host), checked, then recreated with the normal configuration."""
+    c = Checks(); turns = []
+    env = {**os.environ, "GETNET_ANTHROPIC_BASE_URL": "http://127.0.0.1:9", "ANTHROPIC_STARTUP_CHECK": "false",
+           "LLM_FALLBACK_PROVIDER": "none"}
+    _, before = api.get("/api/metrics")
+    up = subprocess.run(["docker", "compose", "-f", str(ROOT / "docker-compose.yml"), "up", "-d", "--no-deps", "api"],
+                        capture_output=True, text=True, timeout=300, cwd=ROOT, env=env)
+    c.add("setup:api_recreated_with_unreachable_provider", up.returncode == 0, up.stderr[-200:])
+    _wait_health(api)
+    api.tokens.clear()
+    try:
+        _, before = api.get("/api/metrics")
+        product = api.chat("A Get Lite tem aluguel mensal?"); turns.append(product)
+        detail = str(body(product).get("detail") or body(product).get("answer") or "")
+        c.add("controlled_time", product["latency_s"] <= 30, product["latency_s"])
+        c.add("clear_message_no_invented_answer", product["http_status"] == 503 and "unavailable" in detail.lower()
+              or (product["http_status"] == 200 and (body(product).get("degraded") is True
+                                                      or str(body(product).get("orchestration_mode", "")).startswith("deterministic_fallback"))),
+              {"http": product["http_status"], "mode": body(product).get("orchestration_mode"), "detail": detail[:200]})
+        human = api.chat("Quero falar com um atendente."); turns.append(human)
+        c.add("safe_fallback_human_handoff_still_works", human["http_status"] == 200 and body(human).get("handoff") is True
+              and bool(body(human).get("handoff_protocol")), human["http_status"])
+        _, after = api.get("/api/metrics")
+        c.add("error_recorded_in_metrics",
+              after.get("errors", 0) > before.get("errors", 0)
+              or (after.get("stages", {}).get("failures", 0) > before.get("stages", {}).get("failures", 0)),
+              {"errors": [before.get("errors"), after.get("errors")],
+               "stage_failures": [before.get("stages", {}).get("failures"), after.get("stages", {}).get("failures")]})
+    finally:
+        restore = subprocess.run(["docker", "compose", "-f", str(ROOT / "docker-compose.yml"), "up", "-d", "--no-deps", "api"],
+                                 capture_output=True, text=True, timeout=300, cwd=ROOT,
+                                 env={k: v for k, v in os.environ.items() if k not in ("GETNET_ANTHROPIC_BASE_URL",)})
+        c.add("teardown:api_recreated_normal", restore.returncode == 0, restore.stderr[-200:])
+        _wait_health(api)
+        api.tokens.clear()
+        warm = api.chat("Olá")
+        c.add("teardown:warmup_after_restore", warm["http_status"] == 200, {"latency_s": warm["latency_s"]})
+        turns.append(warm)
+    return {"checks": c, "turns": turns}
+
+
+def _wait_health(api: Api, seconds: int = 300) -> None:
+    deadline = time.time() + seconds
+    time.sleep(3)
+    while time.time() < deadline:
+        try:
+            if http_json("GET", f"{api.base}/api/health", timeout=5)[0] == 200:
+                return
+        except Exception:  # noqa: BLE001
+            pass
+        time.sleep(3)
+
+
 def scenario_d9(api: Api, ollama: str) -> dict:
     """LLM unavailable: controlled failure, clear message, error recorded, safe fallback. Runs last."""
     c = Checks(); turns = []
@@ -472,6 +528,92 @@ def scenario_d9(api: Api, ollama: str) -> dict:
         c.add("teardown:warmup_after_restart", warm["http_status"] == 200, {"latency_s": warm["latency_s"]})
         turns.append(warm)
     return {"checks": c, "turns": turns}
+
+
+ORCHESTRATION_PATH = ROOT / "backend" / "app" / "evaluation" / "orchestration_scenarios.json"
+
+
+def agents_called(trace: list) -> list[str]:
+    names = []
+    for item in trace or []:
+        item = str(item)
+        for prefix in ("tool:", "replan_tool:"):
+            if item.startswith(prefix) and item[len(prefix):].endswith("_specialist"):
+                name = item[len(prefix):]
+                if name not in names:
+                    names.append(name)
+    return names
+
+
+def orchestration_path(record: dict) -> str:
+    mode = str(record.get("orchestration_mode") or "")
+    return {"context_directed_dispatch": "fast_path", "llm_tool_calling": "planning"}.get(mode, mode or "error")
+
+
+def run_orchestration(api: Api) -> dict:
+    """V7-C: multi-intent (>=2 specialists), natural re-plan candidates and Critic challenges.
+
+    multi_intent: coverage = every expected specialist was called.
+    replan_natural: the replan set without injection (does the first draft pass on its own?).
+    challenge: same messages with X-Critic-Challenge (needs CRITIC_CHALLENGE_MODE=true on the API):
+      caught = the corrupted first draft was rejected; recovered = the re-plan produced an approved answer;
+      escalated = the Critic rejected again and the customer got a human protocol. A corrupted text
+      reaching the customer is counted as leaked.
+    """
+    data = json.loads(ORCHESTRATION_PATH.read_text(encoding="utf-8"))
+    out: dict[str, list[dict]] = {"multi_intent": [], "replan_natural": [], "challenge": []}
+    for case in data["multi_intent"]:
+        record = {"id": case["id"], **summarise_turn(api.chat(case["message"]))}
+        called = agents_called(record.get("trace"))
+        record.update(expected_agents=case["expected_agents"], agents_called=called, path=orchestration_path(record),
+                      covered=all(a in called for a in case["expected_agents"]),
+                      replanned="supervisor_replan" in (record.get("trace") or []))
+        out["multi_intent"].append(record)
+        print(f"  {case['id']:6s} {record['latency_s']:6.1f}s {record['path']:12s} covered={record['covered']} called={called}", flush=True)
+    for case in data["replan"]:
+        for group, headers in (("replan_natural", None), ("challenge", {"X-Critic-Challenge": case["challenge"]})):
+            record = {"id": case["id"], "challenge": case["challenge"] if headers else None,
+                      **summarise_turn(api.chat(case["message"], headers=headers))}
+            trace = [str(x) for x in record.get("trace") or []]
+            record.update(path=orchestration_path(record),
+                          injected=any(x.startswith("critic_challenge_injected") for x in trace),
+                          rejected_first="critic_rejected" in trace or "critic_rejected_fallback_handoff" in trace,
+                          replanned="supervisor_replan" in trace,
+                          recovered="critic_recheck" in trace and record.get("critic_approved") is True and not record.get("handoff"),
+                          escalated=record.get("intent") == "quality_escalation" or "critic_rejected_fallback_handoff" in trace)
+            if headers:
+                record["leaked"] = record["injected"] and not record["rejected_first"]
+            out[group].append(record)
+            print(f"  {case['id']:6s} {group:15s} {record['latency_s']:6.1f}s injected={record['injected']} "
+                  f"rejected={record['rejected_first']} recovered={record['recovered']} escalated={record['escalated']}", flush=True)
+    return out
+
+
+def summarise_orchestration(groups: dict[str, list[dict]]) -> dict:
+    def rate(items, key):
+        return round(sum(1 for i in items if i.get(key)) / len(items), 3) if items else None
+    allr = [r for items in groups.values() for r in items]
+    paths = {}
+    for r in allr:
+        paths[r["path"]] = paths.get(r["path"], 0) + 1
+    mi, nat, ch = groups["multi_intent"], groups["replan_natural"], groups["challenge"]
+    injected = [r for r in ch if r["injected"]]
+    return {
+        "requests": len(allr), "path_counts": paths,
+        "path_rates": {k: round(v / len(allr), 3) for k, v in paths.items()} if allr else {},
+        "multi_intent": {"n": len(mi), "intent_coverage": rate(mi, "covered"),
+                         "planning_rate": round(sum(1 for r in mi if r["path"] == "planning") / len(mi), 3) if mi else None,
+                         "replan_rate": rate(mi, "replanned"), "handoff_rate": rate(mi, "handoff"), "latency": _stats(mi)},
+        "replan_natural": {"n": len(nat), "critic_rejected_first_draft": rate(nat, "rejected_first"), "replan_rate": rate(nat, "replanned"),
+                           "recovered_by_replan": rate(nat, "recovered"), "escalated": rate(nat, "escalated"), "latency": _stats(nat)},
+        "challenge": {"n": len(ch), "injected": len(injected),
+                      "caught_rate": rate(injected, "rejected_first"), "recovered_by_replan": rate(injected, "recovered"),
+                      "escalated_to_human": rate(injected, "escalated"), "leaked_to_customer": sum(1 for r in injected if r["leaked"]),
+                      "by_kind": {k: {"n": sum(1 for r in injected if r["challenge"] == k),
+                                      "caught": sum(1 for r in injected if r["challenge"] == k and r["rejected_first"])}
+                                  for k in sorted({r["challenge"] for r in injected})},
+                      "latency": _stats(ch)},
+    }
 
 
 FUNCTIONAL = {"D3_ambiguity": scenario_d3, "D4_subject_change": scenario_d4,
@@ -621,6 +763,10 @@ def main() -> int:
     parser.add_argument("--only", default="", help="comma list of scenario ids (latency and/or functional)")
     parser.add_argument("--no-functional", action="store_true")
     parser.add_argument("--llm-down", action="store_true", help="run scenario 9 last (stops/starts the ollama container)")
+    parser.add_argument("--llm-down-cloud", action="store_true",
+                        help="scenario 9 for the cloud provider: recreate the api with an unreachable GETNET_ANTHROPIC_BASE_URL, then restore")
+    parser.add_argument("--orchestration", action="store_true",
+                        help="V7-C: multi-intent, natural re-plan and Critic challenge sets (API needs CRITIC_CHALLENGE_MODE=true)")
     parser.add_argument("--timeout", type=float, default=400.0)
     parser.add_argument("--warmup", action="store_true")
     parser.add_argument("--note", default="")
@@ -665,6 +811,12 @@ def main() -> int:
     scenarios = [] if args.no_functional else [(k, fn) for k, fn in FUNCTIONAL.items() if not only or k in only]
     if args.llm_down and (not only or "D9_llm_unavailable" in only):
         scenarios.append(("D9_llm_unavailable", lambda a: scenario_d9(a, args.ollama)))  # always last
+    elif args.llm_down_cloud and (not only or "D9_llm_unavailable" in only):
+        scenarios.append(("D9_llm_unavailable", scenario_d9_cloud))  # always last
+    orchestration = None
+    if args.orchestration:
+        print("== orchestration (multi-intent / re-plan / challenge) ==", flush=True)
+        orchestration = run_orchestration(api)
     for name, fn in scenarios:
         print(f"== functional {name} ==", flush=True)
         result = fn(api)
@@ -675,7 +827,8 @@ def main() -> int:
             print(f"  {'PASS' if item['pass'] else 'FAIL'} {item['check']}" + (f"  {item.get('detail')}" if not item["pass"] else ""), flush=True)
 
     all_turns = [r for records in rounds.values() for r in records] + \
-                [t for item in acceptance.values() for t in item.get("turns", [])]
+                [t for item in acceptance.values() for t in item.get("turns", [])] + \
+                [r for items in (orchestration or {}).values() for r in items]
     approvals = [t for t in all_turns if t.get("critic_mode") == "llm_critic" and t.get("critic_approved") is True]
     live_rejections = [{"id": t.get("id"), "mode": t.get("critic_mode"), "issues": t.get("critic_issues")} for t in all_turns
                        if t.get("critic_mode") in {"llm_critic", "deterministic_grounding_check", "deterministic_safety_check"}
@@ -684,6 +837,11 @@ def main() -> int:
     acceptance["A18_critic_approves"] = {"kind": "live_observation", "pass": c18.passed, "checks": c18.items}
     unit = critic_unit_evidence()
     c17 = Checks(); c17.add("critic_rejection_tests_pass", unit["returncode"] == 0, unit)
+    if orchestration:
+        injected = [r for r in orchestration["challenge"] if r["injected"]]
+        c17.add("live_challenge_drafts_injected", len(injected) == len(orchestration["challenge"]) and bool(injected), len(injected))
+        c17.add("live_challenge_drafts_all_caught", bool(injected) and all(r["rejected_first"] for r in injected),
+                [r["id"] for r in injected if not r["rejected_first"]])
     acceptance["A17_critic_rejects"] = {"kind": "unit_tests_plus_live_count", "pass": c17.passed, "checks": c17.items,
                                         "live_rejections_observed": live_rejections}
 
@@ -708,6 +866,10 @@ def main() -> int:
             "functional_pass_fail_only": [name for name, _ in scenarios],
         },
         "latency_summary": {name: summarise(records) for name, records in rounds.items()},
+        "total_requests": sum(len(r) for r in rounds.values()) + sum(len(i.get("turns", [])) for i in acceptance.values())
+                          + sum(len(i) for i in (orchestration or {}).values()),
+        "orchestration_summary": summarise_orchestration(orchestration) if orchestration else None,
+        "orchestration": orchestration,
         "acceptance_summary": {name: ("PASS" if item["pass"] else "FAIL") for name, item in acceptance.items()},
         "acceptance_map_1_18": {k: {sid: ("PASS" if acceptance[sid]["pass"] else "FAIL") if sid in acceptance else "NOT_RUN" for sid in v}
                                  for k, v in ACCEPTANCE_MAP.items()},
@@ -716,7 +878,8 @@ def main() -> int:
     }
     out = Path(args.out) if args.out else ROOT / "docs" / f"RELATORIO_LATENCIA_{dt.date.today().isoformat()}_{args.label}.json"
     out.write_text(json.dumps(report, ensure_ascii=False, indent=2, default=str) + "\n", encoding="utf-8")
-    print(json.dumps({"latency_summary": report["latency_summary"], "acceptance_summary": report["acceptance_summary"]}, indent=2))
+    print(json.dumps({"latency_summary": report["latency_summary"], "acceptance_summary": report["acceptance_summary"],
+                      "orchestration_summary": report["orchestration_summary"], "total_requests": report["total_requests"]}, indent=2))
     print(f"report: {out}")
     return 0
 

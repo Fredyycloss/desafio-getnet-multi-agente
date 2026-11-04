@@ -22,6 +22,8 @@ class TraceTimeline:
     model_calls: list[dict] = field(default_factory=list)
     # Monotonic deadline for all model calls of this request (None = unbounded).
     llm_deadline: float | None = None
+    # Test-only adversarial draft kind (CRITIC_CHALLENGE_MODE); None in production.
+    critic_challenge: str | None = None
 
     def snapshot(self) -> list[dict]:
         return [dict(event) for event in self.events]

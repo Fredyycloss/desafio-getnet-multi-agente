@@ -153,7 +153,11 @@ class AnthropicProvider(LLMProvider):
             if not key:
                 raise LLMUnavailable(f"{KEY_ENV} is not set")
             import anthropic  # imported lazily: the offline mode never needs the SDK
-            client = anthropic.Anthropic(api_key=key, timeout=self.timeout, max_retries=self.max_retries)
+            # GETNET_ANTHROPIC_BASE_URL unset or empty: SDK default endpoint. The benchmark sets
+            # an unreachable URL to exercise the 'LLM unavailable' path without sending any request out.
+            base_url = os.getenv("GETNET_ANTHROPIC_BASE_URL", "").strip()
+            client = anthropic.Anthropic(api_key=key, timeout=self.timeout, max_retries=self.max_retries,
+                                         **({"base_url": base_url} if base_url else {}))
             del key
         self._client = client
         # Last observed key state: unchecked | ok | llm_key_rejected | llm_key_forbidden | llm_no_credit.
