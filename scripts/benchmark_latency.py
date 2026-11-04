@@ -87,6 +87,8 @@ class Api:
     def __init__(self, base: str, timeout: float, pause: float = 0.0):
         self.base, self.timeout, self.pause = base, timeout, pause
         self.tokens: dict[str, str] = {}
+        self.turns_path: Path | None = None  # --turns-out: full JSONL record of every chat turn
+        self.scenario = ""
 
     def auth(self, user_id: str) -> dict:
         if user_id not in self.tokens:
@@ -112,8 +114,15 @@ class Api:
                                      {"X-Request-ID": trace_id, **self.auth(as_user or user_id), **(headers or {})}, self.timeout)
         except Exception as exc:  # noqa: BLE001 - a client timeout is a result
             status, body = None, {"detail": f"{type(exc).__name__}: {exc}"[:300]}
-        return {"trace_id": trace_id, "message": message, "user_id": user_id, "session_id": session_id,
+        turn = {"trace_id": trace_id, "message": message, "user_id": user_id, "session_id": session_id,
                 "latency_s": round(time.perf_counter() - started, 2), "http_status": status, "_body": body}
+        if self.turns_path is not None:
+            with self.turns_path.open("a", encoding="utf-8") as fh:
+                fh.write(json.dumps({"scenario": self.scenario, "trace_id": trace_id, "message": message, "user_id": user_id,
+                                     "session_id": session_id, "critic_challenge": (headers or {}).get("X-Critic-Challenge"),
+                                     "http_status": status, "latency_s": turn["latency_s"], "response": body},
+                                    ensure_ascii=False, default=str) + "\n")
+        return turn
 
     def get(self, path: str, as_user: str | None = None, **params) -> tuple[int | None, dict]:
         query = f"?{urllib.parse.urlencode(params)}" if params else ""
@@ -563,6 +572,7 @@ def run_orchestration(api: Api) -> dict:
     data = json.loads(ORCHESTRATION_PATH.read_text(encoding="utf-8"))
     out: dict[str, list[dict]] = {"multi_intent": [], "replan_natural": [], "challenge": []}
     for case in data["multi_intent"]:
+        api.scenario = f"multi_intent:{case['id']}"
         record = {"id": case["id"], **summarise_turn(api.chat(case["message"]))}
         called = agents_called(record.get("trace"))
         record.update(expected_agents=case["expected_agents"], agents_called=called, path=orchestration_path(record),
@@ -572,6 +582,7 @@ def run_orchestration(api: Api) -> dict:
         print(f"  {case['id']:6s} {record['latency_s']:6.1f}s {record['path']:12s} covered={record['covered']} called={called}", flush=True)
     for case in data["replan"]:
         for group, headers in (("replan_natural", None), ("challenge", {"X-Critic-Challenge": case["challenge"]})):
+            api.scenario = f"{group}:{case['id']}"
             record = {"id": case["id"], "challenge": case["challenge"] if headers else None,
                       **summarise_turn(api.chat(case["message"], headers=headers))}
             trace = [str(x) for x in record.get("trace") or []]
@@ -772,9 +783,13 @@ def main() -> int:
     parser.add_argument("--note", default="")
     parser.add_argument("--pause", type=float, default=2.0, help="seconds to wait before each chat request")
     parser.add_argument("--out", default="")
+    parser.add_argument("--turns-out", default="", help="append every chat turn (full response body) to this JSONL")
     args = parser.parse_args()
     only = set(filter(None, args.only.split(",")))
     api = Api(args.api, args.timeout, args.pause)
+    if args.turns_out:
+        api.turns_path = Path(args.turns_out)
+        api.turns_path.parent.mkdir(parents=True, exist_ok=True)
 
     latency = [(sid, msg, cat, "official", None) for sid, msg, cat in OFFICIAL] + \
               [(sid, msg, cat, "dossier", check) for sid, msg, cat, check in DOSSIER_SINGLE]
@@ -795,6 +810,7 @@ def main() -> int:
         for sid, msg, cat, group, check in latency:
             if round_name == "cold":
                 unload_models(args.ollama)
+            api.scenario = f"{round_name}:{sid}"
             raw = api.chat(msg)
             record = {"id": sid, "group": group, "category": cat, **summarise_turn(raw)}
             record["route_ok"] = route_ok(record)
@@ -819,6 +835,7 @@ def main() -> int:
         orchestration = run_orchestration(api)
     for name, fn in scenarios:
         print(f"== functional {name} ==", flush=True)
+        api.scenario = f"functional:{name}"
         result = fn(api)
         turns = [summarise_turn(t) for t in result["turns"]]
         acceptance[name] = {"kind": "functional", "pass": result["checks"].passed, "checks": result["checks"].items, "turns": turns,

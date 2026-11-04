@@ -25,6 +25,10 @@ services:
       # Test-only adversarial first drafts (benchmark --orchestration). Keep false outside measurements.
       CRITIC_CHALLENGE_MODE: ${CRITIC_CHALLENGE_MODE:-false}
       CRITIC_STRICTNESS: ${CRITIC_STRICTNESS:-material}
+      # Record every model call to a cassette, e.g. LLM_RECORD_DIR=/data/cassettes/2026-11-04, then
+      # docker compose cp api:/data/cassettes/2026-11-04 docs/evidence/cloud_runs/ (see docs/EVIDENCE.md).
+      LLM_RECORD_DIR: ${LLM_RECORD_DIR:-}
+      LLM_REPLAY_DIR: ${LLM_REPLAY_DIR:-}
       # llm | embedding | hybrid (Context Intelligence); offline mode overrides it in docker-compose.ai.yml
       CONTEXT_MODE: ${CONTEXT_MODE:-llm}
       CLOUD_LLM_BUDGET_SECONDS: ${CLOUD_LLM_BUDGET_SECONDS:-30}
