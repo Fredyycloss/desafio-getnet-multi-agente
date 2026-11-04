@@ -139,6 +139,9 @@ services:
     command: ["ollama pull \"$${OLLAMA_MODEL}\" && ollama pull \"$${OLLAMA_EMBEDDING_MODEL}\""]
     restart: "no"
 
+  # Rebuilds the versioned knowledge snapshot from the official sites (explicit, never at boot).
+  # docker compose --profile tools run --rm --user "$(id -u):$(id -g)" knowledge-refresh
+  # Pages that need JavaScript are rendered only when run on the host with --render-js (needs Node).
   knowledge-refresh:
     profiles: ["tools"]
     build:
@@ -146,10 +149,15 @@ services:
       dockerfile: Dockerfile
     environment:
       DATABASE_PATH: /tmp/knowledge-refresh.sqlite3
+      OLLAMA_BASE_URL: ${OLLAMA_BASE_URL:-http://ollama:11434}
+      OLLAMA_EMBEDDING_MODEL: ${OLLAMA_EMBEDDING_MODEL:-nomic-embed-text}
+    depends_on:
+      ollama:
+        condition: service_healthy
     volumes:
       - ./backend/app/knowledge:/app/app/knowledge:rw
     entrypoint: ["python", "-m", "app.knowledge.ingest_cli"]
-    command: ["--max-pages", "24"]
+    command: ["--max-pages", "2000", "--embed"]
 
 volumes:
   getnet_data:

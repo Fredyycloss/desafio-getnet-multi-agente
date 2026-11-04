@@ -73,7 +73,7 @@
       ]
     },
     "web_weather": {
-      "agent": "web_research_specialist",
+      "agent": "knowledge_specialist",
       "examples": [
         "Como vai estar o tempo em Recife no fim de semana?",
         "Vai fazer frio amanhã em São Paulo?",
@@ -83,7 +83,7 @@
       ]
     },
     "web_fx": {
-      "agent": "web_research_specialist",
+      "agent": "knowledge_specialist",
       "examples": [
         "Quanto está o euro em reais hoje?",
         "Qual a cotação da libra esterlina?",
@@ -93,7 +93,7 @@
       ]
     },
     "web_general": {
-      "agent": "web_research_specialist",
+      "agent": "knowledge_specialist",
       "examples": [
         "Procure na internet o que é a Nota Fiscal de Consumidor Eletrônica.",
         "Quais são os feriados nacionais deste mês?",

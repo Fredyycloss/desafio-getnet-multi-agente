@@ -1,0 +1,3276 @@
+{
+  "version": "2026-11-03",
+  "sources": [
+    "https://site.getnet.com.br (sitemaps + links)",
+    "https://www.getnet.net/en",
+    "https://www.getnet.net/pt"
+  ],
+  "discovered_urls": 420,
+  "sitemap_urls": 257,
+  "downloaded_pages": 378,
+  "rendered_with_js": 52,
+  "skipped": {
+    "sitemap_unavailable": 1,
+    "redirect_outside_allowlist": 2
+  },
+  "failed": {
+    "http_404": 12,
+    "http_403": 1
+  },
+  "skipped_urls": {
+    "https://site.getnet.com.br/page-sitemap.xml": "sitemap_unavailable:500",
+    "https://site.getnet.com.br/portal-do-cliente/": "redirect_outside_allowlist",
+    "https://site.getnet.com.br/portal-do-cliente": "redirect_outside_allowlist"
+  },
+  "failed_urls": {
+    "https://www.getnet.net/en/resources/client-stories/connects-sep-uruguay": "http_404",
+    "https://www.getnet.net/en/resources/client-stories/connects-soft-restaurant": "http_404",
+    "https://www.getnet.net/en/resources/client-stories/connects-koin": "http_404",
+    "https://www.getnet.net/en/resources/client-stories/partner-aevi": "http_404",
+    "https://www.getnet.net/en/resources/client-stories/upi": "http_404",
+    "https://www.getnet.net/en/resources/client-stories/connects-elecctro": "http_404",
+    "https://site.getnet.com.br/fale-conosco/": "http_404",
+    "https://site.getnet.com.br/politica-de-privacidade/": "http_403",
+    "https://site.getnet.com.br/duvidas/get-mini/": "http_404",
+    "https://site.getnet.com.br/duvidas/get-classica/": "http_404",
+    "https://site.getnet.com.br/get-ajuda-link-de-pagamento/": "http_404",
+    "https://site.getnet.com.br/get-ajuda-recebimentos/": "http_404",
+    "https://site.getnet.com.br/get-ajuda-app-getnet/": "http_404"
+  },
+  "stopped_by": "frontier_exhausted",
+  "unvisited_in_frontier": 0,
+  "max_pages": 2000,
+  "pages_by_section": {
+    "getnet.net/pt/suporte": 64,
+    "getnet.net/en/resources": 40,
+    "duvidas": 32,
+    "get-ajuda": 16,
+    "getnet.net/en/partners": 8,
+    "getnet.net/pt/as-nossas-solucoes": 7,
+    "downloads": 7,
+    "getnet.net/en/our-solutions": 5,
+    "getnet.net/en/legal": 5,
+    "getnet.net/pt/legal": 5,
+    "getnet.net/en/your-business": 4,
+    "getnet.net/pt/tarifas": 4,
+    "maquininha": 4,
+    "tef": 3,
+    "parcerias": 3,
+    "link-de-pagamento": 2,
+    "boas-vindas": 2,
+    "automacao-atendimento-ao-cliente": 1,
+    "como-fazer-declaracao-de-conteudo": 1,
+    "dicas-para-vender-mais-ecommerce": 1,
+    "ponto-de-venda-como-funciona": 1,
+    "getnet-e-comida-di-buteco": 1,
+    "mei-ou-me": 1,
+    "vtex-day-2025": 1,
+    "empreendedores-e-pmes": 1,
+    "dicas-de-senhas": 1,
+    "pix-por-aproximacao": 1,
+    "supply-chain": 1,
+    "mercadinho": 1,
+    "varejo-e-atacado": 1,
+    "precificacao": 1,
+    "payback": 1,
+    "mei": 1,
+    "frete-cif": 1,
+    "franquia": 1,
+    "faturamento": 1,
+    "adquirente": 1,
+    "link-de-pagamento-vendas": 1,
+    "o-que-e-holding-e-quais-os-tipos": 1,
+    "conheca-o-conversor-de-moedas": 1,
+    "tap-on-phone-maquininha-no-celular": 1,
+    "vender-pelo-whatsapp": 1,
+    "dicas-para-lucrar-mais-nas-festas-juninas": 1,
+    "storytelling": 1,
+    "como-inovar-seu-negocio": 1,
+    "aumente-o-faturamento-no-inverno": 1,
+    "mc-dia-feliz-getnet": 1,
+    "proteja-seu-negocio-e-venda-com-seguranca": 1,
+    "como-consultar-cnpj": 1,
+    "turismo-de-inverno": 1,
+    "ideias-de-negocios-lucrativos": 1,
+    "sociedade-anonima": 1,
+    "domicilio-eletronico-trabalhista": 1,
+    "carteiras-digitais": 1,
+    "ia-para-pequenos-empreendedores": 1,
+    "contrato-social": 1,
+    "dicas-segundo-semestre": 1,
+    "dia-das-maes": 1,
+    "venda-mais-na-primavera": 1,
+    "liberdade-financeira": 1,
+    "pagamentos-digitais": 1,
+    "conversor-de-moedas-getnet": 1,
+    "checklist-do-ecommerce": 1,
+    "vendas-do-ultimo-semestre": 1,
+    "futuro-do-ecommerce": 1,
+    "link-de-pagamento-getnet": 1,
+    "gestao-de-vendas-getnet": 1,
+    "pix-na-maquininha-getnet": 1,
+    "black-friday-getnet": 1,
+    "maquininha-de-cartao": 1,
+    "conheca-a-taxa-selic": 1,
+    "get-tap-maquininha-de-cartao": 1,
+    "emprestimo-getnet": 1,
+    "erros-na-gestao-de-pagamentos": 1,
+    "proteja-seu-negocio-de-fraudes-digitais": 1,
+    "golpe-comprovante-de-pix": 1,
+    "prepare-seu-comercio-para-2026": 1,
+    "melhor-maquininha-para-o-seu-negocio": 1,
+    "conta-digital-getnet": 1,
+    "mes-do-cliente": 1,
+    "crescimento-vendas-online": 1,
+    "pagamentos-com-cartao": 1,
+    "venda-mais-na-black-friday": 1,
+    "pix-lidera-pagamentos-na-black-friday": 1,
+    "checkout-de-pagamento-o-que-e": 1,
+    "calcule-ticket-medio-do-seu-negocio": 1,
+    "plano-de-negocio": 1,
+    "erros-na-gestao-financeira": 1,
+    "contas-a-pagar": 1,
+    "como-organizar-recebimento-de-compras": 1,
+    "vendas-final-de-ano": 1,
+    "vendas-crescem-na-black-week": 1,
+    "nova-era-dos-pagamentos": 1,
+    "sinais-de-que-seu-negocio-evoluiu": 1,
+    "como-fidelizar-a-venda-extra": 1,
+    "como-organizar-as-despesas-pessoais-e-empresariais": 1,
+    "como-vender-mais-no-verao": 1,
+    "como-se-tornar-mei-comecando-com-as-ferramentas-certas": 1,
+    "parceria-fit-getnet-como-economizar-na-conta-de-luz": 1,
+    "contas-a-pagar-e-receber-como-equilibrar-o-fluxo-financeiro-do-negocio": 1,
+    "pagamentos-no-centro-da-estrategia-a-disrupcao-do-varejo": 1,
+    "o-fim-do-checkout-esta-proximo": 1,
+    "5-funcionalidades-da-maquininha-getnet-para-vender-mais": 1,
+    "carnaval-2026-veja-3-solucoes-para-vender-mais-neste-periodo": 1,
+    "carnaval-2026-5-dicas-de-seguranca-para-evitar-golpes-durante-a-folia": 1,
+    "varejo-cresce-durante-carnaval-2026-e-compras-fisicas-ganham-forca": 1,
+    "getnet-lanca-get-code-comunidade-global-de-desenvolvedores-para-inovacao": 1,
+    "link-de-pagamento-alternativa-segura": 1,
+    "como-definir-precos-justos-e-competitivos-para-produtos-e-servicos": 1,
+    "o-que-e-checkout-movel-e-como-transformar-a-experiencia-de-pagamento": 1,
+    "pix-no-get-tap-mais-agilidade-e-eficiencia-das-vendas": 1,
+    "outono-2026-estacao-promete-ser-quente-para-o-varejo": 1,
+    "indicadores-que-todo-lojista-deveria-acompanhar-semanalmente": 1,
+    "getnet-reforca-posicionamento-como-parceira-do-empreendedor": 1,
+    "get-code-promove-meetup-sobre-oportunidades-de-negocio": 1,
+    "quando-vale-a-pena-antecipar-as-suas-vendas-no-cartao": 1,
+    "getnet-connects-novo-programa-de-parcerias": 1,
+    "split-de-pagamento-veja-como-dividir-recebimentos-com-parceiros": 1,
+    "5-cuidados-para-evitar-golpes-ao-vender-pelas-redes-sociais": 1,
+    "5-dicas-para-bares-e-restaurantes-se-prepararem-aos-jogos": 1,
+    "entre-copas-o-que-mudou-em-4-anos-na-forma-como-pagamos": 1,
+    "chargeback": 1,
+    "dia-das-maes-como-empreendedores-se-protegem-de-golpes": 1,
+    "simulador-de-vendas-da-maquininha-saiba-quanto-voce-ira-faturar": 1,
+    "5-dicas-para-aquecer-seu-caixa-com-a-chegada-do-frio": 1,
+    "gestao-de-vendas-menos-papel-mais-controle-na-mao": 1,
+    "ferias-de-julho-5-dicas-para-vender-mais": 1,
+    "agentic-commerce-o-que-e-e-porque-seu-negocio-precisa": 1,
+    "conversor-de-moedas-getnet-disponivel-agora-no-tef": 1,
+    "como-o-checkout-getnet-pode-ajudar-no-faturamento-ecommerce": 1,
+    "datas-casadas-como-aproveitar-para-vender-mais": 1,
+    "a-era-do-dinheiro-inteligente": 1,
+    "pagamentos-por-biometria-via-pix": 1,
+    "5-dicas-essenciais-para-modernizar-as-vendas-na-feira": 1,
+    "como-vender-no-tiktok-shop-guia-para-empreendedores": 1,
+    "novas-regras-do-pix-contra-fraudes-como-proteger-seu-negocio": 1,
+    "ultimo-trimestre-como-preparar-seu-negocio-para-vender-mais": 1,
+    "financas-do-primeiro-negocio-veja-como-se-organizar-antes": 1,
+    "dias-de-festival-veja-como-preparar-seu-negocio-para-vender-mais": 1,
+    "conciliacao-financeira-para-pequenos-negocios": 1,
+    "como-vender-mais-no-halloween-5-dicas-para-aproveitar-a-data": 1,
+    "o-salto-das-micro-e-pequenas-empresas-do-balcao-a-omnichannel": 1,
+    "como-vender-online-para-outros-paises-e-expandir-seu-negocio": 1,
+    "getnet.net/en": 1,
+    "getnet.net/en/developers": 1,
+    "getnet.net/en/contact": 1,
+    "getnet.net/en/corporate": 1,
+    "getnet.net/pt": 1,
+    "getnet.net/pt/contacto": 1,
+    "home": 1,
+    "taxas": 1,
+    "redirect-app-getnet-brasil": 1,
+    "todas-as-maquininhas": 1,
+    "ofertas": 1,
+    "eye": 1,
+    "get-tap": 1,
+    "getcheckout": 1,
+    "conta-digital": 1,
+    "pix": 1,
+    "emprestimo": 1,
+    "crediario": 1,
+    "pagamentos-recorrentes": 1,
+    "split": 1,
+    "conversor-de-moedas": 1,
+    "getstore": 1,
+    "ofertas-tef-getnet": 1,
+    "agentic-commerce": 1,
+    "get-code": 1,
+    "institucional": 1,
+    "patrocinios": 1,
+    "carreiras": 1,
+    "imprensa": 1,
+    "blog": 1,
+    "produtos-digitais": 1,
+    "cartoes-aceitos": 1,
+    "esg": 1,
+    "report-vulnerability": 1,
+    "politica-de-seguranca-da-informacao": 1,
+    "ouvidoria": 1,
+    "antifraude": 1,
+    "getnet-connects": 1,
+    "getnetrestaurantes": 1,
+    "guia-digital-marca": 1,
+    "get-lite": 1
+  },
+  "pages_by_language": {
+    "pt": 312,
+    "en": 66
+  },
+  "boilerplate_blocks_removed": 4586,
+  "chunks": 757,
+  "characters": 1279878,
+  "chunks_new_vs_previous": 757,
+  "previous_version": null,
+  "embedding_model": "nomic-embed-text",
+  "embedded_this_run": 757,
+  "timings": {
+    "crawl_s": 496.7,
+    "render_js_s": 635.4,
+    "embed_s": 1248.9
+  },
+  "pages_by_market": {
+    "BR": 230,
+    "global": 66,
+    "PT": 82
+  },
+  "pages": [
+    {
+      "url": "https://site.getnet.com.br/automacao-atendimento-ao-cliente/",
+      "title": "Saiba como a automação humaniza o atendimento ao cliente - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2429
+    },
+    {
+      "url": "https://site.getnet.com.br/como-fazer-declaracao-de-conteudo/",
+      "title": "Como fazer a declaração de conteúdo? - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3810
+    },
+    {
+      "url": "https://site.getnet.com.br/dicas-para-vender-mais-ecommerce/",
+      "title": "Dia dos Namorados: Dicas para Vender Mais no E-commerce - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3051
+    },
+    {
+      "url": "https://site.getnet.com.br/ponto-de-venda-como-funciona/",
+      "title": "PDV: o que é, como funciona e como montar um ponto de venda - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4337
+    },
+    {
+      "url": "https://site.getnet.com.br/getnet-e-comida-di-buteco/",
+      "title": "Getnet e Comida di Buteco: 10 anos de parceria - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3292
+    },
+    {
+      "url": "https://site.getnet.com.br/mei-ou-me/",
+      "title": "MEI ou ME: qual é a melhor opção para o seu negócio? - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4748
+    },
+    {
+      "url": "https://site.getnet.com.br/vtex-day-2025/",
+      "title": "VTEX Day 2025: Conheça nossas principais soluções - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2292
+    },
+    {
+      "url": "https://site.getnet.com.br/empreendedores-e-pmes/",
+      "title": "Empreendedores e PMEs impulsionam a transformação - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3642
+    },
+    {
+      "url": "https://site.getnet.com.br/dicas-de-senhas/",
+      "title": "5 Dicas para Evitar Senhas Óbvias e Não Ser Hackeado - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1657
+    },
+    {
+      "url": "https://site.getnet.com.br/pix-por-aproximacao/",
+      "title": "Pix por Aproximação na maquininha: Como funciona! - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4034
+    },
+    {
+      "url": "https://site.getnet.com.br/supply-chain/",
+      "title": "Supply chain: funções, vantagens e integração com outras áreas - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3409
+    },
+    {
+      "url": "https://site.getnet.com.br/mercadinho/",
+      "title": "Guia completo para abrir um mercadinho - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3960
+    },
+    {
+      "url": "https://site.getnet.com.br/varejo-e-atacado/",
+      "title": "Varejo e atacado: entenda as diferenças e como funcionam - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3503
+    },
+    {
+      "url": "https://site.getnet.com.br/precificacao/",
+      "title": "Precificação: estratégias eficazes para definir preços - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4301
+    },
+    {
+      "url": "https://site.getnet.com.br/payback/",
+      "title": "Payback: entenda o conceito, cálculo e vantagens - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4271
+    },
+    {
+      "url": "https://site.getnet.com.br/mei/",
+      "title": "Guia completo do MEI: como abrir, custos e benefícios - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3820
+    },
+    {
+      "url": "https://site.getnet.com.br/frete-cif/",
+      "title": "Entenda o frete CIF e saiba como usar - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2470
+    },
+    {
+      "url": "https://site.getnet.com.br/franquia/",
+      "title": "Franquias: Como escolher a melhor opção - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3580
+    },
+    {
+      "url": "https://site.getnet.com.br/faturamento/",
+      "title": "Faturamento: O que é e como calcular o do seu negócio? - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3296
+    },
+    {
+      "url": "https://site.getnet.com.br/adquirente/",
+      "title": "Adquirente: Tudo que você precisa saber - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2337
+    },
+    {
+      "url": "https://site.getnet.com.br/link-de-pagamento-vendas/",
+      "title": "Link de pagamento: a chave para ampliar suas vendas! - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3285
+    },
+    {
+      "url": "https://site.getnet.com.br/o-que-e-holding-e-quais-os-tipos/",
+      "title": "Holding: o que é e quais os tipos mais comuns no Brasil - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 6238
+    },
+    {
+      "url": "https://site.getnet.com.br/conheca-o-conversor-de-moedas/",
+      "title": "Conversor de Moedas: Conheça essa funcionalidade - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1881
+    },
+    {
+      "url": "https://site.getnet.com.br/tap-on-phone-maquininha-no-celular/",
+      "title": "Maquininha no celular: Conheça o Tap on Phone - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3370
+    },
+    {
+      "url": "https://site.getnet.com.br/vender-pelo-whatsapp/",
+      "title": "7 dicas infalíveis de como vender pelo WhatsApp - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4629
+    },
+    {
+      "url": "https://site.getnet.com.br/dicas-para-lucrar-mais-nas-festas-juninas/",
+      "title": "Dicas para lucrar mais nas festas juninas - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3099
+    },
+    {
+      "url": "https://site.getnet.com.br/storytelling/",
+      "title": "Como utilizar o storytelling para fortalecer a marca do seu negócio - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4629
+    },
+    {
+      "url": "https://site.getnet.com.br/como-inovar-seu-negocio/",
+      "title": "Como Inovar o Seu Negócio - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2978
+    },
+    {
+      "url": "https://site.getnet.com.br/aumente-o-faturamento-no-inverno/",
+      "title": "4 Ideias de Negócio para o Inverno e Festas Julinas - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3744
+    },
+    {
+      "url": "https://site.getnet.com.br/mc-dia-feliz-getnet/",
+      "title": "Getnet participa do McDia Feliz 2025 e incentiva cultura de voluntariado - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4615
+    },
+    {
+      "url": "https://site.getnet.com.br/proteja-seu-negocio-e-venda-com-seguranca/",
+      "title": "Como vender com segurança no físico e no online - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3269
+    },
+    {
+      "url": "https://site.getnet.com.br/como-consultar-cnpj/",
+      "title": "Como consultar CNPJ: confira passo a passo - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2859
+    },
+    {
+      "url": "https://site.getnet.com.br/turismo-de-inverno/",
+      "title": "Turismo de Inverno: estratégias para vender mais - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4749
+    },
+    {
+      "url": "https://site.getnet.com.br/ideias-de-negocios-lucrativos/",
+      "title": "Quer Empreender? Veja 9 ideias de negócios lucrativos - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2626
+    },
+    {
+      "url": "https://site.getnet.com.br/sociedade-anonima/",
+      "title": "Sociedade anônima: o que é e como funcionam essas empresas - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2623
+    },
+    {
+      "url": "https://site.getnet.com.br/domicilio-eletronico-trabalhista/",
+      "title": "Domicílio Eletrônico Trabalhista (DET): Conheça o que é - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3396
+    },
+    {
+      "url": "https://site.getnet.com.br/carteiras-digitais/",
+      "title": "Carteiras Digitais: O que são e como podem aumentar as vendas - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3540
+    },
+    {
+      "url": "https://site.getnet.com.br/ia-para-pequenos-empreendedores/",
+      "title": "IA para Pequenos Empreendedores: como utilizar a IA no dia a dia - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3548
+    },
+    {
+      "url": "https://site.getnet.com.br/contrato-social/",
+      "title": "Contrato Social: o que é e quem precisa ter - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 52
+    },
+    {
+      "url": "https://site.getnet.com.br/dicas-segundo-semestre/",
+      "title": "Vire a Chave: 5 Dicas para um Segundo Semestre de sucesso - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3497
+    },
+    {
+      "url": "https://site.getnet.com.br/dia-das-maes/",
+      "title": "Dia das Mães: 5 dicas para atrair clientes ao seu restaurante - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2890
+    },
+    {
+      "url": "https://site.getnet.com.br/venda-mais-na-primavera/",
+      "title": "Veja como revitalizar seu negócio e vender mais na primavera - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3781
+    },
+    {
+      "url": "https://site.getnet.com.br/liberdade-financeira/",
+      "title": "Conquiste sua liberdade financeira e saia das dívidas - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 5820
+    },
+    {
+      "url": "https://site.getnet.com.br/pagamentos-digitais/",
+      "title": "Pagamentos digitais: como facilitar transações e aumentar vendas - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 6474
+    },
+    {
+      "url": "https://site.getnet.com.br/conversor-de-moedas-getnet/",
+      "title": "Conversor de Moedas: Conheça os benefícios para seu negócio - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4310
+    },
+    {
+      "url": "https://site.getnet.com.br/checklist-do-ecommerce/",
+      "title": "Checklist do e-commerce eficiente: confira os 5 pontos importantes - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4063
+    },
+    {
+      "url": "https://site.getnet.com.br/vendas-do-ultimo-semestre/",
+      "title": "Último gás do ano, prepare-se para as vendas do último semestre - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3386
+    },
+    {
+      "url": "https://site.getnet.com.br/futuro-do-ecommerce/",
+      "title": "O Futuro do E commerce: adaptar-se para liderar - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3479
+    },
+    {
+      "url": "https://site.getnet.com.br/link-de-pagamento-getnet/",
+      "title": "Faça como a Dona Jura e use o Link de pagamento da Getnet - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3063
+    },
+    {
+      "url": "https://site.getnet.com.br/gestao-de-vendas-getnet/",
+      "title": "Faça como a Dona Jura e use o gestão de vendas da Getnet - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2810
+    },
+    {
+      "url": "https://site.getnet.com.br/pix-na-maquininha-getnet/",
+      "title": "Faça como a Dona Jura e use o Pix na maquininha da Getnet - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2359
+    },
+    {
+      "url": "https://site.getnet.com.br/black-friday-getnet/",
+      "title": "Black Friday não começa em novembro: prepare o seu negócio - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4475
+    },
+    {
+      "url": "https://site.getnet.com.br/maquininha-de-cartao/",
+      "title": "Como escolher a melhor maquininha de cartão para o seu negócio - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2153
+    },
+    {
+      "url": "https://site.getnet.com.br/conheca-a-taxa-selic/",
+      "title": "O que é a Taxa Selic e como ela impacta o seu negócio? - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2468
+    },
+    {
+      "url": "https://site.getnet.com.br/get-tap-maquininha-de-cartao/",
+      "title": "Get Tap: Transforme seu Celular em uma Maquininha de Cartão - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 6296
+    },
+    {
+      "url": "https://site.getnet.com.br/emprestimo-getnet/",
+      "title": "Empréstimo: como Funciona o Crédito com Garantia de Recebíveis - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2795
+    },
+    {
+      "url": "https://site.getnet.com.br/erros-na-gestao-de-pagamentos/",
+      "title": "5 erros comuns que podem prejudicar seu negócio - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4284
+    },
+    {
+      "url": "https://site.getnet.com.br/proteja-seu-negocio-de-fraudes-digitais/",
+      "title": "Cuidado com o lobo! A Chapeuzinho Vermelho ensina sobre cibersegurança no seu negócio - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2591
+    },
+    {
+      "url": "https://site.getnet.com.br/golpe-comprovante-de-pix/",
+      "title": "Como saber se um comprovante de Pix é falso? - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2534
+    },
+    {
+      "url": "https://site.getnet.com.br/prepare-seu-comercio-para-2026/",
+      "title": "Quais são os feriados em 2026? Prepare o seu comércio - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3667
+    },
+    {
+      "url": "https://site.getnet.com.br/melhor-maquininha-para-o-seu-negocio/",
+      "title": "Como escolher a melhor maquininha de cartão para o seu negócio - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2394
+    },
+    {
+      "url": "https://site.getnet.com.br/conta-digital-getnet/",
+      "title": "Conheça a Get Conta: A Conta Digital da Getnet - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2705
+    },
+    {
+      "url": "https://site.getnet.com.br/mes-do-cliente/",
+      "title": "Mês do Cliente: 5 dicas de planejamento para aumentar as vendas - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4557
+    },
+    {
+      "url": "https://site.getnet.com.br/crescimento-vendas-online/",
+      "title": "Vendas online crescem 24% no primeiro semestre, aponta Getnet - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2444
+    },
+    {
+      "url": "https://site.getnet.com.br/pagamentos-com-cartao/",
+      "title": "Como começar a aceitar pagamentos com cartão no seu negócio - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2656
+    },
+    {
+      "url": "https://site.getnet.com.br/venda-mais-na-black-friday/",
+      "title": "Como começar a aceitar pagamentos com cartão no seu negócio - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3177
+    },
+    {
+      "url": "https://site.getnet.com.br/pix-lidera-pagamentos-na-black-friday/",
+      "title": "Pix deve liderar os pagamentos na Black Friday 2025 - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2590
+    },
+    {
+      "url": "https://site.getnet.com.br/checkout-de-pagamento-o-que-e/",
+      "title": "Checkout: o que é e como melhorar a experiência do cliente - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4756
+    },
+    {
+      "url": "https://site.getnet.com.br/calcule-ticket-medio-do-seu-negocio/",
+      "title": "Confira o que é e como calcular o ticket médio do seu negócio - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3696
+    },
+    {
+      "url": "https://site.getnet.com.br/plano-de-negocio/",
+      "title": "Como montar um plano de negócios eficiente - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3882
+    },
+    {
+      "url": "https://site.getnet.com.br/erros-na-gestao-financeira/",
+      "title": "7 erros comuns na gestão financeira de pequenos negócios - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3826
+    },
+    {
+      "url": "https://site.getnet.com.br/contas-a-pagar/",
+      "title": "Contas a pagar: entenda o conceito e como aplicar nos negócios - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3692
+    },
+    {
+      "url": "https://site.getnet.com.br/como-organizar-recebimento-de-compras/",
+      "title": "Clientes que compram em novembro, mas pagam depois: como organizar - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3478
+    },
+    {
+      "url": "https://site.getnet.com.br/vendas-final-de-ano/",
+      "title": "Como a pressa de fim de ano atrapalha (ou ajuda) as vendas- Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3374
+    },
+    {
+      "url": "https://site.getnet.com.br/vendas-crescem-na-black-week/",
+      "title": "Black Week: Vendas crescem 7,23%, aponta Getnet- Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1273
+    },
+    {
+      "url": "https://site.getnet.com.br/nova-era-dos-pagamentos/",
+      "title": "Nova era dos pagamentos: como o mobile está redesenhando o consumo na América Latina- Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4036
+    },
+    {
+      "url": "https://site.getnet.com.br/sinais-de-que-seu-negocio-evoluiu/",
+      "title": "Sinais de que o seu negócio evoluiu, mesmo que você não tenha percebido- Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4116
+    },
+    {
+      "url": "https://site.getnet.com.br/como-fidelizar-a-venda-extra/",
+      "title": "13º salário: como transformar a renda extra de dezembro em vendas e fidelização - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 6250
+    },
+    {
+      "url": "https://site.getnet.com.br/como-organizar-as-despesas-pessoais-e-empresariais/",
+      "title": "Como organizar as despesas pessoais e da empresa - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3940
+    },
+    {
+      "url": "https://site.getnet.com.br/como-vender-mais-no-verao/",
+      "title": "Como aproveitar o verão para impulsionar suas vendas - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 8995
+    },
+    {
+      "url": "https://site.getnet.com.br/como-se-tornar-mei-comecando-com-as-ferramentas-certas/",
+      "title": "Como se tornar MEI e começar com as ferramentas certas - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 5264
+    },
+    {
+      "url": "https://site.getnet.com.br/parceria-fit-getnet-como-economizar-na-conta-de-luz/",
+      "title": "Veja como economizar até 15% na conta de luz do seu negócio - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 7716
+    },
+    {
+      "url": "https://site.getnet.com.br/contas-a-pagar-e-receber-como-equilibrar-o-fluxo-financeiro-do-negocio/",
+      "title": "Contas a pagar e a receber: Como equilibrar o fluxo financeiro - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 6143
+    },
+    {
+      "url": "https://site.getnet.com.br/pagamentos-no-centro-da-estrategia-a-disrupcao-do-varejo/",
+      "title": "Pagamentos no centro da estratégia: a disrupção do varejo - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4265
+    },
+    {
+      "url": "https://site.getnet.com.br/o-fim-do-checkout-esta-proximo/",
+      "title": "O fim do checkout está próximo - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 6324
+    },
+    {
+      "url": "https://site.getnet.com.br/5-funcionalidades-da-maquininha-getnet-para-vender-mais/",
+      "title": "5 funcionalidades da maquininha Get para vender mais - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3158
+    },
+    {
+      "url": "https://site.getnet.com.br/carnaval-2026-veja-3-solucoes-para-vender-mais-neste-periodo/",
+      "title": "Carnaval 2026: veja 3 soluções para vender mais neste período - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 7787
+    },
+    {
+      "url": "https://site.getnet.com.br/carnaval-2026-5-dicas-de-seguranca-para-evitar-golpes-durante-a-folia/",
+      "title": "Carnaval 2026: 5 dicas de segurança para evitar golpes na folia - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 6173
+    },
+    {
+      "url": "https://site.getnet.com.br/varejo-cresce-durante-carnaval-2026-e-compras-fisicas-ganham-forca/",
+      "title": "Varejo cresce durante Carnaval e compras físicas ganham força - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2128
+    },
+    {
+      "url": "https://site.getnet.com.br/getnet-lanca-get-code-comunidade-global-de-desenvolvedores-para-inovacao/",
+      "title": "Get Code, comunidade global de desenvolvedores para inovação - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4138
+    },
+    {
+      "url": "https://site.getnet.com.br/link-de-pagamento-alternativa-segura/",
+      "title": "Link de Pagamento, uma alternativa prática e segura - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 6651
+    },
+    {
+      "url": "https://site.getnet.com.br/como-definir-precos-justos-e-competitivos-para-produtos-e-servicos/",
+      "title": "Como definir preços justos e competitivos para produtos e serviços - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 7212
+    },
+    {
+      "url": "https://site.getnet.com.br/o-que-e-checkout-movel-e-como-transformar-a-experiencia-de-pagamento/",
+      "title": "Checkout móvel: Como transformar a experiência de pagamento - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 6727
+    },
+    {
+      "url": "https://site.getnet.com.br/pix-no-get-tap-mais-agilidade-e-eficiencia-das-vendas/",
+      "title": "Pix no Get Tap: mais agilidade e eficiência no dia a dia das vendas - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 8605
+    },
+    {
+      "url": "https://site.getnet.com.br/outono-2026-estacao-promete-ser-quente-para-o-varejo/",
+      "title": "Outono 2026: estação promete ser quente para o varejo - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 7954
+    },
+    {
+      "url": "https://site.getnet.com.br/indicadores-que-todo-lojista-deveria-acompanhar-semanalmente/",
+      "title": "5 indicadores que todo lojista deveria acompanhar semanalmente - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3843
+    },
+    {
+      "url": "https://site.getnet.com.br/getnet-reforca-posicionamento-como-parceira-do-empreendedor/",
+      "title": "Getnet reforça posicionamento como parceira do empreendedor - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4251
+    },
+    {
+      "url": "https://site.getnet.com.br/get-code-promove-meetup-sobre-oportunidades-de-negocio/",
+      "title": "Get Code promove meetup sobre oportunidades de negócio - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2949
+    },
+    {
+      "url": "https://site.getnet.com.br/quando-vale-a-pena-antecipar-as-suas-vendas-no-cartao/",
+      "title": "Quando vale a pena antecipar as suas vendas no cartão? - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 6006
+    },
+    {
+      "url": "https://site.getnet.com.br/getnet-connects-novo-programa-de-parcerias/",
+      "title": "Getnet Connects: Novo programa de parcerias multinacional - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 6847
+    },
+    {
+      "url": "https://site.getnet.com.br/split-de-pagamento-veja-como-dividir-recebimentos-com-parceiros/",
+      "title": "Split de pagamento: veja como dividir recebimentos com parceiros - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 5531
+    },
+    {
+      "url": "https://site.getnet.com.br/5-cuidados-para-evitar-golpes-ao-vender-pelas-redes-sociais/",
+      "title": "5 cuidados para evitar golpes ao vender pelas redes sociais - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4401
+    },
+    {
+      "url": "https://site.getnet.com.br/5-dicas-para-bares-e-restaurantes-se-prepararem-aos-jogos/",
+      "title": "5 dicas para bares e restaurantes se prepararem aos jogos - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 8923
+    },
+    {
+      "url": "https://site.getnet.com.br/entre-copas-o-que-mudou-em-4-anos-na-forma-como-pagamos/",
+      "title": "Entre Copas: o que mudou em 4 anos na forma como pagamos - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2921
+    },
+    {
+      "url": "https://site.getnet.com.br/chargeback/",
+      "title": "Chargeback: o que é, como acontece e como evitar prejuízos - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1734
+    },
+    {
+      "url": "https://site.getnet.com.br/dia-das-maes-como-empreendedores-se-protegem-de-golpes/",
+      "title": "Dia das Mães: Como empreendedores se protegem de golpes - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 6712
+    },
+    {
+      "url": "https://site.getnet.com.br/simulador-de-vendas-da-maquininha-saiba-quanto-voce-ira-faturar/",
+      "title": "Simulador de vendas da maquininha: saiba quanto você irá faturar - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 5618
+    },
+    {
+      "url": "https://site.getnet.com.br/5-dicas-para-aquecer-seu-caixa-com-a-chegada-do-frio/",
+      "title": "5 dicas para aquecer seu caixa com a chegada do frio - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 9336
+    },
+    {
+      "url": "https://site.getnet.com.br/gestao-de-vendas-menos-papel-mais-controle-na-mao/",
+      "title": "Gestão de Vendas: Menos papel, mais controle na mão - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4219
+    },
+    {
+      "url": "https://site.getnet.com.br/ferias-de-julho-5-dicas-para-vender-mais/",
+      "title": "Férias de julho: 5 dicas para preparar seu negócio e vender mais - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 7590
+    },
+    {
+      "url": "https://site.getnet.com.br/agentic-commerce-o-que-e-e-porque-seu-negocio-precisa/",
+      "title": "Agentic Commerce: o que é e por que seu negócio precisa - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 11003
+    },
+    {
+      "url": "https://site.getnet.com.br/conversor-de-moedas-getnet-disponivel-agora-no-tef/",
+      "title": "Conversor de Moedas Getnet, disponível agora no TEF - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 7728
+    },
+    {
+      "url": "https://site.getnet.com.br/como-o-checkout-getnet-pode-ajudar-no-faturamento-ecommerce/",
+      "title": "Como o Checkout Getnet pode ajudar no faturamento e-commerce - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 7379
+    },
+    {
+      "url": "https://site.getnet.com.br/datas-casadas-como-aproveitar-para-vender-mais/",
+      "title": "Datas casadas: o que são e como aproveitar para vender mais - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 8621
+    },
+    {
+      "url": "https://site.getnet.com.br/a-era-do-dinheiro-inteligente/",
+      "title": "A era do dinheiro inteligente - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3717
+    },
+    {
+      "url": "https://site.getnet.com.br/pagamentos-por-biometria-via-pix/",
+      "title": "Pagamentos por biometria via Pix: o que são e como transformam - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 8538
+    },
+    {
+      "url": "https://site.getnet.com.br/5-dicas-essenciais-para-modernizar-as-vendas-na-feira/",
+      "title": "5 dicas essenciais para modernizar e acelerar as vendas na feira - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 7042
+    },
+    {
+      "url": "https://site.getnet.com.br/como-vender-no-tiktok-shop-guia-para-empreendedores/",
+      "title": "Como vender no TikTok Shop: guia para empreendedores - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 10817
+    },
+    {
+      "url": "https://site.getnet.com.br/novas-regras-do-pix-contra-fraudes-como-proteger-seu-negocio/",
+      "title": "Novas regras do Pix contra fraudes: como proteger seu negócio - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 10053
+    },
+    {
+      "url": "https://site.getnet.com.br/ultimo-trimestre-como-preparar-seu-negocio-para-vender-mais/",
+      "title": "Último trimestre: como preparar seu negócio para vender mais - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 7765
+    },
+    {
+      "url": "https://site.getnet.com.br/financas-do-primeiro-negocio-veja-como-se-organizar-antes/",
+      "title": "Finanças do primeiro negócio: veja como se organizar antes - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 8958
+    },
+    {
+      "url": "https://site.getnet.com.br/dias-de-festival-veja-como-preparar-seu-negocio-para-vender-mais/",
+      "title": "Dias de festival: veja como preparar seu negócio para vender mais - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 8389
+    },
+    {
+      "url": "https://site.getnet.com.br/conciliacao-financeira-para-pequenos-negocios/",
+      "title": "Conciliação financeira para pequenos negócios - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 7593
+    },
+    {
+      "url": "https://site.getnet.com.br/como-vender-mais-no-halloween-5-dicas-para-aproveitar-a-data/",
+      "title": "Como vender mais no Halloween: 5 dicas para aproveitar a data - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 11719
+    },
+    {
+      "url": "https://site.getnet.com.br/o-salto-das-micro-e-pequenas-empresas-do-balcao-a-omnichannel/",
+      "title": "O salto das micro e pequenas empresas: do balcão à omnichannel - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3136
+    },
+    {
+      "url": "https://site.getnet.com.br/como-vender-online-para-outros-paises-e-expandir-seu-negocio/",
+      "title": "Como vender online para outros países e expandir seu negócio - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 9098
+    },
+    {
+      "url": "https://www.getnet.net/en/",
+      "title": "Getnet - Home",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 2330
+    },
+    {
+      "url": "https://www.getnet.net/en/your-business/industries/restaurants",
+      "title": "Restaurants",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 3708
+    },
+    {
+      "url": "https://www.getnet.net/en/your-business/industries/travel",
+      "title": "Travel",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 2244
+    },
+    {
+      "url": "https://www.getnet.net/en/your-business/large-enterprises",
+      "title": "Large Enterprises",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 1527
+    },
+    {
+      "url": "https://www.getnet.net/en/our-solutions/in-person-payments",
+      "title": "In-person Payments",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 1468
+    },
+    {
+      "url": "https://www.getnet.net/en/our-solutions/online-payments",
+      "title": "Getnet - Online Payments",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 1337
+    },
+    {
+      "url": "https://www.getnet.net/en/our-solutions/omnichannel",
+      "title": "Getnet - Omnichannel",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 1464
+    },
+    {
+      "url": "https://www.getnet.net/en/our-solutions/value-added-solutions",
+      "title": "Getnet - Value added services",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 1869
+    },
+    {
+      "url": "https://www.getnet.net/en/our-solutions/agentic-commerce",
+      "title": "Agentic Commerce",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 3759
+    },
+    {
+      "url": "https://www.getnet.net/en/partners",
+      "title": "Partners",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 2682
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/whats-new",
+      "title": "What's new",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 9361
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog",
+      "title": "Getnet - Blog",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 247
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/client-stories",
+      "title": "Getnet - Client Stories",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 1159
+    },
+    {
+      "url": "https://www.getnet.net/en/developers",
+      "title": "Developers Community",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 1449
+    },
+    {
+      "url": "https://www.getnet.net/en/contact",
+      "title": "Getnet contact",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 586
+    },
+    {
+      "url": "https://www.getnet.net/en/corporate/about-us",
+      "title": "About us",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 1418
+    },
+    {
+      "url": "https://www.getnet.net/en/legal/privacy-policy",
+      "title": "Getnet - Privacy policy",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 26772
+    },
+    {
+      "url": "https://www.getnet.net/en/legal/cookies",
+      "title": "Getnet - Cookies",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 14680
+    },
+    {
+      "url": "https://www.getnet.net/en/legal/legal-notice",
+      "title": "Getnet - Legal Notice",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 5518
+    },
+    {
+      "url": "https://www.getnet.net/en/legal/relatorio-de-transparencia",
+      "title": "Getent Relatorio de Transparencia",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 554
+    },
+    {
+      "url": "https://www.getnet.net/en/legal/conduct-and-canal-abierto",
+      "title": "Conduct & Canal Abierto",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 1113
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/why-developer-collaboration-no-longer-stops-at-hackathons",
+      "title": "Why developer collaboration no longer stops at hackathons",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 5166
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/health-beauty-payments-in-2026",
+      "title": "Health & Beauty Payments in 2026: Care, Confidence and Performance",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 7272
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/agentic-payments",
+      "title": "Agentic payments: the next frontier in digital commerce",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 8002
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/payments-infrastructure-will-define-performance-in-the-travel-sector",
+      "title": "Payments infrastructure will define performance in the travel sector",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 6384
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/why-retailers-must-treat-payments-as-a-core-strategy",
+      "title": "Why retailers must treat payments as a core strategy",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 8392
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/how-people-prefer-to-pay-in-portugal",
+      "title": "How people prefer to pay in Portugal",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 5752
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/the-mobile-payment-revolution-in-latin-america",
+      "title": "The mobile payment revolution in Latin America",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 8578
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/evolution-of-lending-solution",
+      "title": "The evolution of lending solutions for SMEs",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 9202
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/encryption-vs-tokenisation",
+      "title": "Encryption vs tokenisation: Which is best for your business?",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 7256
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/the-role-payments-play-in-elevating-travel-and-tourism",
+      "title": "The role payments play in elevating travel and tourism",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 7131
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/the-future-of-ecommerce",
+      "title": "The future of eCommerce: How modern shoppers are changing the way they pay",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 9744
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/the-2025-payments-landscape-in-spain-and-portugal",
+      "title": "The 2025 payments landscape in Spain and Portugal",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 7272
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/the-key-fintech-developments-that-shaped-2024",
+      "title": "A year in review: the key fintech developments that shaped 2024",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 7068
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/celebrating-getnet-argentina-fourth-anniversary",
+      "title": "Celebrating Getnet Argentina’s fourth anniversary",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 5938
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/understanding-generational-shopping-preferences",
+      "title": "Understanding generational shopping preferences.",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 5837
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/the-future-of-cross-border-payments-in-latin-america",
+      "title": "The future of cross-border payments in Latin America",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 5531
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/optimising-your-checkout-process",
+      "title": "Optimising your checkout process",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 6475
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/top-tips-to-choose-the-right-payments-partner",
+      "title": "Navigating the payment landscape: Top tips for SMEs in choosing the right partner",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 4692
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/payment-trends-in-mexico",
+      "title": "What are the most popular payment trends in Mexico?",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 5403
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/mexican-travel-industry",
+      "title": "How is Mexico harnessing the travel boom?",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 5866
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/travel-and-tourism",
+      "title": "Travel and tourism: 2024 payment trends",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 5179
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/what-is-next-for-the-latin-america-payments-ecosystem",
+      "title": "What´s next for the Latin America payments ecosystem?",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 4885
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/retail",
+      "title": "How can merchants prepare for the holiday season?",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 5381
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/education-in-the-digital-age-the-adoption-of-digital-payments",
+      "title": "Education in the digital age: the adoption of digital payments",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 6457
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/this-is-how-next-gen-payments-can-help-merchants-meet-esg-objectives",
+      "title": "How next-gen payments can help merchants meet ESG objectives",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 4349
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/how-merchants-should-prepare-for-the-next-generation-of-shoppers",
+      "title": "How merchants should prepare for the next generation of shoppers",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 5983
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/why-embedded-finance-is-transforming-fintech",
+      "title": "Why embedded finance is transforming fintech",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 5514
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/the-future-of-digital-payments-in-the-public-transport-industry",
+      "title": "The future of digital payments in the public transport industry.",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 9157
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/4-things-every-merchant-needs-to-know-about-open-banking",
+      "title": "4 things every merchant needs to know about Open Banking",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 3613
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/what-do-new-payment-regulations-mean-for-merchants",
+      "title": "What do new payment regulations mean for merchants?",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 3539
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/client-stories/connects-pascual",
+      "title": "Getnet transforms Grupo Pascual’s delivery mobiles into full POS terminals",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 3056
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/client-stories/connects-melia",
+      "title": "Meliá Hotels International and Getnet are pioneers in payment security in Latin America, offering P2PE solutions.",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 3992
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/client-stories/zig",
+      "title": "How Getnet and Zig are transforming stadium payments at UD Almería (Spain)",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 3288
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/client-stories/bizum",
+      "title": "Getnet is promoting the arrival of Bizum at physical point-of-sale (POS) terminals",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 4286
+    },
+    {
+      "url": "https://www.getnet.net/pt/",
+      "title": "Pagamento para empresas de forma eficiente | Getnet",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 2964
+    },
+    {
+      "url": "https://www.getnet.net/pt/as-nossas-solucoes/pagamentos-presenciais",
+      "title": "Soluções de pagamento para o seu negócio | Getnet",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 1898
+    },
+    {
+      "url": "https://www.getnet.net/pt/as-nossas-solucoes/pagamentos-presenciais/tpa-portatil",
+      "title": "TPA portátil Get Smart: terminal moderno da Getnet | Getnet",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 3123
+    },
+    {
+      "url": "https://www.getnet.net/pt/as-nossas-solucoes/pagamentos-presenciais/tpa-no-telemovel",
+      "title": "Receba pagamentos com tpa no telemóvel | Getnet",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 3383
+    },
+    {
+      "url": "https://www.getnet.net/pt/as-nossas-solucoes/pagamentos-presenciais/tpa-pagamento",
+      "title": "Get Classic: tpa fiável com preautorização | Getnet",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 3275
+    },
+    {
+      "url": "https://www.getnet.net/pt/as-nossas-solucoes/pagamentos-online",
+      "title": "Métodos de pagamento online | Getnet",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 2020
+    },
+    {
+      "url": "https://www.getnet.net/pt/as-nossas-solucoes/pagamentos-online/get-checkout",
+      "title": "Get checkout: tpa online para o seu e-commerce | Getnet",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 4869
+    },
+    {
+      "url": "https://www.getnet.net/pt/as-nossas-solucoes/pagamentos-online/link-pagamento",
+      "title": "Get Link & Pay: links de pagamento para cobranças online",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 3021
+    },
+    {
+      "url": "https://www.getnet.net/pt/tarifas",
+      "title": "Preços e tarifas para TPA | Getnet",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 2611
+    },
+    {
+      "url": "https://www.getnet.net/pt/tarifas/plana",
+      "title": "Tarifa plana",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 1094
+    },
+    {
+      "url": "https://www.getnet.net/pt/tarifas/basica",
+      "title": "Tarifa básica",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 1107
+    },
+    {
+      "url": "https://www.getnet.net/pt/tarifas/premium",
+      "title": "Tarifa premium",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 1120
+    },
+    {
+      "url": "https://www.getnet.net/pt/contacto",
+      "title": "Entre em contacto com a nossa equipa | Getnet",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 126
+    },
+    {
+      "url": "https://www.getnet.net/pt/legal/aviso-de-privacidade",
+      "title": "Política privacidade: tratamento de dados pessoais |Getnet",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 78553
+    },
+    {
+      "url": "https://www.getnet.net/pt/legal/aviso-legal",
+      "title": "Aviso Legal",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 4470
+    },
+    {
+      "url": "https://www.getnet.net/pt/legal/reclamacoes",
+      "title": "Serviço apoio ao cliente Getnet - Reclamações | Getnet",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 4774
+    },
+    {
+      "url": "https://www.getnet.net/pt/legal/politica-de-cookies",
+      "title": "Saiba mais sobre a nossa política de cookies | Getnet",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 29368
+    },
+    {
+      "url": "https://www.getnet.net/pt/legal/codigo-de-conduta-e-canal-aberto",
+      "title": "Canal de denúncia: comunique com segurança | Getnet",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 1100
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte",
+      "title": "Suporte e perguntas frequentes sobre TPA | Getnet",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 1370
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/contacto",
+      "title": "Contacto: ajudamos-lhe a esclarecer as suas dúvidas | Getnet",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 403
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-classic",
+      "title": "Suporte Get Smart: assistência ao equipamento | Getnet",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 3329
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-checkout",
+      "title": "Suporte Get Checkout: pagamentos online | Getnet",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 726
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-tap-on-phone",
+      "title": "Suporte Get Tap on Phone: ajuda passo a passo | Getnet",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 1527
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-smart",
+      "title": "Suporte Get Smart: assistência ao equipamento | Getnet",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 2805
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-classic/e-possivel-efetuar-cobrancas-com-cartoes-diferentes",
+      "title": "É possível efetuar cobranças com cartões diferentes?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 318
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-checkout/vou-abrir-o-meu-website-e-preciso-de-realizar-vendas-como-posso-contratar-um-gateway-de-pagamentos-online",
+      "title": "É possível efetuar cobranças com cartões diferentes?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 410
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/preciso-de-alterar-a-minha-morada-conta-bancaria-ou-outros-dados-onde-devo-indicar-esta-alteracao",
+      "title": "Preciso de alterar a minha morada, conta bancária ou outros dados. Onde devo indicar esta alteração?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 244
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-classic/onde-posso-obter-os-autocolantes-com-os-cartoes-de-pagamento-aceites-no-meu-negocio-getclassic",
+      "title": "Onde posso obter os autocolantes com os cartões de pagamento aceites no meu negócio?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 259
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/onde-posso-consultar-as-operacoes-realizadas-no-meu-tpa",
+      "title": "Onde posso consultar as operações realizadas no meu TPA?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 279
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/o-meu-negocio-e-movel-e-nao-tenho-uma-localizacao-fixa-qual-e-o-melhor-tpa-para-mim",
+      "title": "O meu negócio é móvel e não tenho uma localização fixa. Qual é o melhor TPA para mim?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 312
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-classic/o-meu-tpa-nao-liga-o-que-posso-fazer",
+      "title": "O meu TPA não liga. O que posso fazer?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 124
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-classic/o-meu-tpa-esta-fora-de-servico-como-procedo-para-o-ativar",
+      "title": "TPA fora de serviço: como reativar o equipamento?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 2411
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-classic/o-meu-tpa-esta-bloqueado-o-que-posso-fazer",
+      "title": "O meu TPA está bloqueado. O que posso fazer?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 157
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-classic/estou-a-experienciar-falhas-de-ligacao-ou-cobertura-no-meu-tpa-o-que-posso-fazer",
+      "title": "O que devo fazer se tiver problemas de cobertura no meu TPV?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 239
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-classic/como-e-que-posso-utilizar-o-servico-key-entry-para-aceitar-pagamentos-sem-a-presenca-do-cliente",
+      "title": "Key Entry para pagamentos sem a presença do cliente",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 821
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/como-posso-pedir-um-tpa-adicional-ou-indicar-que-ja-tenho-um-em-minha-posse",
+      "title": "Como posso pedir um TPA adicional ou indicar que já tenho um em minha posse?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 232
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-classic/como-posso-obter-rolos-de-papel-para-o-meu-tpa-getclassic",
+      "title": "Como posso obter rolos de papel para o meu TPA?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 251
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-classic/como-posso-imprimir-um-duplicado-do-talao",
+      "title": "Como posso imprimir um duplicado do talão?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 1011
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-classic/o-meu-tpa-nao-parece-ter-comunicacao-o-que-posso-fazer",
+      "title": "O meu TPA não parece ter comunicação. O quê posso fazer?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 309
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/como-posso-alterar-a-minha-tarifa-atual",
+      "title": "Como posso alterar a minha tarifa atual?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 191
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-classic/como-ligar-e-desligar-o-meu-tpa",
+      "title": "Como ligar e desligar o meu TPA?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 151
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-classic/a-impressora-do-meu-tpa-nao-funciona",
+      "title": "A impressora do meu TPA não funciona",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 171
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/tenho-falhas-de-ligacao-ou-cobertura-o-que-posso-fazer",
+      "title": "Tenho falhas de ligação ou cobertura. O que posso fazer?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 183
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-smart/posso-fazer-cobrancas-com-diferentes-cartoes",
+      "title": "Posso fazer cobranças com diferentes cartões?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 149
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-smart/posso-criar-um-duplicado-do-recibo",
+      "title": "Posso criar um duplicado do recibo?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 226
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-smart/posso-alterar-a-minha-palavra-passe-getsmart",
+      "title": "Posso alterar a minha palavra-passe?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 178
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/posso-aceitar-pagamentos-no-estrangeiro",
+      "title": "Posso aceitar pagamentos no estrangeiro?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 149
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-smart/onde-posso-obter-os-autocolantes-com-os-cartoes-de-pagamento-aceites-no-meu-negocio-getsmart",
+      "title": "Get Smart: peça autocolantes com os cartões aceites",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 258
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-smart/como-posso-recuperar-o-e-mail-de-acesso-getsmart",
+      "title": "Como posso recuperar o e-mail de acesso?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 235
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-smart/como-posso-recuperar-a-minha-palavra-passe-getsmart",
+      "title": "Como posso recuperar a minha palavra-passe?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 412
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-smart/como-posso-pedir-um-tpa-adicional-ou-cancelar-um-que-ja-tenha-em-minha-posse-getsmart",
+      "title": "Como posso solicitar um TPA adicional ou cancelar um?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 235
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-smart/como-posso-obter-rolos-de-papel-para-o-meu-tpa-getsmart",
+      "title": "Get Smart: Como posso obter rolos de papel para o meu TPA?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 249
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-smart/como-posso-ativar-o-meu-tpa-get-smart",
+      "title": "Como posso ativar o meu TPA Get Smart?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 953
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-smart/a-impressora-do-meu-tpa-nao-imprime-o-que-posso-fazer",
+      "title": "A impressora do meu TPA não imprime. O que posso fazer?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 208
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-smart/sibs-store-no-get-smart",
+      "title": "O que é a SIBS Store que aparece agora no meu TPA Get Smart?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 1699
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-tap-on-phone/que-sistemas-operativos-sao-compativeis",
+      "title": "Que sistemas operativos são compatíveis?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 108
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-tap-on-phone/quando-posso-fechar-o-periodo-contabilistico",
+      "title": "Quando posso fechar o periodo contabilístico?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 191
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-tap-on-phone/quais-os-metodos-de-pagamento-aceites-no-get-tap-on-phone",
+      "title": "Quais os métodos de pagamento aceites no Get Tap on Phone?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 112
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-tap-on-phone/preciso-de-ter-acesso-a-internet-no-smartphone-tablet-para-utilizar-o-get-tap-on-phone",
+      "title": "O Get Tap on Phone precisa de ligação à Internet?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 209
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-tap-on-phone/posso-utilizar-o-get-tap-on-phone-num-dispositivo-iphone",
+      "title": "Posso utilizar o Get Tap on Phone num dispositivo iPhone?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 161
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-tap-on-phone/o-get-tap-on-phone-aceita-pagamentos-com-smartphone-ou-smartwatch",
+      "title": "É possível pagar com smartwatch no Get Tap on Phone?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 270
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-tap-on-phone/como-posso-recuperar-o-endereco-de-e-mail-de-acesso-ao-servico",
+      "title": "Como posso recuperar o endereço de e-mail de acesso?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 191
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-tap-on-phone/como-posso-aceder-ao-historico-das-transacoes",
+      "title": "Como posso aceder ao histórico das transações?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 434
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-checkout/onde-e-que-posso-ver-as-minhas-operacoes",
+      "title": "Onde é que posso ver as minhas operações?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 479
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-checkout/onde-posso-aceder-a-documentacao-tecnica-para-integrar-o-get-checkout",
+      "title": "Onde posso consultar a documentação técnica do Get Checkout?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 258
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-checkout/como-e-que-posso-fazer-uma-devolucao",
+      "title": "Como é que posso fazer uma devolução?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 305
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-checkout/como-posso-mudar-a-minha-password",
+      "title": "Como posso mudar a minha password?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 340
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/o-que-e-getnet",
+      "title": "O que é a Getnet?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 539
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/o-que-e-o-portal-getnet",
+      "title": "O que e o Portal Getnet?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 389
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/como-aceder-ao-portal-getnet",
+      "title": "Como aceder ao Portal Getnet?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 142
+    },
+    {
+      "url": "https://site.getnet.com.br/",
+      "title": "Getnet | Máquinas de cartão e soluções financeiras para o seu negócio",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4197
+    },
+    {
+      "url": "https://site.getnet.com.br/get-ajuda/",
+      "title": "Get Ajuda - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 2952
+    },
+    {
+      "url": "https://site.getnet.com.br/taxas/",
+      "title": "Getnet | Taxas - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 1519
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/",
+      "title": "Dúvidas e Perguntas Frequentes | Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 703
+    },
+    {
+      "url": "https://site.getnet.com.br/redirect-app-getnet-brasil/",
+      "title": "Você será direcionado para o download - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 4525
+    },
+    {
+      "url": "https://site.getnet.com.br/todas-as-maquininhas/",
+      "title": "Getnet | Maquininha de cartão: Melhores taxas e opções grátis",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2270
+    },
+    {
+      "url": "https://site.getnet.com.br/ofertas/",
+      "title": "Getnet | Maquinha de cartão com recebimento em 2 dias úteis e taxas única",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 4465
+    },
+    {
+      "url": "https://site.getnet.com.br/eye/",
+      "title": "Gestão de vendas completa: Eye Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 828
+    },
+    {
+      "url": "https://site.getnet.com.br/get-tap/",
+      "title": "Getnet | Maquininha no celular: Receba pelo celular- Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1377
+    },
+    {
+      "url": "https://site.getnet.com.br/link-de-pagamento/",
+      "title": "Getnet | Link de Pagamento: venda mais online | Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2609
+    },
+    {
+      "url": "https://site.getnet.com.br/getcheckout/",
+      "title": "Getnet | Get Checkout: Pagamentos Online para E-commerce",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2637
+    },
+    {
+      "url": "https://site.getnet.com.br/conta-digital/",
+      "title": "Getnet | Maquininha + Conta Digital - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 9298
+    },
+    {
+      "url": "https://site.getnet.com.br/pix/",
+      "title": "Pix - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 6058
+    },
+    {
+      "url": "https://site.getnet.com.br/emprestimo/",
+      "title": "Emprestimo - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4471
+    },
+    {
+      "url": "https://site.getnet.com.br/crediario/",
+      "title": "Crediário - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4958
+    },
+    {
+      "url": "https://site.getnet.com.br/pagamentos-recorrentes/",
+      "title": "Recorrência - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2017
+    },
+    {
+      "url": "https://site.getnet.com.br/split/",
+      "title": "Getnet | Split de Pagamento Getnet | Divisão Automática de Recebimentos",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1373
+    },
+    {
+      "url": "https://site.getnet.com.br/conversor-de-moedas/",
+      "title": "Getnet | Conversor de Moedas - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1245
+    },
+    {
+      "url": "https://site.getnet.com.br/getstore/",
+      "title": "GetStore - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 433
+    },
+    {
+      "url": "https://site.getnet.com.br/tef/solucao-tef/",
+      "title": "Solução TEF | Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1894
+    },
+    {
+      "url": "https://site.getnet.com.br/tef/pos-tef/",
+      "title": "Solução Pós TEF | Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1889
+    },
+    {
+      "url": "https://site.getnet.com.br/tef/conciliador/",
+      "title": "Conciliador: A Solução para o seu Negócio | Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2846
+    },
+    {
+      "url": "https://site.getnet.com.br/ofertas-tef-getnet/",
+      "title": "Ofertas Sistema TEF | Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1240
+    },
+    {
+      "url": "https://site.getnet.com.br/get-ajuda-recarga-de-celular-desligamento/",
+      "title": "Recarga de celular - Desligamento - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 761
+    },
+    {
+      "url": "https://site.getnet.com.br/agentic-commerce/",
+      "title": "Getnet | Agentic Commerce: o futuro das compras com IA",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 5518
+    },
+    {
+      "url": "https://site.getnet.com.br/get-code/",
+      "title": "Getnet - Get Code | Este é o seu espaço para inovar",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2341
+    },
+    {
+      "url": "https://site.getnet.com.br/institucional/",
+      "title": "Institucional - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 7567
+    },
+    {
+      "url": "https://site.getnet.com.br/parcerias/",
+      "title": "Parcerias - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1585
+    },
+    {
+      "url": "https://site.getnet.com.br/patrocinios/",
+      "title": "Patrocínios - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 2039
+    },
+    {
+      "url": "https://site.getnet.com.br/carreiras/",
+      "title": "Getnet - Carreiras",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4018
+    },
+    {
+      "url": "https://site.getnet.com.br/imprensa/",
+      "title": "Getnet | Imprensa - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 37188
+    },
+    {
+      "url": "https://site.getnet.com.br/blog/",
+      "title": "blog - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1068
+    },
+    {
+      "url": "https://site.getnet.com.br/produtos-digitais/",
+      "title": "Getnet | Produtos Digitais - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1322
+    },
+    {
+      "url": "https://site.getnet.com.br/cartoes-aceitos/",
+      "title": "Getnet | Cartões - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 19676
+    },
+    {
+      "url": "https://site.getnet.com.br/downloads/",
+      "title": "Documentos para Download | Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1119
+    },
+    {
+      "url": "https://site.getnet.com.br/esg/",
+      "title": "ESG - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 5912
+    },
+    {
+      "url": "https://site.getnet.com.br/report-vulnerability/",
+      "title": "Report Vulnerability - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 1154
+    },
+    {
+      "url": "https://site.getnet.com.br/politica-de-seguranca-da-informacao/",
+      "title": "Política de Segurança da Informação | Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2082
+    },
+    {
+      "url": "https://site.getnet.com.br/ouvidoria/",
+      "title": "Ouvidoria | Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1477
+    },
+    {
+      "url": "https://site.getnet.com.br/maquininha/get-smart/",
+      "title": "Getnet | Maquininha POS 3G + Wi-Fi | 4020-4011",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 8355
+    },
+    {
+      "url": "https://site.getnet.com.br/get-ajuda-antecipacao-de-venda/",
+      "title": "Antecipação de venda - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 357
+    },
+    {
+      "url": "https://site.getnet.com.br/parcerias/ecommerce/",
+      "title": "Ecommerce - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3662
+    },
+    {
+      "url": "https://site.getnet.com.br/maquininha/get-mini/",
+      "title": "Getnet | Maquininha Get Mini POS 3G + Wi-Fi | 4020-4011",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 8355
+    },
+    {
+      "url": "https://site.getnet.com.br/maquininha/get-classica/",
+      "title": "Getnet | Maquininha POS 3G + Wi-Fi | 4020-4011",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 8355
+    },
+    {
+      "url": "https://site.getnet.com.br/get-ajuda-gestao-de-vendas/como-fazer-minha-gestao-de-venda/",
+      "title": "Como fazer a gestão das minhas vendas? - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 2050
+    },
+    {
+      "url": "https://site.getnet.com.br/antifraude/",
+      "title": "Antifraude - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1976
+    },
+    {
+      "url": "https://site.getnet.com.br/get-ajuda-maquininha/solucoes-get-smart/",
+      "title": "Soluções Get Smart - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1399
+    },
+    {
+      "url": "https://site.getnet.com.br/get-ajuda-get-tap/o-que-e-o-get-tap-e-como-funciona/",
+      "title": "O que é o Get Tap e como funciona? - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1257
+    },
+    {
+      "url": "https://site.getnet.com.br/get-ajuda-get-tap/como-utilizar-o-get-tap/",
+      "title": "Como utilizar o Get Tap? - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1000
+    },
+    {
+      "url": "https://site.getnet.com.br/get-ajuda-antecipacao-de-venda/como-antecipar-sua-vendas-pelo-app/",
+      "title": "Como antecipar suas vendas pelo app - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1043
+    },
+    {
+      "url": "https://site.getnet.com.br/getnet-connects/",
+      "title": "Getnet Connects | Programa de Parcerias Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 1677
+    },
+    {
+      "url": "https://site.getnet.com.br/getnetrestaurantes/",
+      "title": "Getnet | Getnet para Bares e Restaurantes | Solução de Pagamentos para Restaurantes",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1982
+    },
+    {
+      "url": "https://site.getnet.com.br/get-ajuda-conciliador-essencial/",
+      "title": "Conciliador Essencial - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 791
+    },
+    {
+      "url": "https://www.getnet.net/en/your-business/industries/health-and-beauty",
+      "title": "Health & Beauty",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 2081
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/press-room/getnet-expands-its-payments-platform-across-Europe",
+      "title": "Getnet expands its payments platform across Europe",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 3841
+    },
+    {
+      "url": "https://www.getnet.net/en/partners/soft-restaurant",
+      "title": "Soft Restaurant and Getnet partnered to transform Latin America’s dining experience",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 5897
+    },
+    {
+      "url": "https://www.getnet.net/en/partners/koin",
+      "title": "Getnet and Koin unite to strengthen fraud prevention in Latin America",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 2807
+    },
+    {
+      "url": "https://www.getnet.net/en/partners/pingpong",
+      "title": "PingPong",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 2604
+    },
+    {
+      "url": "https://www.getnet.net/en/partners/nayax",
+      "title": "Getnet and Nayax Announce Global Strategic Partnership to Accelerate Integrated Payments and Commerce Solutions Across Latin America and Iberia",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 2357
+    },
+    {
+      "url": "https://www.getnet.net/en/partners/aevi",
+      "title": "Aevi and Getnet Launch Global Partnership to Enable International Expansion for Enterprise Merchants and ISVs",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 2213
+    },
+    {
+      "url": "https://www.getnet.net/en/partners/upi",
+      "title": "Getnet and UnionPay International accelerate UnionPay card acceptance in Iberia",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 3975
+    },
+    {
+      "url": "https://www.getnet.net/en/partners/elecctro",
+      "title": "Elecctro and Getnet are leading the way in seamless EV charging in Portugal",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 2339
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/instant-payments-from-local-adoption-to-cross-border-growth",
+      "title": "Instant payments: from local adoption to cross-border growth",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 7175
+    },
+    {
+      "url": "https://www.getnet.net/en/resources/blog/how-apac-merchants-can-crack-the-latam-opportunity",
+      "title": "How APAC merchants can crack the LATAM opportunity",
+      "language": "en",
+      "market": "global",
+      "rendered_js": false,
+      "chars": 5589
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-classic/vendas",
+      "title": "vendas",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 358
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-classic/ativar",
+      "title": "ativar",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 250
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-classic/devolucoes",
+      "title": "devoluçoes",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 303
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-classic/operacoes",
+      "title": "operaçoes",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 244
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-smart/ligar-ao-wifi",
+      "title": "Ligar ao wifi",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 559
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-smart/como-ligar-e-desligar-o-meu-tpa",
+      "title": "Como ligar",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 261
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-smart/vendas",
+      "title": "Vendas",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 341
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-smart/operacoes",
+      "title": "Operações",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 267
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-smart/devolucoes",
+      "title": "Devoluções",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 287
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-smart/fecho-de-caixa",
+      "title": "Fecho de caixa",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 224
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-smart/como-posso-modificar-os-meus-dados-pessoais",
+      "title": "Como posso modificar os meus dados pessoais?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 169
+    },
+    {
+      "url": "https://www.getnet.net/pt/suporte/get-smart/como-posso-alterar-a-minha-tarifa-atual-getsmart",
+      "title": "Get Smart: Como posso alterar a minha tarifa atual?",
+      "language": "pt",
+      "market": "PT",
+      "rendered_js": false,
+      "chars": 154
+    },
+    {
+      "url": "https://site.getnet.com.br/boas-vindas/manual-maquinas/",
+      "title": "Manual Maquinas - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 251
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/get-smart/",
+      "title": "Arquivos Get Smart - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 78
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/algar/",
+      "title": "Arquivos Algar - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 74
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/aluguel/",
+      "title": "Arquivos Aluguel - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 76
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/aluguel-zero/",
+      "title": "Arquivos Aluguel Zero - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 81
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/antecipacao-de-vendas/",
+      "title": "Arquivos antecipação de vendas - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 90
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/app-getnet/",
+      "title": "Arquivos app Getnet - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 79
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/app-getnet-brasil/",
+      "title": "Arquivos App Getnet Brasil - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 86
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/bandeiras/",
+      "title": "Arquivos bandeiras - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 78
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/cancelamento-descredenciamento/",
+      "title": "Arquivos cancelamento/descredenciamento - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 99
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/carreira/",
+      "title": "Arquivos carreira - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 77
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/cartao-getnet/",
+      "title": "Arquivos Cartão Getnet - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 82
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/crediario/",
+      "title": "Arquivos crediário - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 78
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/get-conta/",
+      "title": "Arquivos Get Conta - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 78
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/get-tap/",
+      "title": "Arquivos Get Tap - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 76
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/home/",
+      "title": "Arquivos home - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 73
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/link-de-pagamento/",
+      "title": "Arquivos Link de pagamento - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 86
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/loja-digital/",
+      "title": "Arquivos Loja Digital - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 50
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/pix-mais-respostas/",
+      "title": "Arquivos Mais respostas sobre o Pix​ - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 96
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/mundo-open/",
+      "title": "Arquivos Mundo Open - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 79
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/operacional/",
+      "title": "Arquivos operacional - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 80
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/pagamento-carne/",
+      "title": "Arquivos Pagamento Carnê - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 84
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/parcelado/",
+      "title": "Arquivos Parcelado - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 27
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/pix/",
+      "title": "Arquivos Pix - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 72
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/plano-light/",
+      "title": "Arquivos Plano Light - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 80
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/pre-autorizacao/",
+      "title": "Arquivos Pré Autorização - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 84
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/solucao-de-dividas/",
+      "title": "Arquivos solução de dívidas - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 87
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/split-de-pagamento/",
+      "title": "Arquivos Split de Pagamento - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 87
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/superdigital/",
+      "title": "Arquivos Superdigital - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 81
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/taxas/",
+      "title": "Arquivos Taxas - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 74
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/tef-captura-pinpad/",
+      "title": "Arquivos TEF - Captura PINPad - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 89
+    },
+    {
+      "url": "https://site.getnet.com.br/duvidas/venda-com-cartao-de-credito-pre-pago/",
+      "title": "Arquivos Venda com cartão de crédito pré-pago - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 105
+    },
+    {
+      "url": "https://site.getnet.com.br/link-de-pagamento/habilitar-getpay/",
+      "title": "Habilitar Getpay | Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 100
+    },
+    {
+      "url": "https://site.getnet.com.br/parcerias/pos-digital/",
+      "title": "POS Digital - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2761
+    },
+    {
+      "url": "https://site.getnet.com.br/guia-digital-marca/",
+      "title": "Guia Digital Marca - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 2276
+    },
+    {
+      "url": "https://site.getnet.com.br/get-ajuda-voucher/o-que-e-o-pat/",
+      "title": "O Programa de Alimentação do Trabalhador (PAT)",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 4621
+    },
+    {
+      "url": "https://site.getnet.com.br/downloads/regulamentos/",
+      "title": "Documentos para Download | Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 248
+    },
+    {
+      "url": "https://site.getnet.com.br/downloads/documentos-produtos/",
+      "title": "Documentos para Download | Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 511
+    },
+    {
+      "url": "https://site.getnet.com.br/downloads/documento-socioambiental/",
+      "title": "Documentos para Download | Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 123
+    },
+    {
+      "url": "https://site.getnet.com.br/downloads/documentos-ouvidoria/",
+      "title": "Documentos para Download | Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 454
+    },
+    {
+      "url": "https://site.getnet.com.br/downloads/indice-comercio-varejista/",
+      "title": "Documentos para Download | Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 146
+    },
+    {
+      "url": "https://site.getnet.com.br/downloads/politicas/",
+      "title": "Documentos para Download | Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 396
+    },
+    {
+      "url": "https://site.getnet.com.br/boas-vindas/",
+      "title": "Boas Vindas - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 181
+    },
+    {
+      "url": "https://site.getnet.com.br/maquininha/aluguel/",
+      "title": "Getnet | Maquininha de Aluguel Getnet - Garanta Aluguel ZERO",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 3183
+    },
+    {
+      "url": "https://site.getnet.com.br/get-lite/",
+      "title": "Getnet | Getnet, uma empresa do grupo Santander",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1395
+    },
+    {
+      "url": "https://site.getnet.com.br/get-ajuda-maquininha/",
+      "title": "Maquininha - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 482
+    },
+    {
+      "url": "https://site.getnet.com.br/get-ajuda-erros-maquininha/",
+      "title": "Erros na maquininha - Get Ajuda - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 1198
+    },
+    {
+      "url": "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/",
+      "title": "Descontinuação dos pagamentos via WhatsApp Business - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1714
+    },
+    {
+      "url": "https://site.getnet.com.br/get-ajuda-pix/como-habilitar-o-recebimento-de-vendas-via-pix-no-aplicativo-getnet-brasil/",
+      "title": "Como habilitar o recebimento de vendas via pix no aplicativo Getnet Brasil - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1013
+    },
+    {
+      "url": "https://site.getnet.com.br/get-ajuda-configuracoes/funcionalidades-portal-minha-conta-e-app-getnet-brasil/",
+      "title": "Funcionalidades portal minha conta e App Getnet Brasil - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": false,
+      "chars": 1149
+    },
+    {
+      "url": "https://site.getnet.com.br/get-ajuda-pix/",
+      "title": "Pix - Getnet",
+      "language": "pt",
+      "market": "BR",
+      "rendered_js": true,
+      "chars": 526
+    }
+  ]
+}

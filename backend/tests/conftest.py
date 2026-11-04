@@ -13,9 +13,28 @@ def db(tmp_path):
     database.close()
 
 
-@pytest.fixture
-def documents():
+@pytest.fixture(autouse=True)
+def _no_live_site_reads(monkeypatch):
+    """Unit tests never reach the official websites (the live-read tool is tested with a stub)."""
+    monkeypatch.setenv("KNOWLEDGE_LIVE_READ", "false")
+
+
+@pytest.fixture(scope="session")
+def _snapshot_documents():
     return load_documents()
+
+
+@pytest.fixture
+def documents(_snapshot_documents):
+    """The runtime knowledge base (latest official-site snapshot)."""
+    return _snapshot_documents
+
+
+@pytest.fixture
+def legacy_documents():
+    """The 26 hand-written summaries of the previous version (BM25 mechanics regression only)."""
+    from app.knowledge.ingest import load_legacy_curated
+    return load_legacy_curated()
 
 
 def _claimed_user(url: str, kwargs: dict) -> str | None:

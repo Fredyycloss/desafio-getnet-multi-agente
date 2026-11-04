@@ -53,6 +53,53 @@ For the overview and the Mermaid diagram, see the [README](../README.md#architec
    - On rejection, one re-plan: call one specialist, or rewrite using only observed values, customer-facing only. A second rejection leads to handoff.
 9. **Response.** It carries the trace, `stage_timings`, `model_usage`, the Critic verdict, sources, `degraded`/`degraded_reason` and handoff fields. The model rationale is never returned.
 
+## Knowledge base and Knowledge Agent tools
+
+### Ingestion
+
+The knowledge base is built only by the explicit command `python -m app.knowledge.ingest_cli`; see `backend/app/knowledge/`.
+
+1. **Discovery.** `robots.txt` → sitemaps and sub-sitemaps → internal links.
+   - **Domains:** `site.getnet.com.br`, plus `www.getnet.net` limited to `/en` (the URL the challenge names) and `/pt`.
+   - **Politeness:** respects `robots.txt`; ~1 s pause with jitter; retry with backoff; generic User-Agent; HTTPS and allowlist only; HTML only.
+   - **JavaScript pages:** pages that need JavaScript (for example the fee tables) are rendered with the project's Playwright Chromium when run with `--render-js`.
+2. **Extraction.**
+   - The main content is picked only if it holds the page copy.
+   - Navigation, cookie, form and footer blocks are removed, and so is text repeated on many pages of the same host.
+   - Chunks follow the headings, with merging and overlap.
+   - Each chunk carries metadata: URL, title, section, breadcrumb, language, `fetched_at`, `content_hash`, `source_type=official_web_snapshot`.
+   - Exact deduplication uses the normalized hash.
+3. **Snapshot.** Versioned in `backend/app/knowledge/snapshots/<date>/`:
+   - `chunks.json.gz`;
+   - `embeddings.json.gz` (`nomic-embed-text`, `search_document:` prefix, float16);
+   - `manifest.json`: URLs discovered, downloaded, skipped and failed with the reason; pages per section; chunks; characters; timings.
+   - **Idempotent:** embeddings of unchanged chunks are reused.
+4. **Boot.** Offline: `load_documents()` reads the latest snapshot. The 26 hand-written summaries of the previous version are kept only as an evaluation baseline (`corpus.json`, `source_type=curated_summary`) and are not loaded at runtime.
+
+### Retrieval
+
+- BM25 statistics are computed once per language.
+- Dense scores come from the precomputed vectors (numpy); only the query is embedded, with the `search_query:` prefix.
+- Hybrid score = 0.55·BM25(normalised) + 0.45·cosine, plus a small bonus for words in the title or section.
+- Results are filtered by language. Evidence below 0.12 relevance is not used.
+
+### Knowledge Agent tools
+
+The LLM chooses the tools by function calling:
+
+| Tool | What it does |
+|---|---|
+| `search_getnet_knowledge` | RAG over the snapshot |
+| `search_getnet_site_live` | Reads live the official pages that best match the query from the snapshot's URL inventory (allowlist only). Also used automatically when RAG finds nothing relevant. |
+| `web_search` | Public web through stable APIs: optional Brave key → Wikipedia REST → DuckDuckGo Instant Answer |
+| `get_weather_forecast` | Open-Meteo |
+| `get_exchange_rate` | Frankfurter |
+
+- **Answer:** the LLM writes from the evidence (`[n]` citations with URL and section) and the tool results (numbers copied exactly, provider named).
+- **Provider down:** the answer says so and invents nothing (`degraded_reason=provider_unavailable`).
+- **No tool call:** if the model calls no tool on a weather or FX question, the keyword pick is a marked fallback (`model_selected_no_tool`).
+- **Contract change:** web research is no longer a separate Supervisor specialist. The challenge places the web search tool inside the Knowledge Agent. The old name `web_research_specialist` is accepted as an alias of `knowledge_specialist`.
+
 ## Specialist result contract
 
 ```

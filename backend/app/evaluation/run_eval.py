@@ -20,11 +20,12 @@ def main() -> int:
         route_ok = actual_route == case["expected_route"]
         route_hits += int(route_ok)
         retrieval_ok = None
-        if case.get("required_evidence"):
+        if case.get("expected_urls"):
+            # Official page expected among the top 5 chunks (labels are URL fragments of the
+            # official site; they replaced titles of the removed hand-written summaries).
             retrieval_total += 1
-            query = case["message"]
-            matches = knowledge.retrieve(query, k=5, language=case["language"])
-            retrieval_ok = any(case["required_evidence"].lower() in item["title"].lower() for item in matches)
+            matches = knowledge.retrieve(case["message"], k=5, language=case["language"], mode="bm25")
+            retrieval_ok = any(fragment in item["url"] for item in matches for fragment in case["expected_urls"])
             retrieval_hits += int(retrieval_ok)
         results.append({"id": case["id"], "route_expected": case["expected_route"], "route_actual": actual_route,
                         "route_pass": route_ok, "retrieval_pass": retrieval_ok})

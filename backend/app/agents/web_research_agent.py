@@ -201,32 +201,18 @@ class WebResearchAgent:
             return self._unavailable("exchange_rate", language, "provider_unavailable")
 
     def search(self, question: str, language: str) -> dict:
-        try:
-            response = requests.get("https://html.duckduckgo.com/html/", params={"q": question[:350], "kl": "br-pt" if language == "pt" else "us-en"}, headers={"User-Agent": "Mozilla/5.0 GetnetAssistResearch/2.0"}, timeout=self.timeout)
-            response.raise_for_status()
-            soup = BeautifulSoup(response.text, "html.parser")
-            results = []
-            seen = set()
-            for node in soup.select(".result"):
-                link = node.select_one(".result__title a"); snippet = node.select_one(".result__snippet")
-                if not link: continue
-                url = link.get("href", "")
-                if url.startswith("//"): url = "https:" + url
-                parsed = urlparse(url)
-                if parsed.hostname and parsed.hostname.endswith("duckduckgo.com"):
-                    url = unquote(parse_qs(parsed.query).get("uddg", [""])[0])
-                if not url.startswith("https://") or url in seen: continue
-                seen.add(url)
-                results.append({"title": link.get_text(" ", strip=True)[:200], "url": url, "snippet": snippet.get_text(" ", strip=True)[:450] if snippet else ""})
-                if len(results) == 5: break
-            if not results:
-                return self._unavailable("web_search", language, "no_search_results")
-            bullets = "\n".join(f"- {item['title']}: {item['snippet']} ({item['url']})" for item in results)
-            answer = ("I searched the public web. Treat snippets as preliminary and verify important facts with the publisher:\n" if language == "en" else "Pesquisei na web pública. Trate os resumos como preliminares e confirme informações importantes diretamente com o publicador:\n") + bullets
-            return {"answer": answer, "confidence": 0.72, "sources": [{"title": x["title"], "url": x["url"]} for x in results], "tool_result": {"tool": "duckduckgo_public_search", "query": question, "results": results}, "trace": ["web_research_agent", "duckduckgo_search"]}
-        except requests.RequestException as exc:
-            logger.warning("web_search_unavailable error=%s", type(exc).__name__)
-            return self._unavailable("web_search", language, "provider_unavailable")
+        """General public search through stable providers (see web_search_tool)."""
+        from .web_search_tool import search_web
+        found = search_web(question, language, max_results=3)
+        if not found["ok"]:
+            return self._unavailable("web_search", language, "provider_unavailable" if found["errors"] else "no_search_results")
+        results = found["results"]
+        bullets = "\n".join(f"- {item['title']}: {item['snippet']} ({item['url']})" for item in results)
+        answer = ("Public sources found (verify important facts with the publisher):\n" if language == "en"
+                  else "Fontes públicas encontradas (confirme informações importantes com o publicador):\n") + bullets
+        return {"answer": answer, "confidence": 0.72, "sources": [{"title": x["title"], "url": x["url"]} for x in results],
+                "tool_result": {"tool": "web_search", "provider": found["provider"], "query": question, "results": results},
+                "trace": ["web_research_agent", f"web_search:{found['provider']}"]}
 
     @staticmethod
     def _target_day(day: str, question: str) -> date:

@@ -127,27 +127,63 @@ def crawl_official_site(seed_urls: list[str] | None = None, max_pages: int = 24,
     return documents
 
 
-def load_documents() -> list[dict]:
-    """Load deterministic committed knowledge; never crawl at service startup."""
-    docs: list[dict] = []
-    for filename in ("corpus.json", "site_snapshot.json"):
-        path = ROOT / filename
-        if not path.exists(): continue
-        try:
-            loaded = json.loads(path.read_text(encoding="utf-8"))
-            docs.extend(loaded if isinstance(loaded, list) else [])
-        except (OSError, json.JSONDecodeError):
-            logger.exception("knowledge_file_read_failed file=%s", filename)
-    result = []
-    seen = set()
-    for doc in docs:
-        if not allowed_url(doc.get("url", "")): continue
-        lang = doc.get("language", "pt")
+SNAPSHOT_DIR = ROOT / "snapshots"
+LEGACY_CURATED = ROOT / "corpus.json"
+
+
+def latest_snapshot(exclude: str | None = None) -> Path | None:
+    """Most recent snapshots/<version>/ with a chunks file (versions sort by date)."""
+    if not SNAPSHOT_DIR.exists():
+        return None
+    versions = sorted(d for d in SNAPSHOT_DIR.iterdir() if d.is_dir() and (d / "chunks.json.gz").exists() and d.name != exclude)
+    return versions[-1] if versions else None
+
+
+def load_snapshot_vectors(snapshot: Path | None = None) -> tuple[str | None, str, dict[str, list[float]]]:
+    """Precomputed document embeddings of a snapshot: (model, prefix, {content_hash: vector})."""
+    import base64
+    import gzip
+    import struct
+    snapshot = snapshot or latest_snapshot()
+    path = snapshot / "embeddings.json.gz" if snapshot else None
+    if not path or not path.exists():
+        return None, "", {}
+    data = json.loads(gzip.decompress(path.read_bytes()))
+    vectors = {}
+    for key, packed in data["vectors"].items():
+        raw = base64.b64decode(packed)
+        vectors[key] = list(struct.unpack(f"<{len(raw) // 2}e", raw))
+    return data.get("model"), data.get("prefix", ""), vectors
+
+
+def load_legacy_curated() -> list[dict]:
+    """The 26 hand-written summaries used before the full-site snapshot (kept only as an
+    evaluation baseline; not loaded at runtime)."""
+    loaded = json.loads(LEGACY_CURATED.read_text(encoding="utf-8")) if LEGACY_CURATED.exists() else []
+    out = []
+    for doc in loaded:
         for idx, chunk in enumerate(chunk_text(doc.get("content", ""))):
-            key = (doc["url"], chunk[:160].lower(), lang)
-            if key in seen: continue
-            seen.add(key)
-            result.append({"title": doc.get("title", "Getnet"), "url": doc["url"], "content": chunk,
-                           "language": lang, "chunk_id": idx, "source_type": doc.get("source_type", "curated_official_summary"),
-                           "captured_at": doc.get("captured_at"), "content_hash": doc.get("content_hash")})
-    return result
+            out.append({"title": doc.get("title", "Getnet"), "url": doc["url"], "section": doc.get("title", ""),
+                        "content": chunk, "language": doc.get("language", "pt"), "chunk_id": f"legacy-{len(out)}",
+                        "source_type": "curated_summary", "content_hash": None})
+    return out
+
+
+def load_documents() -> list[dict]:
+    """Load the latest versioned official-site snapshot; never crawl at service startup.
+
+    Falls back to the legacy curated summaries only when no snapshot exists.
+    """
+    import gzip
+    snapshot = latest_snapshot()
+    if snapshot is None:
+        logger.warning("knowledge_snapshot_missing using=legacy_curated_summaries")
+        return load_legacy_curated()
+    try:
+        chunks = json.loads(gzip.decompress((snapshot / "chunks.json.gz").read_bytes()))
+    except (OSError, ValueError):
+        logger.exception("knowledge_snapshot_read_failed version=%s", snapshot.name)
+        return load_legacy_curated()
+    for chunk in chunks:
+        chunk["corpus_version"] = snapshot.name
+    return [c for c in chunks if allowed_url(c.get("url", ""))]

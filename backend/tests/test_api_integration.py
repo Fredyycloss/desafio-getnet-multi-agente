@@ -56,7 +56,7 @@ def test_chat_uses_sqlite_customer_tools_for_yesterday_sales(client):
 
 def test_chat_routes_weather_to_public_provider_tool(client, monkeypatch):
     from app.agents.web_research_agent import WebResearchAgent
-    monkeypatch.setattr(WebResearchAgent, "weather", lambda self, question, language: {"answer": "Forecast mock 25°C", "confidence": .9, "sources": [{"title": "Open-Meteo", "url": "https://open-meteo.com/"}], "trace": ["web_research_agent", "open_meteo_forecast"], "tool_result": {"tool": "open_meteo_weather"}})
+    monkeypatch.setattr(WebResearchAgent, "weather", lambda self, question, language, **kwargs: {"answer": "Forecast mock 25°C", "confidence": .9, "sources": [{"title": "Open-Meteo", "url": "https://open-meteo.com/"}], "trace": ["web_research_agent", "open_meteo_forecast"], "tool_result": {"tool": "open_meteo_weather"}})
     response = client.post("/api/chat", json={"message": "What's the weather forecast in Porto Alegre tomorrow?", "user_id": "cliente1988"})
     assert response.status_code == 200
     assert response.json()["intent"] == "general_information"

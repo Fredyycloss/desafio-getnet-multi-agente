@@ -6,7 +6,7 @@ from app.agents.web_research_agent import WebResearchAgent
 
 class FakeResponse:
     def __init__(self, payload, text=""):
-        self.payload = payload; self.text = text
+        self.payload = payload; self.text = text; self.ok = True; self.status_code = 200
     def raise_for_status(self): return None
     def json(self): return self.payload
 
@@ -35,12 +35,31 @@ def test_currency_agent_returns_provider_date_and_rate(monkeypatch):
 
 
 def test_general_search_returns_linked_results(monkeypatch):
-    html = '''<div class="result"><div class="result__title"><a href="https://example.org/article">Example result</a></div><a class="result__snippet">A useful public snippet.</a></div>'''
-    def fake_get(url, **kwargs): return FakeResponse({}, html)
-    monkeypatch.setattr("app.agents.web_research_agent.requests.get", fake_get)
+    # Provider changed from DuckDuckGo HTML scraping to Wikipedia REST (stable JSON API).
+    monkeypatch.delenv("WEB_SEARCH_API_KEY", raising=False)
+
+    def fake_get(url, **kwargs):
+        if "rest.php/v1/search/page" in url:
+            return FakeResponse({"pages": [{"title": "Example result", "excerpt": "excerpt"}]})
+        if "/page/summary/" in url:
+            return FakeResponse({"extract": "A useful public snippet."})
+        raise AssertionError(url)
+    monkeypatch.setattr("app.agents.web_search_tool.requests.get", fake_get)
     result = WebResearchAgent().search("Explain a public topic", "en")
-    assert result["sources"][0]["url"] == "https://example.org/article"
+    assert result["sources"][0]["url"] == "https://en.wikipedia.org/wiki/Example_result"
     assert "A useful public snippet" in result["answer"]
+    assert result["tool_result"]["provider"] == "wikipedia_rest"
+
+
+def test_general_search_reports_unavailable_when_every_provider_fails(monkeypatch):
+    import requests
+    monkeypatch.delenv("WEB_SEARCH_API_KEY", raising=False)
+
+    def boom(url, **kwargs):
+        raise requests.ConnectionError("down")
+    monkeypatch.setattr("app.agents.web_search_tool.requests.get", boom)
+    result = WebResearchAgent().search("Explain a public topic", "en")
+    assert result["tool_result"]["available"] is False and result["sources"] == []
 
 
 def test_weather_location_extraction_removes_relative_date():

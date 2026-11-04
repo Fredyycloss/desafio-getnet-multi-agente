@@ -49,9 +49,8 @@ def main() -> int:
                 scenario["message"], args.user_id, session_id, history=[], trace_id=uuid4().hex
             )
             route = normalize_intent(response.get("intent", "unknown"))
-            source_titles = [item.get("title", "") for item in response.get("sources", [])]
-            expected_source = scenario.get("required_evidence")
-            source_hit = any(expected_source and expected_source.casefold() in title.casefold() for title in source_titles)
+            source_urls = [item.get("url", "") for item in response.get("sources", [])]
+            source_hit = any(f in url for url in source_urls for f in scenario.get("expected_urls", []))
             answer_language = detect_language(response.get("answer", ""))
             case = {
                 "id": scenario["id"],
@@ -62,8 +61,8 @@ def main() -> int:
                 "actual_language": response.get("language"),
                 "answer_language_detected": answer_language,
                 "language_pass": response.get("language") == scenario["language"] and answer_language == scenario["language"],
-                "expected_source": expected_source,
-                "source_hit": source_hit if expected_source else None,
+                "expected_source": scenario.get("expected_urls"),
+                "source_hit": source_hit if scenario.get("expected_urls") else None,
                 "orchestration_mode": response.get("orchestration_mode"),
                 "tool_calls": response.get("tool_calls", 0),
                 "critic": response.get("critic"),

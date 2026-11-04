@@ -118,10 +118,9 @@ flowchart TD
     SUP -->|one clear specialist: fast path| SPEC
     SUP -->|several / unsure: function-calling plan| SPEC
     subgraph SPEC[Specialists - each writes its own answer with the LLM]
-      K[Knowledge<br/>hybrid RAG + citations]
+      K[Knowledge<br/>site RAG + live pages + web search<br/>weather + FX tools, citations]
       CS[Customer Support<br/>profile, terminal status]
       PA[Payments<br/>settlement, declines]
-      W[Web Research<br/>weather, FX, search]
     end
     SPEC --> C{Critic}
     C -->|approved| A[Answer + sources + trace]
@@ -163,24 +162,57 @@ flowchart TD
 | Context Intelligence | Interpret the turn with history (6 messages × 400 chars) | — | 1 (JSON schema) |
 | RiskAssessment | Concrete physical hazards, also from history | regex over message and history | 0 |
 | Supervisor | Fast path or planning loop; one re-plan after a Critic rejection | specialists exposed as tools | 0 on the fast path, 1–3 when planning |
-| Knowledge | Getnet products, fees, Pix, receivables advance, crediário, Payment Link | hybrid RAG over the versioned corpus | 1 |
+| Knowledge | Getnet products, fees, Pix, receivables advance, crediário, Payment Link, and public questions | tools chosen by the LLM: `search_getnet_knowledge` (hybrid RAG over the site snapshot), `search_getnet_site_live`, `web_search` (Wikipedia/DDG Instant Answer, optional Brave key), `get_weather_forecast` (Open-Meteo), `get_exchange_rate` (Frankfurter) | 2: choose tools, then write |
 | Customer Support | Account profile and terminal status | `get_customer_profile`, `get_terminal_status` (SQLite) | 2: choose tools, then write |
 | Payments | Settlement dates, sales, declined transactions | `lookup_payment_status`, `find_declined_transactions` (SQLite) | 2: choose tools, then write |
-| Web Research | Weather, exchange rates, general public search | Open-Meteo, Frankfurter, DuckDuckGo (real HTTP) | 2: extract parameters, then write |
 | Human Handoff | Protocol, queue, status, history, operator API | SQLite tickets | 0 |
 | Critic | Deterministic checks, then model review | tool observations and evidence | 0–1 |
 
 The tools never receive `user_id` from the model. Closures bind the authenticated server-side id, and a test proves that a model passing another customer's id still gets only the caller's data.
 
-### RAG pipeline
+### Knowledge base and RAG pipeline
 
-1. **Ingestion.** `backend/app/knowledge/corpus.json` holds reviewed summaries of 10 official Getnet pages in PT and EN, for 26 chunks in total.
-   - Startup never crawls the web.
-   - An optional refresh (`docker compose --profile tools run --rm knowledge-refresh`) crawls only allowlisted Getnet hosts, for human review.
-2. **Storage.** Text is chunked at 1,100 characters with 150 of overlap and keeps title, URL and language. Dense embeddings from `nomic-embed-text` are cached in SQLite.
-3. **Retrieval.** BM25 over the language-matched corpus is combined with cosine similarity, returning top-4. When the best relevance is below 0.12, the agent abstains and the Supervisor shows a topic menu.
-4. **Generation.** The model receives only the evidence, at most 500 characters per item and marked as untrusted data. It must cite `[n]`, answer in the customer's language and not guess fees or eligibility.
-5. **Review.** The Critic checks that every citation exists and that the answer is supported. Without a model, the agent returns labelled extractive snippets (`degraded: true`).
+1. **Ingestion: the whole official site.** Run `python -m app.knowledge.ingest_cli --render-js --embed`; see [ARCHITECTURE](docs/ARCHITECTURE.md#knowledge-base-and-knowledge-agent-tools).
+   - **Discovery:** robots.txt → sitemaps → internal links, over `site.getnet.com.br` and `www.getnet.net` `/en` (the URL in the challenge) and `/pt`.
+   - **Politeness:** ~1 s between requests, generic User-Agent, allowlist and HTTPS only.
+   - **JavaScript pages:** rendered with Playwright Chromium.
+   - **Not reached by sitemaps or links:** the official help pages are added as seeds.
+   - **Snapshot 2026-11-03** ([manifest](backend/app/knowledge/snapshots/2026-11-03/manifest.json)):
+     - 378 pages: 230 Getnet Brasil, 66 global English, 82 Getnet Portugal;
+     - 52 pages rendered with JavaScript;
+     - 757 chunks, 1.28 million characters;
+     - 4,586 repeated menu, footer and banner blocks removed;
+     - 13 fetch errors, listed with the reason.
+   - **Boot:** reads the committed snapshot and never crawls.
+   - **Previous base:** the 26 hand-written summaries of the previous version are kept only as an evaluation baseline.
+2. **Storage.**
+   - Chunks follow the page headings (merged when small, split with overlap when long).
+   - Metadata: URL, title, section, breadcrumb, language, market (BR/PT/global), `fetched_at`, `content_hash`.
+   - `nomic-embed-text` vectors are **precomputed** at ingestion and stored with the snapshot (float16, gzip), so no document is embedded at query time.
+3. **Retrieval.**
+   - **Scoring:** hybrid, 0.55 × BM25 + 0.45 × cosine. The BM25 part is normalised by the best score the question could reach, so relevance is absolute.
+   - **Language:**
+     - Portuguese questions down-weight the Portugal pages unless they ask about Portugal.
+     - English questions also search the Portuguese-only Brazilian pages, with a small EN→PT glossary of domain terms for BM25.
+   - **Abstention:** below relevance 0.35 (0.22 when the best page is in another language), the agent abstains. Both thresholds were calibrated on a separate set of 16 questions, not on the evaluation set.
+4. **Generation.** The Knowledge Agent chooses its tools by function calling:
+   - official-site RAG;
+   - a live read of the official pages;
+   - web search;
+   - weather;
+   - exchange rate.
+
+   The LLM then writes only from the evidence and the tool results, with `[n]` citations pointing to the URL and section.
+5. **Review.** The Critic checks citations, numbers, IDs and dates against the evidence and tool data. Without a model the agent returns labelled extractive snippets (`degraded: true`).
+
+**Retrieval evaluation.** 70 questions in PT and EN: 60 answerable, labelled with the official URL that holds the answer, and 10 outside the base. Report: [RETRIEVAL_EVAL_2026-11-03.json](docs/eval/RETRIEVAL_EVAL_2026-11-03.json).
+
+| Base / mode | Recall@1 | Recall@3 | Recall@5 | MRR | Correct abstention (outside the base) | Answers inside the base |
+|---|---|---|---|---|---|---|
+| Old: 26 hand-written summaries (BM25) | 33% | 38% | 40% | 0.36 | 100% | 20% |
+| Snapshot, BM25 | 52% | 70% | 73% | 0.61 | 100% | 88% |
+| Snapshot, dense only | 45% | 60% | 67% | 0.53 | 40% | 98% |
+| **Snapshot, hybrid (default)** | **53%** | **70%** | **78%** | **0.62** | **100%** | **92%** |
 
 ### Fixed-text policy
 
@@ -298,7 +330,7 @@ Thresholds were fixed before measuring. Each mode was measured once on the held-
 
 - **Synthetic data and simulated humans.** The customer records are fixtures, and no real operator is connected; responses state `real_agent_connected: false`. The operator API (`X-Operator-Key`) only demonstrates the workflow.
 - **Demo identity.** PIN login with HMAC tokens binds the identity to the token, but it is not production authentication: the PINs are public, there is no rate limiting, and an empty `AUTH_SECRET` uses a per-process secret.
-- **Small knowledge base.** It has 10 official pages and 26 chunks, so questions outside it get an abstention and a topic menu, not an answer.
+- **Knowledge base scope.** It covers the official sites as of the snapshot date (378 pages). The help-centre FAQ widget (`/duvidas/*`) is a JavaScript chatbot with little indexable text. Answers can be as stale as the last `knowledge-refresh`.
 - **Slow local CPU.** On this machine `qwen3:1.7b` prefills about 25 tokens/s and generates about 5 tokens/s. A full local turn takes tens of seconds, so the offline mode misses the latency targets. The cloud mode is the demonstration mode.
 - **Model-dependent classification.** Context Intelligence accuracy depends on the model; see the held-out results. Concrete warning signs that the regex does not recognise, but the model rates "potentially dangerous", get the safety menu, not an immediate alert. The menu always offers "real physical risk".
 - **Public data providers.** The weather, FX and search providers are unauthenticated public services and can rate-limit. The agent then says the provider is unavailable and never invents a value.

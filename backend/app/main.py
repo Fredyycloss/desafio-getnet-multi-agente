@@ -55,7 +55,9 @@ async def lifespan(app: FastAPI):
                 raise RuntimeError(f"Required Ollama chat model did not become ready: {llm_status}")
             time.sleep(2)
     docs = load_documents()
-    service = ChatService(docs, db, llm, llm_required=llm_required)
+    from .knowledge.ingest import load_snapshot_vectors
+    vector_model, _, vectors = load_snapshot_vectors()
+    service = ChatService(docs, db, llm, llm_required=llm_required, vectors=vectors, vector_model=vector_model)
     state.update({"service": service, "db": db, "documents": docs, "metrics": {"requests": 0, "chats": 0, "errors": 0, "total_latency_ms": 0}})
     logger.info("startup_complete docs=%d llm_provider=%s model=%s elapsed_ms=%d", len(docs),
                 getattr(llm, "provider", "none"), getattr(llm, "model", None), int((time.monotonic()-started)*1000))

@@ -23,15 +23,21 @@ from .web_research_agent import WebResearchAgent
 logger = logging.getLogger(__name__)
 
 SUPERVISOR_TOOLS = [
-    {"type": "function", "function": {"name": "knowledge_specialist", "description": "Delegate Getnet product, service, pricing-policy, payment-method or procedure questions to the specialist RAG agent. It retrieves grounded evidence from the official-source corpus and drafts an answer.", "parameters": {"type": "object", "properties": {"query": {"type": "string", "description": "Standalone search query retaining product, issue and user context."}}, "required": ["query"]}}},
+    {"type": "function", "function": {"name": "knowledge_specialist", "description": "Delegate Getnet product, service, fee, payment-method or procedure questions AND public information (weather, exchange rates, general web questions) to the Knowledge agent. It chooses its own tools (official-site RAG, live official pages, web search, weather, exchange rates) and drafts a grounded answer with sources.", "parameters": {"type": "object", "properties": {"query": {"type": "string", "description": "Standalone question retaining product, issue and user context."}}, "required": ["query"]}}},
     {"type": "function", "function": {"name": "customer_support_specialist", "description": "Delegate account profile and card-terminal/connection problems to the support specialist. It inspects synthetic SQLite data through typed tools.", "parameters": {"type": "object", "properties": {"task": {"type": "string"}}, "required": ["task"]}}},
     {"type": "function", "function": {"name": "payments_specialist", "description": "Delegate sales, settlement/deposit dates and declined transactions to the payments specialist. It inspects synthetic SQLite data through typed tools.", "parameters": {"type": "object", "properties": {"task": {"type": "string"}}, "required": ["task"]}}},
-    {"type": "function", "function": {"name": "web_research_specialist", "description": "Delegate public/current questions (weather, exchange rates, general facts) to real public APIs/search. Never use for private customer details.", "parameters": {"type": "object", "properties": {"question": {"type": "string"}}, "required": ["question"]}}},
     {"type": "function", "function": {"name": "risk_assessment_specialist", "description": "Assess ambiguous device/physical safety reports. If risk is elevated, stop routine troubleshooting and escalate.", "parameters": {"type": "object", "properties": {"issue": {"type": "string"}}, "required": ["issue"]}}},
     {"type": "function", "function": {"name": "human_escalation_specialist", "description": "Create a persistent simulated human-support ticket and return a protocol. Use for explicit human requests, unresolved problems, low confidence, or elevated safety incidents. Do not claim a real operator is connected.", "parameters": {"type": "object", "properties": {"reason": {"type": "string"}, "summary": {"type": "string"}, "severity": {"type": "string", "enum": ["normal", "high", "critical"]}}, "required": ["reason", "summary", "severity"]}}},
 ]
 # Specialists that may be dispatched directly when Context Intelligence is confident.
-FAST_PATH_AGENTS = {"knowledge_specialist", "customer_support_specialist", "payments_specialist", "web_research_specialist"}
+FAST_PATH_AGENTS = {"knowledge_specialist", "customer_support_specialist", "payments_specialist"}
+# Web research is a set of Knowledge-agent tools (challenge: "Knowledge Agent ... RAG plus a web
+# search tool"). The old specialist name is still accepted from models/classifiers as an alias.
+AGENT_ALIASES = {"web_research_specialist": "knowledge_specialist"}
+
+
+def canonical_agent(name: str) -> str:
+    return AGENT_ALIASES.get(name, name)
 # Keys of the context assessment the planner needs; the rest only inflates the prompt.
 PLANNER_CONTEXT_KEYS = ("intent", "risk_level", "recommended_agents", "confidence", "figurative_language")
 FINAL_MARKER = "FINAL"
@@ -339,7 +345,7 @@ class SupervisorAgent:
         """Return the single routine specialist to dispatch directly, if any."""
         if assessment_mode not in CONTEXT_MODES or decision.get("action") != "continue":
             return None
-        agents = list(dict.fromkeys(assessment.get("recommended_agents") or []))
+        agents = list(dict.fromkeys(canonical_agent(a) for a in assessment.get("recommended_agents") or []))
         if len(agents) != 1 or agents[0] not in FAST_PATH_AGENTS:
             return None
         try:
@@ -379,8 +385,9 @@ class SupervisorAgent:
         system = (
             "You are the Supervisor Agent for Getnet Assist, coordinating specialist agents through function tools. "
             "Select the specialist tools the request needs, inspect their observations, and call another specialist only when evidence is incomplete. "
-            "Use knowledge_specialist for Getnet product/policy questions; customer_support_specialist for terminal/account/transaction cases; "
-            "web_research_specialist for weather, exchange rates, current or general public information; risk_assessment_specialist for ambiguous hazards; "
+            "Use knowledge_specialist for Getnet product/policy questions and for weather, exchange rates or other public information; "
+            "customer_support_specialist for terminal and account cases; payments_specialist for the customer's sales, settlements and declines; "
+            "risk_assessment_specialist for ambiguous hazards; "
             "human_escalation_specialist when the user requests a person, specialists cannot resolve the case, or confidence is low. "
             "Never invent customer records, balances, rates, dates, product features or sources. "
             "All customer records returned by support tools are SYNTHETIC DEMO FIXTURES. Never imply Getnet production access. "
@@ -423,7 +430,7 @@ class SupervisorAgent:
             for call in calls:
                 if tool_calls >= self.MAX_TOOL_CALLS: break
                 function = call.get("function", {})
-                name = function.get("name", "")
+                name = canonical_agent(function.get("name", ""))
                 args = function.get("arguments") or {}
                 if isinstance(args, str):
                     try: args = json.loads(args)
@@ -581,7 +588,7 @@ class SupervisorAgent:
         calls = assistant.get("tool_calls") or []
         if calls:
             function = calls[0].get("function", {})
-            name = str(function.get("name") or "")
+            name = canonical_agent(str(function.get("name") or ""))
             args = function.get("arguments") or {}
             if isinstance(args, str):
                 try: args = json.loads(args)
@@ -698,6 +705,7 @@ class SupervisorAgent:
         )
 
     def _execute_tool(self, name: str, args: dict, message: str, user_id: str, session_id: str, language: str, history: list[dict], previous: list[dict], trace_id: str) -> dict:
+        name = canonical_agent(name)
         component = {
             "knowledge_specialist": "agent",
             "customer_support_specialist": "agent",
@@ -713,8 +721,6 @@ class SupervisorAgent:
                 return self.support.run(str(args.get("task") or message)[:1000], user_id, language, history, trace_id)
             if name == "payments_specialist":
                 return self.payments.run(str(args.get("task") or message)[:1000], user_id, language, history, trace_id)
-            if name == "web_research_specialist":
-                return self.web.run(str(args.get("question") or message)[:600], language)
             if name == "risk_assessment_specialist":
                 return self.risk.assess(str(args.get("issue") or message), history, language)
             if name == "human_escalation_specialist":
@@ -738,8 +744,8 @@ class SupervisorAgent:
             intent = "customer_support"  # route family for Support and Payments; agent is in the trace
         elif route == "general_question":
             started = time.monotonic()
-            result = self.web.run(message, language)
-            self.db.record_tool(trace_id, "web_research_specialist", user_id, "ok" if result.get("confidence", 0) > 0 else "error", int((time.monotonic() - started) * 1000))
+            result = self.knowledge.run(message, language, history)  # web/weather/FX are Knowledge tools
+            self.db.record_tool(trace_id, "knowledge_specialist", user_id, "ok" if result.get("confidence", 0) > 0 else "error", int((time.monotonic() - started) * 1000))
             intent = "general_information"
         elif route == "smalltalk":
             result = {"answer": "Hello! I can help with Getnet products, support and public information." if language == "en" else "Olá! Posso ajudar com produtos Getnet, suporte e informações públicas.", "confidence": 0.95, "sources": [], "trace": ["smalltalk"]}

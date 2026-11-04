@@ -1,12 +1,93 @@
 [
-  {"id":"product_compare","message":"What's the difference between the Get Clássica and the Get Smart?","language":"en","expected_route":"knowledge","required_evidence":"Get Clássica vs Get Smart"},
-  {"id":"weather_porto_alegre","message":"What's the weather forecast in Porto Alegre tomorrow?","language":"en","expected_route":"general_question","expected_tool":"open_meteo_weather"},
-  {"id":"yesterday_settlement","message":"When will the money from yesterday's sales be deposited?","language":"en","expected_route":"customer_support","expected_tool":"lookup_payment_status"},
-  {"id":"pix_bank_account","message":"Do I need a bank account to receive my sales via Pix?","language":"en","expected_route":"knowledge","required_evidence":"Pix with Getnet"},
-  {"id":"terminal_offline","message":"My card machine won't connect to the internet, what should I do?","language":"en","expected_route":"customer_support","expected_tool":"get_terminal_status"},
-  {"id":"receivables_advance","message":"How does receivables advance (antecipação) work with Getnet?","language":"en","expected_route":"knowledge","required_evidence":"Receivables advance in the Getnet app"},
-  {"id":"euro_rate","message":"What's the euro exchange rate today?","language":"en","expected_route":"general_question","expected_tool":"frankfurter_exchange_rates"},
-  {"id":"declined_transaction","message":"My card machine is showing a transaction decline error.","language":"en","expected_route":"customer_support","expected_tool":"find_declined_transactions"},
-  {"id":"crediario_installments","message":"How many installments can I split a sale into with Crediário?","language":"en","expected_route":"knowledge","required_evidence":"Getnet Crediário"},
-  {"id":"payment_link_whatsapp","message":"Can I sell through WhatsApp using the Payment Link?","language":"en","expected_route":"knowledge","required_evidence":"Getnet Payment Link"}
+  {
+    "id": "product_compare",
+    "message": "What's the difference between the Get Clássica and the Get Smart?",
+    "language": "en",
+    "expected_route": "knowledge",
+    "expected_urls": [
+      "maquininha/get-classica",
+      "maquininha/get-smart",
+      "todas-as-maquininhas",
+      "melhor-maquininha"
+    ]
+  },
+  {
+    "id": "weather_porto_alegre",
+    "message": "What's the weather forecast in Porto Alegre tomorrow?",
+    "language": "en",
+    "expected_route": "general_question",
+    "expected_tool": "open_meteo_weather"
+  },
+  {
+    "id": "yesterday_settlement",
+    "message": "When will the money from yesterday's sales be deposited?",
+    "language": "en",
+    "expected_route": "customer_support",
+    "expected_tool": "lookup_payment_status"
+  },
+  {
+    "id": "pix_bank_account",
+    "message": "Do I need a bank account to receive my sales via Pix?",
+    "language": "en",
+    "expected_route": "knowledge",
+    "expected_urls": [
+      "/pix/",
+      "duvidas/pix",
+      "get-ajuda-pix",
+      "pix-no-get-tap",
+      "pagamentos-por-biometria-via-pix",
+      "get-ajuda-configuracoes"
+    ],
+    "label_note": "widened 2026-11-03 after a text search showed the bank-account answer on these official pages"
+  },
+  {
+    "id": "terminal_offline",
+    "message": "My card machine won't connect to the internet, what should I do?",
+    "language": "en",
+    "expected_route": "customer_support",
+    "expected_tool": "get_terminal_status"
+  },
+  {
+    "id": "receivables_advance",
+    "message": "How does receivables advance (antecipação) work with Getnet?",
+    "language": "en",
+    "expected_route": "knowledge",
+    "expected_urls": [
+      "antecipa"
+    ]
+  },
+  {
+    "id": "euro_rate",
+    "message": "What's the euro exchange rate today?",
+    "language": "en",
+    "expected_route": "general_question",
+    "expected_tool": "frankfurter_exchange_rates"
+  },
+  {
+    "id": "declined_transaction",
+    "message": "My card machine is showing a transaction decline error.",
+    "language": "en",
+    "expected_route": "customer_support",
+    "expected_tool": "find_declined_transactions"
+  },
+  {
+    "id": "crediario_installments",
+    "message": "How many installments can I split a sale into with Crediário?",
+    "language": "en",
+    "expected_route": "knowledge",
+    "expected_urls": [
+      "crediario"
+    ]
+  },
+  {
+    "id": "payment_link_whatsapp",
+    "message": "Can I sell through WhatsApp using the Payment Link?",
+    "language": "en",
+    "expected_route": "knowledge",
+    "expected_urls": [
+      "link-de-pagamento",
+      "vender-pelo-whatsapp",
+      "get-ajuda-whatsapp-business"
+    ]
+  }
 ]

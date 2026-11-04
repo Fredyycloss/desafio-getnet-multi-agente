@@ -17,17 +17,17 @@ from .observability import current_timeline, finish_timeline, start_timeline
 
 class ChatService:
     def __init__(self, documents: list[dict], db: Database, llm: LLMProvider | None = None,
-                 *, llm_required: bool = False):
+                 *, llm_required: bool = False, vectors: dict | None = None, vector_model: str | None = None):
         self.db = db
         self.llm = llm
         self.context_intelligence = ContextIntelligence(llm, classifier=self._intent_classifier(llm, db))
-        self.knowledge = KnowledgeAgent(documents, db=db, llm=llm)
+        self.web = WebResearchAgent(llm=llm)  # module of the Knowledge agent's web/weather/FX tools
+        self.knowledge = KnowledgeAgent(documents, db=db, llm=llm, vectors=vectors, vector_model=vector_model, web=self.web)
         self.support = CustomerSupportAgent(db, llm)
         self.payments = PaymentsAgent(db, llm)
         self.risk = RiskAssessmentAgent()
         self.handoff = HumanHandoffAgent(db)
         self.escalation = EscalationAgent(self.handoff)
-        self.web = WebResearchAgent(llm=llm)
         self.critic = CriticAgent(llm, required=llm_required)
         self.supervisor = SupervisorAgent(llm=llm, db=db, knowledge=self.knowledge, support=self.support,
                                           web=self.web, risk=self.risk, escalation=self.escalation, critic=self.critic,

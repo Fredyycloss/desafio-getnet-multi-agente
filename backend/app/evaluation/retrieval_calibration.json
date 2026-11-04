@@ -1,0 +1,21 @@
+{
+ "_note": "Calibration-only set for the retrieval abstention threshold and the dense floor (2026-11-03). Disjoint from retrieval_questions.json and answer_quality.jsonl; never used to report results.",
+ "questions": [
+  {"id": "k01", "language": "pt", "question": "Como funciona o cashback do conversor de moedas?", "answerable": true},
+  {"id": "k02", "language": "pt", "question": "Quais documentos preciso para abrir a Get Conta?", "answerable": true},
+  {"id": "k03", "language": "pt", "question": "O que é chargeback e como evitar?", "answerable": true},
+  {"id": "k04", "language": "pt", "question": "A Getnet tem programa de parcerias para desenvolvedores?", "answerable": true},
+  {"id": "k05", "language": "en", "question": "What partners does Getnet work with?", "answerable": true},
+  {"id": "k06", "language": "en", "question": "Does Getnet support open banking?", "answerable": true},
+  {"id": "k07", "language": "pt", "question": "Como emitir duplicado do recibo no TPA em Portugal?", "answerable": true},
+  {"id": "k08", "language": "pt", "question": "O que é o Get Code da Getnet?", "answerable": true},
+  {"id": "n01", "language": "pt", "question": "Qual o melhor time de futebol do Brasil?", "answerable": false},
+  {"id": "n02", "language": "pt", "question": "Como plantar tomates na varanda?", "answerable": false},
+  {"id": "n03", "language": "en", "question": "Who painted the Mona Lisa?", "answerable": false},
+  {"id": "n04", "language": "pt", "question": "Qual a distância da Terra até Marte?", "answerable": false},
+  {"id": "n05", "language": "en", "question": "How do I fix a flat bicycle tire?", "answerable": false},
+  {"id": "n06", "language": "pt", "question": "Qual o prazo para declarar imposto de renda pessoa física?", "answerable": false},
+  {"id": "n07", "language": "pt", "question": "Receita de pão de queijo mineiro", "answerable": false},
+  {"id": "n08", "language": "en", "question": "What is the boiling point of water at high altitude?", "answerable": false}
+ ]
+}
