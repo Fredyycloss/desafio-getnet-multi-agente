@@ -28,6 +28,10 @@ class PaymentsAgent(ToolSpecialist):
         "Use period=yesterday or today as the request implies (default yesterday). Call every relevant tool now. Do not answer in text."
     )
     writer_role = "You are the Getnet Payments specialist (sales, settlements, declines)."
+    action_kinds = ("transaction_dispute",)
+    action_prompt = ("When the customer explicitly asks to dispute or contest a specific transaction and its transaction_id is "
+                     "known from the conversation, call propose_transaction_dispute: it only prepares the request, and the customer "
+                     "confirms before anything happens. If the id is unknown, look the transactions up instead.")
 
     def bind_tools(self, user_id: str) -> dict[str, Callable[[dict], dict]]:
         return {

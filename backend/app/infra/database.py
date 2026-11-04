@@ -126,6 +126,7 @@ class Database:
     def _seed(self) -> None:
         now = self._now()
         yesterday = date.today() - timedelta(days=1)
+        three_days_ago = date.today() - timedelta(days=3)
         due = add_business_days(yesterday, 2).isoformat()
         customers = [
             ("cliente1988", "Comércio Demo 1988", "active", "small_business", now),
@@ -144,6 +145,11 @@ class Database:
             ("TX-DEMO-1002", "cliente1988", yesterday.isoformat(), 120.00, 118.80, "debit", "approved", add_business_days(yesterday, 1).isoformat(), "scheduled", None, "Venda demonstrativa de débito"),
             ("TX-DEMO-1003", "cliente1988", yesterday.isoformat(), 89.90, 0.00, "credit", "declined", None, "not_applicable", "05", "Transação demonstrativa recusada pelo emissor"),
             ("TX-DEMO-2001", "demo-user-001", yesterday.isoformat(), 420.00, 407.40, "credit", "approved", add_business_days(yesterday, 2).isoformat(), "scheduled", None, "Venda demonstrativa de crédito"),
+            # V7-F fixtures for disputes: an older sale of 1988 (outside "yesterday", so its daily totals are unchanged),
+            # a declined sale for demo-user-001 and a sale for demo-merchant-001.
+            ("TX-DEMO-1005", "cliente1988", three_days_ago.isoformat(), 59.90, 58.15, "credit", "approved", add_business_days(three_days_ago, 2).isoformat(), "scheduled", None, "Venda demonstrativa de crédito (candidata a contestação)"),
+            ("TX-DEMO-2002", "demo-user-001", yesterday.isoformat(), 35.00, 0.00, "debit", "declined", None, "not_applicable", "51", "Transação demonstrativa recusada: saldo insuficiente"),
+            ("TX-DEMO-3001", "demo-merchant-001", yesterday.isoformat(), 75.00, 74.25, "debit", "approved", add_business_days(yesterday, 1).isoformat(), "scheduled", None, "Venda demonstrativa de débito"),
         ]
         self.conn.executemany("INSERT OR IGNORE INTO transactions VALUES(?,?,?,?,?,?,?,?,?,?,?)", transactions)
         # Keep the seeded demo scenario relative to the actual runtime date.
@@ -151,6 +157,9 @@ class Database:
         self.conn.execute("UPDATE transactions SET transaction_date=?, settlement_date=? WHERE transaction_id='TX-DEMO-1002'", (yesterday.isoformat(), add_business_days(yesterday, 1).isoformat()))
         self.conn.execute("UPDATE transactions SET transaction_date=? WHERE transaction_id='TX-DEMO-1003'", (yesterday.isoformat(),))
         self.conn.execute("UPDATE transactions SET transaction_date=?, settlement_date=? WHERE transaction_id='TX-DEMO-2001'", (yesterday.isoformat(), add_business_days(yesterday, 2).isoformat()))
+        self.conn.execute("UPDATE transactions SET transaction_date=?, settlement_date=? WHERE transaction_id='TX-DEMO-1005'", (three_days_ago.isoformat(), add_business_days(three_days_ago, 2).isoformat()))
+        self.conn.execute("UPDATE transactions SET transaction_date=? WHERE transaction_id='TX-DEMO-2002'", (yesterday.isoformat(),))
+        self.conn.execute("UPDATE transactions SET transaction_date=?, settlement_date=? WHERE transaction_id='TX-DEMO-3001'", (yesterday.isoformat(), add_business_days(yesterday, 1).isoformat()))
         self.conn.commit()
 
     def ensure_session(self, session_id: str, user_id: str) -> None:

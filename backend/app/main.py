@@ -229,6 +229,7 @@ def chat(payload: ChatRequest, request: Request, auth_user: str = Depends(requir
     if challenge and critic_challenge.enabled() and challenge in critic_challenge.KINDS:
         current_timeline().critic_challenge = challenge  # test-only; ignored unless CRITIC_CHALLENGE_MODE=true
     session_id = payload.session_id or uuid4().hex
+    current_timeline().session_id = session_id
     try:
         with stage("session_read_and_validation", "persistence"):
             owner = db.get_session_owner(session_id)
@@ -262,13 +263,17 @@ def chat(payload: ChatRequest, request: Request, auth_user: str = Depends(requir
                       "last_message_id": db.last_message_id(session_id)}
             state["metrics"]["chats"] += 1
             return result
+        decided = _decide_pending_action(service, db, payload.message, auth_user, session_id, request.state.trace_id)
+        if decided is not None:
+            state["metrics"]["chats"] += 1
+            return decided
         storage_guard = inspect_message(payload.message, detect_language(payload.message, history))
         stored_message = "[mensagem bloqueada por divulgação de dado sensível]" if storage_guard.get("blocked") else payload.message
         with stage("user_message_persistence", "persistence"):
             db.save_message(session_id, payload.user_id, "user", stored_message)
         result = service.answer(payload.message, payload.user_id, session_id, history, request.state.trace_id)
         with stage("assistant_message_persistence", "persistence"):
-            db.save_message(session_id, payload.user_id, "assistant", result["answer"], result)
+            db.save_message(session_id, payload.user_id, "assistant", result["answer"], _without_action_token(result))
         timeline = current_timeline()
         result["stage_timings"] = timeline.snapshot() if timeline else []
         result["model_usage"] = timeline.model_usage() if timeline else {"llm_calls": 0, "prompt_tokens": 0, "output_tokens": 0, "calls": []}
@@ -292,6 +297,92 @@ def chat(payload: ChatRequest, request: Request, auth_user: str = Depends(requir
         raise HTTPException(status_code=503, detail="The human-support request could not be confirmed. Please retry or use the official Getnet support channels.") from exc
     finally:
         finish_timeline(trace_token)
+
+
+def _without_action_token(result: dict) -> dict:
+    """The one-time confirmation token goes to the client only; history keeps the action without it."""
+    if not isinstance(result.get("pending_action"), dict):
+        return result
+    return {**result, "pending_action": {k: v for k, v in result["pending_action"].items() if k != "confirmation_token"}}
+
+
+def _action_record(outcome: dict) -> dict:
+    action = outcome.get("action") or {}
+    return {"protocol": outcome.get("protocol"), "summary": action.get("summary"), **(action.get("args") or {})}
+
+
+def _action_reply(service, db, outcome: dict, language: str, user_id: str, session_id: str, trace_id: str, channel: str) -> dict:
+    """Fixed protocol-confirmation text from the record, checked by the Critic against that record."""
+    text = service.actions.result_text(outcome, language)
+    record = _action_record(outcome)
+    critic = service.critic.review(text, language, [record], user_message=None, grounding_observations=[record]) \
+        if outcome["outcome"] in ("executed", "already_executed") else {"approved": True, "mode": "action_policy", "issues": []}
+    if critic.get("approved") is False and outcome["outcome"] in ("executed", "already_executed"):
+        text = (f"Solicitação registrada. Protocolo: {outcome['protocol']}." if language == "pt" else f"Request registered. Protocol: {outcome['protocol']}.")
+    action = outcome.get("action") or {}
+    result = {"answer": text, "language": language, "intent": f"action_{outcome['outcome']}", "agent": "action_service",
+              "confidence": 1.0, "sources": [], "handoff": False, "trace": ["action_service", f"action:{outcome['outcome']}", f"channel:{channel}", "critic_agent"],
+              "orchestration_mode": "action_confirmation", "tool_calls": 0, "critic": critic, "trace_id": trace_id,
+              "degraded": False, "degraded_reason": None, "session_id": session_id,
+              "action": service.actions.public(action) if action else None, "action_protocol": outcome.get("protocol")}
+    db.save_message(session_id, user_id, "assistant", text, result)
+    result["last_message_id"] = db.last_message_id(session_id)
+    return result
+
+
+def _decide_pending_action(service, db, message: str, user_id: str, session_id: str, trace_id: str) -> dict | None:
+    """A short yes/no (or the typed phrase of a sensitive action) answers the pending action of this
+    conversation. Anything else goes through the normal pipeline and the action stays pending."""
+    from .actions.catalog import KINDS
+    from .actions.service import _fold, reinforced_phrase, reply_kind
+    pending = service.actions.pending_for_session(session_id, user_id)
+    if not pending:
+        return None
+    reinforced = KINDS[pending["kind"]].reinforced
+    decision = reply_kind(message)
+    if reinforced and _fold(message) == _fold(reinforced_phrase(pending)):
+        decision = "yes"
+    if decision is None:
+        return None
+    db.save_message(session_id, user_id, "user", message)
+    outcome = service.actions.decide(pending["action_id"], user_id, session_id, decision, typed=message if reinforced else None, channel="chat")
+    return _action_reply(service, db, outcome, pending["language"], user_id, session_id, trace_id, "chat")
+
+
+class ActionDecision(BaseModel):
+    session_id: str = Field(min_length=1, max_length=128)
+    confirmation_token: str = Field(min_length=8, max_length=128)
+    typed_confirmation: str | None = Field(default=None, max_length=80)
+
+
+@app.post("/api/actions/{action_id}/confirm")
+def confirm_action(action_id: str, payload: ActionDecision, request: Request, auth_user: str = Depends(require_user)):
+    return _button_decision(action_id, payload, request, auth_user, "yes")
+
+
+@app.post("/api/actions/{action_id}/cancel")
+def cancel_action(action_id: str, payload: ActionDecision, request: Request, auth_user: str = Depends(require_user)):
+    return _button_decision(action_id, payload, request, auth_user, "no")
+
+
+def _button_decision(action_id: str, payload: ActionDecision, request: Request, auth_user: str, decision: str) -> dict:
+    service, db = state.get("service"), state.get("db")
+    if service is None or db is None:
+        raise HTTPException(status_code=503, detail="Service is starting")
+    outcome = service.actions.decide(action_id, auth_user, payload.session_id, decision, token=payload.confirmation_token,
+                                     typed=payload.typed_confirmation, channel="button")
+    if outcome["outcome"] in ("not_found", "bad_token"):
+        raise HTTPException(status_code=404, detail="Action not found")
+    language = (outcome.get("action") or {}).get("language", "pt")
+    return _action_reply(service, db, outcome, language, auth_user, payload.session_id, request.state.trace_id, "button")
+
+
+@app.get("/api/actions")
+def list_actions(auth_user: str = Depends(require_user)):
+    service = state.get("service")
+    if service is None:
+        raise HTTPException(status_code=503, detail="Service is starting")
+    return service.actions.list_for_user(auth_user)
 
 
 @app.get("/api/sessions/{session_id}/messages")

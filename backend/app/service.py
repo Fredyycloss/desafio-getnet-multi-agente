@@ -23,8 +23,10 @@ class ChatService:
         self.context_intelligence = ContextIntelligence(llm, classifier=self._intent_classifier(llm, db))
         self.web = WebResearchAgent(llm=llm)  # module of the Knowledge agent's web/weather/FX tools
         self.knowledge = KnowledgeAgent(documents, db=db, llm=llm, vectors=vectors, vector_model=vector_model, web=self.web)
-        self.support = CustomerSupportAgent(db, llm)
-        self.payments = PaymentsAgent(db, llm)
+        from .actions.service import ActionService
+        self.actions = ActionService(db)
+        self.support = CustomerSupportAgent(db, llm, actions=self.actions)
+        self.payments = PaymentsAgent(db, llm, actions=self.actions)
         self.risk = RiskAssessmentAgent()
         self.handoff = HumanHandoffAgent(db)
         from .hitl.service import HITLService

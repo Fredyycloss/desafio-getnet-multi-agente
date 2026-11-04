@@ -22,9 +22,13 @@ type Reply = {
   tool_calls?: number
   trace_id?: string
   clarification_options?: ClarificationOption[]
+  pending_action?: PendingAction
+  action_protocol?: string
   critic?: { approved?: boolean; mode?: string; issues?: string[] }
   context_assessment?: { intent?: string; confidence?: number; ambiguity_level?: string; risk_level?: string; recommended_action?: string; recommended_destination?: string; operational_reason?: string }
 }
+type PendingAction = { action_id: string; kind: string; summary: string; status: string; expires_at: string; confirmation_token?: string
+  requires_typed_confirmation?: boolean; typed_confirmation_phrase?: string; ttl_minutes?: number }
 type Message = { id: string; role: 'assistant' | 'user'; text: string; meta?: Reply; time: string; author?: string; operator?: string }
 type LiveMessage = { id: number; role: string; content: string; author?: string; operator?: string; handoff_status?: string }
 
@@ -140,6 +144,26 @@ function Assistant({ auth, onLogout }: { auth: Auth; onLogout: () => void }) {
     return () => clearInterval(id)
   }, [activeHandoff, sessionId]) // eslint-disable-line react-hooks/exhaustive-deps
 
+  const [typed, setTyped] = useState('')
+  const [decided, setDecided] = useState<Record<string, boolean>>({})
+  async function decideAction(action: PendingAction, decision: 'confirm' | 'cancel') {
+    if (!action.confirmation_token) return
+    setBusy(true)
+    try {
+      const response = await fetch(`/api/actions/${encodeURIComponent(action.action_id)}/${decision}`, {
+        method: 'POST', headers: authHeaders,
+        body: JSON.stringify({ session_id: sessionId, confirmation_token: action.confirmation_token, typed_confirmation: typed || undefined }),
+      })
+      const data: Reply = await response.json()
+      if (!response.ok) throw new Error('action')
+      if (data.intent !== 'action_needs_typed_confirmation') setDecided(prev => ({ ...prev, [action.action_id]: true }))
+      setMessages(prev => [...prev, { id: crypto.randomUUID(), role: 'assistant', text: data.answer, meta: data, time: formatTime() }])
+      setTyped('')
+    } catch {
+      setMessages(prev => [...prev, { id: crypto.randomUUID(), role: 'assistant', text: 'Não consegui registrar sua decisão agora. Nada foi executado; tente de novo.', time: formatTime() }])
+    } finally { setBusy(false) }
+  }
+
   async function sendMessage(value = input, options: { humanRequest?: boolean } = {}) {
     const message = value.trim()
     if (!message || busy) return
@@ -248,6 +272,17 @@ function Assistant({ auth, onLogout }: { auth: Auth; onLogout: () => void }) {
               <div className="message-meta"><strong>{msg.role === 'assistant' ? (msg.author === 'operator' ? 'Atendente' : 'Getnet Assist') : 'Você'}</strong>{msg.author === 'operator' && msg.operator && <span className="author-badge">{msg.operator}</span>}<span>{msg.time}</span></div>
               <div className={`message-bubble ${msg.role}`}>{msg.text.split('\n').map((line, i) => line ? <p key={i}>{line}</p> : <div key={i} className="line-space"/>)}</div>
               {msg.meta?.clarification_options && <div className="clarification-actions" aria-label="Opções para continuar">{msg.meta.clarification_options.map((option, index) => <button key={option.id} className="clarification-option" onClick={() => void sendMessage(option.label)} disabled={busy}>{index + 1}. {option.label}</button>)}</div>}
+              {msg.meta?.pending_action && !decided[msg.meta.pending_action.action_id] && <div className="action-card" aria-label="Confirmar ação">
+                <strong>{msg.meta.language === 'en' ? 'Confirmation needed' : 'Confirmação necessária'}</strong>
+                <p>{msg.meta.pending_action.summary}</p>
+                {msg.meta.pending_action.requires_typed_confirmation && <label className="action-typed">{msg.meta.language === 'en' ? 'Type' : 'Digite'} “{msg.meta.pending_action.typed_confirmation_phrase}”
+                  <input value={typed} onChange={e => setTyped(e.target.value)} aria-label="Frase de confirmação" autoComplete="off"/></label>}
+                <div className="action-buttons">
+                  <button className="action-confirm" onClick={() => void decideAction(msg.meta!.pending_action!, 'confirm')} disabled={busy}>{msg.meta.language === 'en' ? 'Confirm' : 'Confirmar'}</button>
+                  <button className="action-cancel" onClick={() => void decideAction(msg.meta!.pending_action!, 'cancel')} disabled={busy}>{msg.meta.language === 'en' ? 'Cancel' : 'Cancelar'}</button>
+                </div>
+              </div>}
+              {msg.meta?.action_protocol && <div className="action-done">Protocolo da ação: <b>{msg.meta.action_protocol}</b></div>}
               {(msg.meta?.sources?.length ?? 0) > 0 && <div className="inline-sources"><span>Fontes consultadas</span>{msg.meta?.sources?.slice(0, 3).map(source => <a href={source.url} target="_blank" rel="noreferrer" key={source.url + source.title}>{source.title}<ArrowUpRight size={12}/></a>)}</div>}
               {msg.meta && <>
                 <button className="detail-toggle" onClick={() => setShowDetails(showDetails === msg.id ? null : msg.id)}><Sparkles size={13}/>{msg.meta.agent.replace(/_/g, ' ')}<ChevronDown size={13} className={showDetails === msg.id ? 'rotate' : ''}/></button>

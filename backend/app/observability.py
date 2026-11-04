@@ -24,6 +24,8 @@ class TraceTimeline:
     llm_deadline: float | None = None
     # Test-only adversarial draft kind (CRITIC_CHALLENGE_MODE); None in production.
     critic_challenge: str | None = None
+    # Conversation the request belongs to (write actions are bound to it).
+    session_id: str | None = None
 
     def snapshot(self) -> list[dict]:
         return [dict(event) for event in self.events]

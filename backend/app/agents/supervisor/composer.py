@@ -50,9 +50,16 @@ class ComposerMixin:
             trace = trace + [f"critic_challenge_injected:{timeline.critic_challenge}"]
 
         # Code-enforced, single critic pass over the exact text that will be returned.
+        proposals = [r["pending_action"] for r in specialist_results if r.get("pending_action")]
         if not model_written and any(r.get("handoff") for r in specialist_results):
             # Hand-off confirmations are deterministic templates, not generated claims.
             critic_result = {"approved": True, "mode": "handoff_policy", "issues": []}
+        elif not model_written and proposals and len(specialist_results) == 1:
+            # Confirmation menu built from the validated record: every ID/value/date it states must be in that record.
+            from ..grounding import find_unsupported
+            unsupported = find_unsupported(draft, proposals)
+            critic_result = {"approved": not unsupported, "mode": "action_confirmation_check",
+                             "issues": [f"not_in_action_record:{u}" for u in unsupported[:3]]}
         else:
             evidence = self._collect_evidence(specialist_results)
             critic_result = self.critic.review(draft, language, evidence, user_message=message, conversation_context=history,
@@ -92,7 +99,7 @@ class ComposerMixin:
             "specialist_results": specialist_results,
         }
         for result in specialist_results:
-            for key in ("handoff_protocol", "handoff_status", "handoff_severity", "real_agent_connected", "handoff_reason", "risk_level"):
+            for key in ("handoff_protocol", "handoff_status", "handoff_severity", "real_agent_connected", "handoff_reason", "risk_level", "pending_action"):
                 if key in result: combined[key] = result[key]
         intent = self._intent_from_results(specialist_results)
         return self._pack(combined, language, intent, trace + ["supervisor_final"], mode, critic=critic_result, trace_id=trace_id, tool_calls=tool_calls)
@@ -158,7 +165,7 @@ class ComposerMixin:
         }
         payload["degraded"] = bool(result.get("degraded", False))
         payload["degraded_reason"] = result.get("degraded_reason") if payload["degraded"] else None
-        for key in ("handoff_reason", "handoff_protocol", "handoff_status", "handoff_severity", "real_agent_connected", "risk_level", "retrieval_mode", "clarification_kind"):
+        for key in ("handoff_reason", "handoff_protocol", "handoff_status", "handoff_severity", "real_agent_connected", "risk_level", "retrieval_mode", "clarification_kind", "pending_action"):
             if key in result: payload[key] = result[key]
         if "clarification_options" in result:
             payload["clarification_options"] = result["clarification_options"]

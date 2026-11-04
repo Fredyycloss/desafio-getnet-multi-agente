@@ -89,10 +89,30 @@ class ToolSpecialist:
     selection_prompt = ""
     writer_role = ""
     answer_tokens_env = "OLLAMA_SUPPORT_ANSWER_MAX_OUTPUT_TOKENS"
+    # Write actions this specialist may PROPOSE (app/actions/catalog.py). Never executed here.
+    action_kinds: tuple[str, ...] = ()
+    action_prompt = ""
 
-    def __init__(self, db: Database, llm: LLMProvider | None = None):
+    def __init__(self, db: Database, llm: LLMProvider | None = None, actions=None):
         self.db = db
         self.llm = llm
+        self.actions = actions
+
+    def _schemas(self) -> list[dict]:
+        if not self.actions:
+            return self.tool_schemas
+        from ..actions.catalog import KINDS
+        return self.tool_schemas + [KINDS[k].tool for k in self.action_kinds]
+
+    def _action_tools(self, user_id: str, language: str) -> dict[str, Callable[[dict], dict]]:
+        if not self.actions:
+            return {}
+        from ..actions.catalog import KINDS
+        from ..observability import current_timeline
+        timeline = current_timeline()
+        session_id = timeline.session_id if timeline else None
+        return {KINDS[k].tool["function"]["name"]: (lambda args, k=k: self.actions.propose(user_id, session_id, k, args, language))
+                for k in self.action_kinds}
 
     # -- subclass hooks -------------------------------------------------------
     def bind_tools(self, user_id: str) -> dict[str, Callable[[dict], dict]]:
@@ -109,7 +129,7 @@ class ToolSpecialist:
             trace_id: str | None = None) -> dict:
         started = time.monotonic()
         audit_trace = trace_id or uuid4().hex
-        raw_tools = self.bind_tools(user_id)
+        raw_tools = {**self.bind_tools(user_id), **self._action_tools(user_id, language)}
         tool_calls: list[dict] = []
         observations: list[dict] = []
         trace: list[str] = [self.name]
@@ -142,8 +162,16 @@ class ToolSpecialist:
                         trace.append("keyword_tool_selection_fallback")
                     for name, args in selected:
                         invoke(name, args)
-                    answer = self._write_with_model(task, language, observations)
-                    if answer:
+                    proposal = next((o for o in observations if o.get("ok") and (o.get("pending_action") or o.get("already_executed"))), None)
+                    if proposal:
+                        # The model chose the action and its arguments; the confirmation menu is fixed text
+                        # built from the validated record (README fixed-text policy, item c).
+                        answer = proposal.get("confirmation_text") or self.actions.result_text(
+                            {"outcome": "already_executed", "action": proposal["action"], "protocol": proposal["protocol"]}, language)
+                        trace.append("action_proposed_awaiting_confirmation" if proposal.get("pending_action") else "action_already_executed")
+                    else:
+                        answer = self._write_with_model(task, language, observations)
+                    if answer and not proposal:
                         trace.append("llm_answer_from_tool_observations")
                 except LLMUnavailable as exc:
                     degraded_reason = degraded_reason_for(exc, True)
@@ -162,6 +190,8 @@ class ToolSpecialist:
                 trace.append("template_fallback")
 
         good = any(o.get("ok") for o in observations)
+        pending = next((o["pending_action"] for o in observations if o.get("ok") and o.get("pending_action")), None)
+        extra = {"pending_action": pending} if pending else {}
         return specialist_result(
             agent=self.name, task=task, answer=answer, confidence=0.9 if good else 0.35, started=started,
             evidence=[o for o in observations if o.get("ok")], tool_calls=tool_calls,
@@ -169,18 +199,19 @@ class ToolSpecialist:
             degraded=degraded_reason is not None, degraded_reason=degraded_reason, trace=trace,
             tool_observations=observations,
             agent_mode="llm_tool_selection_and_answer" if degraded_reason is None else "degraded_" + degraded_reason,
+            **extra,
         )
 
     def _select_with_model(self, task: str, history: list[dict]) -> list[tuple[str, dict]]:
-        messages: list[dict] = [{"role": "system", "content": self.selection_prompt}]
+        messages: list[dict] = [{"role": "system", "content": self.selection_prompt + (" " + self.action_prompt if self.actions and self.action_prompt else "")}]
         for item in history[-4:]:
             if item.get("role") in {"user", "assistant"}:
                 messages.append({"role": item["role"], "content": str(item.get("content", ""))[:300]})
         messages.append({"role": "user", "content": f"Task: {task[:600]}"})
-        response = self.llm.chat(messages, self.tool_schemas,
+        response = self.llm.chat(messages, self._schemas(),
                                  max_tokens=int(os.getenv("OLLAMA_SUPPORT_MAX_OUTPUT_TOKENS", "80")),
                                  purpose=f"{self.name}:tool_selection")
-        allowed = {schema["function"]["name"] for schema in self.tool_schemas}
+        allowed = {schema["function"]["name"] for schema in self._schemas()}
         return [(name, args) for name, args in parse_tool_calls(response) if name in allowed]
 
     def _write_with_model(self, task: str, language: str, observations: list[dict]) -> str | None:

@@ -23,6 +23,10 @@ class CustomerSupportAgent(ToolSpecialist):
         "get_customer_profile for account or registration questions. Call every relevant tool now. Do not answer in text."
     )
     writer_role = "You are the Getnet Customer Support specialist for account profile and card-terminal problems."
+    action_kinds = ("technical_visit", "supply_request", "terminal_block")
+    action_prompt = ("When the customer explicitly asks you to open a technical ticket or visit, send paper rolls or a replacement "
+                     "terminal, or block a lost or stolen terminal, call the matching propose_* tool: it only prepares the request, "
+                     "and the customer confirms before anything happens. Do not propose actions the customer did not ask for.")
 
     def request_selected_topic_details(self, topic_id: str, language: str) -> dict:
         """Ask only for the missing support details after a customer selects a topic."""
