@@ -100,7 +100,7 @@ class Api:
         return {"Authorization": f"Bearer {self.tokens[user_id]}"}
 
     def chat(self, message: str, user_id: str = USER_A, session_id: str | None = None, *, as_user: str | None = None,
-             headers: dict | None = None) -> dict:
+             headers: dict | None = None, selected_topic: str | None = None, anonymous: bool = False) -> dict:
         """as_user: whose token is sent (defaults to user_id). headers: extra request headers."""
         if self.pause:
             time.sleep(self.pause)
@@ -108,10 +108,13 @@ class Api:
         payload = {"message": message, "user_id": user_id}
         if session_id:
             payload["session_id"] = session_id
+        if selected_topic:
+            payload["selected_topic"] = selected_topic
         started = time.perf_counter()
         try:
             status, body = http_json("POST", f"{self.base}/api/chat", payload,
-                                     {"X-Request-ID": trace_id, **self.auth(as_user or user_id), **(headers or {})}, self.timeout)
+                                     {"X-Request-ID": trace_id, **({} if anonymous else self.auth(as_user or user_id)), **(headers or {})},
+                                     self.timeout)
         except Exception as exc:  # noqa: BLE001 - a client timeout is a result
             status, body = None, {"detail": f"{type(exc).__name__}: {exc}"[:300]}
         turn = {"trace_id": trace_id, "message": message, "user_id": user_id, "session_id": session_id,
@@ -539,6 +542,33 @@ def scenario_d9(api: Api, ollama: str) -> dict:
     return {"checks": c, "turns": turns}
 
 
+# V6 block 2: the four home-screen suggestions, typed (pt, en) and clicked (selected_topic).
+SUGGESTIONS = [
+    ("products_compare", "Qual a diferença entre a Get Clássica e a Get Smart?", "What is the difference between Get Clássica and Get Smart terminals?"),
+    ("settlement_timing", "Quando recebo o dinheiro das minhas vendas?", "When do I receive the money from my sales?"),
+    ("terminal_connection", "Minha maquininha não conecta à internet. O que faço?", "My card machine doesn't connect to the internet. What should I do?"),
+    ("payment_link", "Posso vender pelo WhatsApp usando link de pagamento?", "Can I sell on WhatsApp using a payment link?"),
+]
+
+
+def run_suggestions(api: Api) -> list[dict]:
+    """Answered = no clarification menu and grounded (sources or a successful tool observation)."""
+    out = []
+    for topic, pt, en in SUGGESTIONS:
+        for variant, message, topic_sent in (("typed_pt", pt, None), ("typed_en", en, None), ("clicked", pt, topic)):
+            api.scenario = f"suggestion:{topic}:{variant}"
+            raw = api.chat(message, selected_topic=topic_sent)
+            body_ = raw.get("_body") or {}
+            observations = json.dumps(body_.get("specialist_observations") or [], ensure_ascii=False)
+            record = {"id": f"{topic}:{variant}", **summarise_turn(raw),
+                      "menu": bool(body_.get("clarification_options")) or body_.get("orchestration_mode") == "context_policy_clarification",
+                      "grounded": bool(body_.get("sources")) or '"ok": true' in observations}
+            record["answered"] = raw.get("http_status") == 200 and not record["menu"] and record["grounded"]
+            out.append(record)
+            print(f"  {record['id']:34s} {record['latency_s']:6.1f}s answered={record['answered']} menu={record['menu']} agents={record.get('agents')}", flush=True)
+    return out
+
+
 ORCHESTRATION_PATH = ROOT / "backend" / "app" / "evaluation" / "orchestration_scenarios.json"
 
 
@@ -627,7 +657,23 @@ def summarise_orchestration(groups: dict[str, list[dict]]) -> dict:
     }
 
 
-FUNCTIONAL = {"D3_ambiguity": scenario_d3, "D4_subject_change": scenario_d4,
+def scenario_b3_anonymous(api: Api) -> dict:
+    """V6 block 3: the literal challenge payload (no token) for the 10 official messages."""
+    c = Checks(); turns = []
+    for sid, message, _ in OFFICIAL:
+        turn = api.chat(message, anonymous=True); turns.append(turn)
+        b = body(turn)
+        c.add(f"{sid}:http_200_useful_answer", turn["http_status"] == 200 and len((b.get("answer") or "").strip()) > 20
+              and b.get("authenticated") is False, turn["http_status"])
+        dumped = json.dumps(b, ensure_ascii=False)
+        c.add(f"{sid}:no_customer_data", not any(m in dumped for m in USER_A_MARKERS))
+        if sid == "yesterday_settlement":
+            c.add(f"{sid}:asks_for_login", any(w in (b.get("answer") or "").lower() for w in ("login", "sign in", "log in", "entre")),
+                  (b.get("answer") or "")[:160])
+    return {"checks": c, "turns": turns}
+
+
+FUNCTIONAL = {"B3_anonymous_literal": scenario_b3_anonymous, "D3_ambiguity": scenario_d3, "D4_subject_change": scenario_d4,
               "D8_other_customer": scenario_d8, "D10_two_sessions": scenario_d10, "A14_prompt_injection": scenario_a14}
 
 # Mission acceptance scenarios 1-18 -> evidence in this report.
@@ -776,6 +822,7 @@ def main() -> int:
     parser.add_argument("--llm-down", action="store_true", help="run scenario 9 last (stops/starts the ollama container)")
     parser.add_argument("--llm-down-cloud", action="store_true",
                         help="scenario 9 for the cloud provider: recreate the api with an unreachable GETNET_ANTHROPIC_BASE_URL, then restore")
+    parser.add_argument("--suggestions", action="store_true", help="V6 block 2: the 4 home suggestions typed (pt/en) and clicked")
     parser.add_argument("--orchestration", action="store_true",
                         help="V7-C: multi-intent, natural re-plan and Critic challenge sets (API needs CRITIC_CHALLENGE_MODE=true)")
     parser.add_argument("--timeout", type=float, default=400.0)
@@ -841,6 +888,10 @@ def main() -> int:
         scenarios.append(("D9_llm_unavailable", lambda a: scenario_d9(a, args.ollama)))  # always last
     elif args.llm_down_cloud and (not only or "D9_llm_unavailable" in only):
         scenarios.append(("D9_llm_unavailable", scenario_d9_cloud))  # always last
+    suggestions = None
+    if args.suggestions:
+        print("== home-screen suggestions ==", flush=True)
+        suggestions = run_suggestions(api)
     orchestration = None
     if args.orchestration:
         print("== orchestration (multi-intent / re-plan / challenge) ==", flush=True)
@@ -857,7 +908,7 @@ def main() -> int:
 
     all_turns = [r for records in rounds.values() for r in records] + \
                 [t for item in acceptance.values() for t in item.get("turns", [])] + \
-                [r for items in (orchestration or {}).values() for r in items]
+                [r for items in (orchestration or {}).values() for r in items] + (suggestions or [])
     approvals = [t for t in all_turns if t.get("critic_mode") == "llm_critic" and t.get("critic_approved") is True]
     live_rejections = [{"id": t.get("id"), "mode": t.get("critic_mode"), "issues": t.get("critic_issues")} for t in all_turns
                        if t.get("critic_mode") in {"llm_critic", "deterministic_grounding_check", "deterministic_safety_check"}
@@ -898,7 +949,12 @@ def main() -> int:
         # Dossier latency scenarios also list their turn under acceptance: count each request once.
         "total_requests": sum(len(r) for r in rounds.values())
                           + sum(len(i.get("turns", [])) for i in acceptance.values() if i.get("kind") != "latency+functional")
-                          + sum(len(i) for i in (orchestration or {}).values()),
+                          + sum(len(i) for i in (orchestration or {}).values()) + len(suggestions or []),
+        "suggestions_summary": ({"n": len(suggestions), "answered": sum(1 for r in suggestions if r["answered"]),
+                                 "by_variant": {v: f"{sum(1 for r in suggestions if r['id'].endswith(v) and r['answered'])}/"
+                                                   f"{sum(1 for r in suggestions if r['id'].endswith(v))}"
+                                                for v in ("typed_pt", "typed_en", "clicked")}} if suggestions else None),
+        "suggestions": suggestions,
         "orchestration_summary": summarise_orchestration(orchestration) if orchestration else None,
         "orchestration": orchestration,
         "acceptance_summary": {name: ("PASS" if item["pass"] else "FAIL") for name, item in acceptance.items()},
@@ -910,7 +966,8 @@ def main() -> int:
     out = Path(args.out) if args.out else ROOT / "docs" / f"RELATORIO_LATENCIA_{dt.date.today().isoformat()}_{args.label}.json"
     out.write_text(json.dumps(report, ensure_ascii=False, indent=2, default=str) + "\n", encoding="utf-8")
     print(json.dumps({"latency_summary": report["latency_summary"], "acceptance_summary": report["acceptance_summary"],
-                      "orchestration_summary": report["orchestration_summary"], "total_requests": report["total_requests"]}, indent=2))
+                      "orchestration_summary": report["orchestration_summary"], "suggestions_summary": report["suggestions_summary"],
+                      "total_requests": report["total_requests"]}, indent=2))
     print(f"report: {out}")
     return 0
 

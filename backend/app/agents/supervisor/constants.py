@@ -1,6 +1,16 @@
 """Supervisor tool schemas, fast-path agents, aliases and markers."""
 from __future__ import annotations
 
+# Home-screen suggestions (frontend) -> specialist. A click is an explicit topic choice, like a menu
+# option: no clarification, direct dispatch. settlement_timing needs the customer's records, so an
+# anonymous session is answered from the knowledge base with a login hint.
+HOME_TOPICS = {
+    "products_compare": "knowledge_specialist",
+    "settlement_timing": "payments_specialist",
+    "terminal_connection": "customer_support_specialist",
+    "payment_link": "knowledge_specialist",
+}
+
 SUPERVISOR_TOOLS = [
     {"type": "function", "function": {"name": "knowledge_specialist", "description": "Delegate Getnet product, service, fee, payment-method or procedure questions AND public information (weather, exchange rates, general web questions) to the Knowledge agent. It chooses its own tools (official-site RAG, live official pages, web search, weather, exchange rates) and drafts a grounded answer with sources.", "parameters": {"type": "object", "properties": {"query": {"type": "string", "description": "Standalone question retaining product, issue and user context."}}, "required": ["query"]}}},
     {"type": "function", "function": {"name": "customer_support_specialist", "description": "Delegate account profile and card-terminal/connection problems to the support specialist. It inspects synthetic SQLite data through typed tools.", "parameters": {"type": "object", "properties": {"task": {"type": "string"}}, "required": ["task"]}}},

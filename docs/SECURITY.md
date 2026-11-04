@@ -29,9 +29,12 @@
   - One client address is limited to `LOGIN_MAX_REQUESTS_PER_MINUTE` (30) attempts, against password spraying.
   - Unknown and known accounts get the same 401 answer.
   - Tests: `backend/tests/test_login_security.py`.
+- **Anonymous chat.** `POST /api/chat` without a token (the literal challenge payload) is an anonymous session.
+  - Public knowledge, web information and hand-off work.
+  - Customer-data and write tools answer `login_required`; the body `user_id` is never used to read data.
+  - Anonymous sessions cannot read or continue a customer's session (404).
 - **Protected endpoints.**
-  - These four require `Authorization: Bearer` and use the **token's** `user_id`:
-    - `POST /api/chat`
+  - These require `Authorization: Bearer` and use the **token's** `user_id` (`/api/chat` too, when a token is sent):
     - `GET /api/sessions/{id}/messages`
     - `GET /api/handoffs/{protocol}`
     - `POST /api/handoffs/{protocol}/messages`

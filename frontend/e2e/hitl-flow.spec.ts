@@ -10,6 +10,7 @@ async function shot(page: Page, name: string) {
 // the reply appears live in the customer chat with the "Atendente" label → operator resolves →
 // the customer sees the resolution summary and the status "resolvido".
 test('customer ↔ operator console: claim, live reply, resolution back in the chat', async ({ browser }) => {
+  test.setTimeout(150_000) // two pages with live polling; slow on a loaded CPU
   const customer = await browser.newPage()
   await customer.goto('/')
   await customer.getByRole('radio', { name: /cliente1988/ }).check()

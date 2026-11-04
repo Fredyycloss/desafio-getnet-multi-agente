@@ -19,7 +19,7 @@ from .web_research_agent import WebResearchAgent
 
 from .supervisor.composer import ComposerMixin
 from .supervisor.constants import (  # noqa: F401 - re-exported
-    AGENT_ALIASES, FAST_PATH_AGENTS, FINAL_MARKER, PLANNER_CONTEXT_KEYS, SUPERVISOR_TOOLS, canonical_agent,
+    AGENT_ALIASES, FAST_PATH_AGENTS, FINAL_MARKER, HOME_TOPICS, PLANNER_CONTEXT_KEYS, SUPERVISOR_TOOLS, canonical_agent,
 )
 from .supervisor.fast_path import FastPathMixin
 from .supervisor.menus import MenuMixin
@@ -50,9 +50,10 @@ class SupervisorAgent(FastPathMixin, PlannerMixin, ReplanMixin, ComposerMixin, M
         self.policy_gate = PolicyGate()
         self.llm_required = llm_required
 
-    def run(self, *, message: str, user_id: str, session_id: str, language: str, history: list[dict], trace_id: str) -> dict:
+    def run(self, *, message: str, user_id: str, session_id: str, language: str, history: list[dict], trace_id: str,
+            selected_topic: str | None = None) -> dict:
         result = self._run(message=message, user_id=user_id, session_id=session_id, language=language,
-                           history=history, trace_id=trace_id)
+                           history=history, trace_id=trace_id, selected_topic=selected_topic)
         # A configured model whose contextual pass failed means the turn was not
         # interpreted by the LLM: the response is degraded even if it is safe.
         if (self.llm and not result.get("degraded")
@@ -69,7 +70,8 @@ class SupervisorAgent(FastPathMixin, PlannerMixin, ReplanMixin, ComposerMixin, M
             result["trace"] = [*result.get("trace", []), f"llm_fallback_provider:{self.llm.fallback.provider}:{self.llm.fallback_reason}"]
         return result
 
-    def _run(self, *, message: str, user_id: str, session_id: str, language: str, history: list[dict], trace_id: str) -> dict:
+    def _run(self, *, message: str, user_id: str, session_id: str, language: str, history: list[dict], trace_id: str,
+             selected_topic: str | None = None) -> dict:
         from .guardrails import inspect_message
         guard = inspect_message(message, language)
         if guard.get("blocked"):
@@ -84,7 +86,7 @@ class SupervisorAgent(FastPathMixin, PlannerMixin, ReplanMixin, ComposerMixin, M
         try:
             with stage("context_intelligence", "agent"):
                 assessment, assessment_mode = self.context_intelligence.assess(
-                    message, history, language, trace_id, selected_option=selected_option
+                    message, history, language, trace_id, selected_option=selected_option or selected_topic
                 )
         except LLMUnavailable as exc:
             assessment_error = exc
@@ -168,6 +170,19 @@ class SupervisorAgent(FastPathMixin, PlannerMixin, ReplanMixin, ComposerMixin, M
             raise assessment_error
 
         routing_message = self._routing_message(message, history, selected_option, language)
+        topic_agent = None
+        if selected_topic and not selected_option:
+            # Explicit home-screen choice (after the deterministic risk check above): no clarification,
+            # dispatch to the topic's specialist; customer data needs a logged-in customer.
+            from ..auth import is_anonymous
+            topic_agent = HOME_TOPICS[selected_topic]
+            if topic_agent == "payments_specialist" and is_anonymous(user_id):
+                topic_agent = "knowledge_specialist"
+            assessment.update({"needs_clarification": False, "ambiguity_level": "low", "risk_level": "safe", "needs_human": False,
+                               "confidence": max(float(assessment.get("confidence", 0)), 0.9),
+                               "recommended_agents": [topic_agent], "recommended_action": "route_to_agent",
+                               "recommended_destination": topic_agent, "selected_topic": selected_topic,
+                               "operational_reason": "Customer selected a home-screen topic."})
         if selected_option and selected_option != "literal_hazard":
             # A topic selection resolves the previous menu ambiguity. Preserve the original
             # request and let the Supervisor select the relevant specialist on this turn.
@@ -308,6 +323,12 @@ class SupervisorAgent(FastPathMixin, PlannerMixin, ReplanMixin, ComposerMixin, M
                         result = self._run_dispatch(fast_agent, routing_message, user_id, session_id, language, history, trace_id, assessment)
                     else:
                         result = self._run_llm(routing_message, user_id, session_id, language, history, trace_id, assessment)
+                if selected_topic == "settlement_timing" and topic_agent == "knowledge_specialist" and not result.get("handoff"):
+                    # Fixed login prompt (README fixed-text policy: menus/confirmations): the account data needs identity.
+                    result["answer"] = result.get("answer", "") + (
+                        "\n\nPara ver as datas de recebimento das suas próprias vendas, entre com o login demo."
+                        if language == "pt" else "\n\nTo see the settlement dates of your own sales, sign in with the demo login.")
+                    result["login_required_for_account_data"] = True
                 result["context_assessment"] = self._public_context_assessment(assessment)
                 result["trace"] = [*context_trace, *result["trace"]]
                 return result

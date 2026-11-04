@@ -33,10 +33,11 @@ type Message = { id: string; role: 'assistant' | 'user'; text: string; meta?: Re
 type LiveMessage = { id: number; role: string; content: string; author?: string; operator?: string; handoff_status?: string }
 
 const suggestions = [
-  { icon: '▣', title: 'Máquinas Getnet', text: 'Qual a diferença entre a Get Clássica e a Get Smart?' },
-  { icon: '↗', title: 'Recebimento de vendas', text: 'Quando recebo o dinheiro das minhas vendas?' },
-  { icon: '⌁', title: 'Problemas de conexão', text: 'Minha maquininha não conecta à internet. O que faço?' },
-  { icon: '◈', title: 'Link de pagamento', text: 'Posso vender pelo WhatsApp usando link de pagamento?' },
+  // topic: explicit choice sent as selected_topic (answered directly, never a clarification menu).
+  { icon: '▣', title: 'Máquinas Getnet', text: 'Qual a diferença entre a Get Clássica e a Get Smart?', topic: 'products_compare' },
+  { icon: '↗', title: 'Recebimento de vendas', text: 'Quando recebo o dinheiro das minhas vendas?', topic: 'settlement_timing' },
+  { icon: '⌁', title: 'Problemas de conexão', text: 'Minha maquininha não conecta à internet. O que faço?', topic: 'terminal_connection' },
+  { icon: '◈', title: 'Link de pagamento', text: 'Posso vender pelo WhatsApp usando link de pagamento?', topic: 'payment_link' },
 ]
 type Auth = { token: string; userId: string }
 type DemoUser = { user_id: string; merchant_name: string; demo_pin: string }
@@ -164,7 +165,7 @@ function Assistant({ auth, onLogout }: { auth: Auth; onLogout: () => void }) {
     } finally { setBusy(false) }
   }
 
-  async function sendMessage(value = input, options: { humanRequest?: boolean } = {}) {
+  async function sendMessage(value = input, options: { humanRequest?: boolean; topic?: string } = {}) {
     const message = value.trim()
     if (!message || busy) return
     const humanRequest = options.humanRequest === true
@@ -174,7 +175,7 @@ function Assistant({ auth, onLogout }: { auth: Auth; onLogout: () => void }) {
     try {
       const response = await fetch('/api/chat', {
         method: 'POST', headers: authHeaders,
-        body: JSON.stringify({ message, user_id: userId, session_id: sessionId }),
+        body: JSON.stringify({ message, user_id: userId, session_id: sessionId, ...(options.topic ? { selected_topic: options.topic } : {}) }),
       })
       checkAuth(response)
       if (!response.ok) throw new Error(`${humanRequest ? 'handoff' : 'chat'}:${response.status}`)
@@ -264,7 +265,7 @@ function Assistant({ auth, onLogout }: { auth: Auth; onLogout: () => void }) {
         </div>
       </header>
       <section className={`workspace ${messages.length ? 'workspace-chatting' : ''}`}>
-        {messages.length === 0 ? <div className="welcome-wrap"><div className="eyebrow"><span className="eyebrow-line"/><Sparkles size={13}/><span>INTELIGÊNCIA QUE MOVE NEGÓCIOS</span></div><div className="welcome-heading"><h1>Seu negócio tem<br/>muito a <span>conquistar.</span></h1><p>Oi! Eu sou o assistente Getnet.<br/>Como posso facilitar o seu dia hoje?</p></div><div className="suggestion-grid">{suggestions.map((s, i) => <button className="suggestion-card" key={s.title} onClick={() => void sendMessage(s.text)}><div className={`suggestion-icon tone-${i}`}>{s.icon}</div><div className="suggestion-copy"><strong>{s.title}</strong><span>{s.text}</span></div><ArrowUpRight size={16} className="suggestion-arrow"/></button>)}</div><div className="trust-row"><div className="trust-icon"><ShieldCheck size={17}/></div><div><strong>Informação com responsabilidade</strong><span>Respostas orientativas, com base em fontes disponíveis.</span></div><div className="trust-divider"/><div className="trust-icon"><Zap size={16}/></div><div><strong>Feito para você</strong><span>Entende o contexto da sua pergunta.</span></div></div></div> : <div className="conversation">
+        {messages.length === 0 ? <div className="welcome-wrap"><div className="eyebrow"><span className="eyebrow-line"/><Sparkles size={13}/><span>INTELIGÊNCIA QUE MOVE NEGÓCIOS</span></div><div className="welcome-heading"><h1>Seu negócio tem<br/>muito a <span>conquistar.</span></h1><p>Oi! Eu sou o assistente Getnet.<br/>Como posso facilitar o seu dia hoje?</p></div><div className="suggestion-grid">{suggestions.map((s, i) => <button className="suggestion-card" key={s.title} onClick={() => void sendMessage(s.text, { topic: s.topic })}><div className={`suggestion-icon tone-${i}`}>{s.icon}</div><div className="suggestion-copy"><strong>{s.title}</strong><span>{s.text}</span></div><ArrowUpRight size={16} className="suggestion-arrow"/></button>)}</div><div className="trust-row"><div className="trust-icon"><ShieldCheck size={17}/></div><div><strong>Informação com responsabilidade</strong><span>Respostas orientativas, com base em fontes disponíveis.</span></div><div className="trust-divider"/><div className="trust-icon"><Zap size={16}/></div><div><strong>Feito para você</strong><span>Entende o contexto da sua pergunta.</span></div></div></div> : <div className="conversation">
           <div className="conversation-intro"><div className="conversation-spark"><Sparkles size={15}/></div><div><strong>Vamos resolver juntos.</strong><span>Conversa com Getnet Assist</span></div><button className="new-small" onClick={newConversation}><Plus size={14}/> Nova conversa</button></div>
           {messages.map(msg => <div className={`message-row ${msg.role} ${msg.author === 'operator' ? 'operator' : ''}`} key={msg.id}>
             {msg.role === 'assistant' ? <div className="message-avatar"><span>{msg.author === 'operator' ? 'A' : 'g'}</span></div> : <div className="user-avatar">V</div>}

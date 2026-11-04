@@ -10,6 +10,7 @@ export default defineConfig({
   testDir: './e2e',
   timeout: 60_000,
   retries: 0,
+  workers: 1, // one shared API + SQLite; parallel specs only contend for it
   use: { baseURL: 'http://localhost:5180', trace: 'retain-on-failure', ...devices['Desktop Chrome'] },
   webServer: [
     {
@@ -19,7 +20,7 @@ export default defineConfig({
       reuseExistingServer: false,
       timeout: 60_000,
       env: { PYTHONPATH: '.', LLM_PROVIDER: process.env.E2E_LLM_PROVIDER || 'fixture', LLM_REPLAY_DIR: process.env.E2E_REPLAY_DIR || '', DEMO_TODAY: process.env.E2E_DEMO_TODAY || '',
-             CONTEXT_MODE: 'llm', CRITIC_CHALLENGE_MODE: 'false', OLLAMA_ENABLED: 'false', KNOWLEDGE_CRAWL_ENABLED: 'false',
+             CONTEXT_MODE: 'llm', CRITIC_CHALLENGE_MODE: 'false', KNOWLEDGE_LIVE_READ: 'false', OLLAMA_ENABLED: 'false', KNOWLEDGE_CRAWL_ENABLED: 'false',
              DATABASE_PATH: db, AUTH_SECRET: 'e2e-secret', LOG_LEVEL: 'WARNING' },
     },
     {

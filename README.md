@@ -93,6 +93,19 @@ Stop the stack with `docker compose down`. **Never add `-v`**: it would delete t
 
 ### API in one call
 
+The challenge payload, literally, without a token:
+
+```bash
+curl -s -X POST localhost:8000/api/chat -H 'Content-Type: application/json' \
+  -d '{"message":"What is the difference between the Get Clássica and the Get Smart?","user_id":"cliente1988"}' | python3 -m json.tool
+```
+
+Without a token the turn is an **anonymous session**.
+- Product questions (RAG), public information (weather, exchange rate, web) and human hand-off work normally.
+- Tools with customer data never read anything from the body's `user_id`. They answer `login_required`, and the agent asks the customer to sign in.
+
+With the demo login, the same endpoint reads the customer's own synthetic records:
+
 ```bash
 TOKEN=$(curl -s -X POST localhost:8000/api/auth/demo-login -H 'Content-Type: application/json' \
   -d '{"user_id":"cliente1988","pin":"1988"}' | python3 -c 'import sys,json;print(json.load(sys.stdin)["access_token"])')
@@ -100,7 +113,14 @@ curl -s -X POST localhost:8000/api/chat -H "Authorization: Bearer $TOKEN" -H 'Co
   -d '{"message":"Quando cai o dinheiro das vendas de ontem?","user_id":"cliente1988"}' | python3 -m json.tool
 ```
 
-`POST /api/chat` takes `message` and `user_id`, as the challenge requires, plus an optional `session_id`. The identity comes from the bearer token. A body `user_id` that differs from the token returns 403, and a missing or invalid token returns 401.
+`POST /api/chat` request:
+- **Required:** `message` and `user_id`, as the challenge requires.
+- **Optional:** `session_id`, and `selected_topic` (sent by the home-screen suggestions: an explicit topic choice, answered without a clarification menu).
+
+Identity and errors:
+- With a token, the identity comes from the token, and a body `user_id` that differs from it returns 403.
+- An invalid or expired token returns 401.
+- The response field `authenticated` says which case applied.
 
 The response contains:
 - `answer`, `language`, `intent`, `agent`, `sources`;

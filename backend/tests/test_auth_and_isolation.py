@@ -50,7 +50,10 @@ def test_wrong_pin_or_unknown_user_is_rejected(api, payload):
 
 def test_endpoints_require_a_valid_token(api, monkeypatch):
     body = {"message": "Olá", "user_id": A}
-    assert api.post("/api/chat", json=body).status_code == 401
+    # /api/chat without a token is an anonymous session (V6 block 3: the literal challenge payload works);
+    # customer data then needs login (tests/test_anonymous_and_topics.py). A bad token is still 401.
+    anonymous = api.post("/api/chat", json=body)
+    assert anonymous.status_code == 200 and anonymous.json()["authenticated"] is False
     assert api.get("/api/sessions/x/messages").status_code == 401
     assert api.get("/api/handoffs/GN-X").status_code == 401
     assert api.post("/api/handoffs/GN-X/messages", json={"message": "oi", "user_id": A}).status_code == 401

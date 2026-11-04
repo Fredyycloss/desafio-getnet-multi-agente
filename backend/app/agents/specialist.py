@@ -130,6 +130,12 @@ class ToolSpecialist:
         started = time.monotonic()
         audit_trace = trace_id or uuid4().hex
         raw_tools = {**self.bind_tools(user_id), **self._action_tools(user_id, language)}
+        from ..auth import is_anonymous
+        if is_anonymous(user_id):
+            # Anonymous session (no token): customer records are never read, whatever user_id the body claimed.
+            raw_tools = {name: (lambda args, n=name: {"ok": False, "tool": n, "error": "login_required",
+                                                       "message": "Customer data requires the demo login (POST /api/auth/demo-login)."})
+                         for name in raw_tools}
         tool_calls: list[dict] = []
         observations: list[dict] = []
         trace: list[str] = [self.name]
@@ -186,8 +192,16 @@ class ToolSpecialist:
                 trace.append("keyword_tool_selection_fallback")
             if not answer:
                 degraded_reason = degraded_reason or "llm_empty_answer"
-                answer = self.compose_template(observations, language)
-                trace.append("template_fallback")
+                if observations and all(o.get("error") == "login_required" for o in observations):
+                    answer = ("Para consultar dados da sua conta (vendas, recebimentos, maquininha), entre com o login demo. "
+                              "Sem login, posso responder dúvidas sobre produtos e serviços da Getnet."
+                              if language == "pt" else
+                              "To look up your account data (sales, settlements, terminal), sign in with the demo login. "
+                              "Without signing in I can answer questions about Getnet products and services.")
+                    trace.append("login_required_template")
+                else:
+                    answer = self.compose_template(observations, language)
+                    trace.append("template_fallback")
 
         good = any(o.get("ok") for o in observations)
         pending = next((o["pending_action"] for o in observations if o.get("ok") and o.get("pending_action")), None)

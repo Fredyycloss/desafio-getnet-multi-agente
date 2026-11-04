@@ -135,6 +135,21 @@ def issue_operator_token(operator: dict) -> dict:
     return {"access_token": token, "token_type": "bearer", "expires_in": ttl, **operator}
 
 
+ANONYMOUS = "anonymous"
+
+
+def is_anonymous(user_id: str | None) -> bool:
+    return not user_id or user_id == ANONYMOUS
+
+
+def optional_user(authorization: str | None = Header(default=None)) -> str:
+    """/api/chat: no Authorization header -> anonymous session (public knowledge, web, hand-off;
+    customer-data tools answer login_required). A header that is present must be valid (401)."""
+    if not authorization:
+        return ANONYMOUS
+    return require_user(authorization)
+
+
 def require_user(authorization: str | None = Header(default=None)) -> str:
     """FastAPI dependency: the authenticated user_id or 401."""
     scheme, _, token = (authorization or "").partition(" ")

@@ -12,7 +12,7 @@ from fastapi import Depends, FastAPI, HTTPException, Request, Response, Header
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, field_validator
 
-from .auth import DEMO_USERS, check_production_settings, ensure_same_user, issue_token, require_user, verify_pin
+from .auth import ANONYMOUS, DEMO_USERS, check_production_settings, ensure_same_user, issue_token, optional_user, require_user, verify_pin
 from .auth import demo_mode as auth_demo_mode
 from .infra.database import Database
 from .infra.llm import LLMUnavailable, create_llm, resolve_provider_name
@@ -92,6 +92,16 @@ class ChatRequest(BaseModel):
     user_id: str = Field(min_length=1, max_length=128)
     session_id: str | None = Field(default=None, max_length=128)
     history: list[HistoryMessage] = Field(default_factory=list, max_length=12)
+    # Home-screen suggestion: an explicit topic choice, like a menu option (never inferred from text).
+    selected_topic: str | None = Field(default=None, max_length=40)
+
+    @field_validator("selected_topic")
+    @classmethod
+    def known_topic(cls, value: str | None) -> str | None:
+        from .agents.supervisor.constants import HOME_TOPICS
+        if value is not None and value not in HOME_TOPICS:
+            raise ValueError("unknown selected_topic")
+        return value
 
     @field_validator("message")
     @classmethod
@@ -213,11 +223,15 @@ def demo_login(payload: DemoLogin, request: Request):
 
 
 @app.post("/api/chat")
-def chat(payload: ChatRequest, request: Request, auth_user: str = Depends(require_user)):
+def chat(payload: ChatRequest, request: Request, auth_user: str = Depends(optional_user)):
     # Identity comes from the token; the body user_id is kept for the challenge contract and must match.
-    ensure_same_user(auth_user, payload.user_id)
+    # Without a token (the literal challenge payload) the turn is anonymous: the body user_id is never
+    # used to read data; customer-data tools answer login_required.
+    if auth_user != ANONYMOUS:
+        ensure_same_user(auth_user, payload.user_id)
     limiter = state.get("login_limiter")
-    wait = limiter.hit(f"chat:{auth_user}", int(os.getenv("CHAT_MAX_REQUESTS_PER_MINUTE", "30"))) if limiter else 0
+    rate_key = f"chat:{auth_user}" if auth_user != ANONYMOUS else f"chat:anon:{request.client.host if request.client else '-'}"
+    wait = limiter.hit(rate_key, int(os.getenv("CHAT_MAX_REQUESTS_PER_MINUTE", "30"))) if limiter else 0
     if wait:
         raise HTTPException(status_code=429, detail="Too many messages; wait a moment", headers={"Retry-After": str(wait)})
     service: ChatService | None = state.get("service")
@@ -233,11 +247,11 @@ def chat(payload: ChatRequest, request: Request, auth_user: str = Depends(requir
     try:
         with stage("session_read_and_validation", "persistence"):
             owner = db.get_session_owner(session_id)
-            if owner is not None and owner != payload.user_id:
+            if owner is not None and owner != auth_user:
                 # Do not reveal whether another merchant owns the session.
                 raise HTTPException(status_code=404, detail="Session not found")
             try:
-                db.ensure_session(session_id, payload.user_id)
+                db.ensure_session(session_id, auth_user)
             except PermissionError as exc:
                 raise HTTPException(status_code=404, detail="Session not found") from exc
             history = db.get_history(session_id, limit=12)
@@ -270,10 +284,11 @@ def chat(payload: ChatRequest, request: Request, auth_user: str = Depends(requir
         storage_guard = inspect_message(payload.message, detect_language(payload.message, history))
         stored_message = "[mensagem bloqueada por divulgação de dado sensível]" if storage_guard.get("blocked") else payload.message
         with stage("user_message_persistence", "persistence"):
-            db.save_message(session_id, payload.user_id, "user", stored_message)
-        result = service.answer(payload.message, payload.user_id, session_id, history, request.state.trace_id)
+            db.save_message(session_id, auth_user, "user", stored_message)
+        result = service.answer(payload.message, auth_user, session_id, history, request.state.trace_id,
+                                selected_topic=payload.selected_topic)
         with stage("assistant_message_persistence", "persistence"):
-            db.save_message(session_id, payload.user_id, "assistant", result["answer"], _without_action_token(result))
+            db.save_message(session_id, auth_user, "assistant", result["answer"], _without_action_token(result))
         timeline = current_timeline()
         result["stage_timings"] = timeline.snapshot() if timeline else []
         result["model_usage"] = timeline.model_usage() if timeline else {"llm_calls": 0, "prompt_tokens": 0, "output_tokens": 0, "calls": []}
@@ -281,6 +296,7 @@ def chat(payload: ChatRequest, request: Request, auth_user: str = Depends(requir
         db.record_model_calls(request.state.trace_id, result["model_usage"]["calls"])
         state["metrics"]["chats"] += 1
         result["session_id"] = session_id
+        result["authenticated"] = auth_user != ANONYMOUS
         result["last_message_id"] = db.last_message_id(session_id)
         logger.info("chat_done trace_id=%s session_id=%s intent=%s language=%s mode=%s tools=%s handoff=%s",
                     result["trace_id"], session_id, result["intent"], result["language"], result["orchestration_mode"], result["tool_calls"], result["handoff"])

@@ -47,7 +47,8 @@ class ChatService:
         from .agents.intent_classifier import EmbeddingIntentClassifier
         return EmbeddingIntentClassifier(llm, db)
 
-    def answer(self, message: str, user_id: str, session_id: str, history: list[dict] | None = None, trace_id: str | None = None) -> dict:
+    def answer(self, message: str, user_id: str, session_id: str, history: list[dict] | None = None, trace_id: str | None = None,
+               *, selected_topic: str | None = None) -> dict:
         from uuid import uuid4
         request_trace_id = trace_id or uuid4().hex
         # API calls already own a timeline so persistence before and after this
@@ -58,7 +59,7 @@ class ChatService:
         try:
             result = self.supervisor.run(message=message, user_id=user_id, session_id=session_id,
                                          language=self._language(message, history or []), history=history or [],
-                                         trace_id=request_trace_id)
+                                         trace_id=request_trace_id, selected_topic=selected_topic)
             if token is not None:
                 timeline = current_timeline()
                 result["stage_timings"] = timeline.snapshot() if timeline else []

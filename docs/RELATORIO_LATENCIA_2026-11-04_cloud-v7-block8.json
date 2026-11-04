@@ -1,0 +1,1519 @@
+{
+  "label": "cloud-v7-block8",
+  "generated_at": "2026-11-04T08:18:37",
+  "host": {
+    "cpu": "Intel(R) Core(TM) i3-10110U CPU @ 2.10GHz",
+    "cores": 4
+  },
+  "health": {
+    "mode": "supervisor_tool_calling",
+    "llm_available": true,
+    "llm_required": false,
+    "llm": {
+      "available": true,
+      "chat_model_loaded": true,
+      "cloud_mode": "configured",
+      "key_state": "ok",
+      "message": "modo nuvem ativo",
+      "embedding_model_loaded": true,
+      "embedding_runtime_available": true,
+      "models": [
+        "claude-haiku-5-5",
+        "nomic-embed-text"
+      ]
+    },
+    "llm_provider": {
+      "provider": "anthropic",
+      "model": "claude-haiku-5-5",
+      "embedding_model": "nomic-embed-text",
+      "default_budget_seconds": 30.0
+    },
+    "request_llm_budget_seconds": 30.0
+  },
+  "note": "V7 block 8 (V6 blocks 2-3): home suggestions typed/clicked and the literal payload without token, cloud mode. A Qwen context eval ran concurrently on the same CPU (embeddings share Ollama): latency here is not comparable.",
+  "method": "Wall-clock latency of POST /api/chat (demo bearer token), fresh session per latency request, user_id cliente1988, 2 s pause before each request. cold = all Ollama models unloaded before each request; warm = models resident. Latency mean/p95 use llm_complete responses only; fallbacks and errors are not successes.",
+  "outcome_definition": "llm_complete | fallback_budget | fallback_error | http_error.\n\n    Only llm_complete counts as success: every model step the route needs ran\n    and returned a valid result. Deterministic policy outcomes (clarification,\n    handoff, safety) after a successful contextual model call are complete.",
+  "scenario_kinds": {
+    "latency": [],
+    "latency_and_functional": [],
+    "functional_pass_fail_only": [
+      "B3_anonymous_literal"
+    ]
+  },
+  "latency_summary": {},
+  "total_requests": 22,
+  "suggestions_summary": {
+    "n": 12,
+    "answered": 12,
+    "by_variant": {
+      "typed_pt": "4/4",
+      "typed_en": "4/4",
+      "clicked": "4/4"
+    }
+  },
+  "suggestions": [
+    {
+      "id": "products_compare:typed_pt",
+      "trace_id": "9d2df5543a28435fac57fe8e57a156bc",
+      "message": "Qual a diferença entre a Get Clássica e a Get Smart?",
+      "user_id": "cliente1988",
+      "session_id": null,
+      "latency_s": 7.48,
+      "http_status": 200,
+      "orchestration_mode": "context_directed_dispatch",
+      "intent": "product_information",
+      "degraded": false,
+      "degraded_reason": null,
+      "agents": [
+        "knowledge_agent"
+      ],
+      "handoff": false,
+      "handoff_protocol": null,
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:knowledge_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "critic_approved": true,
+      "critic_mode": "llm_critic",
+      "critic_issues": [],
+      "grounding_check": null,
+      "assessment_mode": "llm_context_intelligence",
+      "answer_preview": "Com base nas evidências disponíveis, consigo confirmar apenas parcialmente a diferença entre a Get Clássica e a Get Smart.\n\nO que as evidências mostram:\n- Ambas são listadas como modelos de maquininha no manual, com a seguinte descrição: a ",
+      "sources": [
+        "https://site.getnet.com.br/maquininha/get-smart/",
+        "https://site.getnet.com.br/boas-vindas/manual-maquinas/",
+        "https://site.getnet.com.br/conversor-de-moedas/",
+        "https://site.getnet.com.br/taxas/"
+      ],
+      "clarification_options": [],
+      "llm_calls": 4,
+      "llm_purposes": [
+        "context_intelligence",
+        "knowledge:tool_selection",
+        "knowledge",
+        "critic"
+      ],
+      "embed_calls": 1,
+      "prompt_tokens": 6824,
+      "output_tokens": 628,
+      "usage_source": "response",
+      "cost_usd": 0.0009964,
+      "providers": [
+        "anthropic"
+      ],
+      "load_ms": 0,
+      "outcome": "llm_complete",
+      "menu": false,
+      "grounded": true,
+      "answered": true
+    },
+    {
+      "id": "products_compare:typed_en",
+      "trace_id": "78a27e698d5745ddb1477664409833e6",
+      "message": "What is the difference between Get Clássica and Get Smart terminals?",
+      "user_id": "cliente1988",
+      "session_id": null,
+      "latency_s": 6.08,
+      "http_status": 200,
+      "orchestration_mode": "context_directed_dispatch",
+      "intent": "product_information",
+      "degraded": false,
+      "degraded_reason": null,
+      "agents": [
+        "knowledge_agent"
+      ],
+      "handoff": false,
+      "handoff_protocol": null,
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:knowledge_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "critic_approved": true,
+      "critic_mode": "llm_critic",
+      "critic_issues": [],
+      "grounding_check": null,
+      "assessment_mode": "llm_context_intelligence",
+      "answer_preview": "The evidence does not describe a \"Get Clássica\" terminal at all, so I cannot compare it with Get Smart. [1][2][3] only cover Get Smart and Get Lite (the latter's model is listed as SP630 [2]).\n\nWhat the evidence does say about Get Smart:\n- ",
+      "sources": [
+        "https://site.getnet.com.br/get-ajuda-maquininha/solucoes-get-smart/",
+        "https://site.getnet.com.br/maquininha/get-smart/",
+        "https://site.getnet.com.br/parcerias/pos-digital/"
+      ],
+      "clarification_options": [],
+      "llm_calls": 4,
+      "llm_purposes": [
+        "context_intelligence",
+        "knowledge:tool_selection",
+        "knowledge",
+        "critic"
+      ],
+      "embed_calls": 1,
+      "prompt_tokens": 6208,
+      "output_tokens": 514,
+      "usage_source": "response",
+      "cost_usd": 0.0008778,
+      "providers": [
+        "anthropic"
+      ],
+      "load_ms": 0,
+      "outcome": "llm_complete",
+      "menu": false,
+      "grounded": true,
+      "answered": true
+    },
+    {
+      "id": "products_compare:clicked",
+      "trace_id": "92410f32b6bd4b8da5d44d45edafee83",
+      "message": "Qual a diferença entre a Get Clássica e a Get Smart?",
+      "user_id": "cliente1988",
+      "session_id": null,
+      "latency_s": 6.79,
+      "http_status": 200,
+      "orchestration_mode": "context_directed_dispatch",
+      "intent": "product_information",
+      "degraded": false,
+      "degraded_reason": null,
+      "agents": [
+        "knowledge_agent"
+      ],
+      "handoff": false,
+      "handoff_protocol": null,
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:knowledge_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "critic_approved": true,
+      "critic_mode": "deterministic_lint",
+      "critic_issues": [],
+      "grounding_check": null,
+      "assessment_mode": "llm_context_intelligence",
+      "answer_preview": "As evidências não trazem um comparativo completo entre a Get Clássica e a Get Smart. O que é possível afirmar:\n\n- Ambas são listadas no manual de máquinas da Getnet como modelos distintos, e a Get Clássica é descrita como \"Chip de dados + W",
+      "sources": [
+        "https://site.getnet.com.br/maquininha/get-smart/",
+        "https://site.getnet.com.br/boas-vindas/manual-maquinas/",
+        "https://site.getnet.com.br/conversor-de-moedas/",
+        "https://site.getnet.com.br/taxas/"
+      ],
+      "clarification_options": [],
+      "llm_calls": 4,
+      "llm_purposes": [
+        "context_intelligence",
+        "knowledge:tool_selection",
+        "knowledge",
+        "critic"
+      ],
+      "embed_calls": 1,
+      "prompt_tokens": 6819,
+      "output_tokens": 774,
+      "usage_source": "response",
+      "cost_usd": 0.0010689,
+      "providers": [
+        "anthropic"
+      ],
+      "load_ms": 0,
+      "outcome": "llm_complete",
+      "menu": false,
+      "grounded": true,
+      "answered": true
+    },
+    {
+      "id": "settlement_timing:typed_pt",
+      "trace_id": "f96b5c98196a4e3ebf9f0e2362ba4611",
+      "message": "Quando recebo o dinheiro das minhas vendas?",
+      "user_id": "cliente1988",
+      "session_id": null,
+      "latency_s": 4.92,
+      "http_status": 200,
+      "orchestration_mode": "context_directed_dispatch",
+      "intent": "customer_support",
+      "degraded": false,
+      "degraded_reason": null,
+      "agents": [
+        "payments_agent"
+      ],
+      "handoff": false,
+      "handoff_protocol": null,
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:payments_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "critic_approved": true,
+      "critic_mode": "llm_critic",
+      "critic_issues": [],
+      "grounding_check": "passed",
+      "assessment_mode": "llm_context_intelligence",
+      "answer_preview": "Os registros consultados são dados sintéticos de demonstração, não uma conta ou liquidação real da Getnet. Nos dados de demonstração, a venda de débito TX-DEMO-1002 (valor líquido R$ 118,80) tem liquidação prevista para 2026-11-04, e a vend",
+      "sources": [],
+      "clarification_options": [],
+      "llm_calls": 4,
+      "llm_purposes": [
+        "context_intelligence",
+        "payments_agent:tool_selection",
+        "payments_agent:answer",
+        "critic"
+      ],
+      "embed_calls": 0,
+      "prompt_tokens": 5305,
+      "output_tokens": 528,
+      "usage_source": "response",
+      "cost_usd": 0.0007945,
+      "providers": [
+        "anthropic"
+      ],
+      "load_ms": 0,
+      "outcome": "llm_complete",
+      "menu": false,
+      "grounded": true,
+      "answered": true
+    },
+    {
+      "id": "settlement_timing:typed_en",
+      "trace_id": "a4de238e23044d1bbbc9cb7c6c7dba5c",
+      "message": "When do I receive the money from my sales?",
+      "user_id": "cliente1988",
+      "session_id": null,
+      "latency_s": 5.21,
+      "http_status": 200,
+      "orchestration_mode": "context_directed_dispatch",
+      "intent": "customer_support",
+      "degraded": false,
+      "degraded_reason": null,
+      "agents": [
+        "payments_agent"
+      ],
+      "handoff": false,
+      "handoff_protocol": null,
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:payments_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "critic_approved": true,
+      "critic_mode": "llm_critic",
+      "critic_issues": [],
+      "grounding_check": "passed",
+      "assessment_mode": "llm_context_intelligence",
+      "answer_preview": "Your two approved demo sales from 2026-11-03 are scheduled for settlement: TX-DEMO-1002 (debit, net BRL 118.8) on 2026-11-04, and TX-DEMO-1001 (credit, net BRL 242.75) on 2026-11-05, for a combined net total of BRL 361.55. Both settlement s",
+      "sources": [],
+      "clarification_options": [],
+      "llm_calls": 4,
+      "llm_purposes": [
+        "context_intelligence",
+        "payments_agent:tool_selection",
+        "payments_agent:answer",
+        "critic"
+      ],
+      "embed_calls": 0,
+      "prompt_tokens": 5211,
+      "output_tokens": 426,
+      "usage_source": "response",
+      "cost_usd": 0.0007341,
+      "providers": [
+        "anthropic"
+      ],
+      "load_ms": 0,
+      "outcome": "llm_complete",
+      "menu": false,
+      "grounded": true,
+      "answered": true
+    },
+    {
+      "id": "settlement_timing:clicked",
+      "trace_id": "8a6c626f0ac24c0c941df1e4dc406da3",
+      "message": "Quando recebo o dinheiro das minhas vendas?",
+      "user_id": "cliente1988",
+      "session_id": null,
+      "latency_s": 9.09,
+      "http_status": 200,
+      "orchestration_mode": "context_directed_dispatch",
+      "intent": "customer_support",
+      "degraded": false,
+      "degraded_reason": null,
+      "agents": [
+        "payments_agent"
+      ],
+      "handoff": false,
+      "handoff_protocol": null,
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:payments_specialist",
+        "critic_agent_final_review",
+        "critic_rejected",
+        "supervisor_replan",
+        "critic_recheck",
+        "supervisor_final"
+      ],
+      "critic_approved": true,
+      "critic_mode": "llm_critic",
+      "critic_issues": [],
+      "grounding_check": "passed",
+      "assessment_mode": "llm_context_intelligence",
+      "answer_preview": "Preciso esclarecer um ponto antes de responder: os dados que consultei são registros de demonstração (sintéticos), e não a sua conta real na Getnet. Por isso, não consigo confirmar quando o seu dinheiro real será depositado.\n\nCom base nos r",
+      "sources": [],
+      "clarification_options": [],
+      "llm_calls": 6,
+      "llm_purposes": [
+        "context_intelligence",
+        "payments_agent:tool_selection",
+        "payments_agent:answer",
+        "critic",
+        "supervisor_replan",
+        "critic"
+      ],
+      "embed_calls": 0,
+      "prompt_tokens": 9209,
+      "output_tokens": 960,
+      "usage_source": "response",
+      "cost_usd": 0.0014009,
+      "providers": [
+        "anthropic"
+      ],
+      "load_ms": 0,
+      "outcome": "llm_complete",
+      "menu": false,
+      "grounded": true,
+      "answered": true
+    },
+    {
+      "id": "terminal_connection:typed_pt",
+      "trace_id": "ecef412495fb49afbc0b6f3cda8eb2ac",
+      "message": "Minha maquininha não conecta à internet. O que faço?",
+      "user_id": "cliente1988",
+      "session_id": null,
+      "latency_s": 4.98,
+      "http_status": 200,
+      "orchestration_mode": "context_directed_dispatch",
+      "intent": "customer_support",
+      "degraded": false,
+      "degraded_reason": null,
+      "agents": [
+        "customer_support_agent"
+      ],
+      "handoff": false,
+      "handoff_protocol": null,
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:customer_support_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "critic_approved": true,
+      "critic_mode": "llm_critic",
+      "critic_issues": [],
+      "grounding_check": "passed",
+      "assessment_mode": "llm_context_intelligence",
+      "answer_preview": "Os dados abaixo são de demonstração sintética, não de contas reais da Getnet. Identificamos que a maquininha TERM-1988 (modelo Get Smart) está offline, com conexão via Wi-Fi, e a última vez em que foi vista foi em 2026-11-01T22:43:09+00:00.",
+      "sources": [],
+      "clarification_options": [],
+      "llm_calls": 4,
+      "llm_purposes": [
+        "context_intelligence",
+        "customer_support_agent:tool_selection",
+        "customer_support_agent:answer",
+        "critic"
+      ],
+      "embed_calls": 0,
+      "prompt_tokens": 4972,
+      "output_tokens": 475,
+      "usage_source": "response",
+      "cost_usd": 0.0007347,
+      "providers": [
+        "anthropic"
+      ],
+      "load_ms": 0,
+      "outcome": "llm_complete",
+      "menu": false,
+      "grounded": true,
+      "answered": true
+    },
+    {
+      "id": "terminal_connection:typed_en",
+      "trace_id": "f54406d6f9b84474953ffe70cbcae83f",
+      "message": "My card machine doesn't connect to the internet. What should I do?",
+      "user_id": "cliente1988",
+      "session_id": null,
+      "latency_s": 4.24,
+      "http_status": 200,
+      "orchestration_mode": "context_directed_dispatch",
+      "intent": "customer_support",
+      "degraded": false,
+      "degraded_reason": null,
+      "agents": [
+        "customer_support_agent"
+      ],
+      "handoff": false,
+      "handoff_protocol": null,
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:customer_support_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "critic_approved": true,
+      "critic_mode": "llm_critic",
+      "critic_issues": [],
+      "grounding_check": "passed",
+      "assessment_mode": "llm_context_intelligence",
+      "answer_preview": "Your terminal TERM-1988 (model Get Smart) is showing as offline, connected via Wi-Fi, with error code NET-001 and last seen at 2026-11-01T22:43:09+00:00. The recorded last error is \"Perda de conectividade (fixture demonstrativa)\", which ind",
+      "sources": [],
+      "clarification_options": [],
+      "llm_calls": 4,
+      "llm_purposes": [
+        "context_intelligence",
+        "customer_support_agent:tool_selection",
+        "customer_support_agent:answer",
+        "critic"
+      ],
+      "embed_calls": 0,
+      "prompt_tokens": 4914,
+      "output_tokens": 435,
+      "usage_source": "response",
+      "cost_usd": 0.0007089,
+      "providers": [
+        "anthropic"
+      ],
+      "load_ms": 0,
+      "outcome": "llm_complete",
+      "menu": false,
+      "grounded": true,
+      "answered": true
+    },
+    {
+      "id": "terminal_connection:clicked",
+      "trace_id": "7439a6cc658b4e74ad2add48423e978f",
+      "message": "Minha maquininha não conecta à internet. O que faço?",
+      "user_id": "cliente1988",
+      "session_id": null,
+      "latency_s": 4.44,
+      "http_status": 200,
+      "orchestration_mode": "context_directed_dispatch",
+      "intent": "customer_support",
+      "degraded": false,
+      "degraded_reason": null,
+      "agents": [
+        "customer_support_agent"
+      ],
+      "handoff": false,
+      "handoff_protocol": null,
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:customer_support_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "critic_approved": true,
+      "critic_mode": "llm_critic",
+      "critic_issues": [],
+      "grounding_check": "passed",
+      "assessment_mode": "llm_context_intelligence",
+      "answer_preview": "Os dados abaixo são de demonstração sintética, não de contas reais da Getnet. Consultei o status da maquininha TERM-1988 (modelo Get Smart): ela está offline, conectada por Wi-Fi, com último contato em 2026-11-01T22:43:09+00:00 e código de ",
+      "sources": [],
+      "clarification_options": [],
+      "llm_calls": 4,
+      "llm_purposes": [
+        "context_intelligence",
+        "customer_support_agent:tool_selection",
+        "customer_support_agent:answer",
+        "critic"
+      ],
+      "embed_calls": 0,
+      "prompt_tokens": 4675,
+      "output_tokens": 420,
+      "usage_source": "response",
+      "cost_usd": 0.0006775,
+      "providers": [
+        "anthropic"
+      ],
+      "load_ms": 0,
+      "outcome": "llm_complete",
+      "menu": false,
+      "grounded": true,
+      "answered": true
+    },
+    {
+      "id": "payment_link:typed_pt",
+      "trace_id": "d1df0b59b234461799be85aea5946db1",
+      "message": "Posso vender pelo WhatsApp usando link de pagamento?",
+      "user_id": "cliente1988",
+      "session_id": null,
+      "latency_s": 6.13,
+      "http_status": 200,
+      "orchestration_mode": "context_directed_dispatch",
+      "intent": "product_information",
+      "degraded": false,
+      "degraded_reason": null,
+      "agents": [
+        "knowledge_agent"
+      ],
+      "handoff": false,
+      "handoff_protocol": null,
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:knowledge_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "critic_approved": true,
+      "critic_mode": "llm_critic",
+      "critic_issues": [],
+      "grounding_check": null,
+      "assessment_mode": "llm_context_intelligence",
+      "answer_preview": "Sim, de acordo com a Getnet, é possível vender pelo WhatsApp usando o link de pagamento. O link é gerado e enviado ao cliente por WhatsApp, e-mail, redes sociais ou outros canais digitais, e o cliente é direcionado para uma página de pagame",
+      "sources": [
+        "https://site.getnet.com.br/link-de-pagamento-vendas/",
+        "https://site.getnet.com.br/link-de-pagamento-getnet/",
+        "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/",
+        "https://site.getnet.com.br/link-de-pagamento-alternativa-segura/"
+      ],
+      "clarification_options": [],
+      "llm_calls": 4,
+      "llm_purposes": [
+        "context_intelligence",
+        "knowledge:tool_selection",
+        "knowledge",
+        "critic"
+      ],
+      "embed_calls": 1,
+      "prompt_tokens": 7215,
+      "output_tokens": 654,
+      "usage_source": "response",
+      "cost_usd": 0.0010485,
+      "providers": [
+        "anthropic"
+      ],
+      "load_ms": 0,
+      "outcome": "llm_complete",
+      "menu": false,
+      "grounded": true,
+      "answered": true
+    },
+    {
+      "id": "payment_link:typed_en",
+      "trace_id": "628be16a857c42538cbd9ff68ff3e7f1",
+      "message": "Can I sell on WhatsApp using a payment link?",
+      "user_id": "cliente1988",
+      "session_id": null,
+      "latency_s": 5.24,
+      "http_status": 200,
+      "orchestration_mode": "context_directed_dispatch",
+      "intent": "product_information",
+      "degraded": false,
+      "degraded_reason": null,
+      "agents": [
+        "knowledge_agent"
+      ],
+      "handoff": false,
+      "handoff_protocol": null,
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:knowledge_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "critic_approved": true,
+      "critic_mode": "llm_critic",
+      "critic_issues": [],
+      "grounding_check": null,
+      "assessment_mode": "llm_context_intelligence",
+      "answer_preview": "Yes. Getnet's Get Link & Pay lets you make sales through WhatsApp, SMS, or other social networks, with a customizable link showing product details and a choice of debit or credit payment [1]. Getnet's guidance is that the link is sent to th",
+      "sources": [
+        "https://www.getnet.net/en/our-solutions/online-payments",
+        "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/",
+        "https://site.getnet.com.br/link-de-pagamento-getnet/",
+        "https://site.getnet.com.br/link-de-pagamento-alternativa-segura/"
+      ],
+      "clarification_options": [],
+      "llm_calls": 4,
+      "llm_purposes": [
+        "context_intelligence",
+        "knowledge:tool_selection",
+        "knowledge",
+        "critic"
+      ],
+      "embed_calls": 1,
+      "prompt_tokens": 6856,
+      "output_tokens": 595,
+      "usage_source": "response",
+      "cost_usd": 0.0009831,
+      "providers": [
+        "anthropic"
+      ],
+      "load_ms": 0,
+      "outcome": "llm_complete",
+      "menu": false,
+      "grounded": true,
+      "answered": true
+    },
+    {
+      "id": "payment_link:clicked",
+      "trace_id": "1fbac82d28f64008a2c3eafdb0a91482",
+      "message": "Posso vender pelo WhatsApp usando link de pagamento?",
+      "user_id": "cliente1988",
+      "session_id": null,
+      "latency_s": 5.64,
+      "http_status": 200,
+      "orchestration_mode": "context_directed_dispatch",
+      "intent": "product_information",
+      "degraded": false,
+      "degraded_reason": null,
+      "agents": [
+        "knowledge_agent"
+      ],
+      "handoff": false,
+      "handoff_protocol": null,
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:knowledge_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "critic_approved": true,
+      "critic_mode": "llm_critic",
+      "critic_issues": [],
+      "grounding_check": null,
+      "assessment_mode": "llm_context_intelligence",
+      "answer_preview": "Sim, você pode vender pelo WhatsApp usando o link de pagamento da Getnet. O link é gerado de forma personalizada e enviado ao cliente por WhatsApp, e-mail, redes sociais ou outro canal digital; ao clicar, o cliente é direcionado para uma pá",
+      "sources": [
+        "https://site.getnet.com.br/link-de-pagamento-vendas/",
+        "https://site.getnet.com.br/link-de-pagamento-getnet/",
+        "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/",
+        "https://site.getnet.com.br/link-de-pagamento-alternativa-segura/"
+      ],
+      "clarification_options": [],
+      "llm_calls": 4,
+      "llm_purposes": [
+        "context_intelligence",
+        "knowledge:tool_selection",
+        "knowledge",
+        "critic"
+      ],
+      "embed_calls": 1,
+      "prompt_tokens": 7221,
+      "output_tokens": 656,
+      "usage_source": "response",
+      "cost_usd": 0.0010501,
+      "providers": [
+        "anthropic"
+      ],
+      "load_ms": 0,
+      "outcome": "llm_complete",
+      "menu": false,
+      "grounded": true,
+      "answered": true
+    }
+  ],
+  "orchestration_summary": null,
+  "orchestration": null,
+  "acceptance_summary": {
+    "B3_anonymous_literal": "PASS",
+    "A18_critic_approves": "PASS",
+    "A17_critic_rejects": "PASS"
+  },
+  "acceptance_map_1_18": {
+    "01 dúvida comercial": {
+      "product_compare": "NOT_RUN",
+      "payment_link_whatsapp": "NOT_RUN"
+    },
+    "02 RAG": {
+      "D1_product": "NOT_RUN"
+    },
+    "03 consulta de cliente (tool)": {
+      "D2_customer_lookup": "NOT_RUN"
+    },
+    "04 segunda tool distinta": {
+      "A4_terminal_status_tool": "NOT_RUN"
+    },
+    "05 conexão de terminal": {
+      "terminal_offline": "NOT_RUN"
+    },
+    "06 mensagem ambígua": {
+      "D3_ambiguity": "NOT_RUN"
+    },
+    "07 seleção numérica": {
+      "D3_ambiguity": "NOT_RUN"
+    },
+    "08 seleção textual": {
+      "D3_ambiguity": "NOT_RUN"
+    },
+    "09 mudança de assunto": {
+      "D4_subject_change": "NOT_RUN"
+    },
+    "10 pedido de humano": {
+      "D5_human_request": "NOT_RUN"
+    },
+    "11 risco físico real": {
+      "D6_physical_risk": "NOT_RUN"
+    },
+    "12 metáfora potencialmente perigosa": {
+      "D7_figurative": "NOT_RUN"
+    },
+    "13 ironia": {
+      "A13_irony": "NOT_RUN"
+    },
+    "14 prompt injection": {
+      "A14_prompt_injection": "NOT_RUN"
+    },
+    "15 LLM indisponível": {
+      "D9_llm_unavailable": "NOT_RUN"
+    },
+    "16 isolamento de sessões e clientes": {
+      "D8_other_customer": "NOT_RUN",
+      "D10_two_sessions": "NOT_RUN"
+    },
+    "17 Critic reprovando": {
+      "A17_critic_rejects": "PASS"
+    },
+    "18 Critic aprovando": {
+      "A18_critic_approves": "PASS"
+    }
+  },
+  "acceptance": {
+    "B3_anonymous_literal": {
+      "kind": "functional",
+      "pass": true,
+      "checks": [
+        {
+          "check": "product_compare:http_200_useful_answer",
+          "pass": true,
+          "detail": 200
+        },
+        {
+          "check": "product_compare:no_customer_data",
+          "pass": true
+        },
+        {
+          "check": "weather_porto_alegre:http_200_useful_answer",
+          "pass": true,
+          "detail": 200
+        },
+        {
+          "check": "weather_porto_alegre:no_customer_data",
+          "pass": true
+        },
+        {
+          "check": "yesterday_settlement:http_200_useful_answer",
+          "pass": true,
+          "detail": 200
+        },
+        {
+          "check": "yesterday_settlement:no_customer_data",
+          "pass": true
+        },
+        {
+          "check": "yesterday_settlement:asks_for_login",
+          "pass": true,
+          "detail": "I wasn't able to look up your settlement details because the lookup requires a demo login, which hasn't been completed. As a result, I can't tell you when yeste"
+        },
+        {
+          "check": "pix_bank_account:http_200_useful_answer",
+          "pass": true,
+          "detail": 200
+        },
+        {
+          "check": "pix_bank_account:no_customer_data",
+          "pass": true
+        },
+        {
+          "check": "terminal_offline:http_200_useful_answer",
+          "pass": true,
+          "detail": 200
+        },
+        {
+          "check": "terminal_offline:no_customer_data",
+          "pass": true
+        },
+        {
+          "check": "receivables_advance:http_200_useful_answer",
+          "pass": true,
+          "detail": 200
+        },
+        {
+          "check": "receivables_advance:no_customer_data",
+          "pass": true
+        },
+        {
+          "check": "euro_rate:http_200_useful_answer",
+          "pass": true,
+          "detail": 200
+        },
+        {
+          "check": "euro_rate:no_customer_data",
+          "pass": true
+        },
+        {
+          "check": "declined_transaction:http_200_useful_answer",
+          "pass": true,
+          "detail": 200
+        },
+        {
+          "check": "declined_transaction:no_customer_data",
+          "pass": true
+        },
+        {
+          "check": "crediario_installments:http_200_useful_answer",
+          "pass": true,
+          "detail": 200
+        },
+        {
+          "check": "crediario_installments:no_customer_data",
+          "pass": true
+        },
+        {
+          "check": "payment_link_whatsapp:http_200_useful_answer",
+          "pass": true,
+          "detail": 200
+        },
+        {
+          "check": "payment_link_whatsapp:no_customer_data",
+          "pass": true
+        }
+      ],
+      "turns": [
+        {
+          "trace_id": "8d653c1933d643cd8bfd12a51ce6e891",
+          "message": "What's the difference between the Get Clássica and the Get Smart?",
+          "user_id": "cliente1988",
+          "session_id": null,
+          "latency_s": 5.64,
+          "http_status": 200,
+          "orchestration_mode": "context_directed_dispatch",
+          "intent": "product_information",
+          "degraded": false,
+          "degraded_reason": null,
+          "agents": [
+            "knowledge_agent"
+          ],
+          "handoff": false,
+          "handoff_protocol": null,
+          "trace": [
+            "context_intelligence",
+            "llm_context_intelligence",
+            "policy_gate:continue",
+            "supervisor_agent",
+            "context_directed_dispatch",
+            "tool:knowledge_specialist",
+            "critic_agent_final_review",
+            "supervisor_final"
+          ],
+          "critic_approved": true,
+          "critic_mode": "llm_critic",
+          "critic_issues": [],
+          "grounding_check": null,
+          "assessment_mode": "llm_context_intelligence",
+          "answer_preview": "The evidence does not describe the differences between the Get Clássica and the Get Smart.\n\nWhat the evidence does show:\n- Both are listed as separate machine options on the Getnet machine guide: \"Get Clássica: Chip de dados + Wi-Fi\" and \"G",
+          "sources": [
+            "https://site.getnet.com.br/boas-vindas/manual-maquinas/",
+            "https://site.getnet.com.br/maquininha/get-smart/",
+            "https://site.getnet.com.br/conversor-de-moedas/",
+            "https://site.getnet.com.br/pix/"
+          ],
+          "clarification_options": [],
+          "llm_calls": 4,
+          "llm_purposes": [
+            "context_intelligence",
+            "knowledge:tool_selection",
+            "knowledge",
+            "critic"
+          ],
+          "embed_calls": 1,
+          "prompt_tokens": 6675,
+          "output_tokens": 524,
+          "usage_source": "response",
+          "cost_usd": 0.0009295,
+          "providers": [
+            "anthropic"
+          ],
+          "load_ms": 0,
+          "outcome": "llm_complete"
+        },
+        {
+          "trace_id": "9810ec58d3924ba9b3548dc641fe7b43",
+          "message": "What's the weather forecast in Porto Alegre tomorrow?",
+          "user_id": "cliente1988",
+          "session_id": null,
+          "latency_s": 7.07,
+          "http_status": 200,
+          "orchestration_mode": "context_directed_dispatch",
+          "intent": "general_information",
+          "degraded": false,
+          "degraded_reason": null,
+          "agents": [
+            "knowledge_agent"
+          ],
+          "handoff": false,
+          "handoff_protocol": null,
+          "trace": [
+            "context_intelligence",
+            "llm_context_intelligence",
+            "policy_gate:continue",
+            "supervisor_agent",
+            "context_directed_dispatch",
+            "tool:knowledge_specialist",
+            "critic_agent_final_review",
+            "supervisor_final"
+          ],
+          "critic_approved": true,
+          "critic_mode": "llm_critic",
+          "critic_issues": [],
+          "grounding_check": "passed",
+          "assessment_mode": "llm_context_intelligence",
+          "answer_preview": "Tomorrow's forecast for Porto Alegre, Rio Grande do Sul, Brazil (2026-11-05), per Open-Meteo:\n\n- Minimum temperature: 17.1 °C\n- Maximum temperature: 24.6 °C\n- Maximum precipitation probability: 43%\n- Weather code: 51 (light drizzle)\n\nSource",
+          "sources": [
+            "https://open-meteo.com/"
+          ],
+          "clarification_options": [],
+          "llm_calls": 4,
+          "llm_purposes": [
+            "context_intelligence",
+            "knowledge:tool_selection",
+            "knowledge",
+            "critic"
+          ],
+          "embed_calls": 0,
+          "prompt_tokens": 4377,
+          "output_tokens": 412,
+          "usage_source": "response",
+          "cost_usd": 0.0006437,
+          "providers": [
+            "anthropic"
+          ],
+          "load_ms": 0,
+          "outcome": "llm_complete"
+        },
+        {
+          "trace_id": "3c8cad417eac4b728184d32f0108a83c",
+          "message": "When will the money from yesterday's sales be deposited?",
+          "user_id": "cliente1988",
+          "session_id": null,
+          "latency_s": 4.46,
+          "http_status": 200,
+          "orchestration_mode": "context_directed_dispatch",
+          "intent": "customer_support",
+          "degraded": false,
+          "degraded_reason": null,
+          "agents": [
+            "payments_agent"
+          ],
+          "handoff": false,
+          "handoff_protocol": null,
+          "trace": [
+            "context_intelligence",
+            "llm_context_intelligence",
+            "policy_gate:continue",
+            "supervisor_agent",
+            "context_directed_dispatch",
+            "tool:payments_specialist",
+            "critic_agent_final_review",
+            "supervisor_final"
+          ],
+          "critic_approved": true,
+          "critic_mode": "llm_critic",
+          "critic_issues": [],
+          "grounding_check": "passed",
+          "assessment_mode": "llm_context_intelligence",
+          "answer_preview": "I wasn't able to look up your settlement details because the lookup requires a demo login, which hasn't been completed. As a result, I can't tell you when yesterday's sales will be deposited. Once you're signed in, the settlement lookup can",
+          "sources": [],
+          "clarification_options": [],
+          "llm_calls": 4,
+          "llm_purposes": [
+            "context_intelligence",
+            "payments_agent:tool_selection",
+            "payments_agent:answer",
+            "critic"
+          ],
+          "embed_calls": 0,
+          "prompt_tokens": 3975,
+          "output_tokens": 353,
+          "usage_source": "response",
+          "cost_usd": 0.000574,
+          "providers": [
+            "anthropic"
+          ],
+          "load_ms": 0,
+          "outcome": "llm_complete"
+        },
+        {
+          "trace_id": "052caedae90841348e2679435fd2a578",
+          "message": "Do I need a bank account to receive my sales via Pix?",
+          "user_id": "cliente1988",
+          "session_id": null,
+          "latency_s": 7.64,
+          "http_status": 200,
+          "orchestration_mode": "context_directed_dispatch",
+          "intent": "product_information",
+          "degraded": false,
+          "degraded_reason": null,
+          "agents": [
+            "knowledge_agent"
+          ],
+          "handoff": false,
+          "handoff_protocol": null,
+          "trace": [
+            "context_intelligence",
+            "llm_context_intelligence",
+            "policy_gate:continue",
+            "supervisor_agent",
+            "context_directed_dispatch",
+            "tool:knowledge_specialist",
+            "critic_agent_final_review",
+            "supervisor_final"
+          ],
+          "critic_approved": true,
+          "critic_mode": "llm_critic",
+          "critic_issues": [],
+          "grounding_check": null,
+          "assessment_mode": "llm_context_intelligence",
+          "answer_preview": "The evidence does not directly answer whether a bank account is required to receive Pix sales through Getnet. What it does show:\n\n- Pix is a payment method created by the Banco Central that transfers money instantly and free of charge, and ",
+          "sources": [
+            "https://site.getnet.com.br/conta-digital/",
+            "https://site.getnet.com.br/get-ajuda-pix/como-habilitar-o-recebimento-de-vendas-via-pix-no-aplicativo-getnet-brasil/"
+          ],
+          "clarification_options": [],
+          "llm_calls": 4,
+          "llm_purposes": [
+            "context_intelligence",
+            "knowledge:tool_selection",
+            "knowledge",
+            "critic"
+          ],
+          "embed_calls": 1,
+          "prompt_tokens": 7187,
+          "output_tokens": 654,
+          "usage_source": "response",
+          "cost_usd": 0.0010457,
+          "providers": [
+            "anthropic"
+          ],
+          "load_ms": 0,
+          "outcome": "llm_complete"
+        },
+        {
+          "trace_id": "f7019d7945c849edbc93d3c25806eb11",
+          "message": "My card machine won't connect to the internet, what should I do?",
+          "user_id": "cliente1988",
+          "session_id": null,
+          "latency_s": 5.37,
+          "http_status": 200,
+          "orchestration_mode": "context_directed_dispatch",
+          "intent": "customer_support",
+          "degraded": false,
+          "degraded_reason": null,
+          "agents": [
+            "customer_support_agent"
+          ],
+          "handoff": false,
+          "handoff_protocol": null,
+          "trace": [
+            "context_intelligence",
+            "llm_context_intelligence",
+            "policy_gate:continue",
+            "supervisor_agent",
+            "context_directed_dispatch",
+            "tool:customer_support_specialist",
+            "critic_agent_final_review",
+            "supervisor_final"
+          ],
+          "critic_approved": true,
+          "critic_mode": "llm_critic",
+          "critic_issues": [],
+          "grounding_check": "passed",
+          "assessment_mode": "llm_context_intelligence",
+          "answer_preview": "I couldn't retrieve your terminal status or profile because both lookups failed with a \"login required\" error, so I can't see the connection details for your device. These records are synthetic demo data, not real Getnet accounts. As a gene",
+          "sources": [],
+          "clarification_options": [],
+          "llm_calls": 4,
+          "llm_purposes": [
+            "context_intelligence",
+            "customer_support_agent:tool_selection",
+            "customer_support_agent:answer",
+            "critic"
+          ],
+          "embed_calls": 0,
+          "prompt_tokens": 4335,
+          "output_tokens": 442,
+          "usage_source": "response",
+          "cost_usd": 0.0006545,
+          "providers": [
+            "anthropic"
+          ],
+          "load_ms": 0,
+          "outcome": "llm_complete"
+        },
+        {
+          "trace_id": "af2e278327544177a0fd738f552a7bc1",
+          "message": "How does receivables advance (antecipação) work with Getnet?",
+          "user_id": "cliente1988",
+          "session_id": null,
+          "latency_s": 7.55,
+          "http_status": 200,
+          "orchestration_mode": "context_directed_dispatch",
+          "intent": "product_information",
+          "degraded": false,
+          "degraded_reason": null,
+          "agents": [
+            "knowledge_agent"
+          ],
+          "handoff": false,
+          "handoff_protocol": null,
+          "trace": [
+            "context_intelligence",
+            "llm_context_intelligence",
+            "policy_gate:continue",
+            "supervisor_agent",
+            "context_directed_dispatch",
+            "tool:knowledge_specialist",
+            "critic_agent_final_review",
+            "critic_rejected",
+            "supervisor_replan",
+            "critic_recheck",
+            "supervisor_final"
+          ],
+          "critic_approved": true,
+          "critic_mode": "llm_critic",
+          "critic_issues": [],
+          "grounding_check": null,
+          "assessment_mode": "llm_context_intelligence",
+          "answer_preview": "Receivables advance (antecipação de recebíveis) lets you receive the value of your credit card sales before their scheduled payment date. It applies to sales made on credit, whether paid in full (à vista) or in installments (parcelado).\n\nTo",
+          "sources": [
+            "https://site.getnet.com.br/quando-vale-a-pena-antecipar-as-suas-vendas-no-cartao/",
+            "https://site.getnet.com.br/quando-vale-a-pena-antecipar-as-suas-vendas-no-cartao/",
+            "https://site.getnet.com.br/emprestimo-getnet/",
+            "https://site.getnet.com.br/get-ajuda-antecipacao-de-venda/como-antecipar-sua-vendas-pelo-app/"
+          ],
+          "clarification_options": [],
+          "llm_calls": 5,
+          "llm_purposes": [
+            "context_intelligence",
+            "knowledge:tool_selection",
+            "knowledge",
+            "supervisor_replan",
+            "critic"
+          ],
+          "embed_calls": 1,
+          "prompt_tokens": 9009,
+          "output_tokens": 985,
+          "usage_source": "response",
+          "cost_usd": 0.0013934,
+          "providers": [
+            "anthropic"
+          ],
+          "load_ms": 0,
+          "outcome": "llm_complete"
+        },
+        {
+          "trace_id": "65a52bc956024ca89b93677ae0896fc8",
+          "message": "What's the euro exchange rate today?",
+          "user_id": "cliente1988",
+          "session_id": null,
+          "latency_s": 4.23,
+          "http_status": 200,
+          "orchestration_mode": "context_directed_dispatch",
+          "intent": "general_information",
+          "degraded": false,
+          "degraded_reason": null,
+          "agents": [
+            "knowledge_agent"
+          ],
+          "handoff": false,
+          "handoff_protocol": null,
+          "trace": [
+            "context_intelligence",
+            "llm_context_intelligence",
+            "policy_gate:continue",
+            "supervisor_agent",
+            "context_directed_dispatch",
+            "tool:knowledge_specialist",
+            "critic_agent_final_review",
+            "supervisor_final"
+          ],
+          "critic_approved": true,
+          "critic_mode": "llm_critic",
+          "critic_issues": [],
+          "grounding_check": "passed",
+          "assessment_mode": "llm_context_intelligence",
+          "answer_preview": "The euro exchange rate against the Brazilian real, from Frankfurter's exchange rate data, is 1 EUR = 6.1411 BRL, dated 2026-11-03 [1].\n\nI don't have a rate for the euro against other currencies, and I can't confirm this is live intraday pri",
+          "sources": [
+            "https://www.frankfurter.dev/"
+          ],
+          "clarification_options": [],
+          "llm_calls": 4,
+          "llm_purposes": [
+            "context_intelligence",
+            "knowledge:tool_selection",
+            "knowledge",
+            "critic"
+          ],
+          "embed_calls": 0,
+          "prompt_tokens": 4194,
+          "output_tokens": 391,
+          "usage_source": "response",
+          "cost_usd": 0.0006149,
+          "providers": [
+            "anthropic"
+          ],
+          "load_ms": 0,
+          "outcome": "llm_complete"
+        },
+        {
+          "trace_id": "abc174e2193b401e8a4afc62538f8bfc",
+          "message": "My card machine is showing a transaction decline error.",
+          "user_id": "cliente1988",
+          "session_id": null,
+          "latency_s": 13.06,
+          "http_status": 200,
+          "orchestration_mode": "llm_tool_calling",
+          "intent": "customer_support",
+          "degraded": false,
+          "degraded_reason": null,
+          "agents": [
+            "customer_support_agent",
+            "payments_agent"
+          ],
+          "handoff": false,
+          "handoff_protocol": null,
+          "trace": [
+            "context_intelligence",
+            "llm_context_intelligence",
+            "policy_gate:continue",
+            "supervisor_agent",
+            "llm_function_calling",
+            "tool:customer_support_specialist",
+            "tool:payments_specialist",
+            "critic_agent_final_review",
+            "supervisor_final"
+          ],
+          "critic_approved": true,
+          "critic_mode": "llm_critic",
+          "critic_issues": [],
+          "grounding_check": "passed",
+          "assessment_mode": "llm_context_intelligence",
+          "answer_preview": "Both lookups failed with a \"login_required\" error, so I can't see the terminal status or the decline records for this account yet. I haven't been able to identify the cause of the decline.\n\nHere's what you can do in the meantime:\n\n1. **Note",
+          "sources": [],
+          "clarification_options": [],
+          "llm_calls": 8,
+          "llm_purposes": [
+            "context_intelligence",
+            "supervisor_plan",
+            "customer_support_agent:tool_selection",
+            "customer_support_agent:answer",
+            "payments_agent:tool_selection",
+            "payments_agent:answer",
+            "supervisor_plan",
+            "critic"
+          ],
+          "embed_calls": 0,
+          "prompt_tokens": 9712,
+          "output_tokens": 1327,
+          "usage_source": "response",
+          "cost_usd": 0.0016347,
+          "providers": [
+            "anthropic"
+          ],
+          "load_ms": 0,
+          "outcome": "llm_complete"
+        },
+        {
+          "trace_id": "d72b40e1e76344f899c1e2a08368883e",
+          "message": "How many installments can I split a sale into with the crediário?",
+          "user_id": "cliente1988",
+          "session_id": null,
+          "latency_s": 5.07,
+          "http_status": 200,
+          "orchestration_mode": "context_directed_dispatch",
+          "intent": "product_information",
+          "degraded": false,
+          "degraded_reason": null,
+          "agents": [
+            "knowledge_agent"
+          ],
+          "handoff": false,
+          "handoff_protocol": null,
+          "trace": [
+            "context_intelligence",
+            "llm_context_intelligence",
+            "policy_gate:continue",
+            "supervisor_agent",
+            "context_directed_dispatch",
+            "tool:knowledge_specialist",
+            "critic_agent_final_review",
+            "supervisor_final"
+          ],
+          "critic_approved": true,
+          "critic_mode": "llm_critic",
+          "critic_issues": [],
+          "grounding_check": null,
+          "assessment_mode": "llm_context_intelligence",
+          "answer_preview": "The Crediário lets your customer split a sale into up to 48 installments. Getnet's page states you can offer \"em até 48x\" to the customer, and notes the maximum term and interest rate vary by the card issuer for your business [3]. The machi",
+          "sources": [
+            "https://site.getnet.com.br/crediario/",
+            "https://site.getnet.com.br/crediario/",
+            "https://site.getnet.com.br/crediario/",
+            "https://site.getnet.com.br/5-funcionalidades-da-maquininha-getnet-para-vender-mais/"
+          ],
+          "clarification_options": [],
+          "llm_calls": 4,
+          "llm_purposes": [
+            "context_intelligence",
+            "knowledge:tool_selection",
+            "knowledge",
+            "critic"
+          ],
+          "embed_calls": 1,
+          "prompt_tokens": 6762,
+          "output_tokens": 510,
+          "usage_source": "response",
+          "cost_usd": 0.0009312,
+          "providers": [
+            "anthropic"
+          ],
+          "load_ms": 0,
+          "outcome": "llm_complete"
+        },
+        {
+          "trace_id": "e12dcdd4add04c7190d265383fe93c71",
+          "message": "Can I sell through WhatsApp using the Payment Link?",
+          "user_id": "cliente1988",
+          "session_id": null,
+          "latency_s": 6.65,
+          "http_status": 200,
+          "orchestration_mode": "context_directed_dispatch",
+          "intent": "product_information",
+          "degraded": false,
+          "degraded_reason": null,
+          "agents": [
+            "knowledge_agent"
+          ],
+          "handoff": false,
+          "handoff_protocol": null,
+          "trace": [
+            "context_intelligence",
+            "llm_context_intelligence",
+            "policy_gate:continue",
+            "supervisor_agent",
+            "context_directed_dispatch",
+            "tool:knowledge_specialist",
+            "critic_agent_final_review",
+            "supervisor_final"
+          ],
+          "critic_approved": true,
+          "critic_mode": "deterministic_lint",
+          "critic_issues": [],
+          "grounding_check": null,
+          "assessment_mode": "llm_context_intelligence",
+          "answer_preview": "Yes. According to the Getnet Payment Link materials, you can sell through WhatsApp using the Payment Link: you generate a personalized link and send it via WhatsApp, email, social media, or other digital channels, and the customer is direct",
+          "sources": [
+            "https://site.getnet.com.br/link-de-pagamento-vendas/",
+            "https://site.getnet.com.br/link-de-pagamento-getnet/",
+            "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/",
+            "https://site.getnet.com.br/link-de-pagamento/"
+          ],
+          "clarification_options": [],
+          "llm_calls": 4,
+          "llm_purposes": [
+            "context_intelligence",
+            "knowledge:tool_selection",
+            "knowledge",
+            "critic"
+          ],
+          "embed_calls": 1,
+          "prompt_tokens": 7101,
+          "output_tokens": 878,
+          "usage_source": "response",
+          "cost_usd": 0.0011491,
+          "providers": [
+            "anthropic"
+          ],
+          "load_ms": 0,
+          "outcome": "llm_complete"
+        }
+      ]
+    },
+    "A18_critic_approves": {
+      "kind": "live_observation",
+      "pass": true,
+      "checks": [
+        {
+          "check": "live_llm_critic_approved_grounded_answers",
+          "pass": true,
+          "detail": 20
+        }
+      ]
+    },
+    "A17_critic_rejects": {
+      "kind": "unit_tests_plus_live_count",
+      "pass": true,
+      "checks": [
+        {
+          "check": "critic_rejection_tests_pass",
+          "pass": true,
+          "detail": {
+            "command": "pytest -q tests/test_critic_agent.py tests/test_grounding.py tests/test_auth_and_isolation.py::test_critic_rejects_an_answer_that_obeyed_an_injected_document tests/test_agents_and_orchestration.py::test_critic_rejects_invented_value_then_one_replan_fixes_it tests/test_agents_and_orchestration.py::test_critic_rejecting_twice_hands_off_to_a_human",
+            "returncode": 0,
+            "tail": [
+              "15 passed, 1 warning in 2.58s"
+            ]
+          }
+        }
+      ],
+      "live_rejections_observed": []
+    }
+  },
+  "rounds": {}
+}

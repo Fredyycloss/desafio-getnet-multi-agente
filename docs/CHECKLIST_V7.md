@@ -98,9 +98,9 @@ Starting point: commit `ee74988` (published, CI green, feedback v2 = 7.3/10).
 
 | # | Item | Source | Block | Status | Evidence |
 |---|---|---|---|---|---|
-| B1 | Home-screen suggestions fall into the menu; a clear Payment Link question asks for clarification | V6 2, SELF | 8 | ABERTO | |
-| B2 | `selected_topic` on suggestions; typed suggestions answered by real understanding (pt/en, both modes); Playwright clicks all 4 | V6 2 | 8 | ABERTO | |
-| B3 | Literal challenge payload returns 401 → anonymous session; customer data requires login | V6 3, SELF | 8 | ABERTO | |
+| B1 | Home-screen suggestions fall into the menu; a clear Payment Link question asks for clarification | V6 2, SELF | 8 | RESOLVIDO | Cloud: 12/12 suggestion requests answered with no menu (docs/RELATORIO_LATENCIA_2026-11-04_cloud-v7-block8.json); offline in block 12 run |
+| B2 | `selected_topic` on suggestions; typed suggestions answered by real understanding (pt/en, both modes); Playwright clicks all 4 | V6 2 | 8 | PARCIAL | selected_topic implemented + tests (scripted unsure model still dispatches); Playwright clicks all 4 (e2e/home-suggestions.spec.ts); cloud typed pt/en + clicked 12/12; offline measurement pending (block 12 benchmark) |
+| B3 | Literal challenge payload returns 401 → anonymous session; customer data requires login | V6 3, SELF | 8 | RESOLVIDO | No token = anonymous session; customer tools answer login_required; cloud B3 check 21/21 PASS (docs/RELATORIO_LATENCIA_2026-11-04_cloud-v7-block8.json); tests/test_anonymous_and_topics.py; README shows the literal curl first |
 | B4 | Acceptance scenarios marked `NOT_RUN` in the report | FB2 | 4/8 | ABERTO | |
 
 ## Engineering judgment (block 9)
