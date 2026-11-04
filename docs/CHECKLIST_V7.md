@@ -16,16 +16,16 @@ Starting point: commit `ee74988` (published, CI green, feedback v2 = 7.3/10).
 
 | # | Item | Source | Block | Status | Evidence |
 |---|---|---|---|---|---|
-| K1 | Corpus is 26 hand-written summaries of 10 pages; does not ingest `getnet.net/en` | V6, FB2, SELF | 1 | ABERTO | |
-| K2 | Crawler never run; fixed 40-page limit | V6 | 1 | ABERTO | |
-| K3 | Discovery via robots → sitemap → WP REST → links; JS pages; politeness; generic User-Agent | V6 1.1 | 1 | ABERTO | |
-| K4 | Boilerplate removal, heading-based chunking, rich metadata, dedup | V6 1.2 | 1 | ABERTO | |
-| K5 | Versioned snapshot + manifest; precomputed embeddings; offline boot; idempotent refresh command | V6 1.3 | 1 | ABERTO | |
-| K6 | Hand-written summaries removed or down-weighted (`curated_summary`), with justification | V6 1.3 | 1 | ABERTO | |
-| K7 | Web search inside the Knowledge Agent (tools chosen by the LLM) | V6 1.4, SELF | 1 | ABERTO | |
-| K8 | DuckDuckGo scraping is fragile → stable sources (Wikipedia REST / DDG Instant Answer / optional key) | V6 1.4, SELF | 1 | ABERTO | |
-| K9 | FX without a tool call → degraded answer (regression) | SELF | 1 | ABERTO | |
-| K10 | Retrieval metric was recall@5 on 5 cases → ≥60 labelled questions; recall@1/3/5, MRR, abstention; old × new corpus; BM25 × dense × hybrid | V6 1.5, FB2 | 1 | ABERTO | |
+| K1 | Corpus is 26 hand-written summaries of 10 pages; does not ingest `getnet.net/en` | V6, FB2, SELF | 1 | RESOLVIDO | `backend/app/knowledge/snapshots/2026-11-03/` (378 pages incl. getnet.net/en); `test_knowledge_snapshot.py` |
+| K2 | Crawler never run; fixed 40-page limit | V6 | 1 | RESOLVIDO | `ingest_cli --max-pages` (default 2000), frontier exhausted at 378 pages; manifest `stopped_by` |
+| K3 | Discovery via robots → sitemap → WP REST → links; JS pages; politeness; generic User-Agent | V6 1.1 | 1 | RESOLVIDO | `app/knowledge/crawler.py` (WP REST answers 404 on this site, documented); `test_knowledge_crawler.py` |
+| K4 | Boilerplate removal, heading-based chunking, rich metadata, dedup | V6 1.2 | 1 | RESOLVIDO | `extract_page`, `remove_boilerplate`, `chunk_pages`; `test_knowledge_crawler.py` |
+| K5 | Versioned snapshot + manifest; precomputed embeddings; offline boot; idempotent refresh command | V6 1.3 | 1 | RESOLVIDO | snapshot + `embeddings.json.gz` + manifest (timings); `load_documents()` offline; compose `knowledge-refresh` |
+| K6 | Hand-written summaries removed or down-weighted (`curated_summary`), with justification | V6 1.3 | 1 | RESOLVIDO | `load_legacy_curated()` baseline only; README Knowledge section |
+| K7 | Web search inside the Knowledge Agent (tools chosen by the LLM) | V6 1.4, SELF | 1 | RESOLVIDO | `agents/knowledge_tools.py`, `KnowledgeAgent.run`; `test_knowledge_tools.py` |
+| K8 | DuckDuckGo scraping is fragile → stable sources (Wikipedia REST / DDG Instant Answer / optional key) | V6 1.4, SELF | 1 | RESOLVIDO | `agents/web_search_tool.py` (Brave key optional → Wikipedia REST → DDG Instant Answer); `test_web_research_tools.py` |
+| K9 | FX without a tool call → degraded answer (regression) | SELF | 1 | PARCIAL | no-tool-call is a marked fallback (`test_no_tool_call_on_currency_question_is_a_marked_fallback...`); live rate measured in block 4 benchmark |
+| K10 | Retrieval metric was recall@5 on 5 cases → ≥60 labelled questions; recall@1/3/5, MRR, abstention; old × new corpus; BM25 × dense × hybrid | V6 1.5, FB2 | 1 | RESOLVIDO | `run_retrieval_eval.py` + `retrieval_questions.json` (70); `docs/eval/RETRIEVAL_EVAL_2026-11-03.json` at d603949: hybrid R@5 0.78 vs legacy 0.40 |
 
 ## HITL (block 2)
 
