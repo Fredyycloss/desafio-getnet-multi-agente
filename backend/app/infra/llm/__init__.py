@@ -13,7 +13,7 @@ __all__ = ["LLMProvider", "LLMUnavailable", "LLMTimeout", "LLMBudgetExceeded", "
 
 
 def resolve_provider_name() -> str | None:
-    """LLM_PROVIDER=auto|ollama|anthropic|none. auto: key present -> anthropic, else ollama
+    """LLM_PROVIDER=auto|ollama|anthropic|replay|none. auto: key present -> anthropic, else ollama
     when OLLAMA_ENABLED=true, else no model (deterministic fallback mode)."""
     from .anthropic_provider import anthropic_key_configured
     choice = os.getenv("LLM_PROVIDER", "auto").strip().lower() or "auto"
@@ -22,6 +22,8 @@ def resolve_provider_name() -> str | None:
         return None
     if choice == "fixture":  # deterministic browser-test provider, never selected by auto
         return "fixture"
+    if choice == "replay":  # recorded cloud calls (docs/evidence/cloud_runs), never selected by auto
+        return "replay"
     if choice == "anthropic":
         return "anthropic" if anthropic_key_configured() else None
     if choice == "ollama":
@@ -32,8 +34,21 @@ def resolve_provider_name() -> str | None:
 
 
 def create_llm() -> LLMProvider | None:
+    llm = _create_llm()
+    record_dir = os.getenv("LLM_RECORD_DIR", "").strip()
+    if llm is not None and record_dir and llm.provider != "replay":
+        from .cassette import RecordingProvider
+        logger.info("llm_recording dir=%s", record_dir)
+        return RecordingProvider(llm, record_dir)
+    return llm
+
+
+def _create_llm() -> LLMProvider | None:
     from .ollama import OllamaProvider
     name = resolve_provider_name()
+    if name == "replay":
+        from .cassette import ReplayProvider
+        return ReplayProvider(os.getenv("LLM_REPLAY_DIR", "").strip() or None)
     if name == "fixture":
         from .fixture import FixtureProvider
         return FixtureProvider()

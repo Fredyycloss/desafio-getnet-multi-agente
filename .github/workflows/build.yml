@@ -29,6 +29,13 @@ jobs:
           PYTHONPATH: .
           OLLAMA_ENABLED: 'false'
           KNOWLEDGE_CRAWL_ENABLED: 'false'
+      - name: Replay the recorded cloud run without a key (LLM_PROVIDER=replay)
+        run: python -m pytest -q -rs tests/test_replay_cassette.py
+        working-directory: backend
+        env:
+          PYTHONPATH: .
+          OLLAMA_ENABLED: 'false'
+          KNOWLEDGE_CRAWL_ENABLED: 'false'
       - name: Run challenge evaluation dataset
         run: python -m app.evaluation.run_eval
         working-directory: backend
