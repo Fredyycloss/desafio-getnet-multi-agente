@@ -113,15 +113,25 @@ class ComposerMixin:
 
     @staticmethod
     def _collect_evidence(results: list[dict]) -> list[dict]:
-        evidence: list[dict] = []
+        """At most 8 items, shared fairly between specialists (round-robin), each specialist's
+        structured tool data first. Taking the first 8 in call order let a Knowledge answer
+        (4 passages + sources) push the Payments records out, and the Critic then rejected
+        correct amounts as "not in the evidence" (benchmark 2026-11-04, multi-intent)."""
+        queues: list[list[dict]] = []
         for item in results:
-            evidence.extend(item.get("evidence", []))
-            evidence.extend(item.get("tool_observations", []))
+            queue = list(item.get("tool_observations", []))
             if item.get("tool_result"):
-                evidence.append(item["tool_result"])
-            for source in item.get("sources", []):
-                evidence.append({"source_title": source.get("title"), "source_url": source.get("url")})
-        return evidence[:8]
+                queue.append(item["tool_result"])
+            queue.extend(item.get("evidence", []))
+            queue.extend({"source_title": s.get("title"), "source_url": s.get("url")} for s in item.get("sources", []))
+            if queue:
+                queues.append(queue)
+        evidence: list[dict] = []
+        while len(evidence) < 8 and any(queues):
+            for queue in queues:
+                if queue and len(evidence) < 8:
+                    evidence.append(queue.pop(0))
+        return evidence
 
     @staticmethod
     def _public_context_assessment(assessment: dict) -> dict:

@@ -28,3 +28,16 @@ def test_date_inside_an_iso_timestamp_counts_as_observed():
     observations = [{"data": {"terminal_id": "TERM-1988", "last_seen_at": "2026-11-03T00:36:38+00:00"}}]
     assert find_unsupported("O terminal TERM-1988 foi visto pela última vez em 2026-11-03.", observations) == []
     assert find_unsupported("O terminal TERM-1988 foi visto em 2026-11-04.", observations) != []
+
+
+def test_status_words_outside_record_sentences_are_not_claims():
+    # Generic product wording next to a record answer is not a status claim about a record.
+    answer = ("O total líquido é R$ 361,55.\n"
+              "Para antecipar recebíveis, a Getnet considera as vendas já aprovadas no cartão de crédito.")
+    assert find_unsupported(answer, [{**OBS[0], "transactions": []}]) == []
+
+
+def test_future_settlement_is_supported_by_a_scheduled_record_but_a_past_one_is_not():
+    assert find_unsupported("A venda TX-DEMO-1001 será liquidada em 04/11/2026.", OBS) == []
+    assert find_unsupported("Sale TX-DEMO-1001 is expected to be settled on 2026-11-04.", OBS) == []
+    assert find_unsupported("A venda TX-DEMO-1001 já foi liquidada em 04/11/2026.", OBS) == ["status:settled"]

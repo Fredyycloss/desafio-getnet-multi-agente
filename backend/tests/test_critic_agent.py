@@ -57,3 +57,38 @@ def test_critic_rejects_response_that_omits_required_verdict():
 
     assert result["approved"] is False
     assert result["mode"] == "llm_critic_invalid"
+
+
+class SeverityCriticModel:
+    model = "severity-test"
+
+    def __init__(self, verdict):
+        self.verdict = verdict
+
+    def chat(self, messages, tools=None, **kwargs):
+        props = kwargs["json_schema"]["properties"]["issues"]["items"]
+        assert props["required"] == ["problem", "material"]
+        return {"message": {"content": __import__("json").dumps(self.verdict)}}
+
+
+def test_minor_issues_do_not_reject_even_if_the_model_says_so(monkeypatch):
+    monkeypatch.setenv("CRITIC_STRICTNESS", "material")
+    model = SeverityCriticModel({"approved": False, "issues": [{"problem": "year omitted, acceptable", "material": False}]})
+    result = CriticAgent(model, required=True).review("Funciona até 15/01.", "pt", [{"text": "A partir de 15/01"}], user_message="Até quando?")
+    assert result["approved"] is True and result["issues"] == []
+    assert result["minor_issues"] == ["year omitted, acceptable"] and result["model_verdict_overridden"] is True
+
+
+def test_one_material_issue_rejects_even_if_the_model_approves(monkeypatch):
+    monkeypatch.setenv("CRITIC_STRICTNESS", "material")
+    model = SeverityCriticModel({"approved": True, "issues": [{"problem": "fee 1.99% not in evidence", "material": True},
+                                                               {"problem": "tone", "material": False}]})
+    result = CriticAgent(model, required=True).review("A taxa é 1,99%.", "pt", [{"text": "Taxas sob consulta"}], user_message="Qual a taxa?")
+    assert result["approved"] is False and result["issues"] == ["fee 1.99% not in evidence"]
+
+
+def test_strict_mode_blocks_on_any_issue(monkeypatch):
+    monkeypatch.setenv("CRITIC_STRICTNESS", "strict")
+    model = SeverityCriticModel({"approved": True, "issues": [{"problem": "missing caveat", "material": False}]})
+    result = CriticAgent(model, required=True).review("Sim.", "pt", [{"text": "Sim"}], user_message="Pode?")
+    assert result["approved"] is False

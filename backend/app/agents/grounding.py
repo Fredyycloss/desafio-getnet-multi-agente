@@ -7,7 +7,9 @@ answer without spending a model call.
 
 Limitations (documented, intentional): dates written out in words ("3 de
 novembro") and small integers (< 10, typically counts or list markers) are not
-checked; terminal online/offline wording is left to the model critic because
+checked; status words are checked only in sentences that refer to a record (ID,
+amount or date), and "settled" in the future tense is supported by a scheduled
+settlement; terminal online/offline wording is left to the model critic because
 advice such as "when it is online again" is not a status claim.
 """
 from __future__ import annotations
@@ -29,6 +31,10 @@ STATUS_TERMS = {
     "settled": ("settled", "liquidad"),
     "pending": ("pending", "pendente"),
 }
+
+
+# Future/expectation wording (folded, accent-free) that turns "settled" into a scheduled event.
+FUTURE_RE = re.compile(r"\b(sera|serao|vai ser|vao ser|deve ser|devem ser|previst[oa]s?|agendad[oa]s?|will be|is expected|are expected|scheduled|expected)\b")
 
 
 def _fold(text: str) -> str:
@@ -146,9 +152,18 @@ def find_unsupported(answer: str, observations: list) -> list[str]:
         if not _number_supported(value, decimals, facts):
             unsupported.append(f"value:{token}")
 
-    folded = _fold(answer)
-    for status, forms in STATUS_TERMS.items():
-        if any(form in folded for form in forms) and status not in facts.statuses:
+    # A status word is a claim about a record only in a sentence that refers to one (an ID, an
+    # amount or a date). "antecipar as vendas aprovadas" in a product explanation is not a claim.
+    for sentence in re.split(r"(?<=[.!?;:])\s+|\n+", answer):
+        if not (ID_RE.search(sentence) or ISO_DATE_RE.search(sentence) or BR_DATE_RE.search(sentence)
+                or re.search(r"(?:R\$|US\$|€)\s?\d|\d+[.,]\d{2}\b", sentence)):
+            continue
+        folded = _fold(sentence)
+        for status, forms in STATUS_TERMS.items():
+            if not any(form in folded for form in forms) or status in facts.statuses:
+                continue
+            if status == "settled" and "scheduled" in facts.statuses and FUTURE_RE.search(folded):
+                continue  # "will be settled on 05/11" describes a scheduled settlement
             unsupported.append(f"status:{status}")
 
     return list(dict.fromkeys(unsupported))

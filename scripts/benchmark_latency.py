@@ -824,6 +824,18 @@ def main() -> int:
                   f"llm={record.get('llm_calls')} mode={record.get('orchestration_mode')}"
                   + (f" accept={'PASS' if record['acceptance_pass'] else 'FAIL'}" if "acceptance_pass" in record else ""), flush=True)
 
+    # Official challenge messages: pass = complete model answer, correct specialist and the answer
+    # reached the customer (a Critic escalation to a human is not a delivered answer). Last round wins.
+    for round_name in reversed(list(rounds)):
+        for record in rounds[round_name]:
+            if record["group"] == "official" and record["id"] not in acceptance:
+                c = Checks()
+                c.add("llm_complete", record["outcome"] == "llm_complete", record["outcome"])
+                c.add("route_correct", record.get("route_ok") is not False, record.get("agents"))
+                c.add("answer_delivered_not_quality_escalation", record.get("intent") != "quality_escalation", record.get("critic_issues"))
+                acceptance[record["id"]] = {"kind": f"latency+route ({round_name})", "pass": c.passed, "checks": c.items}
+        break
+
     scenarios = [] if args.no_functional else [(k, fn) for k, fn in FUNCTIONAL.items() if not only or k in only]
     if args.llm_down and (not only or "D9_llm_unavailable" in only):
         scenarios.append(("D9_llm_unavailable", lambda a: scenario_d9(a, args.ollama)))  # always last

@@ -55,3 +55,13 @@ def test_unknown_kind_is_ignored(client, monkeypatch):
     monkeypatch.setenv("CRITIC_CHALLENGE_MODE", "true")
     data = client.post("/api/chat", json=QUESTION, headers={"X-Critic-Challenge": "drop_tables"}).json()
     assert not any(t.startswith("critic_challenge_injected") for t in data["trace"])
+
+
+def test_critic_evidence_is_shared_between_specialists():
+    from app.agents.supervisor_agent import SupervisorAgent
+    knowledge = {"evidence": [{"text": f"page {i}"} for i in range(6)],
+                 "sources": [{"title": f"t{i}", "url": f"https://x/{i}"} for i in range(4)]}
+    payments = {"tool_observations": [{"tool": "lookup_payment_status", "net_total_brl": 361.55}]}
+    evidence = SupervisorAgent._collect_evidence([knowledge, payments])
+    assert len(evidence) == 8
+    assert {"tool": "lookup_payment_status", "net_total_brl": 361.55} in evidence

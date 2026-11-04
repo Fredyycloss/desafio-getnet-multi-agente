@@ -138,8 +138,16 @@ class RecordingProvider(LLMProvider):
         return {**self.inner.describe(), "recording": True}
 
 
+def _superseded(run: Path) -> bool:
+    try:
+        return bool(json.loads((run / "manifest.json").read_text(encoding="utf-8")).get("superseded_by"))
+    except (OSError, ValueError):
+        return False
+
+
 def latest_cloud_run() -> Path | None:
-    runs = sorted(p for p in CLOUD_RUNS.glob("*") if p.is_dir() and any(p.glob("cassette.jsonl*")))
+    """Most recent recorded run (by folder name), skipping runs marked superseded_by in manifest.json."""
+    runs = sorted(p for p in CLOUD_RUNS.glob("*") if p.is_dir() and any(p.glob("cassette.jsonl*")) and not _superseded(p))
     return runs[-1] if runs else None
 
 
