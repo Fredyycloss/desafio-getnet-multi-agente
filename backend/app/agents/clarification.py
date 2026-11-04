@@ -126,7 +126,7 @@ def clarification_result(
             if contextual else
             "Which topic would you like help with?"
         )
-        footer = "Reply with an option name or number. Choosing human support may create a simulated ticket; no live attendant is connected."
+        footer = "Reply with an option name or number. Choosing human support opens a protocol in the attendant queue."
         heading = "Choose a topic:"
     else:
         intro = (
@@ -136,7 +136,7 @@ def clarification_result(
             if contextual else
             "Qual assunto você gostaria de tratar?"
         )
-        footer = "Responda com o nome ou número da opção. A escolha por atendimento humano pode criar um protocolo simulado; nenhum atendente real está conectado."
+        footer = "Responda com o nome ou número da opção. A escolha por atendimento humano abre um protocolo na fila de atendentes."
         heading = "Escolha uma opção:"
     answer = intro + "\n\n" + heading + "\n" + "\n".join(
         f"{index}. {item['label']}" for index, item in enumerate(options, start=1)

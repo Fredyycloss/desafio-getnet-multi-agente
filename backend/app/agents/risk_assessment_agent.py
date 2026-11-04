@@ -83,11 +83,11 @@ class RiskAssessmentAgent:
             message_template = ("Stop using the device immediately. Do not touch, charge, restart, move, or repair a hot, smoking, burning, swollen, or damaged payment terminal. "
               "Move away, keep other people clear, and do not inhale smoke. Do not attempt to extinguish an electrical or battery fire yourself. "
               "If there is fire, smoke, explosion, or immediate danger in Brazil, call the Fire Department at 193; elsewhere call your local emergency number. "
-              "If anyone is injured, seek emergency medical help.\n\nIncident protocol: {protocol}. This is a simulated queue; no real human is monitoring this chat. Do not wait here for emergency assistance.")
+              "If anyone is injured, seek emergency medical help.\n\nIncident protocol: {protocol}. {availability} This chat is not an emergency service: do not wait here for emergency assistance.")
         else:
             message_template = ("Pare de usar o equipamento imediatamente. Não toque, carregue, reinicie, mova nem tente consertar uma maquininha quente, soltando fumaça, em chamas, com bateria estufada ou danificada. "
               "Afaste-se, mantenha outras pessoas longe e evite inalar a fumaça. Não tente apagar sozinho um incêndio elétrico ou de bateria. "
               "Se houver fogo, fumaça, explosão ou perigo imediato no Brasil, ligue para os Bombeiros no 193. Se alguém se feriu, procure atendimento médico de emergência.\n\n"
-              "Protocolo do incidente: {protocol}. Esta é uma fila simulada; nenhum atendente real monitora este chat. Não espere por ajuda de emergência aqui.")
+              "Protocolo do incidente: {protocol}. {availability} Este chat não é um serviço de emergência: não espere ajuda de emergência aqui.")
         return {"requires_handoff": True, "severity": severity, "reason": reason, "message_template": message_template,
                 "trace": ["risk_assessment_agent", "hazard_context_analysis", "safety_override"]}

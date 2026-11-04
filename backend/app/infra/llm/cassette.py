@@ -7,10 +7,14 @@ LLM_PROVIDER=replay    serves those responses back (LLM_REPLAY_DIR, default the 
                        docs/evidence/cloud_runs/). No key and no network: retrieval, tools, PolicyGate
                        and the deterministic Critic checks run for real; only the model text is replayed.
 
-Keys are a hash of the request with volatile parts masked (dates, times, UUIDs, protocols), so a
-recording made one day replays on another. A request that was never recorded raises
-LLMUnavailable("replay_miss"), and the pipeline takes its normal degraded path. Replay never
-invents a model answer.
+Matching, in order:
+1. by request: when the API request carries the recorded X-Request-ID, the calls of that recorded
+   request are served in their recorded order (matched by purpose). This is how a cassette
+   replays a conversation even after prompts or tool lists changed in the code;
+2. by key: a hash of the request with volatile parts masked (dates, times, UUIDs, protocols);
+3. loosely: purpose + last user message.
+A request that was never recorded raises LLMUnavailable("replay_miss"), and the pipeline takes its
+normal degraded path. Replay never invents a model answer.
 """
 from __future__ import annotations
 
@@ -118,7 +122,9 @@ class RecordingProvider(LLMProvider):
              temperature=0.0, max_tokens=None, purpose="chat") -> dict:
         result = self.inner.chat(messages, tools, json_mode=json_mode, json_schema=json_schema, think=think,
                                  temperature=temperature, max_tokens=max_tokens, purpose=purpose)
-        self._write({"kind": "chat", "key": chat_key(messages, tools, json_schema, purpose), "loose": loose_key(messages, purpose),
+        from ...observability import current_timeline
+        timeline = current_timeline()
+        self._write({"kind": "chat", "trace_id": timeline.trace_id if timeline else None, "key": chat_key(messages, tools, json_schema, purpose), "loose": loose_key(messages, purpose),
                      "purpose": purpose, "recorded_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
                      "request": {"messages": messages, "tools": [t.get("function", {}).get("name") for t in tools or []],
                                  "json_schema": bool(json_schema), "max_tokens": max_tokens},
@@ -162,7 +168,9 @@ class ReplayProvider(LLMProvider):
         self.chats: dict[str, list[dict]] = {}
         self.loose: dict[str, list[dict]] = {}
         self.embeds: dict[str, dict] = {}
+        self.by_trace: dict[str, list[dict]] = {}
         self._cursor: dict[str, int] = {}
+        ordered: list[dict] = []
         self.misses: list[dict] = []
         models = set()
         for path in sorted(self.directory.glob("cassette.jsonl*")):
@@ -173,14 +181,53 @@ class ReplayProvider(LLMProvider):
                         continue
                     entry = json.loads(line)
                     if entry["kind"] == "chat":
+                        ordered.append(entry)
+                        if entry.get("trace_id"):
+                            self.by_trace.setdefault(entry["trace_id"], []).append(entry)
                         self.chats.setdefault(entry["key"], []).append(entry)
                         self.loose.setdefault(entry["loose"], []).append(entry)
                         models.add(entry["response"].get("model") or "")
                     elif entry["kind"] == "embed":
                         self.embeds[entry["key"]] = entry
                         self.embedding_model = entry.get("model") or self.embedding_model
+        if not self.by_trace:
+            self._align_with_turns(ordered)
         self.model = "replay:" + ",".join(sorted(m for m in models if m))
         logger.info("replay_loaded dir=%s chats=%d embeds=%d", self.directory, sum(map(len, self.chats.values())), len(self.embeds))
+
+    def _align_with_turns(self, ordered: list[dict]) -> None:
+        """Recordings without trace_id per entry: the benchmark sends one request at a time, so the
+        cassette is in request order and turns.jsonl lists each request's model calls (purposes)."""
+        turns_path = self.directory / "turns.jsonl"
+        if not turns_path.exists():
+            return
+        pos = 0
+        for line in turns_path.read_text(encoding="utf-8").splitlines():
+            if not line.strip():
+                continue
+            turn = json.loads(line)
+            purposes = [c.get("purpose") for c in ((turn.get("response") or {}).get("model_usage") or {}).get("calls", [])]
+            if not purposes:
+                continue
+            # Calls of other requests may sit in between (warm-up, operator summaries): find this request's run.
+            for start in range(pos, len(ordered) - len(purposes) + 1):
+                if [e["purpose"] for e in ordered[start:start + len(purposes)]] == purposes:
+                    self.by_trace[turn["trace_id"]] = ordered[start:start + len(purposes)]
+                    pos = start + len(purposes)
+                    break
+
+    def _from_trace(self, purpose: str) -> dict | None:
+        from ...observability import current_timeline
+        timeline = current_timeline()
+        entries = self.by_trace.get(timeline.trace_id) if timeline else None
+        if not entries:
+            return None
+        cursor = self._cursor.get("trace:" + timeline.trace_id, 0)
+        for i in range(cursor, len(entries)):
+            if entries[i]["purpose"] == purpose:
+                self._cursor["trace:" + timeline.trace_id] = i + 1
+                return entries[i]
+        return None
 
     def _next(self, bucket: str, entries: list[dict]) -> dict:
         i = self._cursor.get(bucket, 0)
@@ -190,14 +237,18 @@ class ReplayProvider(LLMProvider):
     def chat(self, messages, tools=None, *, json_mode=False, json_schema=None, think=None,
              temperature=0.0, max_tokens=None, purpose="chat") -> dict:
         key = chat_key(messages, tools, json_schema, purpose)
-        entries, match = self.chats.get(key), "exact"
-        if not entries:
-            entries, match = self.loose.get(loose_key(messages, purpose)), "loose"
-        if not entries:
-            self.misses.append({"purpose": purpose, "key": key})
-            logger.warning("replay_miss purpose=%s key=%s", purpose, key)
-            raise LLMUnavailable("replay_miss")
-        recorded = self._next(f"{match}:{key}", entries)["response"]
+        traced = self._from_trace(purpose)
+        if traced is not None:
+            recorded, match = traced["response"], "request"
+        else:
+            entries, match = self.chats.get(key), "exact"
+            if not entries:
+                entries, match = self.loose.get(loose_key(messages, purpose)), "loose"
+            if not entries:
+                self.misses.append({"purpose": purpose, "key": key})
+                logger.warning("replay_miss purpose=%s key=%s", purpose, key)
+                raise LLMUnavailable("replay_miss")
+            recorded = self._next(f"{match}:{key}", entries)["response"]
         usage = recorded.get("usage") or {}
         response = normalised_response(content=recorded.get("content") or "", tool_calls=recorded.get("tool_calls") or [],
                                        provider=self.provider, model=f"replay:{recorded.get('model')}",

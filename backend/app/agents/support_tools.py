@@ -1,9 +1,10 @@
 """Customer-support tools backed by the repository's synthetic SQLite data."""
 from __future__ import annotations
 
-from datetime import date, timedelta
+from datetime import timedelta
 from typing import Any
 
+from ..clock import today as clock_today
 from ..infra.database import Database
 
 
@@ -22,7 +23,7 @@ def get_terminal_status(db: Database, user_id: str) -> dict:
 
 
 def lookup_payment_status(db: Database, user_id: str, period: str = "yesterday") -> dict:
-    today = date.today()
+    today = clock_today()
     day = (today - timedelta(days=1)).isoformat() if period in {"yesterday", "ontem"} else today.isoformat()
     customer = db.get_customer(user_id)
     if not customer:
@@ -41,7 +42,7 @@ def lookup_payment_status(db: Database, user_id: str, period: str = "yesterday")
 
 
 def find_declined_transactions(db: Database, user_id: str, period: str = "yesterday") -> dict:
-    day = (date.today() - timedelta(days=1)).isoformat() if period in {"yesterday", "ontem"} else date.today().isoformat()
+    day = (clock_today() - timedelta(days=1)).isoformat() if period in {"yesterday", "ontem"} else clock_today().isoformat()
     customer = db.get_customer(user_id)
     if not customer:
         return {"ok": False, "tool": "find_declined_transactions", "error": "demo_customer_not_found", "user_id": user_id}

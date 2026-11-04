@@ -1,4 +1,4 @@
-"""Persistent simulated human queue backed by SQLite (no live operator connection)."""
+"""Persistent human-support queue backed by SQLite; operators work it from the console or Telegram (app/hitl)."""
 from __future__ import annotations
 
 from ..infra.database import Database

@@ -31,7 +31,13 @@ class EscalationAgent:
             except Exception:  # noqa: BLE001 - notification never loses the ticket
                 channel = {"telegram": "failed"}
         if safety_message:
-            answer = safety_message.format(protocol=protocol)
+            # Availability comes from the live operator channels (console heartbeat, Telegram worker).
+            availability = (("Um atendente está online e foi notificado; a resposta aparecerá aqui." if connected else
+                             "Nenhum atendente está online agora; o protocolo segue na fila prioritária e a resposta aparecerá aqui.")
+                            if language != "en" else
+                            ("An attendant is online and was notified; the reply will appear here." if connected else
+                             "No attendant is online right now; the protocol stays in the priority queue and the reply will appear here."))
+            answer = safety_message.format(protocol=protocol, availability=availability)
         elif language == "en":
             answer = (f"Your request is registered and waiting for an attendant. Protocol: {protocol}.\n\n"
                       + ("An attendant is online and will reply here." if connected else

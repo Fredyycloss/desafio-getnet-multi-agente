@@ -895,7 +895,9 @@ def main() -> int:
             "functional_pass_fail_only": [name for name, _ in scenarios],
         },
         "latency_summary": {name: summarise(records) for name, records in rounds.items()},
-        "total_requests": sum(len(r) for r in rounds.values()) + sum(len(i.get("turns", [])) for i in acceptance.values())
+        # Dossier latency scenarios also list their turn under acceptance: count each request once.
+        "total_requests": sum(len(r) for r in rounds.values())
+                          + sum(len(i.get("turns", [])) for i in acceptance.values() if i.get("kind") != "latency+functional")
                           + sum(len(i) for i in (orchestration or {}).values()),
         "orchestration_summary": summarise_orchestration(orchestration) if orchestration else None,
         "orchestration": orchestration,

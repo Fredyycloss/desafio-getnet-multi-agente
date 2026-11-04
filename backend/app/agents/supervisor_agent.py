@@ -140,11 +140,11 @@ class SupervisorAgent(FastPathMixin, PlannerMixin, ReplanMixin, ComposerMixin, M
                     session_id=session_id, history=history, safety_message=(
                     "Obrigado por confirmar o risco físico. Afaste-se do equipamento e não tente usá-lo ou consertá-lo. "
                     "Se houver fumaça, fogo, faíscas ou perigo imediato no Brasil, ligue para os Bombeiros no 193. "
-                    "Esta fila é simulada; nenhum atendente real foi conectado. Protocolo: {protocol}."
+                    "Protocolo: {protocol}. {availability}"
                     if language == "pt" else
                     "Thank you for confirming a physical hazard. Move away from the device and do not use or repair it. "
                     "If there is smoke, fire, sparking, or immediate danger, contact local emergency services. "
-                    "This queue is simulated; no live attendant is connected. Protocol: {protocol}."
+                    "Protocol: {protocol}. {availability}"
                     ),
                 )
             return self._pack(
@@ -218,19 +218,19 @@ class SupervisorAgent(FastPathMixin, PlannerMixin, ReplanMixin, ComposerMixin, M
                 safety_message = ((
                     "Não consigo confirmar se você está usando uma expressão figurada ou descrevendo um risco real. Não vou orientar procedimentos técnicos enquanto isso não estiver esclarecido. "
                     "Se houver fumaça, fogo, faíscas ou perigo imediato, afaste-se e ligue para os Bombeiros no 193. "
-                    "Este protocolo está em uma fila simulada; nenhum atendente real foi notificado ou conectado. Protocolo: {protocol}."
+                    "Protocolo: {protocol}. {availability}"
                     if language == "pt" else
                     "I cannot confirm whether this is figurative language or a real hazard. I will not provide technical steps until this is clarified. "
                     "If there is smoke, fire, sparks, or immediate danger, move away and contact local emergency services. "
-                    "This protocol is in a simulated queue; no real attendant was notified or connected. Protocol: {protocol}."
+                    "Protocol: {protocol}. {availability}"
                 ) if uncertain_safety else (
                     "A descrição pode indicar risco físico. Não continue usando nem tente reparar o equipamento enquanto isso não estiver esclarecido. "
                     "Se houver fumaça, fogo, faíscas ou perigo imediato no Brasil, afaste-se e ligue para os Bombeiros no 193. "
-                    "Este protocolo é de uma fila simulada; nenhum atendente real foi notificado ou conectado. Protocolo: {protocol}."
+                    "Protocolo: {protocol}. {availability}"
                     if language == "pt" else
                     "Your description may indicate physical danger. Do not continue using or attempt to repair the device until this is clarified. "
                     "If there is smoke, fire, sparks, or immediate danger, move away and contact local emergency services. "
-                    "This protocol is in a simulated queue; no real attendant was notified or connected. Protocol: {protocol}."
+                    "Protocol: {protocol}. {availability}"
                 ))
             else:
                 safety_message = None

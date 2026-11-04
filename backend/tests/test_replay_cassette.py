@@ -76,7 +76,9 @@ def test_record_dir_wraps_the_configured_provider(monkeypatch, tmp_path):
 
 # ---------------------------------------------------------------- committed cloud run
 
-PUBLIC_TOOLS = ("tool:get_weather_forecast", "tool:get_exchange_rate", "tool:web_search", "tool:site_live_search")
+# Live public providers: their results change between runs, so those turns are not replayable offline.
+PUBLIC_TOOLS = ("get_weather_forecast", "get_exchange_rate", "web_search", "site_live_search",
+                "open_meteo_weather", "frankfurter_exchange_rates", "duckduckgo_public_search", "wikipedia")
 
 
 def _recorded_turns():
@@ -91,12 +93,26 @@ def _recorded_turns():
         body = t.get("response") or {}
         trace = [str(x) for x in body.get("trace") or []]
         key = (t["message"], t.get("critic_challenge"))
-        if (t.get("session_id") or t.get("http_status") != 200 or key in seen or any(x in trace for x in PUBLIC_TOOLS)
+        nested = json.dumps(body.get("specialist_observations") or [], ensure_ascii=False)
+        if (t.get("session_id") or t.get("http_status") != 200 or key in seen or any(x in nested for x in PUBLIC_TOOLS)
                 or not (body.get("model_usage") or {}).get("llm_calls") or t["scenario"].startswith(("functional:", "cold:"))):
             continue
         seen.add(key)
         selected.append(t)
     return run, selected
+
+
+def _restore_observed_terminals(db, run):
+    for line in (run / "turns.jsonl").read_text(encoding="utf-8").splitlines():
+        body = json.loads(line).get("response") or {}
+        for result in body.get("specialist_observations") or []:
+            for obs in (result.get("tool_observations") or []) if isinstance(result, dict) else []:
+                data = obs.get("data") if obs.get("tool") == "get_terminal_status" else None
+                if isinstance(data, dict) and data.get("terminal_id"):
+                    db.conn.execute("UPDATE terminals SET status=?, connection_type=?, last_seen_at=?, error_code=?, last_error=? "
+                                    "WHERE terminal_id=?", (data.get("status"), data.get("connection_type"), data.get("last_seen_at"),
+                                                            data.get("error_code"), data.get("last_error"), data["terminal_id"]))
+    db.conn.commit()
 
 
 def _specialists(trace):
@@ -114,13 +130,18 @@ def test_recorded_cloud_run_replays_without_key(monkeypatch, tmp_path):
     monkeypatch.setenv("DATABASE_PATH", str(tmp_path / "replay.sqlite3"))
     monkeypatch.setenv("CONTEXT_MODE", "llm")
     monkeypatch.delenv("GETNET_ANTHROPIC_API_KEY", raising=False)
+    # Same synthetic world as the recording: its date ("yesterday's sales", today_utc) and the
+    # terminal state the cloud run observed.
+    monkeypatch.setenv("DEMO_TODAY", json.loads((run / "manifest.json").read_text())["date"][:10])
     from app.main import app, state
     from tests.conftest import AutoAuthClient as TestClient
     mismatches = []
     with TestClient(app) as client:
+        _restore_observed_terminals(state["db"], run)
         assert client.get("/api/health").json()["llm_provider"]["provider"] == "replay"
         for t in turns:
             headers = {"X-Critic-Challenge": t["critic_challenge"]} if t.get("critic_challenge") else {}
+            headers["X-Request-ID"] = t["trace_id"]  # replay the calls of this recorded request, in order
             got = client.post("/api/chat", json={"message": t["message"], "user_id": t["user_id"]}, headers=headers).json()
             want = t["response"]
             same = (_specialists(got.get("trace")) == _specialists(want.get("trace"))
@@ -130,5 +151,7 @@ def test_recorded_cloud_run_replays_without_key(monkeypatch, tmp_path):
                 mismatches.append({"scenario": t["scenario"], "want": [_specialists(want.get("trace")), want.get("handoff"), (want.get("critic") or {}).get("approved")],
                                    "got": [_specialists(got.get("trace")), got.get("handoff"), (got.get("critic") or {}).get("approved")]})
         misses = list(state["service"].llm.misses) if hasattr(state["service"].llm, "misses") else []
-    # Report-style assertion: at least 90% of reproducible recorded turns replay to the same outcome.
+    # Measured 2026-11-04 on the committed run: every reproducible turn replays to the recorded outcome.
+    # A small margin (10%) keeps the test useful while prompts evolve between recordings.
+    print(f"REPLAY_PARITY replayed={len(turns)} same_outcome={len(turns) - len(mismatches)} misses={len(misses)}", [m["scenario"] for m in mismatches], [m["purpose"] for m in misses])
     assert len(mismatches) <= len(turns) * 0.10, {"replayed": len(turns), "mismatches": mismatches[:10], "misses": misses[:10]}

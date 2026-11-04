@@ -10,6 +10,8 @@ from datetime import date, datetime, timedelta, timezone
 from pathlib import Path
 from typing import Any
 
+from ..clock import today as clock_today
+
 
 def add_business_days(start: date, days: int) -> date:
     current = start
@@ -125,8 +127,8 @@ class Database:
 
     def _seed(self) -> None:
         now = self._now()
-        yesterday = date.today() - timedelta(days=1)
-        three_days_ago = date.today() - timedelta(days=3)
+        yesterday = clock_today() - timedelta(days=1)
+        three_days_ago = clock_today() - timedelta(days=3)
         due = add_business_days(yesterday, 2).isoformat()
         customers = [
             ("cliente1988", "Comércio Demo 1988", "active", "small_business", now),

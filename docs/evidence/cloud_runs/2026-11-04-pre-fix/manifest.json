@@ -1,0 +1,68 @@
+{
+  "date": "2026-11-04",
+  "commit": "c4063da",
+  "provider": [
+    "anthropic"
+  ],
+  "models": [
+    "claude-haiku-5-5"
+  ],
+  "health_at_start": {
+    "mode": "supervisor_tool_calling",
+    "llm_available": true,
+    "llm_required": false,
+    "llm": {
+      "available": true,
+      "chat_model_loaded": true,
+      "cloud_mode": "configured",
+      "key_state": "ok",
+      "message": "modo nuvem ativo",
+      "embedding_model_loaded": true,
+      "embedding_runtime_available": true,
+      "models": [
+        "claude-haiku-5-5",
+        "nomic-embed-text"
+      ]
+    },
+    "llm_provider": {
+      "provider": "anthropic",
+      "model": "claude-haiku-5-5",
+      "embedding_model": "nomic-embed-text",
+      "default_budget_seconds": 30.0,
+      "recording": true
+    },
+    "request_llm_budget_seconds": 30.0
+  },
+  "files": {
+    "turns.jsonl": "one line per /api/chat call: scenario, question, HTTP status, latency and the full response (answer, sources, trace, stage timings, specialist observations with tool arguments/results, Critic verdict, model_usage)",
+    "cassette.jsonl.gz": "every model call: masked request key, purpose, messages sent, tool names, response, tokens. Used by LLM_PROVIDER=replay",
+    "benchmark_report.json": "the benchmark report of this run (latency, acceptance 1-18, orchestration)"
+  },
+  "counts": {
+    "chat_turns": 92,
+    "model_calls": 444,
+    "embedding_calls": 54,
+    "model_calls_by_purpose": {
+      "context_intelligence": 88,
+      "critic": 83,
+      "knowledge:tool_selection": 48,
+      "knowledge": 48,
+      "supervisor_plan": 40,
+      "supervisor_replan": 28,
+      "payments_agent:tool_selection": 24,
+      "payments_agent:answer": 24,
+      "handoff_summary": 21,
+      "customer_support_agent:tool_selection": 20,
+      "customer_support_agent:answer": 20
+    }
+  },
+  "tokens": {
+    "prompt": 663848,
+    "output": 71799
+  },
+  "cost_usd": 0.102284,
+  "privacy": "Synthetic demo customers only. Credential scan (key prefix, bearer tokens, configured secret values) passed before export.",
+  "superseded_by": "2026-11-04",
+  "why_kept": "First cloud run of V7 blocks 4-5, before the Critic/grounding fixes it motivated: 9/20 multi-intent answers escalated to a human because the model rejected issues it called minor, Payments records were cut from the Critic evidence, and the status check flagged generic wording. Kept as before/after evidence.",
+  "benchmark_report": "docs/RELATORIO_LATENCIA_2026-11-04_cloud-v7-pre-fix.json"
+}

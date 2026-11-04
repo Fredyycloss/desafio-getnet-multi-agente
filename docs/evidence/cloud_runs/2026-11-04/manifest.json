@@ -1,0 +1,65 @@
+{
+  "date": "2026-11-04",
+  "commit": "eac1d96",
+  "provider": [
+    "anthropic"
+  ],
+  "models": [
+    "claude-haiku-5-5"
+  ],
+  "health_at_start": {
+    "mode": "supervisor_tool_calling",
+    "llm_available": true,
+    "llm_required": false,
+    "llm": {
+      "available": true,
+      "chat_model_loaded": true,
+      "cloud_mode": "configured",
+      "key_state": "ok",
+      "message": "modo nuvem ativo",
+      "embedding_model_loaded": true,
+      "embedding_runtime_available": true,
+      "models": [
+        "claude-haiku-5-5",
+        "nomic-embed-text"
+      ]
+    },
+    "llm_provider": {
+      "provider": "anthropic",
+      "model": "claude-haiku-5-5",
+      "embedding_model": "nomic-embed-text",
+      "default_budget_seconds": 30.0,
+      "recording": true
+    },
+    "request_llm_budget_seconds": 30.0
+  },
+  "files": {
+    "turns.jsonl": "one line per /api/chat call: scenario, question, HTTP status, latency and the full response (answer, sources, trace, stage timings, specialist observations with tool arguments/results, Critic verdict, model_usage)",
+    "cassette.jsonl.gz": "every model call: masked request key, purpose, messages sent, tool names, response, tokens. Used by LLM_PROVIDER=replay",
+    "benchmark_report.json": "the benchmark report of this run (latency, acceptance 1-18, orchestration)"
+  },
+  "counts": {
+    "chat_turns": 92,
+    "model_calls": 418,
+    "embedding_calls": 50,
+    "model_calls_by_purpose": {
+      "context_intelligence": 88,
+      "critic": 78,
+      "knowledge:tool_selection": 48,
+      "knowledge": 48,
+      "supervisor_plan": 40,
+      "payments_agent:tool_selection": 25,
+      "payments_agent:answer": 25,
+      "supervisor_replan": 20,
+      "customer_support_agent:tool_selection": 19,
+      "customer_support_agent:answer": 19,
+      "handoff_summary": 8
+    }
+  },
+  "tokens": {
+    "prompt": 639784,
+    "output": 69427
+  },
+  "cost_usd": 0.098692,
+  "privacy": "Synthetic demo customers only. Credential scan (key prefix, bearer tokens, configured secret values) passed before export."
+}

@@ -7,6 +7,7 @@ from datetime import date, datetime, timezone
 
 from pydantic import BaseModel, ConfigDict, Field
 
+from ..clock import today as clock_today
 from ..infra.llm import LLMProvider, LLMTimeout, LLMUnavailable
 from ..language import detect_language
 from ..observability import stage
@@ -174,7 +175,7 @@ class CriticAgent:
                     system = critic_system_prompt(strictness)
                     payload = {
                         # UTC, the timezone of every tool timestamp (a local date made recent records look "future").
-                        "today_utc": datetime.now(timezone.utc).date().isoformat(),
+                        "today_utc": clock_today().isoformat() if os.getenv("DEMO_TODAY") else datetime.now(timezone.utc).date().isoformat(),
                         "language": language,
                         "customer_request": (user_message or "")[:600],
                         "recent_conversation": [
