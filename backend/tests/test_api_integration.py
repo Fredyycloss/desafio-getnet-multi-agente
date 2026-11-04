@@ -81,9 +81,10 @@ def test_explicit_human_request_creates_persistent_ticket(client):
     response = client.post("/api/chat", json={"message": "Quero falar com atendimento humano.", "user_id": "cliente1988"})
     assert response.status_code == 200
     assert response.json()["handoff"] is True
-    assert "não há atendente real conectado" in response.json()["answer"].lower()
+    # V7-A contract: the queue is real; with no operator online the customer is told so.
     assert response.json()["handoff_status"] == "queued"
-    assert "aguardando atendimento" in response.json()["answer"].lower()
+    assert response.json()["real_agent_connected"] is False
+    assert "nenhum atendente está online" in response.json()["answer"].lower()
 
 
 def test_every_chat_turn_passes_context_interpretation_before_risk_and_handoff(client, monkeypatch):
@@ -197,9 +198,10 @@ def test_chat_cannot_reuse_another_users_session(client):
 
 
 def test_operator_api_requires_configuration_and_key(client, monkeypatch):
+    # V7-A/E contract: individual operator login; the shared key is only an optional bootstrap.
     monkeypatch.delenv("OPERATOR_API_KEY", raising=False)
-    disabled = client.get("/api/operator/queue", headers={"X-Operator-ID": "operator-1"})
-    assert disabled.status_code == 503
+    disabled = client.get("/api/operator/queue", headers={"X-Operator-ID": "operator-1", "X-Operator-Key": "test-operator-key"})
+    assert disabled.status_code == 401
     monkeypatch.setenv("OPERATOR_API_KEY", "test-operator-key")
     unauthorized = client.get("/api/operator/queue", headers={"X-Operator-ID": "operator-1", "X-Operator-Key": "wrong"})
     authorized = client.get("/api/operator/queue", headers={"X-Operator-ID": "operator-1", "X-Operator-Key": "test-operator-key"})
@@ -242,7 +244,7 @@ def test_customer_cannot_append_to_another_users_ticket(client):
 
 def test_global_handoff_queue_requires_operator_credentials(client, monkeypatch):
     response = client.get("/api/handoffs")
-    assert response.status_code == 503
+    assert response.status_code == 401  # never public
     monkeypatch.setenv("OPERATOR_API_KEY", "test-operator-key")
     denied = client.get("/api/handoffs", headers={"X-Operator-ID": "operator-1", "X-Operator-Key": "bad"})
     allowed = client.get("/api/handoffs", headers={"X-Operator-ID": "operator-1", "X-Operator-Key": "test-operator-key"})

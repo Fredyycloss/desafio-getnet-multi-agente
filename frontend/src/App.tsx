@@ -25,7 +25,8 @@ type Reply = {
   critic?: { approved?: boolean; mode?: string; issues?: string[] }
   context_assessment?: { intent?: string; confidence?: number; ambiguity_level?: string; risk_level?: string; recommended_action?: string; recommended_destination?: string; operational_reason?: string }
 }
-type Message = { id: string; role: 'assistant' | 'user'; text: string; meta?: Reply; time: string }
+type Message = { id: string; role: 'assistant' | 'user'; text: string; meta?: Reply; time: string; author?: string; operator?: string }
+type LiveMessage = { id: number; role: string; content: string; author?: string; operator?: string; handoff_status?: string }
 
 const suggestions = [
   { icon: '▣', title: 'Máquinas Getnet', text: 'Qual a diferença entre a Get Clássica e a Get Smart?' },
@@ -100,6 +101,8 @@ function Assistant({ auth, onLogout }: { auth: Auth; onLogout: () => void }) {
   function checkAuth(response: Response) { if (response.status === 401) onLogout() }
   const [sessionId, setSessionId] = useState<string>(() => crypto.randomUUID())
   const [activeHandoff, setActiveHandoff] = useState<{ protocol: string; language: 'pt' | 'en'; status: string } | null>(null)
+  const lastSeenId = useRef(0)
+  const HANDOFF_LABEL: Record<string, string> = { queued: 'aguardando atendente', assigned: 'em atendimento', resolved: 'resolvido', returned_to_ai: 'resolvido' }
   const bottomRef = useRef<HTMLDivElement>(null)
   const inputRef = useRef<HTMLTextAreaElement>(null)
 
@@ -107,6 +110,26 @@ function Assistant({ auth, onLogout }: { auth: Auth; onLogout: () => void }) {
     fetch('/api/health').then(r => setApiOnline(r.ok)).catch(() => setApiOnline(false))
   }, [])
   useEffect(() => { bottomRef.current?.scrollIntoView({ behavior: 'smooth', block: 'end' }) }, [messages, busy])
+
+  // Live updates while a human handles (or may pick up) the request: operator replies,
+  // status changes, resolution summary and the assistant resuming after a hand-back.
+  useEffect(() => {
+    if (!activeHandoff || activeHandoff.status === 'resolved' || activeHandoff.status === 'returned_to_ai') return
+    const poll = async () => {
+      try {
+        const response = await fetch(`/api/sessions/${encodeURIComponent(sessionId)}/messages?after_id=${lastSeenId.current}`, { headers: authHeaders })
+        checkAuth(response)
+        if (!response.ok) return
+        const body: { messages: LiveMessage[]; last_message_id: number; ticket?: { status: string; real_agent_connected?: boolean } } = await response.json()
+        lastSeenId.current = Math.max(lastSeenId.current, body.last_message_id || 0)
+        const live = body.messages.filter(m => m.author && m.author !== 'assistant')
+        if (live.length) setMessages(prev => [...prev, ...live.map(m => ({ id: `live-${m.id}`, role: 'assistant' as const, text: m.content, time: formatTime(), author: m.author, operator: m.operator }))])
+        if (body.ticket?.status && body.ticket.status !== activeHandoff.status) setActiveHandoff({ ...activeHandoff, status: body.ticket.status })
+      } catch { /* transient; next poll retries */ }
+    }
+    const id = setInterval(() => void poll(), 3000)
+    return () => clearInterval(id)
+  }, [activeHandoff, sessionId]) // eslint-disable-line react-hooks/exhaustive-deps
 
   async function sendMessage(value = input, options: { humanRequest?: boolean } = {}) {
     const message = value.trim()
@@ -116,36 +139,15 @@ function Assistant({ auth, onLogout }: { auth: Auth; onLogout: () => void }) {
     setInput('')
     setBusy(true)
     try {
-      if (activeHandoff && !humanRequest) {
-        const response = await fetch(`/api/handoffs/${encodeURIComponent(activeHandoff.protocol)}/messages`, {
-          method: 'POST', headers: authHeaders, body: JSON.stringify({ message, user_id: userId }),
-        })
-        checkAuth(response)
-        if (response.status === 422) {
-          const body = await response.json().catch(() => ({}))
-          setMessages(prev => [...prev, { id: crypto.randomUUID(), role: 'assistant', text: typeof body.detail === 'string' ? body.detail : 'Por segurança, não envie informações secretas por aqui.', time: formatTime() }])
-          return
-        }
-        if (!response.ok) throw new Error(`handoff:${response.status}`)
-        setMessages(prev => [...prev, {
-          id: crypto.randomUUID(), role: 'assistant',
-          text: activeHandoff.language === 'en'
-            ? `Your follow-up was added to simulated support protocol ${activeHandoff.protocol}. Status: ${activeHandoff.status}. No real human attendant is connected to this demo.`
-            : `Sua mensagem foi adicionada ao protocolo simulado ${activeHandoff.protocol}. Status: ${activeHandoff.status}. Nenhum atendente real está conectado a esta demonstração.`,
-          time: formatTime(),
-        }])
-        setApiOnline(true)
-        return
-      }
-
       const response = await fetch('/api/chat', {
         method: 'POST', headers: authHeaders,
         body: JSON.stringify({ message, user_id: userId, session_id: sessionId }),
       })
       checkAuth(response)
       if (!response.ok) throw new Error(`${humanRequest ? 'handoff' : 'chat'}:${response.status}`)
-      const data: Reply & { session_id?: string } = await response.json()
+      const data: Reply & { session_id?: string; last_message_id?: number } = await response.json()
       if (data.session_id) setSessionId(data.session_id)
+      if (data.last_message_id) lastSeenId.current = Math.max(lastSeenId.current, data.last_message_id)
       setMessages(prev => [...prev, { id: crypto.randomUUID(), role: 'assistant', text: data.answer, meta: data, time: formatTime() }])
       if (data.handoff_protocol) {
         setActiveHandoff({ protocol: data.handoff_protocol, language: data.language === 'en' ? 'en' : 'pt', status: data.handoff_status || 'queued' })
@@ -181,7 +183,7 @@ function Assistant({ auth, onLogout }: { auth: Auth; onLogout: () => void }) {
           id: crypto.randomUUID(), role: 'assistant',
           text: activeHandoff.language === 'en'
             ? `Support request ${activeHandoff.protocol} status: ${status}. ${ticket.real_agent_connected ? 'An attendant is connected.' : 'No live human attendant is connected to this demo.'}`
-            : `Status da solicitação ${activeHandoff.protocol}: ${status === 'queued' ? 'aguardando atendimento' : status}. ${ticket.real_agent_connected ? 'Um atendente está conectado.' : 'Nenhum atendente real está conectado a esta demonstração.'}`,
+            : `Status da solicitação ${activeHandoff.protocol}: ${HANDOFF_LABEL[status] || status}. ${ticket.real_agent_connected ? 'Há atendente conectado ao canal de atendimento.' : 'Nenhum atendente conectado no momento; a solicitação segue na fila.'}`,
           time: formatTime(),
         }])
         setApiOnline(true)
@@ -231,10 +233,10 @@ function Assistant({ auth, onLogout }: { auth: Auth; onLogout: () => void }) {
       <section className={`workspace ${messages.length ? 'workspace-chatting' : ''}`}>
         {messages.length === 0 ? <div className="welcome-wrap"><div className="eyebrow"><span className="eyebrow-line"/><Sparkles size={13}/><span>INTELIGÊNCIA QUE MOVE NEGÓCIOS</span></div><div className="welcome-heading"><h1>Seu negócio tem<br/>muito a <span>conquistar.</span></h1><p>Oi! Eu sou o assistente Getnet.<br/>Como posso facilitar o seu dia hoje?</p></div><div className="suggestion-grid">{suggestions.map((s, i) => <button className="suggestion-card" key={s.title} onClick={() => void sendMessage(s.text)}><div className={`suggestion-icon tone-${i}`}>{s.icon}</div><div className="suggestion-copy"><strong>{s.title}</strong><span>{s.text}</span></div><ArrowUpRight size={16} className="suggestion-arrow"/></button>)}</div><div className="trust-row"><div className="trust-icon"><ShieldCheck size={17}/></div><div><strong>Informação com responsabilidade</strong><span>Respostas orientativas, com base em fontes disponíveis.</span></div><div className="trust-divider"/><div className="trust-icon"><Zap size={16}/></div><div><strong>Feito para você</strong><span>Entende o contexto da sua pergunta.</span></div></div></div> : <div className="conversation">
           <div className="conversation-intro"><div className="conversation-spark"><Sparkles size={15}/></div><div><strong>Vamos resolver juntos.</strong><span>Conversa com Getnet Assist</span></div><button className="new-small" onClick={newConversation}><Plus size={14}/> Nova conversa</button></div>
-          {messages.map(msg => <div className={`message-row ${msg.role}`} key={msg.id}>
-            {msg.role === 'assistant' ? <div className="message-avatar"><span>g</span></div> : <div className="user-avatar">V</div>}
+          {messages.map(msg => <div className={`message-row ${msg.role} ${msg.author === 'operator' ? 'operator' : ''}`} key={msg.id}>
+            {msg.role === 'assistant' ? <div className="message-avatar"><span>{msg.author === 'operator' ? 'A' : 'g'}</span></div> : <div className="user-avatar">V</div>}
             <div className="message-content">
-              <div className="message-meta"><strong>{msg.role === 'assistant' ? 'Getnet Assist' : 'Você'}</strong><span>{msg.time}</span></div>
+              <div className="message-meta"><strong>{msg.role === 'assistant' ? (msg.author === 'operator' ? 'Atendente' : 'Getnet Assist') : 'Você'}</strong>{msg.author === 'operator' && msg.operator && <span className="author-badge">{msg.operator}</span>}<span>{msg.time}</span></div>
               <div className={`message-bubble ${msg.role}`}>{msg.text.split('\n').map((line, i) => line ? <p key={i}>{line}</p> : <div key={i} className="line-space"/>)}</div>
               {msg.meta?.clarification_options && <div className="clarification-actions" aria-label="Opções para continuar">{msg.meta.clarification_options.map((option, index) => <button key={option.id} className="clarification-option" onClick={() => void sendMessage(option.label)} disabled={busy}>{index + 1}. {option.label}</button>)}</div>}
               {(msg.meta?.sources?.length ?? 0) > 0 && <div className="inline-sources"><span>Fontes consultadas</span>{msg.meta?.sources?.slice(0, 3).map(source => <a href={source.url} target="_blank" rel="noreferrer" key={source.url + source.title}>{source.title}<ArrowUpRight size={12}/></a>)}</div>}

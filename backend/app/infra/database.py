@@ -112,6 +112,11 @@ class Database:
             self.conn.execute("ALTER TABLE tickets ADD COLUMN assigned_operator TEXT")
         if "resolved_at" not in ticket_columns:
             self.conn.execute("ALTER TABLE tickets ADD COLUMN resolved_at TEXT")
+        for column, kind in (("operator_summary", "TEXT"), ("telegram_message_id", "INTEGER"), ("ai_instruction", "TEXT"),
+                             ("resume_pending", "INTEGER NOT NULL DEFAULT 0"), ("resolution", "TEXT")):
+            if column not in ticket_columns:
+                self.conn.execute(f"ALTER TABLE tickets ADD COLUMN {column} {kind}")
+        self.conn.execute("CREATE TABLE IF NOT EXISTS telegram_messages (message_id INTEGER PRIMARY KEY, protocol TEXT NOT NULL)")
         self.conn.commit()
 
     @staticmethod
@@ -171,18 +176,41 @@ class Database:
 
     def get_history(self, session_id: str, limit: int = 12) -> list[dict]:
         with self.lock:
-            rows = self.conn.execute("SELECT role,content,metadata_json FROM messages WHERE session_id=? ORDER BY id DESC LIMIT ?", (session_id, limit)).fetchall()
+            rows = self.conn.execute("SELECT id,role,content,metadata_json FROM messages WHERE session_id=? ORDER BY id DESC LIMIT ?", (session_id, limit)).fetchall()
         history = []
         for row in reversed(rows):
-            item = {"role": row["role"], "content": row["content"]}
+            item = {"role": row["role"], "content": row["content"], "id": row["id"]}
             try:
                 metadata = json.loads(row["metadata_json"] or "{}")
             except (TypeError, json.JSONDecodeError):
                 metadata = {}
             if isinstance(metadata, dict) and isinstance(metadata.get("clarification_options"), list):
                 item["clarification_options"] = metadata["clarification_options"]
+            if isinstance(metadata, dict):
+                for key in ("author", "hidden", "handoff_protocol", "handoff_status", "operator"):
+                    if key in metadata:
+                        item[key] = metadata[key]
             history.append(item)
         return history
+
+    def last_message_id(self, session_id: str) -> int:
+        with self.lock:
+            row = self.conn.execute("SELECT MAX(id) AS m FROM messages WHERE session_id=?", (session_id,)).fetchone()
+        return int(row["m"] or 0)
+
+    def messages_after(self, session_id: str, after_id: int = 0, limit: int = 50) -> list[dict]:
+        """Messages newer than ``after_id`` (live updates for the customer UI); hidden notes excluded."""
+        with self.lock:
+            rows = self.conn.execute("SELECT id,role,content,metadata_json,created_at FROM messages WHERE session_id=? AND id>? ORDER BY id LIMIT ?",
+                                     (session_id, after_id, limit)).fetchall()
+        out = []
+        for row in rows:
+            meta = json.loads(row["metadata_json"] or "{}")
+            if meta.get("hidden"):
+                continue
+            out.append({"id": row["id"], "role": row["role"], "content": row["content"], "created_at": row["created_at"],
+                        **{k: meta[k] for k in ("author", "operator", "handoff_protocol", "handoff_status") if k in meta}})
+        return out
 
     def get_customer(self, user_id: str) -> dict | None:
         with self.lock:
@@ -284,13 +312,66 @@ class Database:
         return self.get_ticket(protocol)
 
 
+    def set_ticket_fields(self, protocol: str, **fields) -> None:
+        allowed = {"operator_summary", "telegram_message_id", "ai_instruction", "resume_pending", "resolution"}
+        items = {k: v for k, v in fields.items() if k in allowed}
+        if not items:
+            return
+        with self.lock:
+            self.conn.execute(f"UPDATE tickets SET {', '.join(f'{k}=?' for k in items)}, updated_at=? WHERE protocol=?",
+                              (*items.values(), self._now(), protocol.upper()))
+            if items.get("telegram_message_id"):
+                self.conn.execute("INSERT OR REPLACE INTO telegram_messages(message_id,protocol) VALUES(?,?)",
+                                  (items["telegram_message_id"], protocol.upper()))
+            self.conn.commit()
+
+    def map_telegram_message(self, message_id: int | None, protocol: str) -> None:
+        if message_id:
+            with self.lock:
+                self.conn.execute("INSERT OR REPLACE INTO telegram_messages(message_id,protocol) VALUES(?,?)", (message_id, protocol.upper()))
+                self.conn.commit()
+
+    def protocol_for_telegram_message(self, message_id: int) -> str | None:
+        with self.lock:
+            row = self.conn.execute("SELECT protocol FROM telegram_messages WHERE message_id=?", (message_id,)).fetchone()
+        return row["protocol"] if row else None
+
+    def active_ticket_for_session(self, session_id: str) -> dict | None:
+        """The ticket of this session currently handled by a human (status assigned)."""
+        with self.lock:
+            row = self.conn.execute("SELECT protocol FROM tickets WHERE session_id=? AND status='assigned' ORDER BY updated_at DESC LIMIT 1",
+                                    (session_id,)).fetchone()
+        return self.get_ticket(row["protocol"]) if row else None
+
+    def latest_ticket_for_session(self, session_id: str) -> dict | None:
+        with self.lock:
+            row = self.conn.execute("SELECT protocol FROM tickets WHERE session_id=? ORDER BY created_at DESC, updated_at DESC LIMIT 1",
+                                    (session_id,)).fetchone()
+        return self.get_ticket(row["protocol"]) if row else None
+
+    def return_ticket_to_ai(self, protocol: str, operator_id: str, instruction: str) -> dict | None:
+        protocol = protocol.upper()
+        safe = self._redact(instruction)
+        with self.lock:
+            row = self.conn.execute("SELECT status,assigned_operator FROM tickets WHERE protocol=?", (protocol,)).fetchone()
+            if not row:
+                return None
+            if row["status"] != "assigned" or row["assigned_operator"] != operator_id:
+                raise ValueError("ticket_not_assigned_to_operator")
+            now = self._now()
+            self.conn.execute("UPDATE tickets SET status='returned_to_ai',ai_instruction=?,resume_pending=1,resolved_at=?,updated_at=? WHERE protocol=?",
+                              (safe, now, now, protocol))
+            self.conn.execute("INSERT INTO ticket_messages(protocol,role,content,created_at) VALUES(?,?,?,?)", (protocol, "operator", f"Returned to AI: {safe}", now))
+            self.conn.commit()
+        return self.get_ticket(protocol)
+
     def claim_ticket(self, protocol: str, operator_id: str) -> dict | None:
         protocol = protocol.upper()
         with self.lock:
             row = self.conn.execute("SELECT status,assigned_operator FROM tickets WHERE protocol=?", (protocol,)).fetchone()
             if not row:
                 return None
-            if row["status"] == "resolved":
+            if row["status"] in {"resolved", "returned_to_ai"}:
                 raise ValueError("ticket_already_resolved")
             if row["assigned_operator"] and row["assigned_operator"] != operator_id:
                 raise ValueError("ticket_already_assigned")
@@ -325,7 +406,7 @@ class Database:
             if row["status"] != "assigned" or row["assigned_operator"] != operator_id:
                 raise ValueError("ticket_not_assigned_to_operator")
             now = self._now()
-            self.conn.execute("UPDATE tickets SET status='resolved',resolved_at=?,updated_at=? WHERE protocol=?", (now, now, protocol))
+            self.conn.execute("UPDATE tickets SET status='resolved',resolution=?,resolved_at=?,updated_at=? WHERE protocol=?", (safe, now, now, protocol))
             self.conn.execute("INSERT INTO ticket_messages(protocol,role,content,created_at) VALUES(?,?,?,?)", (protocol, "operator", f"Resolution: {safe}", now))
             self.conn.commit()
         return self.get_ticket(protocol)

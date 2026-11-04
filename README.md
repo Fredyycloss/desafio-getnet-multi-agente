@@ -5,7 +5,7 @@ A FastAPI service in which LLM agents answer Getnet product, payment, terminal a
 - Answers are built from real tools and retrieved evidence.
 - An independent Critic reviews every automated answer and can reject it.
 - Physical-risk reports, ambiguous messages and explicit requests for a person are handled by deterministic policies.
-- The service hands off to a simulated human queue with a protocol number.
+- The service hands off to human operators with a protocol number. Operators work in a web console or on Telegram, and the assistant resumes with what the human decided.
 
 It runs with Docker Compose in two modes:
 
@@ -113,7 +113,7 @@ flowchart TD
     R --> P{PolicyGate}
     P -->|hazard or model 'critical'| S[Safety instructions<br/>+ priority protocol]
     P -->|possible danger / ambiguous| M[Clarification menu<br/>incl. 'real physical risk' and 'attendant']
-    P -->|human request| H[Human handoff<br/>simulated queue + protocol]
+    P -->|human request| H[Human handoff<br/>protocol → operator console / Telegram<br/>→ live replies → resume]
     P -->|continue| SUP[Supervisor]
     SUP -->|one clear specialist: fast path| SPEC
     SUP -->|several / unsure: function-calling plan| SPEC
@@ -165,7 +165,7 @@ flowchart TD
 | Knowledge | Getnet products, fees, Pix, receivables advance, crediário, Payment Link, and public questions | tools chosen by the LLM: `search_getnet_knowledge` (hybrid RAG over the site snapshot), `search_getnet_site_live`, `web_search` (Wikipedia/DDG Instant Answer, optional Brave key), `get_weather_forecast` (Open-Meteo), `get_exchange_rate` (Frankfurter) | 2: choose tools, then write |
 | Customer Support | Account profile and terminal status | `get_customer_profile`, `get_terminal_status` (SQLite) | 2: choose tools, then write |
 | Payments | Settlement dates, sales, declined transactions | `lookup_payment_status`, `find_declined_transactions` (SQLite) | 2: choose tools, then write |
-| Human Handoff | Protocol, queue, status, history, operator API | SQLite tickets | 0 |
+| Human Handoff | Protocol, LLM summary for the operator, queue, live operator ↔ customer messages, resolution summary in history, hand-back to the AI with an instruction | SQLite tickets; web console `/operador` (individual logins); Telegram Bot API worker (buttons + replies) | 1 (operator summary) |
 | Critic | Deterministic checks, then model review | tool observations and evidence | 0–1 |
 
 The tools never receive `user_id` from the model. Closures bind the authenticated server-side id, and a test proves that a model passing another customer's id still gets only the caller's data.
@@ -328,7 +328,7 @@ Thresholds were fixed before measuring. Each mode was measured once on the held-
 
 ## Limitations
 
-- **Synthetic data and simulated humans.** The customer records are fixtures, and no real operator is connected; responses state `real_agent_connected: false`. The operator API (`X-Operator-Key`) only demonstrates the workflow.
+- **Synthetic data.** The customer records are fixtures. Human operators are real people using the console or Telegram. `real_agent_connected` is `true` only while a channel is live, so with nobody online the customer is told the request is waiting. See [docs/HITL.md](docs/HITL.md).
 - **Demo identity.** PIN login with HMAC tokens binds the identity to the token, but it is not production authentication: the PINs are public, there is no rate limiting, and an empty `AUTH_SECRET` uses a per-process secret.
 - **Knowledge base scope.** It covers the official sites as of the snapshot date (378 pages). The help-centre FAQ widget (`/duvidas/*`) is a JavaScript chatbot with little indexable text. Answers can be as stale as the last `knowledge-refresh`.
 - **Slow local CPU.** On this machine `qwen3:1.7b` prefills about 25 tokens/s and generates about 5 tokens/s. A full local turn takes tens of seconds, so the offline mode misses the latency targets. The cloud mode is the demonstration mode.

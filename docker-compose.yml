@@ -26,6 +26,11 @@ services:
       CLOUD_LLM_BUDGET_SECONDS: ${CLOUD_LLM_BUDGET_SECONDS:-30}
       LOCAL_LLM_BUDGET_SECONDS: ${LOCAL_LLM_BUDGET_SECONDS:-150}
       AUTH_SECRET: ${AUTH_SECRET:-}
+      DEMO_MODE: ${DEMO_MODE:-true}
+      OPERATOR_TOKEN_TTL_SECONDS: ${OPERATOR_TOKEN_TTL_SECONDS:-28800}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_OPERATOR_CHAT_ID: ${TELEGRAM_OPERATOR_CHAT_ID:-}
+      TELEGRAM_OPERATOR_IDS: ${TELEGRAM_OPERATOR_IDS:-}
       AUTH_TOKEN_TTL_SECONDS: ${AUTH_TOKEN_TTL_SECONDS:-3600}
       OLLAMA_ENABLED: ${OLLAMA_ENABLED:-false}
       OLLAMA_REQUIRED: ${OLLAMA_REQUIRED:-false}
@@ -68,6 +73,26 @@ services:
       timeout: 5s
       retries: 5
       start_period: 20s
+
+  # Human operators on Telegram (long polling; single instance). Idles without a token.
+  telegram-worker:
+    build:
+      context: ./backend
+      dockerfile: Dockerfile
+    environment:
+      DATABASE_PATH: /data/getnet_assist.sqlite3
+      DEMO_MODE: ${DEMO_MODE:-true}
+      LOG_LEVEL: ${LOG_LEVEL:-INFO}
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_OPERATOR_CHAT_ID: ${TELEGRAM_OPERATOR_CHAT_ID:-}
+      TELEGRAM_OPERATOR_IDS: ${TELEGRAM_OPERATOR_IDS:-}
+    volumes:
+      - getnet_data:/data
+    command: ["python", "-m", "app.hitl.telegram_worker"]
+    depends_on:
+      api:
+        condition: service_healthy
+    restart: unless-stopped
 
   web:
     build:

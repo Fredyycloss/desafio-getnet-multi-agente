@@ -31,13 +31,13 @@ Starting point: commit `ee74988` (published, CI green, feedback v2 = 7.3/10).
 
 | # | Item | Source | Block | Status | Evidence |
 |---|---|---|---|---|---|
-| H1 | Simulated queue (`real_agent_connected=false`), no operator channel | FB2, V6 7, SELF | 2 | ABERTO | |
-| H2 | Telegram channel: card with LLM summary, inline buttons, reply / `/r`, long-polling worker, authorized operators, audit | V7-A | 2 | ABERTO | |
-| H3 | Web operator console (queue, details, claim, reply, resolve) with individual login | V7-A, V6 7 | 2 | ABERTO | |
-| H4 | Resumption: operator messages reach the customer live; customer talks to the human while `in_progress`; resolution summary in history; "return to AI with instruction" | V7-A, FB2 | 2 | ABERTO | |
-| H5 | `real_agent_connected` reflects reality | V7-A | 2 | ABERTO | |
-| H6 | Tests: simulated Telegram transport, unauthorized operator, Telegram outage → console works; end-to-end resumption; Playwright customer + operator | V7-A | 2 | ABERTO | |
-| H7 | Committed evidence: real transcript + Telegram screenshots + trace | V7-A | 2 | ABERTO | |
+| H1 | Simulated queue (`real_agent_connected=false`), no operator channel | FB2, V6 7, SELF | 2 | RESOLVIDO | `app/hitl/` (console + Telegram); `real_agent_connected` from channel heartbeat |
+| H2 | Telegram channel: card with LLM summary, inline buttons, reply / `/r`, long-polling worker, authorized operators, audit | V7-A | 2 | RESOLVIDO | `app/hitl/telegram.py`, `telegram_worker.py`, compose `telegram-worker`; `test_hitl_telegram.py` (simulated Bot API) |
+| H3 | Web operator console (queue, details, claim, reply, resolve) with individual login | V7-A, V6 7 | 2 | RESOLVIDO | `frontend/src/OperatorConsole.tsx` (`/operador`), `app/hitl/api.py`, `app/hitl/operators.py` (scrypt, roles) |
+| H4 | Resumption: operator messages reach the customer live; customer talks to the human while `in_progress`; resolution summary in history; "return to AI with instruction" | V7-A, FB2 | 2 | RESOLVIDO | live polling `GET /api/sessions/{id}/messages?after_id`, ticket routing in `/api/chat`, resolution note, `return-to-ai` + `resume_if_pending`; `test_hitl_api.py` |
+| H5 | `real_agent_connected` reflects reality | V7-A | 2 | RESOLVIDO | `HITLService.human_available()`; `test_full_cycle_operator_reply_live...` asserts true with console live |
+| H6 | Tests: simulated Telegram transport, unauthorized operator, Telegram outage → console works; end-to-end resumption; Playwright customer + operator | V7-A | 2 | RESOLVIDO | `test_hitl_telegram.py` (8), `test_hitl_api.py` (4), `frontend/e2e/hitl-flow.spec.ts` (customer + operator) |
+| H7 | Committed evidence: real transcript + Telegram screenshots + trace | V7-A | 2 | PARCIAL | console screenshots `docs/evidence/hitl/*.png`; Telegram transcript waits for the bot token |
 
 ## Answer quality and Critic (block 3)
 

@@ -73,6 +73,34 @@ def verify_token(token: str) -> str | None:
         return None
 
 
+def sign_claims(claims: dict, ttl_seconds: int) -> str:
+    now = int(time.time())
+    payload = {**claims, "iat": now, "exp": now + ttl_seconds}
+    body = _b64(json.dumps(payload, separators=(",", ":"), sort_keys=True).encode())
+    return f"{body}.{_b64(hmac.new(_secret(), body.encode(), hashlib.sha256).digest())}"
+
+
+def verify_claims(token: str) -> dict | None:
+    """Signature + expiry check; returns the claims (any token kind) or None."""
+    try:
+        body, signature = token.split(".", 1)
+        expected = _b64(hmac.new(_secret(), body.encode(), hashlib.sha256).digest())
+        if not hmac.compare_digest(expected, signature):
+            return None
+        claims = json.loads(_unb64(body))
+        return claims if int(claims.get("exp", 0)) >= int(time.time()) else None
+    except (ValueError, json.JSONDecodeError, TypeError):
+        return None
+
+
+def issue_operator_token(operator: dict) -> dict:
+    """Operator session token (kind=operator); never accepted on customer endpoints."""
+    ttl = int(os.getenv("OPERATOR_TOKEN_TTL_SECONDS", "28800"))
+    token = sign_claims({"sub": f"op:{operator['username']}", "kind": "operator", "role": operator["role"],
+                         "name": operator["display_name"]}, ttl)
+    return {"access_token": token, "token_type": "bearer", "expires_in": ttl, **operator}
+
+
 def require_user(authorization: str | None = Header(default=None)) -> str:
     """FastAPI dependency: the authenticated user_id or 401."""
     scheme, _, token = (authorization or "").partition(" ")

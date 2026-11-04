@@ -33,5 +33,5 @@ test('login → product question → ambiguous menu → numeric selection → at
   await page.getByRole('button', { name: 'Falar com atendente' }).click()
   await expect(page.getByText(/Protocolo: GET-/).first()).toBeVisible()
   await page.getByRole('button', { name: 'Consultar solicitação de atendimento' }).click()
-  await expect(page.getByText(/Status da solicitação GET-.*aguardando atendimento/)).toBeVisible()
+  await expect(page.getByText(/Status da solicitação GET-.*aguardando atendente/)).toBeVisible()
 })

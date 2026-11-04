@@ -72,6 +72,9 @@ app = FastAPI(
     lifespan=lifespan,
 )
 origins = [x.strip() for x in os.getenv("CORS_ORIGINS", "http://localhost:5173,http://localhost:8080").split(",") if x.strip()]
+from .hitl.api import require_operator as require_operator_api, resume_if_pending, router as operator_router  # noqa: E402
+
+app.include_router(operator_router)
 app.add_middleware(CORSMiddleware, allow_origins=origins, allow_credentials=False, allow_methods=["GET", "POST", "OPTIONS"], allow_headers=["Content-Type", "Authorization", "X-Request-ID", "X-Operator-Key", "X-Operator-ID"])
 
 
@@ -111,18 +114,6 @@ class OperatorReply(BaseModel):
 
 class OperatorResolution(BaseModel):
     resolution: str = Field(min_length=1, max_length=2000)
-
-
-def require_operator(x_operator_key: str | None, x_operator_id: str | None) -> str:
-    configured = os.getenv("OPERATOR_API_KEY", "").strip()
-    if not configured:
-        raise HTTPException(status_code=503, detail="Operator API is disabled. Configure OPERATOR_API_KEY.")
-    if not x_operator_key or not hmac.compare_digest(x_operator_key, configured):
-        raise HTTPException(status_code=401, detail="Invalid operator credentials")
-    operator_id = (x_operator_id or "").strip()
-    if not operator_id or len(operator_id) > 80 or any(ord(c) < 32 for c in operator_id):
-        raise HTTPException(status_code=400, detail="X-Operator-ID is required")
-    return operator_id
 
 
 @app.middleware("http")
@@ -229,6 +220,25 @@ def chat(payload: ChatRequest, request: Request, auth_user: str = Depends(requir
             if not history and payload.history:
                 history = [item.model_dump() for item in payload.history[-10:]]
         from .agents.guardrails import inspect_message
+        active = service.hitl.active_ticket_for_session(session_id)
+        if active:
+            guard = inspect_message(payload.message, detect_language(payload.message, history))
+            if guard.get("blocked"):
+                raise HTTPException(status_code=422, detail=guard["message"])
+            with stage("human_conversation", "hitl"):
+                db.save_message(session_id, auth_user, "user", payload.message, {"handoff_protocol": active["protocol"]})
+                ticket = service.hitl.customer_message(active, auth_user, payload.message)
+            lang = ticket.get("language", "pt")
+            result = {"answer": ("Mensagem enviada ao atendente (protocolo {p}). Status: {s}." if lang == "pt"
+                                 else "Message sent to the attendant (protocol {p}). Status: {s}.").format(p=ticket["protocol"], s=service.hitl.status_label(ticket)),
+                      "language": lang, "intent": "human_conversation", "agent": "human_handoff_agent", "confidence": 1.0,
+                      "sources": [], "handoff": True, "handoff_protocol": ticket["protocol"], "handoff_status": ticket["status"],
+                      "real_agent_connected": True, "trace": ["human_conversation", "message_forwarded_to_operator"],
+                      "orchestration_mode": "human_conversation", "tool_calls": 0, "critic": {"approved": True, "mode": "handoff_policy"},
+                      "trace_id": request.state.trace_id, "degraded": False, "degraded_reason": None, "session_id": session_id,
+                      "last_message_id": db.last_message_id(session_id)}
+            state["metrics"]["chats"] += 1
+            return result
         storage_guard = inspect_message(payload.message, detect_language(payload.message, history))
         stored_message = "[mensagem bloqueada por divulgação de dado sensível]" if storage_guard.get("blocked") else payload.message
         with stage("user_message_persistence", "persistence"):
@@ -243,6 +253,7 @@ def chat(payload: ChatRequest, request: Request, auth_user: str = Depends(requir
         db.record_model_calls(request.state.trace_id, result["model_usage"]["calls"])
         state["metrics"]["chats"] += 1
         result["session_id"] = session_id
+        result["last_message_id"] = db.last_message_id(session_id)
         logger.info("chat_done trace_id=%s session_id=%s intent=%s language=%s mode=%s tools=%s handoff=%s",
                     result["trace_id"], session_id, result["intent"], result["language"], result["orchestration_mode"], result["tool_calls"], result["handoff"])
         return result
@@ -261,27 +272,36 @@ def chat(payload: ChatRequest, request: Request, auth_user: str = Depends(requir
 
 
 @app.get("/api/sessions/{session_id}/messages")
-def session_messages(session_id: str, user_id: str | None = None, auth_user: str = Depends(require_user)):
+def session_messages(session_id: str, user_id: str | None = None, after_id: int | None = None, auth_user: str = Depends(require_user)):
     ensure_same_user(auth_user, user_id)
     db: Database | None = state.get("db")
-    if not db: raise HTTPException(status_code=503, detail="Service is starting")
+    service: ChatService | None = state.get("service")
+    if not db or not service: raise HTTPException(status_code=503, detail="Service is starting")
     if db.get_session_owner(session_id) != auth_user:
         raise HTTPException(status_code=404, detail="Session not found")
-    return {"session_id": session_id, "messages": db.get_history(session_id, 50)}
+    if after_id is None:
+        return {"session_id": session_id, "messages": [m for m in db.get_history(session_id, 50) if not m.get("hidden")]}
+    # Live view for the chat UI: new messages (operator, status, resolution, resumed AI) + ticket status.
+    ticket = db.latest_ticket_for_session(session_id)
+    if ticket and ticket.get("resume_pending"):
+        resume_if_pending(ticket)
+        ticket = db.get_ticket(ticket["protocol"])
+    messages = db.messages_after(session_id, after_id)
+    public_ticket = None
+    if ticket:
+        public_ticket = {"protocol": ticket["protocol"], "status": ticket["status"], "status_label": service.hitl.status_label(ticket),
+                         "real_agent_connected": bool(ticket.get("assigned_operator")) or service.hitl.human_available()}
+    return {"session_id": session_id, "messages": messages, "ticket": public_ticket,
+            "last_message_id": max([after_id, *[m["id"] for m in messages]])}
 
 
 @app.get("/api/handoffs")
-def list_handoffs(
-    status: str | None = None,
-    x_operator_key: str | None = Header(default=None, alias="X-Operator-Key"),
-    x_operator_id: str | None = Header(default=None, alias="X-Operator-ID"),
-):
+def list_handoffs(status: str | None = None, operator: dict = Depends(require_operator_api)):
     # Queue-wide visibility is an operator capability, never a public endpoint.
-    require_operator(x_operator_key, x_operator_id)
     service: ChatService | None = state.get("service")
     if not service: raise HTTPException(status_code=503, detail="Service is starting")
     items = service.handoff.list_tickets(status)
-    return {"count": len(items), "items": items, "real_agent_connected": False, "environment": "demonstration"}
+    return {"count": len(items), "items": items, **service.hitl.channel_status(), "environment": "demonstration"}
 
 
 @app.get("/api/handoffs/{protocol}")
@@ -319,71 +339,6 @@ def append_handoff_message(protocol: str, payload: TicketMessage, auth_user: str
         service.db.save_message(ticket["session_id"], payload.user_id, "assistant", confirmation,
                                 {"handoff_protocol": protocol, "handoff_status": ticket.get("status")})
     return {"ticket": ticket, "message": "Added to simulated support queue; no live operator is connected."}
-
-
-@app.get("/api/operator/queue")
-def operator_queue(
-    status: str | None = None,
-    x_operator_key: str | None = Header(default=None, alias="X-Operator-Key"),
-    x_operator_id: str | None = Header(default=None, alias="X-Operator-ID"),
-):
-    require_operator(x_operator_key, x_operator_id)
-    service: ChatService | None = state.get("service")
-    if not service: raise HTTPException(status_code=503, detail="Service is starting")
-    return {"count": len(service.handoff.list_tickets(status)), "items": service.handoff.list_tickets(status), "environment": "synthetic demonstration"}
-
-
-@app.post("/api/operator/tickets/{protocol}/claim")
-def operator_claim(
-    protocol: str,
-    x_operator_key: str | None = Header(default=None, alias="X-Operator-Key"),
-    x_operator_id: str | None = Header(default=None, alias="X-Operator-ID"),
-):
-    operator_id = require_operator(x_operator_key, x_operator_id)
-    db: Database | None = state.get("db")
-    if not db: raise HTTPException(status_code=503, detail="Service is starting")
-    try:
-        ticket = db.claim_ticket(protocol, operator_id)
-    except ValueError as exc:
-        raise HTTPException(status_code=409, detail=str(exc)) from exc
-    if not ticket: raise HTTPException(status_code=404, detail="Ticket not found")
-    return {"ticket": ticket}
-
-
-@app.post("/api/operator/tickets/{protocol}/messages")
-def operator_reply(
-    protocol: str,
-    payload: OperatorReply,
-    x_operator_key: str | None = Header(default=None, alias="X-Operator-Key"),
-    x_operator_id: str | None = Header(default=None, alias="X-Operator-ID"),
-):
-    operator_id = require_operator(x_operator_key, x_operator_id)
-    db: Database | None = state.get("db")
-    if not db: raise HTTPException(status_code=503, detail="Service is starting")
-    try:
-        ticket = db.append_operator_message(protocol, operator_id, payload.message)
-    except ValueError as exc:
-        raise HTTPException(status_code=409, detail=str(exc)) from exc
-    if not ticket: raise HTTPException(status_code=404, detail="Ticket not found")
-    return {"ticket": ticket}
-
-
-@app.post("/api/operator/tickets/{protocol}/resolve")
-def operator_resolve(
-    protocol: str,
-    payload: OperatorResolution,
-    x_operator_key: str | None = Header(default=None, alias="X-Operator-Key"),
-    x_operator_id: str | None = Header(default=None, alias="X-Operator-ID"),
-):
-    operator_id = require_operator(x_operator_key, x_operator_id)
-    db: Database | None = state.get("db")
-    if not db: raise HTTPException(status_code=503, detail="Service is starting")
-    try:
-        ticket = db.resolve_ticket(protocol, operator_id, payload.resolution)
-    except ValueError as exc:
-        raise HTTPException(status_code=409, detail=str(exc)) from exc
-    if not ticket: raise HTTPException(status_code=404, detail="Ticket not found")
-    return {"ticket": ticket}
 
 
 @app.get("/api/metrics")

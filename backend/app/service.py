@@ -27,7 +27,9 @@ class ChatService:
         self.payments = PaymentsAgent(db, llm)
         self.risk = RiskAssessmentAgent()
         self.handoff = HumanHandoffAgent(db)
-        self.escalation = EscalationAgent(self.handoff)
+        from .hitl.service import HITLService
+        self.hitl = HITLService(db, llm)
+        self.escalation = EscalationAgent(self.handoff, notifier=self.hitl)
         self.critic = CriticAgent(llm, required=llm_required)
         self.supervisor = SupervisorAgent(llm=llm, db=db, knowledge=self.knowledge, support=self.support,
                                           web=self.web, risk=self.risk, escalation=self.escalation, critic=self.critic,
