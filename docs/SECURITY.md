@@ -1,11 +1,34 @@
 # Security, privacy and operational boundaries
 
+## Evaluation credential policy
+
+- **The project never distributes an API key.** Not in the repository, not in documents and not by message.
+- To run the cloud mode, the evaluator uses **their own** Anthropic key: `bash scripts/set-api-key.sh` stores it in `.env` with hidden input and never prints it.
+- Without a key, two modes need no credential:
+  - **replay**: `LLM_PROVIDER=replay` replays the recorded cloud run in [`docs/evidence/cloud_runs/`](evidence/cloud_runs/). Retrieval, tools, PolicyGate and the deterministic Critic checks run for real; only the model text is replayed.
+  - **offline**: `bash scripts/start-ai.sh -d` runs the local Qwen model.
+- The cloud-mode evidence (questions, answers, sources, full traces, Critic verdicts, token usage) is committed, so the cloud behaviour can be checked without executing anything. See [`docs/EVIDENCE.md`](EVIDENCE.md).
+- **Key sent earlier by email.** A key was sent to the evaluator by email on 03/11/2026. That practice is withdrawn, and the key is revoked by the author (revocation status is recorded in [`docs/CHECKLIST_V7.md`](CHECKLIST_V7.md), item S1).
+- **Secret scanning.**
+  - CI runs gitleaks v8.21.2 (pinned image `zricethezav/gitleaks:v8.21.2`) over the whole git history, with findings redacted.
+  - The same scan is a pre-commit hook: `.pre-commit-config.yaml`; run `pre-commit install` once.
+
 ## Identity: demo login with HMAC tokens
 
 - **Login.** `POST /api/auth/demo-login {user_id, pin}` returns a bearer token: a JSON payload (`sub`, `iat`, `exp`) signed with HMAC-SHA256.
   - The secret is `AUTH_SECRET`. When it is empty, a random secret is generated per API process, so tokens stop working after a restart.
   - The expiry is `AUTH_TOKEN_TTL_SECONDS` (default 3600).
-- **Demo accounts.** The synthetic users and their PINs are listed in `backend/app/auth.py` and by `GET /api/auth/demo-users`. They are public on purpose.
+- **Demo accounts (`DEMO_MODE=true`, the default for the challenge).** The synthetic users and their PINs are listed in `backend/app/auth.py` and by `GET /api/auth/demo-users`. They are public on purpose.
+- **Outside the demo (`DEMO_MODE=false`):**
+  - `GET /api/auth/demo-users` returns 404, so no account list is served, and the login screen asks for the user id.
+  - The public PINs and the demo operators stop working.
+  - Customer credentials come from `CUSTOMER_CREDENTIALS_FILE`: scrypt hashes, created with `python -m app.auth add-customer <id> --file <path>`, with the PIN read without echo.
+  - The API refuses to start without `AUTH_SECRET` (at least 32 characters) and without that file.
+- **Lockout and rate limiting** (customer and operator login). The counters live in the database, so every API replica shares them.
+  - After `LOGIN_MAX_FAILURES` (5) failures within `LOGIN_WINDOW_SECONDS` (300), the account is locked for `LOGIN_LOCKOUT_SECONDS` (300). The API answers 429 with `Retry-After`.
+  - One client address is limited to `LOGIN_MAX_REQUESTS_PER_MINUTE` (30) attempts, against password spraying.
+  - Unknown and known accounts get the same 401 answer.
+  - Tests: `backend/tests/test_login_security.py`.
 - **Protected endpoints.**
   - These four require `Authorization: Bearer` and use the **token's** `user_id`:
     - `POST /api/chat`
@@ -18,7 +41,7 @@
 - **Tools.** They never accept `user_id` from the model. Closures bind the authenticated id, and SQL is parameterized.
 - **Tests.** `backend/tests/test_auth_and_isolation.py` covers A × B data, session, protocol and "show customer X's sales", token tampering and expiry, and a model that passes another `user_id` to a payment tool.
 
-This scheme is demonstration identity, not production authentication. It has no rate limiting or lockout, and the PINs are public.
+In demo mode this is demonstration identity with public PINs, not production authentication.
 
 ## LLM provider keys
 
@@ -43,7 +66,15 @@ The gateway blocks passwords, tokens and full card numbers before any model sees
 
 ## Operator API
 
-The operator API is disabled unless `OPERATOR_API_KEY` is set. It needs `X-Operator-Key` + `X-Operator-ID`, and only the operator who claimed a ticket can reply to it or resolve it. It is a shared demo secret, not enterprise identity.
+- **Individual accounts.** Each operator has an account with a scrypt password hash, compared in constant time; a dummy hash is computed for unknown users.
+  - Roles: `operator` and `supervisor`. The supervisor sees the audit log and the knowledge-gap queue.
+  - Login: `POST /api/operator/login` returns an HMAC token with `kind=operator` and an expiry (`OPERATOR_TOKEN_TTL_SECONDS`, default 8 h).
+- **Accounts.**
+  - Demo operators exist only with `DEMO_MODE=true`: `ana.operadora` and `bruno.supervisor`, with passwords in `docs/HITL.md`.
+  - Other accounts are created with `python -m app.hitl.operators add <user> --role operator|supervisor`.
+- **Audit.** Every action is recorded per operator and channel (console or Telegram): login ok / failed / locked, claim, reply, resolve, return to AI.
+- **Ticket ownership.** Only the operator who claimed a ticket can reply to it or resolve it.
+- **Shared key.** The shared `X-Operator-Key` exists only for bootstrap, is disabled unless `OPERATOR_API_KEY` is set, and is not used by the console or the Telegram worker.
 
 ## Physical safety
 
@@ -57,9 +88,9 @@ Before any real deployment, add:
 - real identity (OAuth/SSO) and tenant authorization;
 - approved Getnet integrations;
 - a secrets manager;
-- rate limiting and abuse detection;
+- abuse detection beyond the login limiter;
 - a retention policy and privacy/legal review;
-- operator RBAC and notifications;
+- SSO for operators;
 - monitoring and alerting;
 - continuous model and retrieval evaluation and prompt-injection red-teaming;
 - dependency and image scanning;

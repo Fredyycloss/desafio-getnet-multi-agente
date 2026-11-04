@@ -74,17 +74,17 @@ def require_supervisor(operator: dict = Depends(require_operator)) -> dict:
 def operator_login(payload: OperatorLogin, request: Request):
     db = _state()["db"]
     limiter = _state().get("login_limiter")
-    key = f"op:{payload.username}:{request.client.host if request.client else '-'}"
-    if limiter and not limiter.allow(key):
-        raise HTTPException(status_code=429, detail="Too many attempts", headers={"Retry-After": str(limiter.retry_after(key))})
+    keys = (f"op:{payload.username.strip()}", f"ip:{request.client.host if request.client else '-'}")
+    wait = limiter.check(*keys) if limiter else 0
+    if wait:
+        ops.audit(db, payload.username[:80], "console", "login", None, "locked")
+        raise HTTPException(status_code=429, detail="Too many attempts", headers={"Retry-After": str(wait)})
     op = ops.verify_operator(db, payload.username.strip(), payload.password)
+    if limiter:
+        limiter.record(bool(op), *keys)
     if not op:
-        if limiter:
-            limiter.fail(key)
         ops.audit(db, payload.username[:80], "console", "login", None, "failed")
         raise HTTPException(status_code=401, detail="Invalid operator credentials")
-    if limiter:
-        limiter.success(key)
     ops.audit(db, op["username"], "console", "login", None, "ok")
     return issue_operator_token(op)
 

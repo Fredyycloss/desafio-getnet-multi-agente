@@ -42,11 +42,45 @@ def _unb64(text: str) -> bytes:
     return base64.urlsafe_b64decode(text + "=" * (-len(text) % 4))
 
 
+def demo_mode() -> bool:
+    """DEMO_MODE=true (default for the challenge): public synthetic PINs and a user list on the
+    login screen. false: customers need credentials from CUSTOMER_CREDENTIALS_FILE, the list is
+    not served and AUTH_SECRET must be configured."""
+    return os.getenv("DEMO_MODE", "true").strip().lower() == "true"
+
+
+def _scrypt(secret: str, salt: str) -> str:
+    return hashlib.scrypt(secret.encode(), salt=bytes.fromhex(salt), n=2 ** 14, r=8, p=1, dklen=32).hex()
+
+
+def _configured_credentials() -> dict:
+    path = os.getenv("CUSTOMER_CREDENTIALS_FILE", "").strip()
+    if not path or not os.path.exists(path):
+        return {}
+    with open(path, encoding="utf-8") as fh:
+        return json.load(fh)
+
+
 def verify_pin(user_id: str, pin: str) -> bool:
+    if not demo_mode():
+        cred = _configured_credentials().get(user_id)
+        salt = cred["salt"] if cred else "00" * 16
+        digest = _scrypt(str(pin), salt)  # computed for unknown users too (timing)
+        return bool(cred) and hmac.compare_digest(digest, cred["hash"])
     user = DEMO_USERS.get(user_id)
     # compare_digest on both branches keeps timing independent of user existence.
     expected = user["pin"] if user else "\0" * 8
     return hmac.compare_digest(expected.encode(), str(pin).encode()) and user is not None
+
+
+def check_production_settings() -> None:
+    """Refuse to start outside demo mode without a signing secret or customer credentials."""
+    if demo_mode():
+        return
+    if len(os.getenv("AUTH_SECRET", "").strip()) < 32:
+        raise RuntimeError("DEMO_MODE=false requires AUTH_SECRET with at least 32 characters")
+    if not _configured_credentials():
+        raise RuntimeError("DEMO_MODE=false requires CUSTOMER_CREDENTIALS_FILE with hashed customer credentials")
 
 
 def issue_token(user_id: str, ttl_seconds: int | None = None) -> dict:
@@ -115,3 +149,33 @@ def ensure_same_user(token_user: str, claimed: str | None) -> None:
     """A user_id sent in the body/query must match the token (403 otherwise)."""
     if claimed is not None and claimed.strip() and claimed.strip() != token_user:
         raise HTTPException(status_code=403, detail="user_id does not match the authenticated user")
+
+
+def main() -> int:
+    """python -m app.auth add-customer <user_id> --file creds.json  (PIN read without echo)."""
+    import argparse
+    import getpass
+    parser = argparse.ArgumentParser(description=main.__doc__)
+    sub = parser.add_subparsers(dest="cmd", required=True)
+    add = sub.add_parser("add-customer")
+    add.add_argument("user_id")
+    add.add_argument("--file", required=True)
+    args = parser.parse_args()
+    secret = getpass.getpass("PIN/password: ")
+    if len(secret) < 6:
+        raise SystemExit("use at least 6 characters outside demo mode")
+    data = {}
+    if os.path.exists(args.file):
+        with open(args.file, encoding="utf-8") as fh:
+            data = json.load(fh)
+    salt = secrets.token_hex(16)
+    data[args.user_id] = {"salt": salt, "hash": _scrypt(secret, salt)}
+    with open(args.file, "w", encoding="utf-8") as fh:
+        json.dump(data, fh, indent=2)
+    os.chmod(args.file, 0o600)
+    print(f"customer {args.user_id} saved")
+    return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

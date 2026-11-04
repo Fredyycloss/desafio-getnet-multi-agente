@@ -7,6 +7,15 @@ on:
 permissions:
   contents: read
 jobs:
+  secret-scan:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Gitleaks over the whole git history (pinned v8.21.2, findings redacted)
+        run: docker run --rm -v "$PWD":/repo:ro zricethezav/gitleaks:v8.21.2 git /repo --redact --no-banner --exit-code 1
+
   backend-quality:
     runs-on: ubuntu-latest
     steps:

@@ -50,8 +50,14 @@ function LoginScreen({ onLogin }: { onLogin: (auth: Auth) => void }) {
   const [pin, setPin] = useState('')
   const [error, setError] = useState('')
   const [busy, setBusy] = useState(false)
+  // DEMO_MODE=false: the API does not list accounts (404) and the customer types the id.
+  const [demo, setDemo] = useState(true)
   useEffect(() => {
-    fetch('/api/auth/demo-users').then(r => r.json()).then(body => {
+    fetch('/api/auth/demo-users').then(r => {
+      if (r.status === 404) { setDemo(false); return null }
+      return r.json()
+    }).then(body => {
+      if (!body) return
       setUsers(body.users || [])
       if (body.users?.length) setUserId(body.users[0].user_id)
     }).catch(() => setError('Não consegui conectar à API.'))
@@ -60,6 +66,7 @@ function LoginScreen({ onLogin }: { onLogin: (auth: Auth) => void }) {
     setBusy(true); setError('')
     try {
       const response = await fetch('/api/auth/demo-login', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ user_id: userId, pin }) })
+      if (response.status === 429) { setError('Muitas tentativas. Aguarde alguns minutos e tente de novo.'); return }
       if (!response.ok) { setError('Usuário ou PIN inválido.'); return }
       const body = await response.json()
       onLogin({ token: body.access_token, userId: body.user_id })
@@ -67,14 +74,16 @@ function LoginScreen({ onLogin }: { onLogin: (auth: Auth) => void }) {
   }
   return <div className="login-shell"><form className="login-card" onSubmit={e => { e.preventDefault(); void submit() }} aria-label="Login demo">
     <div className="brand-row"><div className="brand-mark"><span>g</span></div><div className="brand-name">getnet<span>assist</span></div></div>
-    <h1>Entrar na demonstração</h1>
-    <p className="login-note">Contas sintéticas. O PIN de cada conta está listado de propósito: isto é uma demonstração, não autenticação de produção.</p>
-    <div className="login-users" role="radiogroup" aria-label="Usuário sintético">
-      {users.map(u => <label key={u.user_id} className={`login-user ${userId === u.user_id ? 'selected' : ''}`}>
-        <input type="radio" name="user" value={u.user_id} checked={userId === u.user_id} onChange={() => setUserId(u.user_id)}/>
-        <span><strong>{u.user_id}</strong><small>{u.merchant_name} · PIN {u.demo_pin}</small></span>
-      </label>)}
-    </div>
+    <h1>{demo ? 'Entrar na demonstração' : 'Entrar'}</h1>
+    {demo ? <>
+      <p className="login-note">Contas sintéticas. O PIN de cada conta está listado de propósito: isto é uma demonstração, não autenticação de produção.</p>
+      <div className="login-users" role="radiogroup" aria-label="Usuário sintético">
+        {users.map(u => <label key={u.user_id} className={`login-user ${userId === u.user_id ? 'selected' : ''}`}>
+          <input type="radio" name="user" value={u.user_id} checked={userId === u.user_id} onChange={() => setUserId(u.user_id)}/>
+          <span><strong>{u.user_id}</strong><small>{u.merchant_name} · PIN {u.demo_pin}</small></span>
+        </label>)}
+      </div>
+    </> : <label className="login-pin">Usuário<input value={userId} onChange={e => setUserId(e.target.value)} autoComplete="username" maxLength={128} aria-label="Usuário"/></label>}
     <label className="login-pin">PIN<input value={pin} onChange={e => setPin(e.target.value)} inputMode="numeric" autoComplete="off" maxLength={16} aria-label="PIN"/></label>
     {error && <div className="login-error" role="alert">{error}</div>}
     <button className="login-submit" type="submit" disabled={!userId || !pin || busy}>{busy ? 'Entrando…' : 'Entrar'}</button>

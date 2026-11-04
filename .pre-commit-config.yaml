@@ -1,0 +1,7 @@
+# Secret scan before every commit:  pip install pre-commit && pre-commit install
+# (or without pre-commit: docker run --rm -v "$PWD":/repo:ro zricethezav/gitleaks:v8.21.2 git /repo --redact --no-banner)
+repos:
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.21.2
+    hooks:
+      - id: gitleaks

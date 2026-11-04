@@ -17,6 +17,10 @@ def db(tmp_path):
 def _no_live_site_reads(monkeypatch):
     """Unit tests never reach the official websites (the live-read tool is tested with a stub)."""
     monkeypatch.setenv("KNOWLEDGE_LIVE_READ", "false")
+    # AutoAuthClient logs in before every request; the per-address login ceiling is tested
+    # explicitly in test_login_security.py, so it is lifted for the other API tests.
+    monkeypatch.setenv("LOGIN_MAX_REQUESTS_PER_MINUTE", "1000000")
+    monkeypatch.setenv("CHAT_MAX_REQUESTS_PER_MINUTE", "1000000")
 
 
 @pytest.fixture(scope="session")

@@ -22,7 +22,17 @@ All customer records are **synthetic demo fixtures**. Nothing connects to real G
 
 ## For the evaluator (Para o avaliador)
 
-The **main mode is the cloud**. It needs an Anthropic API key, which is sent to you separately, not in this repository. The key has a spending limit and will be replaced after the evaluation.
+The **main mode is the cloud** (Anthropic). **This project never distributes an API key.** You can check it in three ways:
+
+| Way | What you need | What runs |
+|---|---|---|
+| Read the recorded cloud run | nothing | Committed cloud recordings: question, answer, sources, full trace, Critic verdict and tokens ([docs/EVIDENCE.md](docs/EVIDENCE.md)) |
+| Replay | Docker or Python, no key | `LLM_PROVIDER=replay`: the recorded model answers are replayed. Retrieval, tools, PolicyGate and the Critic's deterministic checks run for real |
+| Cloud mode with **your own** key | an Anthropic key | The steps below |
+
+Credential policy, lockout and demo mode: [docs/SECURITY.md](docs/SECURITY.md).
+
+Cloud mode with your own key:
 
 1. `git clone https://github.com/Fredyycloss/desafio-getnet-multi-agente.git && cd desafio-getnet-multi-agente`
 2. `bash scripts/set-api-key.sh`. The script:

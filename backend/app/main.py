@@ -12,7 +12,8 @@ from fastapi import Depends, FastAPI, HTTPException, Request, Response, Header
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, Field, field_validator
 
-from .auth import DEMO_USERS, ensure_same_user, issue_token, require_user, verify_pin
+from .auth import DEMO_USERS, check_production_settings, ensure_same_user, issue_token, require_user, verify_pin
+from .auth import demo_mode as auth_demo_mode
 from .infra.database import Database
 from .infra.llm import LLMUnavailable, create_llm, resolve_provider_name
 from .knowledge.ingest import load_documents
@@ -29,6 +30,7 @@ state: dict = {"service": None, "db": None, "documents": [], "metrics": {"reques
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     started = time.monotonic()
+    check_production_settings()
     db = Database()
     llm_required = os.getenv("OLLAMA_REQUIRED", "false").lower() == "true"
     llm = create_llm()
@@ -58,6 +60,8 @@ async def lifespan(app: FastAPI):
     from .knowledge.ingest import load_snapshot_vectors
     vector_model, _, vectors = load_snapshot_vectors()
     service = ChatService(docs, db, llm, llm_required=llm_required, vectors=vectors, vector_model=vector_model)
+    from .login_limiter import LoginLimiter
+    state["login_limiter"] = LoginLimiter(db)
     state.update({"service": service, "db": db, "documents": docs, "metrics": {"requests": 0, "chats": 0, "errors": 0, "total_latency_ms": 0}})
     logger.info("startup_complete docs=%d llm_provider=%s model=%s elapsed_ms=%d", len(docs),
                 getattr(llm, "provider", "none"), getattr(llm, "model", None), int((time.monotonic()-started)*1000))
@@ -184,23 +188,38 @@ class DemoLogin(BaseModel):
 
 @app.get("/api/auth/demo-users")
 def demo_users():
-    """Synthetic demo merchants for the login screen (demonstration data only)."""
+    """Synthetic demo merchants for the login screen (demonstration data only, DEMO_MODE=true)."""
+    if not auth_demo_mode():
+        raise HTTPException(status_code=404, detail="Not available outside demo mode")
     return {"users": [{"user_id": uid, "merchant_name": item["merchant_name"], "demo_pin": item["pin"]}
                       for uid, item in DEMO_USERS.items()],
             "note": "Synthetic demo accounts. PINs are public on purpose; this is not production identity."}
 
 
 @app.post("/api/auth/demo-login")
-def demo_login(payload: DemoLogin):
-    if not verify_pin(payload.user_id.strip(), payload.pin.strip()):
-        raise HTTPException(status_code=401, detail="Invalid demo credentials")
-    return issue_token(payload.user_id.strip())
+def demo_login(payload: DemoLogin, request: Request):
+    user_id = payload.user_id.strip()
+    keys = (f"cust:{user_id}", f"ip:{request.client.host if request.client else '-'}")
+    limiter = state.get("login_limiter")
+    wait = limiter.check(*keys) if limiter else 0
+    if wait:
+        raise HTTPException(status_code=429, detail="Too many attempts", headers={"Retry-After": str(wait)})
+    ok = verify_pin(user_id, payload.pin.strip())
+    if limiter:
+        limiter.record(ok, *keys)
+    if not ok:
+        raise HTTPException(status_code=401, detail="Invalid credentials")
+    return issue_token(user_id)
 
 
 @app.post("/api/chat")
 def chat(payload: ChatRequest, request: Request, auth_user: str = Depends(require_user)):
     # Identity comes from the token; the body user_id is kept for the challenge contract and must match.
     ensure_same_user(auth_user, payload.user_id)
+    limiter = state.get("login_limiter")
+    wait = limiter.hit(f"chat:{auth_user}", int(os.getenv("CHAT_MAX_REQUESTS_PER_MINUTE", "30"))) if limiter else 0
+    if wait:
+        raise HTTPException(status_code=429, detail="Too many messages; wait a moment", headers={"Retry-After": str(wait)})
     service: ChatService | None = state.get("service")
     db: Database | None = state.get("db")
     if service is None or db is None: raise HTTPException(status_code=503, detail="Service is starting")
@@ -322,6 +341,10 @@ def get_handoff(protocol: str, user_id: str | None = None, auth_user: str = Depe
 @app.post("/api/handoffs/{protocol}/messages")
 def append_handoff_message(protocol: str, payload: TicketMessage, auth_user: str = Depends(require_user)):
     ensure_same_user(auth_user, payload.user_id)
+    limiter = state.get("login_limiter")
+    wait = limiter.hit(f"chat:{auth_user}", int(os.getenv("CHAT_MAX_REQUESTS_PER_MINUTE", "30"))) if limiter else 0
+    if wait:
+        raise HTTPException(status_code=429, detail="Too many messages; wait a moment", headers={"Retry-After": str(wait)})
     service: ChatService | None = state.get("service")
     if not service: raise HTTPException(status_code=503, detail="Service is starting")
     current = service.handoff.get_ticket(protocol)
