@@ -186,6 +186,8 @@ class AnthropicProvider(LLMProvider):
             params["system"] = (params.get("system", "") + "\n\nReturn one JSON object only.").strip()
         if output_config:
             params["output_config"] = output_config
+        # "omit" leaves the model default (adaptive): required for models that reject
+        # thinking=disabled (e.g. claude-sonnet-5-5, used as the evaluation judge).
         if think is True or self.thinking == "adaptive":
             params["thinking"] = {"type": "adaptive"}
         elif self.thinking == "disabled":

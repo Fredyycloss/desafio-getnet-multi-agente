@@ -37,7 +37,7 @@ def _benchmark_messages() -> list[str]:
 def test_intent_examples_share_no_phrase_with_datasets_or_benchmark():
     examples = [t for spec in json.loads(EXAMPLES_PATH.read_text())["intents"].values() for t in spec["examples"]]
     evaluation = ROOT / "backend" / "app" / "evaluation"
-    others = [c["message"] for split in ("dev", "heldout")
+    others = [c["message"] for split in ("dev", "heldout_v1", "heldout_v2")
               for c in json.loads((evaluation / f"context_scenarios_{split}.json").read_text())]
     others += _benchmark_messages()
     forbidden = set().union(*(_grams(m) for m in others))

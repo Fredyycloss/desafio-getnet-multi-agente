@@ -25,8 +25,9 @@ def percentile(values: list[float], quantile: float) -> float:
 def main() -> int:
     parser = argparse.ArgumentParser(description="Evaluate PT-BR contextual risk assessment with a live local Ollama model.")
     parser.add_argument("--model", help="Optional Ollama model tag; otherwise use OLLAMA_MODEL.")
-    parser.add_argument("--split", choices=["dev", "heldout"], default="heldout",
-                        help="dev = scenarios used while developing; heldout = never used for tuning.")
+    parser.add_argument("--split", choices=["dev", "heldout_v1", "heldout_v2"], default="heldout_v2",
+                        help="dev = used while developing; heldout_v1 = seen during Critic calibration; heldout_v2 = new, unseen.")
+    parser.add_argument("--run", type=int, default=1, help="run number (repeated runs for mean ± sd)")
     parser.add_argument("--mode", choices=["llm", "embedding", "hybrid"], default="llm",
                         help="llm = model every turn (B); embedding = kNN only (A); hybrid = kNN + model on triggers (C).")
     parser.add_argument("--output", default=None)
@@ -219,8 +220,9 @@ def main() -> int:
         "context_mode": args.mode,
         "decided_by": dict(Counter(item.get("decided_by") or "llm" for item in cases)),
         "llm_call_rate": round(sum(1 for item in cases if (item.get("decided_by") or "llm") == "llm") / max(len(cases), 1), 4),
-        "tuning_note": ("held-out: written before the stage-2 prompt rewrite and never used to tune prompts, rules or thresholds"
-                        if args.split == "heldout" else "dev: used while developing the prompt and rules"),
+        "tuning_note": (("held-out v2 (2026-11-04): new cases with recorded origin, never used for tuning" if args.split == "heldout_v2" else "held-out v1: written before the stage-A prompt rewrite; seen while calibrating the Critic")
+                        if args.split.startswith("heldout") else "dev: used while developing the prompt and rules"),
+        "run": args.run,
         "dataset_size": len(cases),
         "route_accuracy": round(sum(item["expected_agent"] == item["actual_agent"] for item in routed) / max(len(route_cases), 1), 4),
         "route_cases": len(route_cases),

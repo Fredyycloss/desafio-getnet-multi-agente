@@ -157,7 +157,7 @@ def test_dev_hazards_are_caught_even_if_the_model_says_safe(case):
     assert _decide(case, adversarial) in {"safety_handoff", "ambiguous_safety_handoff"}
 
 
-@pytest.mark.parametrize("case", [c for c in load("dev") + load("heldout") if c["expected_risk"] in DANGEROUS],
+@pytest.mark.parametrize("case", [c for c in load("dev") + load("heldout_v1") + load("heldout_v2") if c["expected_risk"] in DANGEROUS],
                          ids=lambda c: c["id"])
 def test_policy_never_drops_a_hazard_the_model_reports(case):
     # Held-out is NOT used to tune rules: here the model reports the labelled risk and the
@@ -169,8 +169,17 @@ def test_policy_never_drops_a_hazard_the_model_reports(case):
 
 # -- Datasets and evaluation leak ----------------------------------------------------
 
+def test_heldout_v2_is_large_disjoint_and_records_origin():
+    seen = {c["message"] for c in load("dev") + load("heldout_v1")}
+    v2 = load("heldout_v2")
+    assert len(v2) >= 100 and len({c["id"] for c in v2}) == len(v2)
+    assert not seen & {c["message"] for c in v2}
+    assert all(c.get("origin") for c in v2)
+    assert {c["origin"].split(" ")[0].split(":")[0].rstrip(";") for c in v2} == {"manual", "generated", "paraphrase"}
+
+
 def test_heldout_dataset_is_large_disjoint_and_covers_new_categories():
-    dev, heldout = load("dev"), load("heldout")
+    dev, heldout = load("dev"), load("heldout_v1")
     assert len(heldout) >= 40
     assert len({c["id"] for c in heldout}) == len(heldout)
     assert not {c["message"] for c in dev} & {c["message"] for c in heldout}
@@ -196,7 +205,7 @@ SANCTIONED_GRAMS = {"pegando fogo de tanto", "fogo de tanto movimento"}
 def test_no_dataset_phrase_is_copied_into_routing_code(module):
     source = _norm((AGENTS_DIR / module).read_text(encoding="utf-8"))
     leaked = []
-    for case in load("dev") + load("heldout"):
+    for case in load("dev") + load("heldout_v1") + load("heldout_v2"):
         words = _norm(case["message"]).split()
         for i in range(len(words) - 3):
             gram = " ".join(words[i:i + 4])

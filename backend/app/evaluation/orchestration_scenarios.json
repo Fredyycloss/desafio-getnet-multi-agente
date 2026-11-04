@@ -1,0 +1,37 @@
+{
+ "_note": "Block V7-C scenarios (written 2026-11-03). multi_intent: each needs >=2 specialists (expected_agents). replan: the first specialist's evidence is naturally incomplete or the answer must be checked against tools; challenge items are run with CRITIC_CHALLENGE_MODE (test-only) to inject a bad first draft.",
+ "multi_intent": [
+  {"id": "mi01", "language": "pt", "message": "Qual a diferença entre a Get Clássica e a Get Smart e quando cai o dinheiro das vendas de ontem?", "expected_agents": ["knowledge_specialist", "payments_specialist"]},
+  {"id": "mi02", "language": "pt", "message": "Minha máquina não conecta e queria saber se o Pix cai na hora.", "expected_agents": ["customer_support_specialist", "knowledge_specialist"]},
+  {"id": "mi03", "language": "pt", "message": "Qual a cotação do euro e posso vender pelo Link de Pagamento para fora do Brasil?", "expected_agents": ["knowledge_specialist"]},
+  {"id": "mi04", "language": "pt", "message": "Tive venda recusada ontem? E como faço para antecipar as vendas aprovadas?", "expected_agents": ["payments_specialist", "knowledge_specialist"]},
+  {"id": "mi05", "language": "pt", "message": "Meu terminal está offline e eu queria saber quanto vou receber das vendas de ontem.", "expected_agents": ["customer_support_specialist", "payments_specialist"]},
+  {"id": "mi06", "language": "pt", "message": "Quero saber se minha conta está ativa e quais as taxas da Get Smart.", "expected_agents": ["customer_support_specialist", "knowledge_specialist"]},
+  {"id": "mi07", "language": "pt", "message": "Quanto tempo leva para cair uma venda no crediário e quando recebo as de ontem?", "expected_agents": ["knowledge_specialist", "payments_specialist"]},
+  {"id": "mi08", "language": "pt", "message": "Vai chover amanhã em Curitiba? Vou vender numa feira e preciso saber se o Get Tap funciona sem internet.", "expected_agents": ["knowledge_specialist"]},
+  {"id": "mi09", "language": "pt", "message": "Qual o erro do meu terminal e o que a Getnet orienta sobre manual da maquininha?", "expected_agents": ["customer_support_specialist", "knowledge_specialist"]},
+  {"id": "mi10", "language": "pt", "message": "Recebi uma recusa ontem; quais bandeiras de cartão a maquininha aceita?", "expected_agents": ["payments_specialist", "knowledge_specialist"]},
+  {"id": "mi11", "language": "en", "message": "Is my terminal online, and does Getnet offer a payment link?", "expected_agents": ["customer_support_specialist", "knowledge_specialist"]},
+  {"id": "mi12", "language": "en", "message": "When will yesterday's sales be deposited and how does receivables advance work?", "expected_agents": ["payments_specialist", "knowledge_specialist"]},
+  {"id": "mi13", "language": "en", "message": "What's the dollar rate today and can foreign customers pay me through the payment link?", "expected_agents": ["knowledge_specialist"]},
+  {"id": "mi14", "language": "en", "message": "Was any transaction declined yesterday, and which card brands are accepted?", "expected_agents": ["payments_specialist", "knowledge_specialist"]},
+  {"id": "mi15", "language": "pt", "message": "Qual o modelo da minha maquininha e ela tem conversor de moedas?", "expected_agents": ["customer_support_specialist", "knowledge_specialist"]},
+  {"id": "mi16", "language": "pt", "message": "Preciso saber o status das minhas vendas de ontem e se o empréstimo Getnet cai no mesmo dia.", "expected_agents": ["payments_specialist", "knowledge_specialist"]},
+  {"id": "mi17", "language": "pt", "message": "Minha conta está ativa? Quero também contratar pagamentos recorrentes, como funciona?", "expected_agents": ["customer_support_specialist", "knowledge_specialist"]},
+  {"id": "mi18", "language": "pt", "message": "Meu terminal mostra erro de rede; o Get Tap no celular seria uma alternativa? Que Android precisa?", "expected_agents": ["customer_support_specialist", "knowledge_specialist"]},
+  {"id": "mi19", "language": "en", "message": "Is my account active and what are the Get Mini requirements?", "expected_agents": ["customer_support_specialist", "knowledge_specialist"]},
+  {"id": "mi20", "language": "pt", "message": "Quanto recebo das vendas de ontem e posso parcelar no crediário em 48 vezes?", "expected_agents": ["payments_specialist", "knowledge_specialist"]}
+ ],
+ "replan": [
+  {"id": "rp01", "language": "pt", "message": "Qual o valor líquido exato da venda TX-DEMO-1001 e quando ela será liquidada?", "challenge": "invented_number"},
+  {"id": "rp02", "language": "pt", "message": "Qual foi o código da recusa da minha venda de ontem?", "challenge": "invented_number"},
+  {"id": "rp03", "language": "en", "message": "How much is the net amount of my approved sales from yesterday?", "challenge": "invented_number"},
+  {"id": "rp04", "language": "pt", "message": "Qual a taxa de crédito parcelado da Get Mini?", "challenge": "wrong_citation"},
+  {"id": "rp05", "language": "pt", "message": "Em até quantas vezes o Get Tap parcela?", "challenge": "invented_number"},
+  {"id": "rp06", "language": "en", "message": "What Android version does Get Tap require?", "challenge": "wrong_language"},
+  {"id": "rp07", "language": "pt", "message": "Quanto custa cada link pago no Link de Pagamento?", "challenge": "invented_number"},
+  {"id": "rp08", "language": "pt", "message": "Qual o prazo de recebimento das vendas no crediário?", "challenge": "secret_request"},
+  {"id": "rp09", "language": "pt", "message": "Meu terminal está com qual código de erro?", "challenge": "invented_number"},
+  {"id": "rp10", "language": "en", "message": "Until when did WhatsApp Business payments work?", "challenge": "wrong_citation"}
+ ]
+}
