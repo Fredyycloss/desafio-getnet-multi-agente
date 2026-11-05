@@ -2,11 +2,15 @@
 from __future__ import annotations
 
 import logging
+import re
 
 from ...infra.llm import LLMTimeout
 from ..clarification import clarification_result
 
 logger = logging.getLogger("app.agents.supervisor_agent")
+
+CITATION = re.compile(r"\[\d{1,2}\]")
+
 
 class ComposerMixin:
     def _finalize(self, specialist_results: list[dict], draft: str, trace: list[str], message: str, user_id: str,
@@ -36,6 +40,12 @@ class ComposerMixin:
                 trace_id=trace_id, tool_calls=tool_calls, context_assessment=context_assessment,
             )
 
+        cited = [r for r in specialist_results if CITATION.search(str(r.get("answer", "")))]
+        if draft and cited and not CITATION.search(draft):
+            # The planner rewrote cited specialist answers and dropped their [n] markers: the
+            # specialists' own answers (with citations) are used instead.
+            draft, model_written = "", False
+            trace = trace + ["planner_draft_dropped_citations_replaced"]
         if not draft:
             # The specialists' own answers are the draft; no extra generation needed.
             answers = list(dict.fromkeys(str(r.get("answer", "")).strip() for r in specialist_results if r.get("answer")))

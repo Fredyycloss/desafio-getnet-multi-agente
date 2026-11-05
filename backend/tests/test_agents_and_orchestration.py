@@ -593,3 +593,25 @@ def test_response_without_llm_is_marked_degraded(db, documents):
                             session_id="degraded-1", language="en", history=[], trace_id="degraded-1")
     assert result["degraded"] is True and result["degraded_reason"] == "llm_disabled"
     assert result["orchestration_mode"] == "deterministic_fallback"
+
+
+def test_planner_rewrite_that_drops_citations_is_replaced_by_the_cited_specialist_answer(db, documents):
+    class RewritingModel(PlanningSupervisorModel):
+        def chat(self, messages, tools=None, **kwargs):
+            out = super().chat(messages, tools, **kwargs)
+            if kwargs.get("json_schema") is None and self.plan_calls == 2:
+                return {"message": {"content": "Get Lite has no monthly rental."}}  # rewrite without [n]
+            return out
+
+    model = RewritingModel(context_assessment(recommended_agents=["knowledge_specialist", "customer_support_specialist"]))
+    supervisor = build_supervisor(db, documents, model)
+    original = supervisor.knowledge.run
+
+    def cited_run(*args, **kwargs):
+        result = original(*args, **kwargs)
+        return {**result, "answer": "Get Lite has no monthly rental [1]."}
+    supervisor.knowledge.run = cited_run
+    result = supervisor.run(message="What is Get Lite monthly rental?", user_id="cliente1988", session_id="plan-3",
+                            language="en", history=[], trace_id="plan-citations")
+    assert "planner_draft_dropped_citations_replaced" in result["trace"]
+    assert "[1]" in result["answer"]

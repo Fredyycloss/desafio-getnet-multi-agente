@@ -27,7 +27,8 @@ class ValidCriticModel:
         assert {"approved", "issues"} <= set(json_schema["required"])
         # The Supervisor never used a rewritten answer; requesting one only cost tokens.
         assert "corrected_answer" not in json_schema["properties"]
-        assert max_tokens is not None and max_tokens <= 80
+        # 160: at 80 tokens 6-7% of verdicts were truncated JSON (CRITIC_CALIBRATION_2026-11-04).
+        assert max_tokens is not None and max_tokens <= 160
         assert think is False
         assert temperature == 0.0
         return {"message": {"content": '{"approved":true,"issues":[],"corrected_answer":""}'}}
@@ -92,3 +93,26 @@ def test_strict_mode_blocks_on_any_issue(monkeypatch):
     model = SeverityCriticModel({"approved": True, "issues": [{"problem": "missing caveat", "material": False}]})
     result = CriticAgent(model, required=True).review("Sim.", "pt", [{"text": "Sim"}], user_message="Pode?")
     assert result["approved"] is False
+
+
+def test_critic_retries_once_on_invalid_json_and_gets_relative_dates():
+    import json as _json
+    from app.agents.critic_agent import CriticAgent
+
+    class Model:
+        model = "scripted"
+
+        def __init__(self):
+            self.calls = []
+
+        def chat(self, messages, tools=None, *, purpose="chat", **kwargs):
+            self.calls.append((purpose, messages))
+            content = '{"approved": true, "iss' if purpose == "critic" else _json.dumps({"approved": True, "issues": []})
+            return {"message": {"content": content}}
+
+    model = Model()
+    verdict = CriticAgent(model, required=True).review("Resposta.", "pt", [{"title": "t", "url": "u", "content": "c"}])
+    assert verdict["approved"] is True and verdict["mode"] == "llm_critic"
+    assert [p for p, _ in model.calls] == ["critic", "critic_retry"]
+    payload = _json.loads(model.calls[0][1][1]["content"])
+    assert set(payload["relative_dates"]) == {"yesterday", "today", "tomorrow"}

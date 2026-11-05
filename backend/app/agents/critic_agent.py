@@ -3,7 +3,7 @@ from __future__ import annotations
 import json
 import os
 import re
-from datetime import date, datetime, timezone
+from datetime import date, datetime, timedelta, timezone
 
 from pydantic import BaseModel, ConfigDict, Field
 
@@ -47,7 +47,8 @@ CRITIC_RULES = {
 def critic_system_prompt(strictness: str = "material") -> str:
     return (_CRITIC_BASE + CRITIC_RULES.get(strictness, CRITIC_RULES["material"])
             + "Statements that records are synthetic demonstration data are mandatory policy text, not claims to verify. "
-              "Text from the official Getnet pages in the evidence counts as support. Dates are compared with today_utc. "
+              "Text from the official Getnet pages in the evidence counts as support. Dates are compared with today_utc; "
+              "'today', 'yesterday' and 'tomorrow' mean exactly the dates in relative_dates (computed by code, do not recompute). "
             + "Return issues: at most 3, each a very short problem and material=true only if it would change what the customer "
               "believes or does (unsupported or contradicted fact, wrong language, unsafe guidance, request for secrets, request "
               "not addressed); observations you consider minor or acceptable have material=false. approved=false only when "
@@ -177,9 +178,12 @@ class CriticAgent:
                 try:
                     strictness = os.getenv("CRITIC_STRICTNESS", "material")
                     system = critic_system_prompt(strictness)
+                    # UTC, the timezone of every tool timestamp (a local date made recent records look "future").
+                    today = clock_today() if os.getenv("DEMO_TODAY") else datetime.now(timezone.utc).date()
                     payload = {
-                        # UTC, the timezone of every tool timestamp (a local date made recent records look "future").
-                        "today_utc": clock_today().isoformat() if os.getenv("DEMO_TODAY") else datetime.now(timezone.utc).date().isoformat(),
+                        "today_utc": today.isoformat(),
+                        "relative_dates": {"yesterday": (today - timedelta(days=1)).isoformat(), "today": today.isoformat(),
+                                           "tomorrow": (today + timedelta(days=1)).isoformat()},
                         "language": language,
                         "customer_request": (user_message or "")[:600],
                         "recent_conversation": [
@@ -190,16 +194,22 @@ class CriticAgent:
                         "answer": answer[:2000],
                         "evidence": _compact_evidence(evidence),
                     }
-                    data = self.llm.chat(
-                        [{"role": "system", "content": system}, {"role": "user", "content": json.dumps(payload, ensure_ascii=False)}],
-                        json_schema=_critic_schema(),
-                        think=False,
-                        temperature=0.0,
-                        max_tokens=int(os.getenv("OLLAMA_CRITIC_MAX_OUTPUT_TOKENS", "80")),
-                        purpose="critic",
-                    )
-                    result = json.loads(data.get("message", {}).get("content", "{}"))
-                    parsed = CriticAssessment.model_validate(result)
+                    messages = [{"role": "system", "content": system}, {"role": "user", "content": json.dumps(payload, ensure_ascii=False)}]
+                    parsed = None
+                    for attempt in range(2):  # one retry: an invalid verdict is usually a truncated JSON object
+                        data = self.llm.chat(
+                            messages, json_schema=_critic_schema(), think=False, temperature=0.0,
+                            max_tokens=int(os.getenv("OLLAMA_CRITIC_MAX_OUTPUT_TOKENS", "160")),
+                            purpose="critic" if attempt == 0 else "critic_retry",
+                        )
+                        try:
+                            parsed = CriticAssessment.model_validate(json.loads(data.get("message", {}).get("content", "{}")))
+                            break
+                        except (ValueError, TypeError):
+                            if attempt:
+                                raise
+                            messages = messages + [{"role": "user", "content": "Your last output was not valid JSON for the schema. "
+                                                    "Return only the JSON object, each problem at most 12 words."}]
                     approved, material, minor = parsed.decide(strictness)
                     verdict = {
                         "approved": approved,
