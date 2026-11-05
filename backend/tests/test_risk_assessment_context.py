@@ -48,3 +48,18 @@ def test_assistant_safety_question_does_not_create_a_historical_hazard():
     result = RiskAssessmentAgent().assess("Não.", history, "pt")
 
     assert result["requires_handoff"] is False
+
+
+def test_naming_something_does_not_read_as_danger_vocabulary():
+    """'se chama' (is named/called) must not collide with 'chamas' (flames) -- found 05/11/2026:
+    singular 'chama' matched the verb 'chamar' in any naming sentence, forcing Context
+    Intelligence's conservative floor to treat a business name as an unexplained hazard."""
+    for message in ("Meu principal fornecedor se chama Distribuidora Vale Verde.",
+                    "Meu estabelecimento se chama Doceria Primavera."):
+        assert RiskAssessmentAgent.danger_vocabulary(message) is False
+        result = RiskAssessmentAgent().assess(message, [], "pt")
+        assert result["requires_handoff"] is False
+
+
+def test_plural_chamas_still_matches_as_danger_vocabulary():
+    assert RiskAssessmentAgent.danger_vocabulary("A loja está em chamas.") is True

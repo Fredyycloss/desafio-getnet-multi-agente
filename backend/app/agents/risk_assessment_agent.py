@@ -33,12 +33,17 @@ class RiskAssessmentAgent:
     )
     CONCRETE_HAZARD = (
         r"\b(smoke|smoking|flames?|on fire|caught fire|sparks?|electric(?:al)? shock|overheating|swollen battery)\b",
-        r"\b(fumaca|fumacando|chamas?|pegando fogo|pegou fogo|incendio|faiscas?|choque|superaquec|cheiro de queimado|bateria.{0,35}(estufada|inchada|inchou))\b",
+        # "chamas" (plural, flames) only -- the singular "chama" collides with the verb "chamar"
+        # ("se chama" = "is named"), an extremely common, harmless construction.
+        r"\b(fumaca|fumacando|chamas|pegando fogo|pegou fogo|incendio|faiscas?|choque|superaquec|cheiro de queimado|bateria.{0,35}(estufada|inchada|inchou))\b",
     )
     # Broad physical-danger vocabulary (not a hazard by itself). Used by the
     # Context Intelligence as a conservative floor when the model says "safe".
     DANGER_VOCABULARY = (
-        r"\b(explo\w*|bomba\w*|fogo|chamas?|fumac\w*|faisca\w*|choque|queim\w*|derret\w*|estour\w*|incendi\w*|"
+        # "chamas" (plural, flames) only -- see the CONCRETE_HAZARD comment above; the singular
+        # "chama" matched "se chama" ("is named") in every message naming a shop, product or
+        # supplier, forcing risk_level=ambiguous on completely benign turns (found 05/11/2026).
+        r"\b(explo\w*|bomba\w*|fogo|chamas|fumac\w*|faisca\w*|choque|queim\w*|derret\w*|estour\w*|incendi\w*|"
         r"machuc\w*|ferid\w*|ferir|perig\w*|medo|receio|estalo|inchad\w*|estufad\w*)\b",
         r"\b(explo\w*|bomb\w*|fire|flames?|smok\w*|sparks?|shock\w*|burn\w*|melt\w*|hurt|injur\w*|danger\w*|afraid|scared|swollen)\b",
     )

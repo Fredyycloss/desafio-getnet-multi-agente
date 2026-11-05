@@ -127,6 +127,7 @@ calibração (mede κ humano×humano antes de seguir), depois o restante.
 | X.1 | `retrieval_test_v2` e `quality_test_v2` usam as mesmas 66 páginas (pergunta igual nos dois arquivos) — aceitável pela missão ("mesma pergunta serve às duas medições"), mas documentar a dependência para não contar como dois sinais independentes | RESOLVIDO (documentado em `DATASETS.md`) | `backend/app/evaluation/DATASETS.md` |
 | X.2 | `quality_test_v2` não foi medido nem uma vez ainda (sanity check só confirmou que os `expected_urls` existem via BM25, recall@3=0,94 — esperado, pois a pergunta foi escrita a partir da própria página) | PARCIAL | `retrieval_v2_bm25_sanity` (scratch, não commitado — é só verificação de integridade, não resultado a reportar) |
 | X.3 | Carimbo de dataset (`dataset:` no relatório) ausente em runs anteriores a hoje — relatórios antigos (`ANSWER_QUALITY_cloud_2026-11-05.json` etc.) não têm o campo; não retroativo | RESOLVIDO (campo adicionado só para runs novos) | `run_answer_quality.py` |
+| X.4 | Bug de segurança/UX: `risk_level=ambiguous` indevido em qualquer frase pt que nomeia algo ("X se chama Y") — regex `chamas?` colidia com o verbo "chamar"; cliente via menu de confirmação de risco físico numa frase neutra. Achado ao investigar o Bloco 9 round 3, mas é geral (não só memória) | RESOLVIDO | `app/agents/risk_assessment_agent.py` (`chamas?`→`chamas`); heldout de 109 casos idêntico à base após a correção; `docs/RELATORIO_BUG_CHAMA_2026-11-05.md` |
 
 ---
 
