@@ -38,8 +38,9 @@ CRITIC_RULES = {
     # v2 (default since 2026-11-02): reject only material problems.
     "material": ("Reject (approved=false) only for a material problem: a factual claim not supported by "
                  "the evidence, a contradiction with an observation, the wrong language, unsafe guidance, a request for secrets, or "
-                 "not addressing the customer's request. General low-risk advice and standard caveats are allowed. Style, tone, "
-                 "missing optional caveats or minor wording are not reasons to reject. "),
+                 "not addressing the customer's request -- including a question with more than one distinct part where the "
+                 "evidence answers a part the reply skips or glosses over. General low-risk advice and standard caveats are "
+                 "allowed. Style, tone, missing optional caveats or minor wording are not reasons to reject. "),
     # v1 wording (benchmark run anthropic-critic-v1, 21% rejections): any unsupported or conflicting claim.
     "strict": "Reject claims that are unsupported or conflict with a more authoritative observation. ",
 }
