@@ -11,6 +11,7 @@ import numpy as np
 from typing import Any
 
 from ..memory import memory_limit, window
+from .excerpt import focused_excerpt
 from ..infra.database import Database
 from ..infra.llm import LLMProvider, LLMUnavailable
 from ..language import normalize
@@ -429,7 +430,7 @@ class KnowledgeAgent:
         )
         history_block = "\n".join(f"{m.get('role')}: {str(m.get('content',''))[:memory_limit(m, 300)]}" for m in window(history, 4))
         evidence_block = "\n\n".join(
-            f"[{i+1}] {d['title']} — {d.get('section') or ''} | {d['url']}\n{d['content'][:EVIDENCE_PROMPT_CHARS]}" for i, d in enumerate(evidence)
+            f"[{i+1}] {d['title']} — {d.get('section') or ''} | {d['url']}\n{focused_excerpt(d['content'], query, EVIDENCE_PROMPT_CHARS)}" for i, d in enumerate(evidence)
         ) or "(none)"
         tools_block = json.dumps(tool_results or [], ensure_ascii=False, default=str)[:2500]
         # Retrieved pages and tool output are data: delimited, and a page cannot close the delimiter itself.

@@ -48,9 +48,9 @@ class ChatService:
 
     @staticmethod
     def _intent_classifier(llm, db, extra_examples=None):
-        """kNN intent classifier for CONTEXT_MODE=embedding|hybrid (local nomic embeddings)."""
+        """kNN intent classifier for CONTEXT_MODE=embedding|hybrid|llm_knn_route (local nomic embeddings)."""
         import os
-        if llm is None or os.getenv("CONTEXT_MODE", "llm").strip().lower() not in {"embedding", "hybrid"}:
+        if llm is None or os.getenv("CONTEXT_MODE", "llm").strip().lower() not in {"embedding", "hybrid", "llm_knn_route"}:
             return None
         from .agents.intent_classifier import EmbeddingIntentClassifier
         return EmbeddingIntentClassifier(llm, db, extra_examples=extra_examples)

@@ -12,6 +12,7 @@ from ..clock import today as clock_today
 from ..infra.llm import LLMProvider, LLMTimeout, LLMUnavailable
 from ..language import detect_language
 from ..observability import stage
+from .excerpt import focused_excerpt
 from .grounding import find_unsupported
 
 MAX_EVIDENCE_ITEMS = 8
@@ -119,10 +120,11 @@ def _critic_schema() -> dict:
     }
 
 
-def _compact_evidence(evidence: list[dict]) -> list[dict]:
+def _compact_evidence(evidence: list[dict], focus: str = "") -> list[dict]:
     """Bound evidence sent to the critic: at most 8 items, long text truncated. Structured tool
     data (lists/objects: transactions, terminal status) keeps more characters than page text,
-    because the amounts and dates the answer quotes live there."""
+    because the amounts and dates the answer quotes live there. Page text is cut around the part
+    the answer talks about (``focus``), not at its start."""
     compact: list[dict] = []
     for item in evidence[:MAX_EVIDENCE_ITEMS]:
         if not isinstance(item, dict):
@@ -130,7 +132,7 @@ def _compact_evidence(evidence: list[dict]) -> list[dict]:
         reduced = {}
         for key, value in item.items():
             if isinstance(value, str):
-                reduced[key] = value[:MAX_EVIDENCE_CHARS]
+                reduced[key] = focused_excerpt(value, focus, MAX_EVIDENCE_CHARS) if key == "content" else value[:MAX_EVIDENCE_CHARS]
             elif isinstance(value, (int, float, bool)) or value is None:
                 reduced[key] = value
             else:
@@ -192,7 +194,7 @@ class CriticAgent:
                             if item.get("role") in {"user", "assistant"}
                         ],
                         "answer": answer[:2000],
-                        "evidence": _compact_evidence(evidence),
+                        "evidence": _compact_evidence(evidence, answer),
                     }
                     messages = [{"role": "system", "content": system}, {"role": "user", "content": json.dumps(payload, ensure_ascii=False)}]
                     parsed = None

@@ -114,7 +114,9 @@ class ContextIntelligence:
 
     mode (CONTEXT_MODE): ``llm`` = model for every turn; ``embedding`` = kNN only
     (no generation); ``hybrid`` = kNN for clear, low-risk turns and the model whenever
-    a mandatory trigger fires (see ``needs_llm``).
+    a mandatory trigger fires (see ``needs_llm``); ``llm_knn_route`` = the model decides every
+    turn's risk and safety, and on a turn the model rates safe with no mandatory trigger a confident
+    kNN match only chooses the specialist (see ``_route_from_knn``).
     """
 
     def __init__(self, llm: LLMProvider | None, *, classifier=None, mode: str | None = None):
@@ -176,13 +178,13 @@ class ContextIntelligence:
         selected_option: str | None = None,
     ) -> tuple[dict, str]:
         knn = None
-        if self.mode in {"embedding", "hybrid"} and self.classifier is not None:
+        if self.mode in {"embedding", "hybrid", "llm_knn_route"} and self.classifier is not None:
             try:
                 knn = self.classifier.classify(message)
             except LLMUnavailable as exc:
                 logger.warning("context_embedding_unavailable trace_id=%s error=%s", trace_id, type(exc).__name__)
             reason = self.needs_llm(message, history, knn)
-            if knn is not None and (self.mode == "embedding" or reason is None or self.llm is None):
+            if knn is not None and self.mode != "llm_knn_route" and (self.mode == "embedding" or reason is None or self.llm is None):
                 assessment = self._assessment_from_knn(knn, clarify=reason is not None)
                 calibrated = self._apply_deterministic_context_controls(assessment, message, history, language)
                 calibrated.update(decided_by="embedding", embedding_match=knn, llm_trigger=reason)
@@ -275,9 +277,27 @@ class ContextIntelligence:
             calibrated["confidence"],
         )
         calibrated["decided_by"] = "llm"
+        if self.mode == "llm_knn_route" and knn is not None and reason is None:
+            calibrated = self._route_from_knn(calibrated, knn, message, history, language)
         if knn is not None:
             calibrated.update(embedding_match=knn, llm_trigger=reason)
         return calibrated, "llm_context_intelligence"
+
+    def _route_from_knn(self, assessment: dict, knn: dict, message: str, history: list[dict], language: str) -> dict:
+        """Route-only override: the kNN never touches risk. It applies only when the model rated the
+        turn safe, asked for no human, and either sent it to the menu or picked a single specialist;
+        a multi-agent plan from the model is kept. Deterministic controls run again afterwards."""
+        agent = knn.get("agent")
+        if (not agent or knn.get("intent") == "human" or assessment.get("risk_level") != "safe"
+                or assessment.get("needs_human")
+                or assessment.get("recommended_action") not in {"route_to_agent", "clarify"}
+                or len(assessment.get("recommended_agents") or []) > 1):
+            return assessment
+        routed = {**assessment, "recommended_agents": [agent], "recommended_action": "route_to_agent",
+                  "recommended_destination": agent, "needs_clarification": False, "ambiguity_level": "low"}
+        routed = self._apply_deterministic_context_controls(routed, message, history, language)
+        routed["decided_by"] = "llm_risk_knn_route"
+        return routed
 
     @staticmethod
     def _apply_deterministic_context_controls(

@@ -123,3 +123,36 @@ def test_deterministic_hazard_still_wins_in_hybrid_mode():
     result, _ = _ci("hybrid", CountingLLM(context_assessment())).assess(message, [], "pt", "t4")
     deterministic = RiskAssessmentAgent().assess(message, [], "pt")
     assert PolicyGate().apply(result, deterministic)["action"] == "safety_handoff"
+
+
+# -- llm_knn_route: the model decides risk on every turn, the kNN only picks the specialist ---------
+
+CLEAR_PRODUCT = "Quais modelos de maquininha a Getnet oferece para quem está começando agora?"
+
+
+def test_knn_route_replaces_a_needless_menu_but_the_model_still_runs():
+    menu = context_assessment(recommended_agents=[], recommended_action="clarify", recommended_destination="clarification",
+                              needs_clarification=True, ambiguity_level="high", confidence=0.4)
+    llm = CountingLLM(menu)
+    result, mode = _ci("llm_knn_route", llm).assess(CLEAR_PRODUCT, [], "pt", "t5")
+    assert llm.calls == 1 and mode == "llm_context_intelligence"
+    assert result["decided_by"] == "llm_risk_knn_route"
+    assert result["recommended_agents"] == ["knowledge_specialist"]
+    assert result["recommended_action"] == "route_to_agent" and result["risk_level"] == "safe"
+
+
+def test_knn_route_never_overrides_a_model_risk_signal():
+    risky = context_assessment(risk_level="potentially_dangerous", recommended_agents=[], recommended_action="clarify",
+                               recommended_destination="clarification", needs_clarification=True)
+    result, _ = _ci("llm_knn_route", CountingLLM(risky)).assess(CLEAR_PRODUCT, [], "pt", "t6")
+    assert result["decided_by"] == "llm" and result["risk_level"] == "potentially_dangerous"
+    assert result["recommended_action"] == "clarify"
+
+
+def test_knn_route_keeps_a_multi_agent_plan_and_skips_triggered_turns():
+    plan = context_assessment(recommended_agents=["knowledge_specialist", "payments_specialist"])
+    result, _ = _ci("llm_knn_route", CountingLLM(plan)).assess(CLEAR_PRODUCT, [], "pt", "t7")
+    assert result["recommended_agents"] == ["knowledge_specialist", "payments_specialist"]
+    message = "A maquininha está soltando fumaça perto do caixa."
+    result, _ = _ci("llm_knn_route", CountingLLM(context_assessment())).assess(message, [], "pt", "t8")
+    assert result["decided_by"] == "llm" and result["llm_trigger"] == "danger_vocabulary"

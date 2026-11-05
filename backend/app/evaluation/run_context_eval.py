@@ -28,8 +28,8 @@ def main() -> int:
     parser.add_argument("--split", choices=["dev", "heldout_v1", "heldout_v2"], default="heldout_v2",
                         help="dev = used while developing; heldout_v1 = seen during Critic calibration; heldout_v2 = new, unseen.")
     parser.add_argument("--run", type=int, default=1, help="run number (repeated runs for mean ± sd)")
-    parser.add_argument("--mode", choices=["llm", "embedding", "hybrid"], default="llm",
-                        help="llm = model every turn (B); embedding = kNN only (A); hybrid = kNN + model on triggers (C).")
+    parser.add_argument("--mode", choices=["llm", "embedding", "hybrid", "llm_knn_route"], default="llm",
+                        help="llm = model every turn (B); embedding = kNN only (A); hybrid = kNN + model on triggers (C); llm_knn_route = model decides risk every turn, kNN picks the specialist on safe untriggered turns (D).")
     parser.add_argument("--output", default=None)
     args = parser.parse_args()
     args.output = args.output or f"context-evaluation-{args.split}-{args.mode}.json"
