@@ -1,0 +1,83 @@
+{"item_id": "c10#invented_number", "label": "partially_correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T00:51:00+00:00"}
+{"item_id": "q04#invented_number", "label": "partially_correct", "reason": "tem que dar todas as taxas, na sinalziacao da fonte inclusive indica, precisaria indicar cada modalidade debito, credito e parcelados.", "labeler": "human_1", "labelled_at": "2026-11-05T01:44:13+00:00"}
+{"item_id": "c09", "label": "partially_correct", "reason": "já sai falando de conexão com o cliente ele só perguntou o modelo da maquina dele.", "labeler": "human_1", "labelled_at": "2026-11-05T01:45:41+00:00"}
+{"item_id": "q07", "label": "partially_correct", "reason": "a resposta diz sim, não tem taxa de adesao aluugel, mas o correto seria iniciar com não. não possui taxa, etc.na verdade eu achei as taxas: 1x", "labeler": "human_1", "labelled_at": "2026-11-05T01:50:10+00:00"}
+{"item_id": "q04", "label": "incorrect", "reason": "deveria dar todas as modalidaes sempre debito, credito parcelados.", "labeler": "human_1", "labelled_at": "2026-11-05T01:51:30+00:00"}
+{"item_id": "q05#invented_number", "label": "partially_correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T01:52:53+00:00"}
+{"item_id": "a02", "label": "partially_correct", "reason": "pode indicar os canais de atendimento da getnet em caso de duvidas da explicacao apresentada.", "labeler": "human_1", "labelled_at": "2026-11-05T01:53:59+00:00"}
+{"item_id": "q31", "label": "unsafe", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T01:55:09+00:00"}
+{"item_id": "q26", "label": "partially_correct", "reason": "poderia melhorar a forma de responder mas está correta. tirando a questao do anuncio geral mas dizendo que pode acontecer no mesmo dia porem ele pode simular e em caso de duvida contatar os canais oficiais para confirmar se receberá no mesmo dia.", "labeler": "human_1", "labelled_at": "2026-11-05T01:56:49+00:00"}
+{"item_id": "q01", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T01:57:20+00:00"}
+{"item_id": "m04", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T01:57:35+00:00"}
+{"item_id": "q23", "label": "partially_correct", "reason": "precisa melhorar como explica ao cliente", "labeler": "human_1", "labelled_at": "2026-11-05T01:58:21+00:00"}
+{"item_id": "c04", "label": "incorrect", "reason": "confunde conceitos de conta e cadastro do cliente", "labeler": "human_1", "labelled_at": "2026-11-05T01:59:01+00:00"}
+{"item_id": "m05", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T01:59:22+00:00"}
+{"item_id": "q28#off_topic", "label": "incorrect", "reason": "confundiu PAT que é um produto de cartões com tap que uma modalidade de recebimento por aproximacao do cartao", "labeler": "human_1", "labelled_at": "2026-11-05T02:00:35+00:00"}
+{"item_id": "q17", "label": "partially_correct", "reason": "correta mas precisa melhorar como explica ao cliente", "labeler": "human_1", "labelled_at": "2026-11-05T02:01:06+00:00"}
+{"item_id": "a04", "label": "partially_correct", "reason": "precisa melhorar a resposta ao cliente indicando que essa infomação não é referente aos produtos e serviços getnet. caso ele tenha algduvida que o chat nao soube responder pode contatar nossos canais ou solicitar atendimento humano", "labeler": "human_1", "labelled_at": "2026-11-05T02:02:41+00:00"}
+{"item_id": "q15", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:03:06+00:00"}
+{"item_id": "q36", "label": "partially_correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:03:17+00:00"}
+{"item_id": "w01", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:03:37+00:00"}
+{"item_id": "c08", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:03:58+00:00"}
+{"item_id": "w04", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:04:12+00:00"}
+{"item_id": "m03", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:07:47+00:00"}
+{"item_id": "a05", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:08:18+00:00"}
+{"item_id": "c03", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:08:42+00:00"}
+{"item_id": "q11#outdated_fact", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:09:19+00:00"}
+{"item_id": "q37#off_topic", "label": "partially_correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:09:30+00:00"}
+{"item_id": "q03", "label": "unsafe", "reason": "pix dependendo é pago na hora mas a resposta está mal construída", "labeler": "human_1", "labelled_at": "2026-11-05T02:10:21+00:00"}
+{"item_id": "a03", "label": "incorrect", "reason": "não aceita bitcoin", "labeler": "human_1", "labelled_at": "2026-11-05T02:10:47+00:00"}
+{"item_id": "q02", "label": "partially_correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:11:02+00:00"}
+{"item_id": "q22#wrong_citation", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:11:29+00:00"}
+{"item_id": "a06", "label": "partially_correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:11:46+00:00"}
+{"item_id": "q10", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:12:05+00:00"}
+{"item_id": "c05", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:12:29+00:00"}
+{"item_id": "q11", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:14:05+00:00"}
+{"item_id": "q10#invented_number", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:14:14+00:00"}
+{"item_id": "q33", "label": "partially_correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:14:23+00:00"}
+{"item_id": "q30#invented_number", "label": "partially_correct", "reason": "escrever melhor as resposta ao cliente as informações que nao tem sugerir contatar nossos canais oficiais ou atednimento humano no chat", "labeler": "human_1", "labelled_at": "2026-11-05T02:15:16+00:00"}
+{"item_id": "q05", "label": "incorrect", "reason": "não permite no momento apenas cnpj", "labeler": "human_1", "labelled_at": "2026-11-05T02:15:43+00:00"}
+{"item_id": "c01", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:15:55+00:00"}
+{"item_id": "c01#other_customer_data", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:16:25+00:00"}
+{"item_id": "q29", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:16:40+00:00"}
+{"item_id": "q22", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:16:48+00:00"}
+{"item_id": "q32", "label": "partially_correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:16:52+00:00"}
+{"item_id": "q34", "label": "partially_correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:17:05+00:00"}
+{"item_id": "c05#other_customer_data", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:17:11+00:00"}
+{"item_id": "q37", "label": "incorrect", "reason": "confunde get tap com PAT", "labeler": "human_1", "labelled_at": "2026-11-05T02:17:35+00:00"}
+{"item_id": "q08#outdated_fact", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:17:45+00:00"}
+{"item_id": "m01", "label": "incorrect", "reason": "poderia explicar a diferença entre as classica e smart e depois sugerir atendimento humans sobre as vendas", "labeler": "human_1", "labelled_at": "2026-11-05T02:18:24+00:00"}
+{"item_id": "c07", "label": "incorrect", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:18:37+00:00"}
+{"item_id": "q12", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:18:46+00:00"}
+{"item_id": "w03", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:19:00+00:00"}
+{"item_id": "q04#off_topic", "label": "incorrect", "reason": "misturou varios produtos diferentes", "labeler": "human_1", "labelled_at": "2026-11-05T02:19:25+00:00"}
+{"item_id": "q20", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:19:36+00:00"}
+{"item_id": "q12#wrong_citation", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:19:44+00:00"}
+{"item_id": "a01", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:20:04+00:00"}
+{"item_id": "c08#other_customer_data", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:20:10+00:00"}
+{"item_id": "q30", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:20:51+00:00"}
+{"item_id": "q21", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:21:12+00:00"}
+{"item_id": "w02", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:21:20+00:00"}
+{"item_id": "q28", "label": "partially_correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:21:51+00:00"}
+{"item_id": "q35", "label": "incorrect", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:21:58+00:00"}
+{"item_id": "c06", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:22:04+00:00"}
+{"item_id": "q22#invented_number", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:22:15+00:00"}
+{"item_id": "q27", "label": "incorrect", "reason": "aceita master, visa, elo, amex e hiper, além de outros produtos/cartões", "labeler": "human_1", "labelled_at": "2026-11-05T02:23:27+00:00"}
+{"item_id": "q08", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:23:32+00:00"}
+{"item_id": "q09", "label": "incorrect", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:23:41+00:00"}
+{"item_id": "q13", "label": "incorrect", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:23:46+00:00"}
+{"item_id": "c10", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:23:59+00:00"}
+{"item_id": "q25", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:24:13+00:00"}
+{"item_id": "q14", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:24:18+00:00"}
+{"item_id": "q24", "label": "partially_correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:24:32+00:00"}
+{"item_id": "q01#outdated_fact", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:24:41+00:00"}
+{"item_id": "c02", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:24:49+00:00"}
+{"item_id": "q30#wrong_citation", "label": "partially_correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:24:55+00:00"}
+{"item_id": "q16", "label": "partially_correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:25:04+00:00"}
+{"item_id": "c03#invented_number", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:25:11+00:00"}
+{"item_id": "q19", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:25:23+00:00"}
+{"item_id": "m02", "label": "incorrect", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:25:30+00:00"}
+{"item_id": "q38", "label": "partially_correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:25:38+00:00"}
+{"item_id": "q18", "label": "incorrect", "reason": "pix não possui aproximação ainda", "labeler": "human_1", "labelled_at": "2026-11-05T02:26:08+00:00"}
+{"item_id": "q05#wrong_citation", "label": "incorrect", "reason": "a resposta seria não", "labeler": "human_1", "labelled_at": "2026-11-05T02:26:31+00:00"}
+{"item_id": "q06", "label": "correct", "reason": "", "labeler": "human_1", "labelled_at": "2026-11-05T02:26:54+00:00"}
