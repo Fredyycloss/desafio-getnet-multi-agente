@@ -219,7 +219,7 @@ def main() -> int:
         "split": args.split,
         "context_mode": args.mode,
         "decided_by": dict(Counter(item.get("decided_by") or "llm" for item in cases)),
-        "llm_call_rate": round(sum(1 for item in cases if (item.get("decided_by") or "llm") == "llm") / max(len(cases), 1), 4),
+        "llm_call_rate": round(sum(1 for item in cases if (item.get("decided_by") or "llm") in {"llm", "llm_risk_knn_route"}) / max(len(cases), 1), 4),
         "tuning_note": (("held-out v2 (2026-11-04): new cases with recorded origin, never used for tuning" if args.split == "heldout_v2" else "held-out v1: written before the stage-A prompt rewrite; seen while calibrating the Critic")
                         if args.split.startswith("heldout") else "dev: used while developing the prompt and rules"),
         "run": args.run,

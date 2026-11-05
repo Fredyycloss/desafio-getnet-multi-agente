@@ -52,7 +52,7 @@ class ContextAssessment(BaseModel):
     operational_reason: str = Field(min_length=1, max_length=160)
     blocked_tools: list[str] = Field(default_factory=list, max_length=20)
     # Which component decided the turn (hybrid mode) and why the LLM was or was not called.
-    decided_by: Literal["embedding", "llm", "rule"] | None = None
+    decided_by: Literal["embedding", "llm", "llm_risk_knn_route", "rule"] | None = None
     embedding_match: dict | None = None
     llm_trigger: str | None = None
 

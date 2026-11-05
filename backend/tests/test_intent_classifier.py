@@ -7,7 +7,7 @@ from pathlib import Path
 
 import pytest
 
-from app.agents.context_intelligence import ContextIntelligence
+from app.agents.context_intelligence import ContextAssessment, ContextIntelligence
 from app.agents.intent_classifier import EXAMPLES_PATH, EmbeddingIntentClassifier
 from app.agents.policy_gate import PolicyGate
 from app.agents.risk_assessment_agent import RiskAssessmentAgent
@@ -139,6 +139,7 @@ def test_knn_route_replaces_a_needless_menu_but_the_model_still_runs():
     assert result["decided_by"] == "llm_risk_knn_route"
     assert result["recommended_agents"] == ["knowledge_specialist"]
     assert result["recommended_action"] == "route_to_agent" and result["risk_level"] == "safe"
+    ContextAssessment.model_validate(result)  # the result stays a valid assessment (API and eval re-validate it)
 
 
 def test_knn_route_never_overrides_a_model_risk_signal():
