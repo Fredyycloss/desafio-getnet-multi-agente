@@ -130,3 +130,35 @@ def test_memory_note_survives_the_history_window_and_reaches_the_answer_writer(d
     CustomerSupportAgent(db, model).run("Qual é o nome da minha loja?", "cliente1988", "pt", history=history)
     assert any("Doceria Primavera" in m["content"] for m in next(v for k, v in model.prompts.items() if k.endswith(":tool_selection")))
     assert "Doceria Primavera" in next(v for k, v in model.prompts.items() if k.endswith(":answer"))[-1]["content"]
+
+
+def test_knowledge_recall_tool_answers_from_the_session_memory(db):
+    from app.agents.knowledge_agent import KnowledgeAgent
+    from app.infra.llm.base import normalised_response
+
+    class Model:
+        model = "scripted"
+
+        def __init__(self):
+            self.prompts = {}
+
+        def chat(self, messages, tools=None, *, purpose="chat", **kwargs):
+            self.prompts[purpose] = messages
+            if tools:
+                return normalised_response(content="", tool_calls=[{"id": "1", "function": {"name": "recall_conversation", "arguments": {}}}],
+                                           provider="t", model="t", prompt_tokens=1, output_tokens=1, latency_ms=1, cost_usd=0)
+            return normalised_response(content="Você disse que a loja se chama Doceria Primavera.", tool_calls=[], provider="t",
+                                       model="t", prompt_tokens=1, output_tokens=1, latency_ms=1, cost_usd=0)
+
+        def embed(self, texts):
+            from app.infra.llm import LLMUnavailable
+            raise LLMUnavailable("no embeddings")
+
+    note = {"role": "assistant", "content": "[conversation memory] store: Doceria Primavera", "memory": True}
+    history = [note] + [{"role": "user", "content": f"pergunta {i}"} for i in range(6)]
+    model = Model()
+    result = KnowledgeAgent([], db=db, llm=model).run("Qual é o nome da minha loja?", "pt", history=history)
+    assert "tool:recall_conversation" in result["trace"] and "abstention" not in result["trace"]
+    assert "Doceria Primavera" in result["answer"]
+    assert "Doceria Primavera" in model.prompts["knowledge"][-1]["content"]
+    assert KnowledgeAgent([], db=db, llm=model).run("Qual é o nome da minha loja?", "pt", history=[])["trace"][-1] == "abstention"

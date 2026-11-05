@@ -40,6 +40,10 @@ KNOWLEDGE_TOOLS = [
         "parameters": {"type": "object", "properties": {
             "base": {"type": "string", "description": "e.g. EUR"}, "quote": {"type": "string", "description": "e.g. BRL"}},
             "required": ["base"]}}},
+    {"type": "function", "function": {"name": "recall_conversation",
+        "description": "What the customer said earlier in this same conversation (session memory and their recent messages). "
+                       "Use when the customer asks about something they told you before.",
+        "parameters": {"type": "object", "properties": {}}}},
 ]
 KNOWLEDGE_TOOL_NAMES = {t["function"]["name"] for t in KNOWLEDGE_TOOLS}
 TOKEN = re.compile(r"[a-z0-9]+")
