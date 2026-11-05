@@ -410,7 +410,7 @@ Thresholds were fixed before measuring. Each mode was measured once on the held-
 - **Public data providers.** The weather, FX and search providers are unauthenticated public services and can rate-limit. The agent then says the provider is unavailable and never invents a value.
 - **Open items, measured but not fixed:**
   - in planning mode, the composed answer loses the inline `[n]` citation markers (see the ablation report);
-  - the Critic and the judge are not yet calibrated against human labels;
+  - against 83 human labels, the Critic and the judge agree at chance level (kappa ≈ 0), although the Critic catches 18/20 injected defects ([details](docs/RELATORIO_QUALIDADE_2026-11-04.md#5-critic-and-judge-against-human-labels));
   - the replicas share one SQLite file; Postgres is not implemented;
   - the Telegram channel is tested with a simulated Bot API, and no real-bot transcript is committed.
 

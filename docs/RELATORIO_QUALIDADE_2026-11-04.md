@@ -39,7 +39,7 @@ Every number below comes from a committed report produced by a real run. Each li
 | Mean latency | 7.5 s | 6.0 s |
 
 - **Judge.** `claude-sonnet-5-5`, rubric in `evaluation/`. It was stricter than the deterministic checks: 59% judged fully correct.
-- **Judge not yet calibrated.** It has not been checked against human labels (checklist Q5/Q6).
+- **Judge vs human labels.** It agrees with them at chance level; see section 5.
 - **Files.** `eval/ANSWER_QUALITY_cloud_run1_2026-11-03.json` and `eval/ABLATION_2026-11-04.json`.
 
 ## 3. What each stage contributes
@@ -64,9 +64,51 @@ See [`ABLACAO_2026-11-04.md`](ABLACAO_2026-11-04.md):
 - **Off column is noise.** The single "off" recall in the middle run came from a terminal tool lookup, not from memory.
 - **Still open.** Two of the four recall questions still miss: one goes to a clarification menu, and in the other the recall tool is not chosen.
 
+## 5. Critic and judge against human labels
+
+**Labels.** 83 answers labelled by the author (`evaluation/human_labels.jsonl`):
+- 63 real answers and 20 with an injected defect;
+- 42 correct, 23 partial, 16 incorrect, 2 unsafe.
+
+**Method.** The split is fixed by a hash of the item id: 44 items to calibrate, 39 to test. The positive class is "should be rejected" (incorrect or unsafe). Code: `calibrate_critic.py`, with `DEMO_TODAY=2026-11-04`, the date the answers were recorded.
+
+Files:
+- `eval/CRITIC_CALIBRATION_2026-11-04.json`;
+- `eval/critic_calibration_runs/1_without_demo_today.json`, the first run, which had the date wrong.
+
+| Test half (39) | Precision | Recall | F1 | Cohen's kappa |
+|---|---|---|---|---|
+| Critic `material` (chosen on the calibration half) | 0.18 | 0.30 | 0.22 | −0.15 |
+| Critic `strict` | 0.28 | 1.00 | 0.43 | 0.06 |
+| Judge (`claude-sonnet-5-5`) | 0.25 | 0.10 | 0.14 | 0.00 |
+
+| Injected defects (20, defect known regardless of labels) | Caught |
+|---|---|
+| Critic `material` | **18** |
+| Critic `strict` | 19 |
+| Judge | 8 |
+| Human label "not correct" | 9 |
+
+**What this shows:**
+- **Low agreement.** The Critic and the judge agree with the human labels at chance level (kappa ≈ 0). That is a negative result.
+- **Planted defects.** The Critic catches the defects that were planted in the answers: an invented number, a wrong ID, a wrong citation. On this subset it beats both the judge and the labeller.
+- **Different criteria.** Most answers the human rejected and the Critic approved were judged against outside knowledge, while the Critic checks the answer against the retrieved evidence only. Examples:
+  - q27: card brands accepted;
+  - a03: "does not accept bitcoin";
+  - q04: payment modes.
+
+  When the evidence is incomplete, an answer can be fully grounded and still incomplete. That is a retrieval or coverage gap, and the Critic cannot see it.
+- **Critic false rejections.** 6 of 83 Critic outputs failed validation. Production treats them as rejections (fail closed), so they count as false rejections. Some date reasoning ("tomorrow", "yesterday") was also wrong.
+- **Decision.** `material` is kept, as chosen on the calibration half. `strict` would reject 26 of 29 acceptable test answers.
+
+**Not fixed in this round:**
+- the Critic's invalid-output rate (7%);
+- its relative-date reasoning;
+- a completeness check against the expected facts.
+
 ## Known gaps
 
 - Inline citations are lost in planning mode (see the ablation report).
 - Memory recall is 2/4 on the long-conversation set.
-- The judge is not calibrated against humans.
+- Critic and judge agree with the human labels at chance level (kappa ≈ 0); the Critic still catches 18/20 injected defects.
 - Offline routing is weak.

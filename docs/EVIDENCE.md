@@ -79,6 +79,7 @@ LLM_PROVIDER=replay DEMO_TODAY=2026-11-04 PYTHONPATH=. uvicorn app.main:app --po
 | Ablation: quality, safety and routing with the Critic, Context Intelligence, PolicyGate, fast path or planning switched off (cloud, commit `861ada7`) | [`eval/ABLATION_2026-11-04.json`](eval/ABLATION_2026-11-04.json), decisions in [`ABLACAO_2026-11-04.md`](ABLACAO_2026-11-04.md) | `python -m app.evaluation.run_ablation` |
 | Session memory on vs off: 4 conversations of 16 turns, recall of early facts, prompt tokens | [`eval/MEMORY_EVAL_2026-11-04.json`](eval/MEMORY_EVAL_2026-11-04.json) | `python -m app.evaluation.run_memory_eval` |
 | Quality summary (context mean ± sd, answer quality, stage contributions) | [`RELATORIO_QUALIDADE_2026-11-04.md`](RELATORIO_QUALIDADE_2026-11-04.md) | — |
+| Critic and judge vs 83 human labels (calibration / test halves, injected defects) | [`eval/CRITIC_CALIBRATION_2026-11-04.json`](eval/CRITIC_CALIBRATION_2026-11-04.json) | `python -m app.evaluation.calibrate_critic` |
 
 ## 4. Screenshots
 
