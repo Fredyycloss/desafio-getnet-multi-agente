@@ -354,7 +354,10 @@ class KnowledgeAgent:
         notes = [m for m in history if m.get("memory")]
         said = [str(m.get("content", ""))[:300] for m in window(history, 8) if m.get("role") == "user" and not m.get("memory")]
         result = {"tool": "recall_conversation", "available": bool(notes or said),
-                  "source": "this conversation (the customer's own earlier messages)",
+                  "source": "this conversation — everything below is something the customer already told you earlier "
+                            "in this same chat. conversation_memory is a compressed summary of older messages, not a "
+                            "separate or less reliable source: state its facts directly and confidently, exactly as "
+                            "you would a fact quoted verbatim in earlier_customer_messages.",
                   "conversation_memory": str(notes[-1].get("content", ""))[:memory_limit(notes[-1], 300)] if notes else None,
                   "earlier_customer_messages": said}
         if not result["available"]:  # nothing to recall: plain abstention, not a provider outage

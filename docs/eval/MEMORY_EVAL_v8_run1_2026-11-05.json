@@ -1,0 +1,1137 @@
+{
+  "date": "2026-11-05",
+  "commit": "9e5548f",
+  "conversations": 30,
+  "turns_per_conversation": 16,
+  "settings": {
+    "SESSION_SUMMARY_AFTER_MESSAGES": null,
+    "SESSION_MEMORY_RECENT_MESSAGES": null
+  },
+  "on": {
+    "conversations": [
+      {
+        "id": "store_and_model",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Doceria Primavera",
+          "Get Mini"
+        ],
+        "answer": "Não consigo confirmar pelos registros disponíveis o nome do seu estabelecimento nem o modelo da maquininha que você mencionou, porque o histórico desta sessão não traz essa informação de forma verificável. O que consta é o terminal TERM-1988, modelo Get Smart, com status offline, conexão Wi-Fi, último contato em 2026-11-05T15:24:03+00:00 e código de erro NET-001 (perda de conectividade). Important",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 6521,
+          "memory_chars": 869
+        },
+        "final_turn_prompt_tokens": 7827,
+        "final_turn_cost_usd": 0.0010242,
+        "judge_remembered": false,
+        "judge_reason": "Assistant fails to recall the business name or the Get Mini; it gives unrelated terminal data instead."
+      },
+      {
+        "id": "terminal_problem",
+        "recalled_all": true,
+        "recalled": [
+          "TERM-1988"
+        ],
+        "expected": [
+          "TERM-1988"
+        ],
+        "answer": "O terminal que você mencionou é o **TERM-1988**, modelo Get Smart. Ele está offline desde a última conexão registrada em 2026-11-05T15:24:03+00:00, com o erro **NET-001** (perda de conectividade).\n\nComo verificação básica, confira se a conexão Wi-Fi do local está funcionando e se o terminal está ligado e próximo do roteador.",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 7459,
+          "memory_chars": 838
+        },
+        "final_turn_prompt_tokens": 9170,
+        "final_turn_cost_usd": 0.0013315,
+        "judge_remembered": true,
+        "judge_reason": "Assistant correctly identifies the terminal as TERM-1988, matching the customer's earlier statement."
+      },
+      {
+        "id": "chosen_product",
+        "recalled_all": true,
+        "recalled": [
+          "Get Clássica"
+        ],
+        "expected": [
+          "Get Clássica"
+        ],
+        "answer": "Não encontrei, no histórico desta conversa, nenhuma menção de que você tenha escolhido um modelo de maquininha no começo. O que consta é que você decidiu ficar com a **Get Clássica** (Getnet) [1]. Se você se referia a outro modelo, ele não aparece nos registros disponíveis.\n\n[1] Resumo da conversa (memória da sessão).",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 8817,
+          "memory_chars": 837
+        },
+        "final_turn_prompt_tokens": 8388,
+        "final_turn_cost_usd": 0.0010078,
+        "judge_remembered": true,
+        "judge_reason": "Answer correctly recalls the customer chose Get Clássica, a correct paraphrase of the earlier fact."
+      },
+      {
+        "id": "shop_name_en",
+        "recalled_all": true,
+        "recalled": [
+          "Blue Harbor"
+        ],
+        "expected": [
+          "Blue Harbor"
+        ],
+        "answer": "Your shop is **Blue Harbor Café**, according to the session notes from our earlier conversation (the conversation memory, not a separate evidence source). Note that the customer's own messages in that memory don't include the shop name; it comes from the session summary.",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 8759,
+          "memory_chars": 848
+        },
+        "final_turn_prompt_tokens": 9285,
+        "final_turn_cost_usd": 0.0010665,
+        "judge_remembered": true,
+        "judge_reason": "Assistant correctly recalls the shop name Blue Harbor Café, matching the customer's earlier statement."
+      },
+      {
+        "id": "city_pt",
+        "recalled_all": true,
+        "recalled": [
+          "Joinville"
+        ],
+        "expected": [
+          "Joinville"
+        ],
+        "answer": "Você mencionou antes que sua loja fica no centro de Joinville, conforme o resumo da sessão. Os dados da conta que consegui consultar agora são do cadastro \"Comércio Demo 1988\", com status \"active\" e segmento \"small_business\", mas eles não trazem a cidade. Lembrete: estes são dados sintéticos de demonstração, não de uma conta Getnet real.",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 8836,
+          "memory_chars": 838
+        },
+        "final_turn_prompt_tokens": 7438,
+        "final_turn_cost_usd": 0.0009958,
+        "judge_remembered": true,
+        "judge_reason": "Answer correctly states the store is in Joinville, matching the earlier message."
+      },
+      {
+        "id": "owner_name_pt",
+        "recalled_all": true,
+        "recalled": [
+          "Renata"
+        ],
+        "expected": [
+          "Renata"
+        ],
+        "answer": "Sim, lembro. Pelo histórico desta sessão, você é a Renata, dona de um pet shop pequeno atendido pela Getnet. Não tenho registro de outras informações pessoais além do que foi conversado aqui.\n\nSe quiser, posso retomar as pendências em aberto: bandeiras, parcelamento, o erro NET-001 da maquininha TERM-1988, a bobina e o prazo de débito. Para atendimento humano, use a opção 4. Seu protocolo de atend",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 8858,
+          "memory_chars": 933
+        },
+        "final_turn_prompt_tokens": 10165,
+        "final_turn_cost_usd": 0.001322,
+        "judge_remembered": true,
+        "judge_reason": "Assistant correctly recalls the customer's name, Renata, from the earlier message."
+      },
+      {
+        "id": "business_type_en",
+        "recalled_all": true,
+        "recalled": [
+          "bike"
+        ],
+        "expected": [
+          "bike"
+        ],
+        "answer": "You told me you run a small bike repair shop near the river [conversation memory].",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 7930,
+          "memory_chars": 983
+        },
+        "final_turn_prompt_tokens": 9407,
+        "final_turn_cost_usd": 0.0011187,
+        "judge_remembered": true,
+        "judge_reason": "Answer correctly restates the stated fact: a small bike repair shop near the river."
+      },
+      {
+        "id": "payment_pref_pt",
+        "recalled_all": true,
+        "recalled": [
+          "débito"
+        ],
+        "expected": [
+          "débito"
+        ],
+        "answer": "Não encontrei, na sessão, nenhuma informação dizendo qual forma de pagamento você disse que seus clientes mais usam: o histórico registra que você recebe majoritariamente no débito e usa pouco o crédito, mas isso é uma observação anterior e não uma informação confirmada. Os registros desta consulta mostram duas vendas demonstrativas aprovadas em 04/11/2026: TX-DEMO-1001 no crédito (R$ 250,00) e TX",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 8838,
+          "memory_chars": 967
+        },
+        "final_turn_prompt_tokens": 8700,
+        "final_turn_cost_usd": 0.0011,
+        "judge_remembered": true,
+        "judge_reason": "Names débito as the earlier-stated majority method, though it hedges and says it found no confirmed info."
+      },
+      {
+        "id": "open_days_en",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Saturday"
+        ],
+        "answer": "Which topic would you like help with?\n\nChoose a topic:\n1. Terminal, connection, or technical issue\n2. Sales, payments, or settlements\n3. Getnet products, fees, or services\n4. Speak with a human attendant\n\nReply with an option name or number. Choosing human support opens a protocol in the attendant queue.",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 7594,
+          "memory_chars": 671
+        },
+        "final_turn_prompt_tokens": 2531,
+        "final_turn_cost_usd": 0.0003196,
+        "judge_remembered": false,
+        "judge_reason": "The answer ignores the question and gives a generic topic menu without mentioning Saturday or Sunday."
+      },
+      {
+        "id": "product_interest_en",
+        "recalled_all": true,
+        "recalled": [
+          "Payment Link"
+        ],
+        "expected": [
+          "Payment Link"
+        ],
+        "answer": "Based on the conversation record, the earlier messages from you show two questions: whether you can take contactless payments, and how to reach technical support. You did not state a specific Getnet product in those messages.\n\nThe session summary does mention products that were discussed, including the Getnet Payment Link, Get Tap, Get Smart, Get Lite, Get Conta, and Crediário, but the record does",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 8616,
+          "memory_chars": 953
+        },
+        "final_turn_prompt_tokens": 8462,
+        "final_turn_cost_usd": 0.0010767,
+        "judge_remembered": false,
+        "judge_reason": "Answer denies the customer stated any product and lists Payment Link only among many, not as their stated interest."
+      },
+      {
+        "id": "employee_pt",
+        "recalled_all": true,
+        "recalled": [
+          "Tiago"
+        ],
+        "expected": [
+          "Tiago"
+        ],
+        "answer": "Não consigo confirmar o nome do funcionário que opera a maquininha com base nos dados disponíveis. Na sessão, o nome \"Tiago\" aparece apenas como uma menção sem confirmação de perfil, e as informações que eu consigo consultar agora tratam somente do status do terminal TERM-1988 (Get Smart), que está offline desde 2026-11-05 com o erro NET-001 (perda de conectividade). Vale verificar se o Wi-Fi do e",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 7467,
+          "memory_chars": 1025
+        },
+        "final_turn_prompt_tokens": 7940,
+        "final_turn_cost_usd": 0.001019,
+        "judge_remembered": true,
+        "judge_reason": "Answer explicitly mentions the name Tiago as the employee operating the terminal, correctly recalling the fact."
+      },
+      {
+        "id": "region_en",
+        "recalled_all": true,
+        "recalled": [
+          "Curitiba"
+        ],
+        "expected": [
+          "Curitiba"
+        ],
+        "answer": "You said your café is in Curitiba. This comes from the conversation memory for this session, which summarizes that the customer runs a café in Curitiba [conversation memory]. Your earlier messages in this conversation were about contactless payments and technical support, and they did not mention the city [conversation memory].",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 8198,
+          "memory_chars": 905
+        },
+        "final_turn_prompt_tokens": 9249,
+        "final_turn_cost_usd": 0.0011429,
+        "judge_remembered": true,
+        "judge_reason": "Answer correctly states Curitiba, the city the customer named for the café; the self-contradicting note about earlier messages does not negate it."
+      },
+      {
+        "id": "employee_count_pt",
+        "recalled_all": true,
+        "recalled": [
+          "7"
+        ],
+        "expected": [
+          "7"
+        ],
+        "answer": "Você disse que sua loja tem **7 funcionários**, incluindo o dono. Essa informação está no resumo da conversa registrado na sessão.",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 7938,
+          "memory_chars": 1027
+        },
+        "final_turn_prompt_tokens": 13051,
+        "final_turn_cost_usd": 0.0014991,
+        "judge_remembered": true,
+        "judge_reason": "The answer correctly states 7 employees, matching the customer's earlier statement, and paraphrases including the owner."
+      },
+      {
+        "id": "opening_year_pt",
+        "recalled_all": true,
+        "recalled": [
+          "2019"
+        ],
+        "expected": [
+          "2019"
+        ],
+        "answer": "Você não disse o ano em que abriu o restaurante nas mensagens desta conversa, de acordo com o que está registrado. A única informação sobre isso está no resumo interno da sessão, que indica que o restaurante foi aberto em 2019, antes da pandemia. Porém, as suas mensagens registradas são apenas \"Posso vender por aproximação?\" e \"Como falo com o suporte técnico?\", então não há como confirmar que voc",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 7658,
+          "memory_chars": 1085
+        },
+        "final_turn_prompt_tokens": 15952,
+        "final_turn_cost_usd": 0.0019777,
+        "judge_remembered": false,
+        "judge_reason": "Answer states the year 2019 but denies the customer said it, disclaiming the fact rather than demonstrating recall."
+      },
+      {
+        "id": "competitor_en",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "last year"
+        ],
+        "answer": "Yes, you mentioned it. Your earlier conversation memory records that you switched to Getnet from another acquirer. However, the memory does not record when that switch happened, and it does not name the previous acquirer. The only messages recalled from this conversation are your questions about contactless payments and technical support, so the switch was not mentioned in those messages. I can't ",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 8117,
+          "memory_chars": 976
+        },
+        "final_turn_prompt_tokens": 8104,
+        "final_turn_cost_usd": 0.0009744,
+        "judge_remembered": true,
+        "judge_reason": "Assistant correctly recalls switching to Getnet from another acquirer, though it wrongly claims no timing was given."
+      },
+      {
+        "id": "ticket_size_pt",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "85"
+        ],
+        "answer": "Sua solicitação foi registrada e aguarda um atendente. Protocolo: GET-20261105-D08A27.\n\nNenhum atendente está online agora; a solicitação segue na fila e a resposta aparecerá aqui. Este é um ambiente de demonstração com dados sintéticos, não um chamado oficial da Getnet.",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 7069,
+          "memory_chars": 878
+        },
+        "final_turn_prompt_tokens": 7576,
+        "final_turn_cost_usd": 0.0011456,
+        "judge_remembered": false,
+        "judge_reason": "The answer does not mention the R$ 85 average ticket; it only gives a generic ticket registration message."
+      },
+      {
+        "id": "neighborhood_en",
+        "recalled_all": true,
+        "recalled": [
+          "Pinheiros"
+        ],
+        "expected": [
+          "Pinheiros"
+        ],
+        "answer": "The records I can access don't include a neighborhood, so I can't confirm what you said about your store's location. The only store-related data I have is the profile for \"Comércio Demo 1988,\" which is active and classified as small_business. Your session memory notes that your store is in Pinheiros, São Paulo, but that comes from our earlier conversation, not from a verified account record. Also,",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 7270,
+          "memory_chars": 841
+        },
+        "final_turn_prompt_tokens": 6954,
+        "final_turn_cost_usd": 0.0008594,
+        "judge_remembered": true,
+        "judge_reason": "Answer states the store is in Pinheiros, São Paulo, matching the earlier statement, despite extra hedging."
+      },
+      {
+        "id": "complaint_detail_pt",
+        "recalled_all": true,
+        "recalled": [
+          "data"
+        ],
+        "expected": [
+          "data"
+        ],
+        "answer": "Os dados de demonstração que tenho aqui não incluem o texto do problema que você relatou no comprovante, então não consigo confirmar qual foi. Pelo histórico da conversa, você havia comentado sobre um comprovante de venda com data errada na semana passada, mas esse detalhe vem da memória da sessão e não de um registro verificado. Os registros consultados são dados sintéticos de demonstração, não c",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 9023,
+          "memory_chars": 811
+        },
+        "final_turn_prompt_tokens": 8360,
+        "final_turn_cost_usd": 0.0011115,
+        "judge_remembered": true,
+        "judge_reason": "Answer correctly recalls the wrong date on the receipt from earlier conversation, though hedged."
+      },
+      {
+        "id": "second_location_pt",
+        "recalled_all": true,
+        "recalled": [
+          "duas"
+        ],
+        "expected": [
+          "duas"
+        ],
+        "answer": "Não consigo confirmar quantas lojas você tem nem onde elas ficam, porque o perfil consultado traz apenas o nome do estabelecimento (\"Comércio Demo 1988\"), o status da conta (ativa) e o segmento (pequeno negócio), sem dados de endereço ou de unidades. Pelo histórico desta sessão, você mencionou duas lojas, uma no shopping e outra na rua principal, mas essa informação não está nos registros retornad",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 8427,
+          "memory_chars": 895
+        },
+        "final_turn_prompt_tokens": 7651,
+        "final_turn_cost_usd": 0.0011206,
+        "judge_remembered": true,
+        "judge_reason": "Answer correctly recalls two stores, one in the shopping mall and one on the main street."
+      },
+      {
+        "id": "preferred_contact_en",
+        "recalled_all": true,
+        "recalled": [
+          "WhatsApp"
+        ],
+        "expected": [
+          "WhatsApp"
+        ],
+        "answer": "Your contact preference isn't in the profile data I can see; it only shows your merchant name (Comércio Demo 1988), account status (active), and segment (small_business). Our earlier conversation mentions WhatsApp contact, but the preference was never confirmed, so please don't rely on that note. To set or confirm your preferred contact method, please use the official Getnet channels. Note that th",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 7025,
+          "memory_chars": 1001
+        },
+        "final_turn_prompt_tokens": 7119,
+        "final_turn_cost_usd": 0.0009239,
+        "judge_remembered": true,
+        "judge_reason": "Answer recalls the customer mentioned WhatsApp contact earlier, though it hedges and disclaims reliance on it."
+      },
+      {
+        "id": "machine_count_pt",
+        "recalled_all": true,
+        "recalled": [
+          "três",
+          "Get Smart"
+        ],
+        "expected": [
+          "três",
+          "Get Smart"
+        ],
+        "answer": "Pelo resumo da sessão, você mencionou que usa três maquininhas Get Smart, uma por caixa. Só consigo confirmar um equipamento: o terminal TERM-1988, modelo Get Smart, está com status offline, conexão Wi-Fi, último sinal em 2026-11-05T15:24:03+00:00 e erro NET-001 (perda de conectividade). Não tenho dados de status para as outras duas maquininhas, então não posso confirmar o estado delas. Como verif",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 9381,
+          "memory_chars": 794
+        },
+        "final_turn_prompt_tokens": 7610,
+        "final_turn_cost_usd": 0.0010805,
+        "judge_remembered": true,
+        "judge_reason": "Answer states three Get Smart terminals, one per cash register, matching the customer's earlier statement."
+      },
+      {
+        "id": "business_hours_pt",
+        "recalled_all": true,
+        "recalled": [
+          "9h"
+        ],
+        "expected": [
+          "9h"
+        ],
+        "answer": "Com base na conversa, você informou que a loja funciona das 9h às 19h, de segunda a sábado.\n\nOs registros cadastrais consultados na conta não trazem um campo de horário de funcionamento, então não consigo confirmar esse dado pelo sistema. Se precisar atualizá-lo, você pode fazer isso pelo Portal Minha Conta ou pelo App Getnet Brasil.",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 7787,
+          "memory_chars": 1066
+        },
+        "final_turn_prompt_tokens": 11452,
+        "final_turn_cost_usd": 0.0014492,
+        "judge_remembered": true,
+        "judge_reason": "Assistant correctly restates the stated hours (9h-19h) and days (Monday to Saturday) from the earlier message."
+      },
+      {
+        "id": "franchise_en",
+        "recalled_all": true,
+        "recalled": [
+          "franchise"
+        ],
+        "expected": [
+          "franchise"
+        ],
+        "answer": "From the conversation memory, you described your bakery as one of four franchise units, and the account visible to me is for \"Comércio Demo 1988,\" a small_business account that is active. You did not describe a separate arrangement beyond that, and I can't confirm from the evidence whether this account qualifies for MEI (Getnet has MEI content, but eligibility is unconfirmed).",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 8145,
+          "memory_chars": 943
+        },
+        "final_turn_prompt_tokens": 10481,
+        "final_turn_cost_usd": 0.0012991,
+        "judge_remembered": true,
+        "judge_reason": "Answer correctly recalls the bakery is one of four franchise units, matching the earlier statement."
+      },
+      {
+        "id": "card_brand_pref_pt",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Elo"
+        ],
+        "answer": "Não tenho dados que permitam confirmar qual bandeira de cartão é a mais usada na sua loja. As transações que consegui consultar (TX-DEMO-1001, crédito, e TX-DEMO-1002, débito) não identificam a bandeira, e esses registros são dados de demonstração, não de uma conta real.\n\nSe quiser, posso verificar outras informações sobre as vendas da sua loja ou orientar sobre como consultar o relatório de bande",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 8706,
+          "memory_chars": 1100
+        },
+        "final_turn_prompt_tokens": 10600,
+        "final_turn_cost_usd": 0.001408,
+        "judge_remembered": false,
+        "judge_reason": "The answer does not mention Elo; it says no data confirms the flag and ignores the customer's stated fact."
+      },
+      {
+        "id": "delivery_only_en",
+        "recalled_all": true,
+        "recalled": [
+          "delivery"
+        ],
+        "expected": [
+          "delivery"
+        ],
+        "answer": "Yes, you said your business is delivery-only, with no storefront. This comes from the conversation memory, which records that you run a delivery-only kitchen and are evaluating Getnet. Your earlier messages in this session (about contactless payments and technical support) do not mention a storefront either way.",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 8827,
+          "memory_chars": 897
+        },
+        "final_turn_prompt_tokens": 7962,
+        "final_turn_cost_usd": 0.0009382,
+        "judge_remembered": true,
+        "judge_reason": "Answer correctly states the business is delivery-only with no storefront, matching the earlier message."
+      },
+      {
+        "id": "supplier_name_pt",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Vale Verde"
+        ],
+        "answer": "Qual assunto você gostaria de tratar?\n\nEscolha uma opção:\n1. Maquininha, conexão ou falha\n2. Vendas, pagamentos ou recebimentos\n3. Produtos, taxas ou serviços Getnet\n4. Falar com atendente humano\n\nResponda com o nome ou número da opção. A escolha por atendimento humano abre um protocolo na fila de atendentes.",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 7669,
+          "memory_chars": 795
+        },
+        "final_turn_prompt_tokens": 2785,
+        "final_turn_cost_usd": 0.0003465,
+        "judge_remembered": false,
+        "judge_reason": "Answer is a generic menu prompt and never mentions Distribuidora Vale Verde."
+      },
+      {
+        "id": "goal_revenue_en",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "20,000",
+          "20000",
+          "double"
+        ],
+        "answer": "",
+        "memory": null,
+        "final_turn_prompt_tokens": null,
+        "final_turn_cost_usd": null,
+        "judge_remembered": false,
+        "judge_reason": "The assistant answer is empty, so it gives no revenue goal at all."
+      },
+      {
+        "id": "seasonal_pt",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Natal"
+        ],
+        "answer": "",
+        "memory": null,
+        "final_turn_prompt_tokens": null,
+        "final_turn_cost_usd": null,
+        "judge_remembered": false,
+        "judge_reason": "The assistant answer is empty, so it provides no evidence of remembering the fact."
+      },
+      {
+        "id": "accessibility_en",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "wheelchair",
+          "ramp"
+        ],
+        "answer": "",
+        "memory": null,
+        "final_turn_prompt_tokens": null,
+        "final_turn_cost_usd": null,
+        "judge_remembered": false,
+        "judge_reason": "The assistant answer is empty, so it demonstrates no recall of the wheelchair ramp."
+      },
+      {
+        "id": "loyalty_program_pt",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "10",
+          "grátis"
+        ],
+        "answer": "",
+        "memory": null,
+        "final_turn_prompt_tokens": null,
+        "final_turn_cost_usd": null,
+        "judge_remembered": false,
+        "judge_reason": "The assistant answer is empty, so it demonstrates no recall of the loyalty program fact."
+      }
+    ],
+    "recall_rate": 0.6667,
+    "mean_final_prompt_tokens": 7474.0,
+    "summary_calls": {
+      "calls": 260,
+      "prompt_tokens": 183016,
+      "output_tokens": 77494,
+      "cost_usd": 0.0570486
+    },
+    "judge_recall_rate": 0.6333,
+    "judge_usage": {
+      "calls": 30,
+      "cost_usd": 0.020936800000000002
+    }
+  },
+  "off": {
+    "conversations": [
+      {
+        "id": "store_and_model",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Doceria Primavera",
+          "Get Mini"
+        ],
+        "answer": "Os dados que tenho aqui são de demonstração (sintéticos), não de contas reais da Getnet. Não tenho o nome do seu estabelecimento disponível nas informações desta sessão, e o histórico anterior não foi fornecido para mim, então não consigo confirmar o que você disse antes. Pelo registro da consulta, a maquininha vinculada à sua conta é a TERM-1988, modelo Get Smart, que está offline desde 2026-11-0",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 6188,
+        "final_turn_cost_usd": 0.0010138,
+        "judge_remembered": false,
+        "judge_reason": "Assistant says it lacks the establishment name and machine info, and gives a different device model."
+      },
+      {
+        "id": "terminal_problem",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "TERM-1988"
+        ],
+        "answer": "Quero confirmar se entendi. Qual opção descreve melhor o que você quis dizer?\n\nEscolha uma opção:\n1. Há um risco físico real acontecendo agora\n2. Problemas de conexão\n3. Problemas para realizar vendas\n4. Defeito ou funcionamento da maquininha\n5. Quero falar com atendimento humano\n\nResponda com o nome ou número da opção. A escolha por atendimento humano abre um protocolo na fila de atendentes.",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 2423,
+        "final_turn_cost_usd": 0.0003143,
+        "judge_remembered": false,
+        "judge_reason": "Answer doesn't mention TERM-1988; it offers generic menu options instead of the terminal name."
+      },
+      {
+        "id": "chosen_product",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Get Clássica"
+        ],
+        "answer": "Não encontrei nenhum modelo de maquininha citado no início da nossa conversa. As suas mensagens anteriores foram estas: \"A Getnet atende MEI?\", \"Como funciona o link de pagamento?\", \"Posso vender por aproximação?\" e \"Como falo com o suporte técnico?\". Nenhuma delas menciona um modelo específico de equipamento.\n\nSe você escolheu um modelo em outro atendimento ou canal, ele não aparece no histórico ",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 10105,
+        "final_turn_cost_usd": 0.001341,
+        "judge_remembered": false,
+        "judge_reason": "Assistant denies any model mention, missing the customer's stated choice of Get Clássica."
+      },
+      {
+        "id": "shop_name_en",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Blue Harbor"
+        ],
+        "answer": "I can't tell you the name of your shop. Our conversation history contains no earlier message where you gave a shop name. Your earlier messages were questions about whether Getnet serves sole proprietors, how the payment link works, contactless payments, and how to reach technical support. If you share the shop name now, I can use it for this conversation.\n\nYour contactless payment request is regis",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 7732,
+        "final_turn_cost_usd": 0.0010072,
+        "judge_remembered": false,
+        "judge_reason": "Assistant explicitly denies any earlier shop name was given, not recalling Blue Harbor Café."
+      },
+      {
+        "id": "city_pt",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Joinville"
+        ],
+        "answer": "Não encontrei nenhuma informação sobre a cidade da sua loja nos dados disponíveis, e a memória desta sessão não traz essa informação. A consulta ao seu perfil retornou apenas o nome do estabelecimento, \"Comércio Demo 1988\", o status da conta, \"active\", e o segmento, \"small_business\". Vale lembrar que estes são dados sintéticos de demonstração, e não de contas reais da Getnet. Se quiser, você pode ",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 5823,
+        "final_turn_cost_usd": 0.0008873,
+        "judge_remembered": false,
+        "judge_reason": "Assistant says it found no city information and did not recall Joinville."
+      },
+      {
+        "id": "owner_name_pt",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Renata"
+        ],
+        "answer": "Não consigo confirmar seu nome pessoal, pois o perfil disponível mostra apenas os dados do estabelecimento. O nome cadastrado para a conta é \"Comércio Demo 1988\", com status \"active\" e segmento \"small_business\". Esses registros são dados sintéticos de demonstração, não contas reais da Getnet. Posso ajudar com outras informações do perfil da sua conta ou com problemas no terminal de cartão.",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 5736,
+        "final_turn_cost_usd": 0.0007791,
+        "judge_remembered": false,
+        "judge_reason": "The answer does not mention Renata; it claims the name is unavailable and gives a different account name."
+      },
+      {
+        "id": "business_type_en",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "bike"
+        ],
+        "answer": "I don't have a record of you telling me what kind of business you run in this session, so I can't confirm that from our conversation. Your profile lists the merchant name as \"Comércio Demo 1988\" with an account status of \"active\" and a segment of \"small_business.\" That profile doesn't include a business category, so the type of business isn't something I can show you. Please note these are synthet",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 5566,
+        "final_turn_cost_usd": 0.0007471,
+        "judge_remembered": false,
+        "judge_reason": "Assistant denies having the fact and never mentions a bike repair shop; it does not recall it."
+      },
+      {
+        "id": "payment_pref_pt",
+        "recalled_all": true,
+        "recalled": [
+          "débito"
+        ],
+        "expected": [
+          "débito"
+        ],
+        "answer": "Não consigo confirmar qual forma de pagamento você disse que seus clientes mais usam, porque não há essa informação no histórico desta sessão. Os dados disponíveis mostram duas vendas aprovadas de 2026-11-04: TX-DEMO-1001 no crédito (R$ 250,00) e TX-DEMO-1002 no débito (R$ 120,00). Esses registros são dados sintéticos de demonstração, não contas ou liquidações reais da Getnet. Se quiser, posso con",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 6703,
+        "final_turn_cost_usd": 0.0009238,
+        "judge_remembered": false,
+        "judge_reason": "Assistant claims the information is absent and cites unrelated transactions, not the customer's stated debit preference."
+      },
+      {
+        "id": "open_days_en",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Saturday"
+        ],
+        "answer": "Which topic would you like help with?\n\nChoose a topic:\n1. Terminal, connection, or technical issue\n2. Sales, payments, or settlements\n3. Getnet products, fees, or services\n4. Speak with a human attendant\n\nReply with an option name or number. Choosing human support opens a protocol in the attendant queue.",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 2332,
+        "final_turn_cost_usd": 0.0002977,
+        "judge_remembered": false,
+        "judge_reason": "The answer ignores the question and gives no mention of Saturday or Sunday; it is a generic menu."
+      },
+      {
+        "id": "product_interest_en",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Payment Link"
+        ],
+        "answer": "Which topic would you like help with?\n\nChoose a topic:\n1. Terminal, connection, or technical issue\n2. Sales, payments, or settlements\n3. Getnet products, fees, or services\n4. Speak with a human attendant\n\nReply with an option name or number. Choosing human support opens a protocol in the attendant queue.",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 2229,
+        "final_turn_cost_usd": 0.0002944,
+        "judge_remembered": false,
+        "judge_reason": "Answer asks a generic topic menu and never mentions the Payment Link product the customer stated."
+      },
+      {
+        "id": "employee_pt",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Tiago"
+        ],
+        "answer": "Não encontrei nenhum nome de funcionário nas informações disponíveis nesta sessão, pois os dados que tenho se referem apenas ao status técnico da maquininha TERM-1988. Só consigo mostrar os dados da sua própria conta, e a conversa anterior não está registrada no meu contexto. Posso confirmar que a maquininha TERM-1988 (modelo Get Smart, conexão Wi-Fi) está offline, com último contato em 2026-11-05",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 8438,
+        "final_turn_cost_usd": 0.0012573,
+        "judge_remembered": false,
+        "judge_reason": "Assistant says it cannot see the earlier conversation and does not mention Tiago."
+      },
+      {
+        "id": "region_en",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Curitiba"
+        ],
+        "answer": "The conversation so far doesn't contain any mention of your café's location. Your earlier messages were about whether Getnet serves sole proprietors, how the payment link works, contactless payments, and technical support. You haven't told me which city your café is in, so I can't say.\n\nIf you share the city, I can help with questions related to your business, though I can't verify location detail",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 5896,
+        "final_turn_cost_usd": 0.0007456,
+        "judge_remembered": false,
+        "judge_reason": "The assistant denies any mention of the city and claims the customer never said it, which is wrong."
+      },
+      {
+        "id": "employee_count_pt",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "7"
+        ],
+        "answer": "Qual assunto você gostaria de tratar?\n\nEscolha uma opção:\n1. Maquininha, conexão ou falha\n2. Vendas, pagamentos ou recebimentos\n3. Produtos, taxas ou serviços Getnet\n4. Falar com atendente humano\n\nResponda com o nome ou número da opção. A escolha por atendimento humano abre um protocolo na fila de atendentes.",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 2446,
+        "final_turn_cost_usd": 0.0003096,
+        "judge_remembered": false,
+        "judge_reason": "The answer is a menu of support options and never mentions the 7 employees."
+      },
+      {
+        "id": "opening_year_pt",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "2019"
+        ],
+        "answer": "Não encontrei nenhuma menção, nas suas mensagens anteriores nesta conversa, ao ano em que você abriu seu restaurante. As mensagens registradas são sobre atendimento a MEI, link de pagamento, venda por aproximação e suporte técnico [1]. Se quiser, você pode me informar esse dado agora, mas eu não tenho como confirmar que foi mencionado antes.",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 6334,
+        "final_turn_cost_usd": 0.0008059,
+        "judge_remembered": false,
+        "judge_reason": "The answer claims no year was mentioned, failing to recall that 2019 was stated earlier."
+      },
+      {
+        "id": "competitor_en",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "last year"
+        ],
+        "answer": "No, you haven't mentioned switching to Getnet from another provider. Your earlier messages in this conversation were:\n\n1. \"Does Getnet serve sole proprietors?\"\n2. \"How does the payment link work?\"\n3. \"Can I take contactless payments?\"\n4. \"How do I reach technical support?\"\n\nThere is no reference to a prior provider or a switch, and the conversation memory contains no such statement. I can't tell y",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 5975,
+        "final_turn_cost_usd": 0.000782,
+        "judge_remembered": false,
+        "judge_reason": "Assistant denies the customer mentioned switching from another acquirer, failing to recall the fact."
+      },
+      {
+        "id": "ticket_size_pt",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "85"
+        ],
+        "answer": "Não encontrei nenhum valor de ticket médio que você tenha informado nesta conversa, e as informações disponíveis não trazem esse cálculo. Os dados que tenho são de duas vendas aprovadas em 04/11/2026: TX-DEMO-1001 (R$ 250,00, crédito, liquidação em 06/11/2026) e TX-DEMO-1002 (R$ 120,00, débito, liquidação em 05/11/2026). Se quiser, posso mostrar os valores brutos e líquidos dessas transações, mas ",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 6692,
+        "final_turn_cost_usd": 0.0010187,
+        "judge_remembered": false,
+        "judge_reason": "Assistant denies any stated average ticket and cites unrelated transactions instead of the R$ 85 figure."
+      },
+      {
+        "id": "neighborhood_en",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Pinheiros"
+        ],
+        "answer": "I can't tell you which neighborhood your store is in. Your earlier messages in this conversation were about sole proprietors, payment links, contactless payments, and technical support, and none of them mention a neighborhood or store location. The account information I referenced earlier shows only the merchant name, account status, and segment, with no address. If you share the neighborhood now,",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 7932,
+        "final_turn_cost_usd": 0.0010057,
+        "judge_remembered": false,
+        "judge_reason": "Assistant denies any neighborhood was mentioned, failing to recall Pinheiros."
+      },
+      {
+        "id": "complaint_detail_pt",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "data"
+        ],
+        "answer": "Qual assunto você gostaria de tratar?\n\nEscolha uma opção:\n1. Maquininha, conexão ou falha\n2. Vendas, pagamentos ou recebimentos\n3. Produtos, taxas ou serviços Getnet\n4. Falar com atendente humano\n\nResponda com o nome ou número da opção. A escolha por atendimento humano abre um protocolo na fila de atendentes.",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 2440,
+        "final_turn_cost_usd": 0.0003155,
+        "judge_remembered": false,
+        "judge_reason": "Answer ignores the earlier wrong-date receipt complaint and just offers a generic menu of options."
+      },
+      {
+        "id": "second_location_pt",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "duas"
+        ],
+        "answer": "Estes registros são dados sintéticos de demonstração, não contas reais da Getnet. Pelas informações disponíveis no seu perfil, a conta está ativa, é do segmento pequeno negócio e está registrada como \"Comércio Demo 1988\". Não encontrei nos dados retornados nenhuma informação sobre o número de lojas nem sobre os endereços, então não consigo confirmar quantas lojas você mencionou nem onde ficam. Se ",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 5853,
+        "final_turn_cost_usd": 0.0008508,
+        "judge_remembered": false,
+        "judge_reason": "Answer says it cannot confirm the number of stores or their locations, so it does not recall the fact."
+      },
+      {
+        "id": "preferred_contact_en",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "WhatsApp"
+        ],
+        "answer": "You didn't state a contact preference in this conversation. Your earlier messages were about whether Getnet serves sole proprietors, how the payment link works, contactless payments, and reaching technical support, but none mention how you'd like to be contacted. The conversation memory returned no stored preference either, so I can't tell you one.\n\nI also can't provide technical support contact d",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 8063,
+        "final_turn_cost_usd": 0.0010143,
+        "judge_remembered": false,
+        "judge_reason": "Assistant denies any stated contact preference, missing the customer's stated WhatsApp preference entirely."
+      },
+      {
+        "id": "machine_count_pt",
+        "recalled_all": false,
+        "recalled": [
+          "Get Smart"
+        ],
+        "expected": [
+          "três",
+          "Get Smart"
+        ],
+        "answer": "Com base no que está disponível nesta sessão, a única maquininha registrada é a TERM-1988, modelo Get Smart, que aparece como offline desde 2026-11-05T16:24:15+00:00 com conexão Wi-Fi. O código de erro registrado é NET-001, relacionado a perda de conectividade. Não tenho no histórico desta conversa uma informação sobre quantas maquininhas você disse usar, então não consigo confirmar essa quantidad",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 6063,
+        "final_turn_cost_usd": 0.0008418,
+        "judge_remembered": false,
+        "judge_reason": "Assistant says it has no record of the customer's count of machines, so it doesn't recall the three Get Smart units."
+      },
+      {
+        "id": "business_hours_pt",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "9h"
+        ],
+        "answer": "Qual assunto você gostaria de tratar?\n\nEscolha uma opção:\n1. Maquininha, conexão ou falha\n2. Vendas, pagamentos ou recebimentos\n3. Produtos, taxas ou serviços Getnet\n4. Falar com atendente humano\n\nResponda com o nome ou número da opção. A escolha por atendimento humano abre um protocolo na fila de atendentes.",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 2438,
+        "final_turn_cost_usd": 0.0003138,
+        "judge_remembered": false,
+        "judge_reason": "The answer ignores the question and offers a menu, never mentioning the 9h-19h, Monday-to-Saturday hours."
+      },
+      {
+        "id": "franchise_en",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "franchise"
+        ],
+        "answer": "Which topic would you like help with?\n\nChoose a topic:\n1. Terminal, connection, or technical issue\n2. Sales, payments, or settlements\n3. Getnet products, fees, or services\n4. Speak with a human attendant\n\nReply with an option name or number. Choosing human support opens a protocol in the attendant queue.",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 2322,
+        "final_turn_cost_usd": 0.0003067,
+        "judge_remembered": false,
+        "judge_reason": "Answer is a generic topic menu and never mentions the franchise arrangement."
+      },
+      {
+        "id": "card_brand_pref_pt",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Elo"
+        ],
+        "answer": "Não consigo confirmar qual bandeira de cartão você mencionou antes, porque não tenho esse histórico da conversa disponível nesta sessão. Os dados que tenho são de transações demonstrativas (sintéticas) da sua própria conta, não dados reais da Getnet: TX-DEMO-1001 (crédito, R$ 250,00, liquidação em 2026-11-06) e TX-DEMO-1002 (débito, R$ 120,00, liquidação em 2026-11-05). Essas informações não inclu",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 6735,
+        "final_turn_cost_usd": 0.0009885,
+        "judge_remembered": false,
+        "judge_reason": "Assistant explicitly says it cannot confirm the card brand and offers no Elo recall."
+      },
+      {
+        "id": "delivery_only_en",
+        "recalled_all": true,
+        "recalled": [
+          "delivery"
+        ],
+        "expected": [
+          "delivery"
+        ],
+        "answer": "No. Based on this conversation, you haven't mentioned whether your business has a physical storefront or is delivery-only. Your earlier messages asked whether Getnet serves sole proprietors, how the payment link works, whether it supports contactless payments, and how to reach technical support. The conversation memory tool returned no details about your business model, so I can't say which applie",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 8014,
+        "final_turn_cost_usd": 0.0010254,
+        "judge_remembered": false,
+        "judge_reason": "Assistant claims the customer never mentioned business model, contradicting the earlier statement that it is delivery-only."
+      },
+      {
+        "id": "supplier_name_pt",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Vale Verde"
+        ],
+        "answer": "Qual assunto você gostaria de tratar?\n\nEscolha uma opção:\n1. Maquininha, conexão ou falha\n2. Vendas, pagamentos ou recebimentos\n3. Produtos, taxas ou serviços Getnet\n4. Falar com atendente humano\n\nResponda com o nome ou número da opção. A escolha por atendimento humano abre um protocolo na fila de atendentes.",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 2465,
+        "final_turn_cost_usd": 0.0003125,
+        "judge_remembered": false,
+        "judge_reason": "The answer is a generic menu prompt and does not mention Distribuidora Vale Verde."
+      },
+      {
+        "id": "goal_revenue_en",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "20,000",
+          "20000",
+          "double"
+        ],
+        "answer": "You did not mention a revenue goal in this conversation. Your earlier messages were:\n\n- \"Does Getnet serve sole proprietors?\"\n- \"How does the payment link work?\"\n- \"Can I take contactless payments?\"\n- \"How do I reach technical support?\"\n\nNothing in the conversation record references a revenue goal for this year, so I can't answer that from what's available. If you shared one in a different session",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 7977,
+        "final_turn_cost_usd": 0.0010702,
+        "judge_remembered": false,
+        "judge_reason": "Assistant denies any revenue goal was mentioned; does not recall the $20,000 monthly revenue target."
+      },
+      {
+        "id": "seasonal_pt",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Natal"
+        ],
+        "answer": "Qual assunto você gostaria de tratar?\n\nEscolha uma opção:\n1. Situação de uma venda ou pagamento\n2. Prazo para receber uma venda\n3. Venda recusada\n4. Produtos, taxas ou serviços Getnet\n5. Quero falar com atendimento humano\n\nResponda com o nome ou número da opção. A escolha por atendimento humano abre um protocolo na fila de atendentes.",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 2347,
+        "final_turn_cost_usd": 0.0003052,
+        "judge_remembered": false,
+        "judge_reason": "The answer is a generic menu of support options and does not mention Christmas or February sales periods."
+      },
+      {
+        "id": "accessibility_en",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "wheelchair",
+          "ramp"
+        ],
+        "answer": "You haven't mentioned any accessibility feature about your shop in this conversation. Your earlier messages were:\n\n- \"Does Getnet serve sole proprietors?\"\n- \"How does the payment link work?\"\n- \"Can I take contactless payments?\"\n- \"How do I reach technical support?\"\n\nIf you meant to share something about accessibility, please tell me again and I can note it with your request. Your contactless payme",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 7752,
+        "final_turn_cost_usd": 0.0010352,
+        "judge_remembered": false,
+        "judge_reason": "Assistant denies any accessibility feature was mentioned; the wheelchair ramp fact is not recalled."
+      },
+      {
+        "id": "loyalty_program_pt",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "10",
+          "grátis"
+        ],
+        "answer": "Qual assunto você gostaria de tratar?\n\nEscolha uma opção:\n1. Maquininha, conexão ou falha\n2. Vendas, pagamentos ou recebimentos\n3. Produtos, taxas ou serviços Getnet\n4. Falar com atendente humano\n\nResponda com o nome ou número da opção. A escolha por atendimento humano abre um protocolo na fila de atendentes.",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 2434,
+        "final_turn_cost_usd": 0.0003129,
+        "judge_remembered": false,
+        "judge_reason": "The answer is a generic support menu and never references the 10-purchase, free 11th purchase loyalty program."
+      }
+    ],
+    "recall_rate": 0.0667,
+    "mean_final_prompt_tokens": 5448.4,
+    "summary_calls": {
+      "calls": 0,
+      "prompt_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    },
+    "judge_recall_rate": 0.0,
+    "judge_usage": {
+      "calls": 30,
+      "cost_usd": 0.019895999999999997
+    }
+  },
+  "context_compression": {
+    "mean_chars_replaced": 8112.9,
+    "mean_memory_note_chars": 914.5
+  }
+}

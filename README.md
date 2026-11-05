@@ -289,12 +289,12 @@ The agents see only the last messages: Context Intelligence and Supervisor see 6
 - **Switch:** `SESSION_MEMORY=off`.
 - **Questions about earlier turns.** The Knowledge Agent can choose `recall_conversation`, which returns this session's memory and the customer's earlier messages as evidence.
 - **Before abstaining.** If the Knowledge Agent finds no evidence and a memory note exists, it reads the session memory before saying "not found".
-- **Measured** (12 conversations of 16 turns; the fact is said in turn 1 and asked in turn 16; cloud, [report](docs/eval/MEMORY_EVAL_2026-11-05.json), [details](docs/RELATORIO_QUALIDADE_2026-11-05.md#2-session-memory-12-conversations-of-16-turns)):
-  - with memory on, the early fact is recalled in **9/12** conversations (10/12 in a second run); with memory off, in 3/12. Two of those three are scorer false positives: answers that say "I don't have that" but contain the keyword.
-  - **Misses:** two answers came from the customer profile instead of memory, and one recall question went to a clarification menu.
-  - **Compression:** about 8,000 characters of older messages are replaced by a note of about 950 characters.
-  - **No token saving at this length:** the history is already windowed, so the note adds prompt tokens (7,428 vs 5,394 on the last turn).
-  - **Earlier runs:** 04/11, 4 conversations: 2/4 vs 0/4 ([`MEMORY_EVAL_2026-11-04.json`](docs/eval/MEMORY_EVAL_2026-11-04.json), [`memory_runs/`](docs/eval/memory_runs/)).
+- **Measured** (V8, 30 conversations of 16 turns, keyword **and** an LLM judge scoring each answer against a rubric — not keyword alone, which inflates recall in both directions; cloud; [report round 1](docs/eval/MEMORY_EVAL_v8_run1_2026-11-05.json), [report round 2](docs/eval/MEMORY_EVAL_v8_run2_on_2026-11-05.json), [details](docs/RELATORIO_MEMORIA_2026-11-05.md)):
+  - with memory on, the early fact is judged recalled in **19–21/30** conversations across two rounds (63–70%, two rounds: an auth-token bug in the eval script corrupted 4 of round 1's cases, corrected to 73% once excluded); with memory off, **0/30**.
+  - **Misses, by cause:** a clarification menu intercepts the recall question before any specialist runs (recurring, a few cases per round); the model sometimes recalls the right fact from the session summary but denies the customer said it (mitigated by a clearer tool description, not eliminated); a specialist occasionally prefers live tool data over a fact the customer already stated.
+  - **Target not met:** the mission's goal was ≥28/30 (93%); measured recall is 63–77% depending on round. Documented as an open gap, not hidden.
+  - **Compression:** about 8,100 characters of older messages are replaced by a note of about 915 characters (~9x).
+  - **No token saving at this length:** the history is already windowed, so the note adds prompt tokens (up to ~8,500 on the last turn vs ~5,400 with memory off).
 - **Tests:** `backend/tests/test_session_memory.py` (a 30-turn conversation, redaction, isolation, the note surviving the history window, `recall_conversation`).
 
 ### How the system improves over time
