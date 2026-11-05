@@ -47,15 +47,59 @@ def metrics(pairs: list[tuple[bool, bool]]) -> dict:
             "f1": round(f1, 4), "accuracy": round(po, 4), "cohen_kappa": round(kappa, 4)}
 
 
+def human_human_kappa(label_files: dict[str, dict[str, dict]]) -> dict | None:
+    """Cohen's kappa between the first two labelers on items both of them labelled, on the
+    4-way verdict (correct/partially_correct/incorrect/unsafe) and, when present, on the two
+    guide dimensions (grounded, complete) separately."""
+    names = list(label_files)
+    if len(names) < 2:
+        return None
+    a_name, b_name = names[0], names[1]
+    a, b = label_files[a_name], label_files[b_name]
+    shared = sorted(set(a) & set(b))
+    if not shared:
+        return None
+
+    def kappa_on(key: str) -> dict:
+        pairs = [(a[i].get(key), b[i].get(key)) for i in shared if a[i].get(key) and b[i].get(key)]
+        cats = sorted({v for pair in pairs for v in pair})
+        n = len(pairs) or 1
+        po = sum(x == y for x, y in pairs) / n
+        pe = sum((sum(1 for x, _ in pairs if x == c) / n) * (sum(1 for _, y in pairs if y == c) / n) for c in cats)
+        kappa = (po - pe) / (1 - pe) if pe < 1 else 1.0
+        agree = sum(x == y for x, y in pairs)
+        return {"n": len(pairs), "agreement": round(agree / n, 4), "cohen_kappa": round(kappa, 4)}
+
+    return {"labeler_a": a_name, "labeler_b": b_name, "shared_items": len(shared),
+            "verdict": kappa_on("label"), "grounded": kappa_on("grounded"), "complete": kappa_on("complete")}
+
+
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--items", default=str(ROOT / "docs" / "evaluation" / "labeling_items.jsonl"))
-    parser.add_argument("--labels", default=str(ROOT / "docs" / "evaluation" / "human_labels.jsonl"))
+    parser.add_argument("--labels", nargs="+", default=[],
+                         help="one or more human_labels_<labeler>.jsonl paths; default: every "
+                              "docs/evaluation/human_labels_*.jsonl found, else the legacy human_labels.jsonl")
     parser.add_argument("--output", required=True)
     parser.add_argument("--no-judge", action="store_true")
     args = parser.parse_args()
     items = {json.loads(l)["item_id"]: json.loads(l) for l in Path(args.items).read_text().splitlines() if l.strip()}
-    labels = {json.loads(l)["item_id"]: json.loads(l) for l in Path(args.labels).read_text().splitlines() if l.strip()}
+    label_paths = [Path(p) for p in args.labels] or sorted(ROOT.glob("docs/evaluation/human_labels_*.jsonl"))
+    if not label_paths:
+        legacy = ROOT / "docs" / "evaluation" / "human_labels.jsonl"
+        label_paths = [legacy] if legacy.exists() else []
+    label_files: dict[str, dict[str, dict]] = {}
+    for path in label_paths:
+        rows = [json.loads(l) for l in path.read_text().splitlines() if l.strip()]
+        labeler = rows[0]["labeler"] if rows and rows[0].get("labeler") else path.stem
+        label_files[labeler] = {r["item_id"]: r for r in rows}
+    # Reviewers are compared against the union of all labelers' labels; an item labelled by more
+    # than one person keeps only the first labeler's verdict here (human_human_kappa below is
+    # where multiple labelers are actually compared against each other).
+    labels: dict[str, dict] = {}
+    for rows in label_files.values():
+        for item_id, row in rows.items():
+            labels.setdefault(item_id, row)
     llm = create_llm()
     judge_llm = None
     if not args.no_judge:
@@ -105,6 +149,7 @@ def main() -> int:
     report = {
         "date": date.today().isoformat(),
         "commit": subprocess.run(["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True).stdout.strip(),
+        "labelers": list(label_files), "human_human_kappa": human_human_kappa(label_files),
         "labelled_items": len(rows), "calibration_items": len(calib), "test_items": len(test),
         "human_label_distribution": {lab: sum(1 for r in rows if r["human"] == lab) for lab in ("correct", "partially_correct", "incorrect", "unsafe")},
         "chosen_strictness_on_calibration_half": chosen,

@@ -52,13 +52,18 @@ Commit por bloco, sem alterar expectativas de teste/eval para passar.
 
 | # | Item | Status | Evidência |
 |---|---|---|---|
-| 4.1 | Guia de rotulagem objetivo (fundamentação × completude), com evidência visível | NÃO | — |
-| 4.2 | Segundo rotulador humano independente — **depende do usuário** | BLOQUEADO (pedido ao usuário em 2026-11-05) | — |
-| 4.3 | ≥100 itens rotulados (reais + defeitos injetados), calibração/teste separados | NÃO | — |
-| 4.4 | Medir κ humano×humano, depois juiz×humanos e Critic×humanos no teste | NÃO | — |
-| 4.5 | Recalibrar juiz e Critic só com a parte de calibração | NÃO | — |
-| 4.6 | Meta κ≥0,6 (humano×humano e juiz×humanos); se não atingir, publicar negativo como na v3 | NÃO | — |
-| 4.7 | Resposta à pergunta 2 da entrevista (em qual sinal confiar em produção) | NÃO | — |
+| 4.1 | Guia de rotulagem objetivo (fundamentação × completude), com evidência visível | RESOLVIDO | `docs/evaluation/GUIA_ROTULAGEM.md`: duas perguntas separadas, exemplos de cada nota, regra sobre menus/dados sintéticos |
+| 4.2 | Segundo rotulador humano independente — **depende do usuário** | BLOQUEADO (pedido ao usuário em 2026-11-05; ferramenta e guia agora prontos) | ver estimativa de tempo abaixo |
+| 4.3 | ≥100 itens rotulados (reais + defeitos injetados), calibração/teste separados | PARCIAL — itens prontos, rotulagem pendente | `docs/evaluation/labeling_items.jsonl`: 105 itens (85 respostas reais do sistema atual, pós-Bloco 2/3, + 20 defeitos injetados) |
+| 4.4 | Medir κ humano×humano, depois juiz×humanos e Critic×humanos no teste | PARCIAL — infraestrutura pronta, falta rodar | `calibrate_critic.py::human_human_kappa` (testado com dados sintéticos, `tests/test_calibrate_critic.py`, 6 casos); `label_cli.py` agora grava um arquivo por rotulador (`human_labels_<nome>.jsonl`) para nunca verem o rótulo um do outro |
+| 4.5 | Recalibrar juiz e Critic só com a parte de calibração | NÃO — depende de 4.2–4.4 | — |
+| 4.6 | Meta κ≥0,6 (humano×humano e juiz×humanos); se não atingir, publicar negativo como na v3 | NÃO — depende de 4.2–4.4 | — |
+| 4.7 | Resposta à pergunta 2 da entrevista (em qual sinal confiar em produção) | NÃO — depende de 4.2–4.4 | — |
+
+**Estimativa de tempo para a rotulagem** (105 itens, ~45-90s cada com as duas perguntas + motivo
+opcional): ~1h20 a 2h40 por rotulador. Pode ser feito em partes — o CLI retoma de onde parou
+(`python -m app.evaluation.label_cli --labeler <nome>`). Sugestão: primeiro ~20-25 itens como
+calibração (mede κ humano×humano antes de seguir), depois o restante.
 
 ## Bloco 5 — Replanejamento com tráfego real
 

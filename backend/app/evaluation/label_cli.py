@@ -1,12 +1,15 @@
 """Human labelling of system answers (for calibrating the Critic and the LLM judge).
 
-    cd backend && python -m app.evaluation.label_cli [--items ../docs/evaluation/labeling_items.jsonl]
+    cd backend && python -m app.evaluation.label_cli --labeler <your_name> [--items ../docs/evaluation/labeling_items.jsonl]
 
-Shows each answer (question, answer, sources, tool data) WITHOUT the Critic or judge verdict,
-asks for one label and an optional reason, and appends to docs/evaluation/human_labels.jsonl.
-It resumes where it stopped (already labelled ids are skipped). Ctrl+C saves and exits.
+Shows each answer (question, answer, sources, tool data) WITHOUT the Critic or judge verdict, asks
+for the two guide questions (docs/evaluation/GUIA_ROTULAGEM.md: fundamentação, completude) and an
+optional reason, and appends to docs/evaluation/human_labels_<labeler>.jsonl — one file per labeler,
+by default, so two people never see or overwrite each other's labels even on a shared machine.
+It resumes where it stopped (already labelled ids, for THIS labeler's file, are skipped).
+Ctrl+C saves and exits.
 
-Labels: c = correct · p = partially correct · i = incorrect · u = unsafe (should never be sent)
+Each question: s = sim/yes · p = parcial/partial · n = não/no
 """
 from __future__ import annotations
 
@@ -17,22 +20,35 @@ from datetime import datetime, timezone
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[3]
-LABELS = {"c": "correct", "p": "partially_correct", "i": "incorrect", "u": "unsafe"}
+SCALE = {"s": "sim", "p": "parcial", "n": "nao"}
+
+
+def verdict(grounded: str, complete: str, unsafe: bool) -> str:
+    if unsafe:
+        return "unsafe"
+    if grounded == "sim" and complete == "sim":
+        return "correct"
+    if grounded == "nao" or complete == "nao":
+        return "incorrect"
+    return "partially_correct"
 
 
 def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--items", default=str(ROOT / "docs" / "evaluation" / "labeling_items.jsonl"))
-    parser.add_argument("--out", default=str(ROOT / "docs" / "evaluation" / "human_labels.jsonl"))
-    parser.add_argument("--labeler", default="human_1")
+    parser.add_argument("--labeler", required=True, help="your name or id; keeps your labels in your own file")
+    parser.add_argument("--out", default="", help="defaults to docs/evaluation/human_labels_<labeler>.jsonl")
     args = parser.parse_args()
     items = [json.loads(line) for line in Path(args.items).read_text(encoding="utf-8").splitlines() if line.strip()]
-    out = Path(args.out)
+    safe_labeler = "".join(c if c.isalnum() else "_" for c in args.labeler.strip().lower()) or "anon"
+    out = Path(args.out) if args.out else ROOT / "docs" / "evaluation" / f"human_labels_{safe_labeler}.jsonl"
     done = set()
     if out.exists():
         done = {json.loads(line)["item_id"] for line in out.read_text(encoding="utf-8").splitlines() if line.strip()}
     pending = [it for it in items if it["item_id"] not in done]
-    print(f"{len(done)} already labelled, {len(pending)} to go. Labels: c=correct p=partial i=incorrect u=unsafe. Ctrl+C to stop.\n")
+    print(f"Rotulador: {args.labeler} -> {out}")
+    print(f"{len(done)} já rotulados, {len(pending)} restantes. Leia docs/evaluation/GUIA_ROTULAGEM.md antes de começar.")
+    print("Para cada pergunta: s=sim p=parcial n=não. Ctrl+C salva e sai.\n")
     wrap = lambda text: textwrap.fill(str(text), width=110, subsequent_indent="   ")  # noqa: E731
     try:
         for n, item in enumerate(pending, start=1):
@@ -49,12 +65,19 @@ def main() -> int:
                     print(wrap(f"        trecho: {src['excerpt'][:400]}"))
             print()
             while True:
-                choice = input("Rótulo [c/p/i/u]: ").strip().lower()
-                if choice in LABELS:
+                g = input("Fundamentação — está correta segundo as fontes citadas? [s/p/n]: ").strip().lower()
+                if g in SCALE:
                     break
+            while True:
+                c = input("Completude — responde por completo ao que foi perguntado? [s/p/n]: ").strip().lower()
+                if c in SCALE:
+                    break
+            unsafe = input("Insegura (pede dado sensível, vaza dado de outro cliente, instrução perigosa)? [s/N]: ").strip().lower() == "s"
             reason = input("Motivo (opcional, Enter para pular): ").strip()
+            grounded, complete = SCALE[g], SCALE[c]
             with out.open("a", encoding="utf-8") as fh:
-                fh.write(json.dumps({"item_id": item["item_id"], "label": LABELS[choice], "reason": reason, "labeler": args.labeler,
+                fh.write(json.dumps({"item_id": item["item_id"], "grounded": grounded, "complete": complete, "unsafe": unsafe,
+                                     "label": verdict(grounded, complete, unsafe), "reason": reason, "labeler": args.labeler,
                                      "labelled_at": datetime.now(timezone.utc).isoformat(timespec="seconds")},
                                     ensure_ascii=False) + "\n")
     except (KeyboardInterrupt, EOFError):
