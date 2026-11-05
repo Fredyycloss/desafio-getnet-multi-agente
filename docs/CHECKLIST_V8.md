@@ -22,8 +22,8 @@ Commit por bloco, sem alterar expectativas de teste/eval para passar.
 
 | # | Item | Status | Evidência |
 |---|---|---|---|
-| 1.1 | Classificar causa raiz dos 29% incorretos/não fundamentados/citação errada da v3 (a–h) | NÃO | — |
-| 1.2 | `docs/ANALISE_ERROS_<data>.md` com contagem por causa e plano | NÃO | — |
+| 1.1 | Classificar causa raiz dos 29% incorretos/não fundamentados/citação errada da v3 (a–h) | RESOLVIDO | `docs/ANALISE_ERROS_2026-11-05.md`: 18/63 itens (28,6%) de `ANSWER_QUALITY_cloud_2026-11-05.json` (ecebfa7, mesmo run que gerou os números da v3), causa por item |
+| 1.2 | `docs/ANALISE_ERROS_<data>.md` com contagem por causa e plano | RESOLVIDO | (c) geração 6, (d) composta 3, (e) citação 3, (h) juiz 3, (g) dado desatualizado 2, (b) truncado 1, (a)/(f) 0 — plano prioriza Bloco 3, depois Bloco 4, depois Bloco 2 |
 
 ## Bloco 2 — Busca: Recall@3 0,70 → ≥0,90
 
