@@ -43,14 +43,14 @@ Starting point: commit `ee74988` (published, CI green, feedback v2 = 7.3/10).
 
 | # | Item | Source | Block | Status | Evidence |
 |---|---|---|---|---|---|
-| Q1 | No answer-quality measure (judge, groundedness, number check) | FB2, V7-B, V6 4 | 3 | ABERTO | |
-| Q2 | Quality set ≥60 with `must_include`/`must_not_include`/sources/values | V7-B | 3 | ABERTO | |
-| Q3 | Metrics: groundedness (judge + deterministic), number accuracy, coverage, correct citation, language, abstention, usefulness 1–5 | V7-B | 3 | ABERTO | |
-| Q4 | LLM-as-judge with a versioned rubric, documented judge model, temperature 0, cost | V7-B | 3 | ABERTO | |
-| Q5 | Human labels: ~80 answers (incl. injected bad ones) + labelling tool; Critic/judge P/R/F1, kappa; calibrate on half, report on the other half | V7-B | 3 | ABERTO | |
-| Q6 | Critic approved 100% / calibration 21%→0% between runs: explain and measure | FB2, SELF, V6 4 | 3 | ABERTO | |
-| Q7 | `heldout_v1` (seen) + `heldout_v2` ≥100 new cases with recorded origin; 3 runs per mode, mean ± sd | V6 4, SELF | 3 | ABERTO | |
-| Q8 | `RELATORIO_QUALIDADE_<data>.md` | V7-B | 3 | ABERTO | |
+| Q1 | No answer-quality measure (judge, groundedness, number check) | FB2, V7-B, V6 4 | 3 | RESOLVIDO | app/evaluation/answer_quality.py + run_answer_quality.py; cloud run docs/eval/ANSWER_QUALITY_cloud_run1_2026-11-03.json |
+| Q2 | Quality set ≥60 with `must_include`/`must_not_include`/sources/values | V7-B | 3 | RESOLVIDO | answer_quality.jsonl: 63 items with must_include / must_not_include / sources |
+| Q3 | Metrics: groundedness (judge + deterministic), number accuracy, coverage, correct citation, language, abstention, usefulness 1–5 | V7-B | 3 | RESOLVIDO | coverage, forbidden absent, numbers supported, citation correct, abstention, judge correct/grounded |
+| Q4 | LLM-as-judge with a versioned rubric, documented judge model, temperature 0, cost | V7-B | 3 | RESOLVIDO | docs/evaluation/JUDGE_RUBRIC.md; judge claude-sonnet-5-5, temperature 0, cost recorded |
+| Q5 | Human labels: ~80 answers (incl. injected bad ones) + labelling tool; Critic/judge P/R/F1, kappa; calibrate on half, report on the other half | V7-B | 3 | PARCIAL | label_cli + 83 labelling items + calibrate_critic.py ready; human labels await the author (asked in the final report) |
+| Q6 | Critic approved 100% / calibration 21%→0% between runs: explain and measure | FB2, SELF, V6 4 | 3 | PARCIAL | Strict vs material explained (docs/RELATORIO_QUALIDADE_2026-11-04.md); Critic now decides by per-issue severity (eac1d96); human-label calibration pending Q5 |
+| Q7 | `heldout_v1` (seen) + `heldout_v2` ≥100 new cases with recorded origin; 3 runs per mode, mean ± sd | V6 4, SELF | 3 | RESOLVIDO | heldout_v2 109 cases; 3 runs per mode: cloud route 0.932±0.008, FN 0; offline route 0.184±0.033, FN 0 |
+| Q8 | `RELATORIO_QUALIDADE_<data>.md` | V7-B | 3 | RESOLVIDO | docs/RELATORIO_QUALIDADE_2026-11-04.md |
 
 ## Orchestration (block 4)
 
@@ -76,14 +76,14 @@ Starting point: commit `ee74988` (published, CI green, feedback v2 = 7.3/10).
 
 | # | Item | Source | Block | Status | Evidence |
 |---|---|---|---|---|---|
-| S1 | API key sent in plain text by message → policy: never distribute a key; evaluator uses their own key or replay/offline; old key revoked (user confirms) | FB2, V7-E | 6 | PARCIAL | Policy in README + docs/SECURITY.md; revocation of the emailed key awaits the author's confirmation |
+| S1 | API key sent in plain text by message → policy: never distribute a key; evaluator uses their own key or replay/offline; old key revoked (user confirms) | FB2, V7-E | 6 | RESOLVIDO | Policy in README + docs/SECURITY.md; the author confirmed on 04/11/2026 that the emailed key was revoked |
 | S2 | Secret scanning in CI (pinned gitleaks) + documented pre-commit hook | V7-E | 6 | RESOLVIDO | CI job gitleaks v8.21.2 (pinned image, redacted) + `.pre-commit-config.yaml`; local scan: no leaks |
 | S3 | Shared operator key → individual operators (hashed password, roles, expiry, per-operator audit) | FB2, V7-E | 6 | RESOLVIDO | Block 2: scrypt accounts, roles, expiring tokens, per-operator audit; shared key bootstrap-only (off by default) |
 | S4 | Rate limiting + lockout on customer and operator login; basic rate limit on `/api/chat` | V7-E, V6 8, SELF | 6 | RESOLVIDO | `app/login_limiter.py` (DB-backed): account lockout, per-address ceiling, per-customer chat limit; tests/test_login_security.py |
 | S5 | Public PINs → explicit `DEMO_MODE`; outside demo, configured secret required and no user listing | V7-E, SELF | 6 | RESOLVIDO | `DEMO_MODE=false`: no user list, scrypt customer credentials, AUTH_SECRET required; UI asks for the id |
-| S6 | Per-process `AUTH_SECRET` → required outside demo | V6 8, SELF | 12 | ABERTO | |
-| S7 | Injection beyond the prompt: tool allowlist per agent, schema-checked args, output filter for other customers' identifiers, delimited retrieved content; new tests (including injection inside a site page) | V6 8, SELF | 12 | ABERTO | |
-| S8 | `SECURITY.md`: threats × controls × tests | V6 8 | 12 | ABERTO | |
+| S6 | Per-process `AUTH_SECRET` → required outside demo | V6 8, SELF | 12 | RESOLVIDO | Block 6: DEMO_MODE=false refuses to start without AUTH_SECRET; demo: DB-shared secret + /api/health warning |
+| S7 | Injection beyond the prompt: tool allowlist per agent, schema-checked args, output filter for other customers' identifiers, delimited retrieved content; new tests (including injection inside a site page) | V6 8, SELF | 12 | RESOLVIDO | Schema-checked args, per-agent allowlist, output filter, <untrusted_data>; tests/test_injection_defense.py (5) |
+| S8 | `SECURITY.md`: threats × controls × tests | V6 8 | 12 | RESOLVIDO | docs/SECURITY.md 'Threats × controls × tests' |
 
 ## Write tools (block 7)
 
@@ -101,44 +101,44 @@ Starting point: commit `ee74988` (published, CI green, feedback v2 = 7.3/10).
 | B1 | Home-screen suggestions fall into the menu; a clear Payment Link question asks for clarification | V6 2, SELF | 8 | RESOLVIDO | Cloud: 12/12 suggestion requests answered with no menu (docs/RELATORIO_LATENCIA_2026-11-04_cloud-v7-block8.json); offline in block 12 run |
 | B2 | `selected_topic` on suggestions; typed suggestions answered by real understanding (pt/en, both modes); Playwright clicks all 4 | V6 2 | 8 | PARCIAL | selected_topic implemented + tests (scripted unsure model still dispatches); Playwright clicks all 4 (e2e/home-suggestions.spec.ts); cloud typed pt/en + clicked 12/12; offline measurement pending (block 12 benchmark) |
 | B3 | Literal challenge payload returns 401 → anonymous session; customer data requires login | V6 3, SELF | 8 | RESOLVIDO | No token = anonymous session; customer tools answer login_required; cloud B3 check 21/21 PASS (docs/RELATORIO_LATENCIA_2026-11-04_cloud-v7-block8.json); tests/test_anonymous_and_topics.py; README shows the literal curl first |
-| B4 | Acceptance scenarios marked `NOT_RUN` in the report | FB2 | 4/8 | ABERTO | |
+| B4 | Acceptance scenarios marked `NOT_RUN` in the report | FB2 | 4/8 | RESOLVIDO | Cloud run 2026-11-04: acceptance map 1–18 with no NOT_RUN |
 
 ## Engineering judgment (block 9)
 
 | # | Item | Source | Block | Status | Evidence |
 |---|---|---|---|---|---|
-| J1 | Heavy chain without a measure that justifies it → ablation (full, no Critic, no CI, no PolicyGate (safety set only), fast path only, planning only) | FB2, V7-G | 9 | ABERTO | |
-| J2 | Simplify what does not pay for itself; `docs/ABLACAO_<data>.md` | V7-G | 9 | ABERTO | |
-| J3 | Extensive deterministic policy (risk regex, menus) → justify with numbers (cases decided by each rule) | V6, SELF | 9 | ABERTO | |
+| J1 | Heavy chain without a measure that justifies it → ablation (full, no Critic, no CI, no PolicyGate (safety set only), fast path only, planning only) | FB2, V7-G | 9 | RESOLVIDO | docs/eval/ABLATION_2026-11-04.json (commit 861ada7, 1 run per config): no PolicyGate → 19/19 dangerous missed; no CI → 4 missed, +50% cost; no Critic → numbers supported 56/58 → 52/58 |
+| J2 | Simplify what does not pay for itself; `docs/ABLACAO_<data>.md` | V7-G | 9 | RESOLVIDO | docs/ABLACAO_2026-11-04.md: every stage pays for itself on safety, grounding or cost; nothing removed (the measurement shows no gain from removal); planning-mode citation loss recorded as a finding |
+| J3 | Extensive deterministic policy (risk regex, menus) → justify with numbers (cases decided by each rule) | V6, SELF | 9 | PARCIAL | RiskAssessment alone on heldout_v2: 15/19 dangerous flagged, 3/90 false alarms; its 4 misses are the ones CI covers (docs/ABLACAO_2026-11-04.md). Menus not attributed per rule |
 
 ## Memory and continuous improvement (block 10)
 
 | # | Item | Source | Block | Status | Evidence |
 |---|---|---|---|---|---|
-| M1 | No long-conversation summary → incremental summary + structured session memory; 30-turn test; tokens saved | FB2, V7-H, SELF | 10 | ABERTO | |
-| M2 | Improvement loop: refresh, 👍/👎 feedback, validated answers (invalidated by corpus version), knowledge-gap queue promoted only by an operator | V6 6, SELF | 10 | ABERTO | |
+| M1 | No long-conversation summary → incremental summary + structured session memory; 30-turn test; tokens saved | FB2, V7-H, SELF | 10 | RESOLVIDO | app/memory.py; 30-turn test; on/off measurement docs/eval/MEMORY_EVAL_2026-11-04.json |
+| M2 | Improvement loop: refresh, 👍/👎 feedback, validated answers (invalidated by corpus version), knowledge-gap queue promoted only by an operator | V6 6, SELF | 10 | RESOLVIDO | app/improvement.py: feedback, validated answers by corpus version, gap queue promoted only by a supervisor; tests/test_improvement_loop.py |
 
 ## Observability and production (block 11)
 
 | # | Item | Source | Block | Status | Evidence |
 |---|---|---|---|---|---|
-| P1 | No OpenTelemetry, alerts or dashboards → OTel spans + OTLP + observability profile (Jaeger, Prometheus, Grafana), versioned dashboard, alert rules, screenshots | FB2, V7-I, V6 10, SELF | 11 | ABERTO | |
-| P2 | `/metrics` in Prometheus format | V6 10 | 11 | ABERTO | |
-| P3 | No replica strategy → stateless API, optional Postgres with migrations, `--scale api=2`, single Telegram worker | FB2, V7-I | 11 | ABERTO | |
-| P4 | Two compose files → one file with profiles (cloud, offline, test, observability, tools) | V6 10, SELF | 11 | ABERTO | |
-| P5 | Ollama always starts in cloud mode → evaluate a light embedding inside the API | V6 10, SELF | 11 | ABERTO | |
-| P6 | Historical reports in `docs/` that do not reflect the code → `docs/history/` + index | V6 10, SELF | 11 | ABERTO | |
-| P7 | One cloud tool case above the latency target (15.3 s) → measure and optimise | SELF | 11 | ABERTO | |
+| P1 | No OpenTelemetry, alerts or dashboards → OTel spans + OTLP + observability profile (Jaeger, Prometheus, Grafana), versioned dashboard, alert rules, screenshots | FB2, V7-I, V6 10, SELF | 11 | RESOLVIDO | telemetry.py + observability profile; docs/evidence/observability (Jaeger 33 spans with the API trace_id, Grafana, 7 alert rules) |
+| P2 | `/metrics` in Prometheus format | V6 10 | 11 | RESOLVIDO | GET /metrics; tests/test_telemetry.py |
+| P3 | No replica strategy → stateless API, optional Postgres with migrations, `--scale api=2`, single Telegram worker | FB2, V7-I | 11 | PARCIAL | --scale api=2 over the shared SQLite volume (DB state, DB-shared signing secret, single Telegram worker); Postgres with migrations NOT delivered (docs/OBSERVABILITY.md) |
+| P4 | Two compose files → one file with profiles (cloud, offline, test, observability, tools) | V6 10, SELF | 11 | RESOLVIDO | Single docker-compose.yml with profiles offline/test/observability/tools; docker-compose.ai.yml removed |
+| P5 | Ollama always starts in cloud mode → evaluate a light embedding inside the API | V6 10, SELF | 11 | ABERTO | Not evaluated in this round; Ollama still serves nomic embeddings in cloud mode |
+| P6 | Historical reports in `docs/` that do not reflect the code → `docs/history/` + index | V6 10, SELF | 11 | RESOLVIDO | docs/history/ (header 'Histórico — não reflete o código atual') + docs/README.md |
+| P7 | One cloud tool case above the latency target (15.3 s) → measure and optimise | SELF | 11 | RESOLVIDO | Cloud run 2026-11-04: tools 8/8 within 15 s in both rounds (p95 13.89 s warm) |
 
 ## Offline (block 12)
 
 | # | Item | Source | Block | Status | Evidence |
 |---|---|---|---|---|---|
-| F1 | Offline: 2/12 routes, 41% action; Qwen sends everything to the menu | SELF, FB2 | 12 | ABERTO | |
-| F2 | Hybrid rejected by a safety false negative → kNN decides route only, never safety; fix the cause, not the case | V6 9, SELF | 12 | ABERTO | |
-| F3 | Unstable Qwen routing depending on prompt wording | SELF | 12 | ABERTO | |
-| F4 | False risk alert for a vague message and for "transaction decline error" (regression tests in both modes) | SELF | 12 | ABERTO | |
-| F5 | Try `qwen3:4b` within 8 GB (measure memory) | V6 9 | 12 | ABERTO | |
+| F1 | Offline: 2/12 routes, 41% action; Qwen sends everything to the menu | SELF, FB2 | 12 | ABERTO | Measured again: offline (Qwen3 1.7B, LLM mode) route 0.184±0.033 and action 0.462 on heldout_v2 (3 runs); not fixed in this round |
+| F2 | Hybrid rejected by a safety false negative → kNN decides route only, never safety; fix the cause, not the case | V6 9, SELF | 12 | ABERTO | Not done in this round |
+| F3 | Unstable Qwen routing depending on prompt wording | SELF | 12 | ABERTO | Not done in this round |
+| F4 | False risk alert for a vague message and for "transaction decline error" (regression tests in both modes) | SELF | 12 | ABERTO | Not done in this round |
+| F5 | Try `qwen3:4b` within 8 GB (measure memory) | V6 9 | 12 | ABERTO | qwen3:4b not tried in this round |
 
 ## Closing (block 13)
 

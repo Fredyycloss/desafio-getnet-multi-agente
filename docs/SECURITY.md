@@ -8,7 +8,7 @@
   - **replay**: `LLM_PROVIDER=replay` replays the recorded cloud run in [`docs/evidence/cloud_runs/`](evidence/cloud_runs/). Retrieval, tools, PolicyGate and the deterministic Critic checks run for real; only the model text is replayed.
   - **offline**: `bash scripts/start-ai.sh -d` runs the local Qwen model.
 - The cloud-mode evidence (questions, answers, sources, full traces, Critic verdicts, token usage) is committed, so the cloud behaviour can be checked without executing anything. See [`docs/EVIDENCE.md`](EVIDENCE.md).
-- **Key sent earlier by email.** A key was sent to the evaluator by email on 03/11/2026. That practice is withdrawn, and the key is revoked by the author (revocation status is recorded in [`docs/CHECKLIST_V7.md`](CHECKLIST_V7.md), item S1).
+- **Key sent earlier by email.** A key was sent to the evaluator by email on 03/11/2026. That practice is withdrawn, and the author confirmed on 04/11/2026 that the key was revoked.
 - **Secret scanning.**
   - CI runs gitleaks v8.21.2 (pinned image `zricethezav/gitleaks:v8.21.2`) over the whole git history, with findings redacted.
   - The same scan is a pre-commit hook: `.pre-commit-config.yaml`; run `pre-commit install` once.
@@ -99,3 +99,19 @@ Before any real deployment, add:
 - dependency and image scanning;
 - TLS;
 - backups.
+
+## Threats × controls × tests
+
+| Threat | Control | Test |
+|---|---|---|
+| Reading another customer's data by changing `user_id` | Identity from the token. Tools bind the server-side id. Identity arguments from the model are dropped | `test_auth_and_isolation.py`, `test_injection_defense.py::test_identity_and_unknown_arguments_are_dropped_and_bad_values_rejected` |
+| Literal payload without a token reading data | Anonymous session; customer tools answer `login_required` | `test_anonymous_and_topics.py`, benchmark `B3_anonymous_literal` |
+| Leaking another customer's identifiers in an answer | Output filter (`app/output_filter.py`) | `test_injection_defense.py::test_other_customers_identifiers_are_removed_from_the_answer` |
+| Prompt injection in the message | Untrusted-data prompts; deterministic Critic (secret requests, missing citations); PolicyGate authority | benchmark `A14_prompt_injection`, `test_auth_and_isolation.py` |
+| Prompt injection inside a retrieved page | `<untrusted_data>` delimiters that a page cannot close; the Critic | `test_injection_defense.py::test_retrieved_page_is_delimited_and_cannot_close_the_delimiter`, `test_critic_rejects_an_answer_that_obeyed_an_injected_document` |
+| The model calling a tool of another agent, or with bad arguments | Per-agent allowlist; schema check (types, enums, ranges, required) | `test_injection_defense.py` |
+| A write action without consent | Only `propose_*` tools; confirmation bound to customer and session, with expiry and token; idempotency; audit | `test_write_actions.py` |
+| Brute force or password spraying | Account lockout, per-address ceiling, chat rate limit | `test_login_security.py` |
+| Secrets in the repository or in evidence | gitleaks in CI and pre-commit; credential scan before exporting recordings | CI job `secret-scan`, `scripts/export_cloud_run.py` |
+| Sensitive data sent to models or memory | Guardrail block before any model; redaction of the summary and gaps | `test_session_memory.py`, guardrail tests |
+| Shared operator credential | Individual scrypt accounts, roles, expiry, per-operator audit | `test_hitl_api.py`, `test_login_security.py` |

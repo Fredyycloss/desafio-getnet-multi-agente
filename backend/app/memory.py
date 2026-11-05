@@ -50,6 +50,14 @@ def _redact(text: str) -> str:
 MEMORY_NOTE_CHARS = 1100
 
 
+def window(history: list[dict] | None, n: int) -> list[dict]:
+    """The last ``n`` messages, keeping the session memory note even when it is older than them."""
+    history = list(history or [])
+    tail = history[-n:] if n > 0 else []
+    notes = [m for m in history[:-n] if m.get("memory")] if n > 0 else [m for m in history if m.get("memory")]
+    return notes[-1:] + tail
+
+
 def memory_limit(item: dict, default: int) -> int:
     """Characters kept from a history message: the memory note gets a larger budget than a turn."""
     return MEMORY_NOTE_CHARS if item.get("memory") else default

@@ -7,7 +7,7 @@ from datetime import date, datetime, timezone
 
 from pydantic import BaseModel, ConfigDict, Field
 
-from ..memory import memory_limit
+from ..memory import memory_limit, window
 from ..clock import today as clock_today
 from ..infra.llm import LLMProvider, LLMTimeout, LLMUnavailable
 from ..language import detect_language
@@ -184,7 +184,7 @@ class CriticAgent:
                         "customer_request": (user_message or "")[:600],
                         "recent_conversation": [
                             {"role": item.get("role"), "content": str(item.get("content", ""))[:memory_limit(item, 300)]}
-                            for item in (conversation_context or [])[-4:]
+                            for item in window(conversation_context, 4)
                             if item.get("role") in {"user", "assistant"}
                         ],
                         "answer": answer[:2000],

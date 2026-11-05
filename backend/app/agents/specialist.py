@@ -16,7 +16,7 @@ import time
 from typing import Any, Callable
 from uuid import uuid4
 
-from ..memory import memory_limit
+from ..memory import memory_limit, window
 from ..infra.database import Database
 from ..infra.llm import LLMAuthError, LLMBudgetExceeded, LLMProvider, LLMTimeout, LLMUnavailable
 from ..observability import stage
@@ -221,7 +221,7 @@ class ToolSpecialist:
                             {"outcome": "already_executed", "action": proposal["action"], "protocol": proposal["protocol"]}, language)
                         trace.append("action_proposed_awaiting_confirmation" if proposal.get("pending_action") else "action_already_executed")
                     else:
-                        answer = self._write_with_model(task, language, observations)
+                        answer = self._write_with_model(task, language, observations, history or [])
                     if answer and not proposal:
                         trace.append("llm_answer_from_tool_observations")
                 except LLMUnavailable as exc:
@@ -263,7 +263,7 @@ class ToolSpecialist:
 
     def _select_with_model(self, task: str, history: list[dict]) -> list[tuple[str, dict]]:
         messages: list[dict] = [{"role": "system", "content": self.selection_prompt + (" " + self.action_prompt if self.actions and self.action_prompt else "")}]
-        for item in history[-4:]:
+        for item in window(history, 4):
             if item.get("role") in {"user", "assistant"}:
                 messages.append({"role": item["role"], "content": str(item.get("content", ""))[:memory_limit(item, 300)]})
         messages.append({"role": "user", "content": f"Task: {task[:600]}"})
@@ -273,16 +273,22 @@ class ToolSpecialist:
         allowed = {schema["function"]["name"] for schema in self._schemas()}
         return [(name, args) for name, args in parse_tool_calls(response) if name in allowed]
 
-    def _write_with_model(self, task: str, language: str, observations: list[dict]) -> str | None:
+    def _write_with_model(self, task: str, language: str, observations: list[dict],
+                          history: list[dict] | None = None) -> str | None:
         system = (
             f"{self.writer_role} Answer the customer's request using ONLY the tool observations JSON. "
             "Copy identifiers, amounts, dates and statuses exactly as they appear; never invent or recompute values. "
             "If an observation is missing or failed, say so. State that the records are synthetic demo data, not real Getnet accounts. "
             "You may suggest basic low-risk checks for the observed problem, but no specific procedures, codes, phone numbers or promises. "
+            "conversation_memory, when present, summarises what the customer said earlier in this session; use it to "
+            "resolve references to earlier messages, but take every record value from the observations only. "
             "Be concise (at most 5 sentences). "
             + ("Respond only in English." if language == "en" else "Responda somente em português brasileiro.")
         )
         payload = {"request": task[:600], "observations": [compact_observation(o) for o in observations]}
+        notes = [m for m in window(history, 0) if m.get("memory")]
+        if notes:
+            payload["conversation_memory"] = str(notes[-1].get("content", ""))[:memory_limit(notes[-1], 300)]
         response = self.llm.chat(
             [{"role": "system", "content": system}, {"role": "user", "content": json.dumps(payload, ensure_ascii=False)}],
             think=False, temperature=0.0, max_tokens=int(os.getenv(self.answer_tokens_env, "180")),

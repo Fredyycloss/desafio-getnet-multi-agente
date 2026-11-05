@@ -102,3 +102,31 @@ def test_memory_can_be_disabled(monkeypatch, tmp_path):
         for i in range(16):
             r = _say(client, f"Mensagem {i}", "off")
     assert r["memory"] == {"memory_used": False} and not model.summary_inputs
+
+
+def test_memory_note_survives_the_history_window_and_reaches_the_answer_writer(db):
+    from app.agents.support_agent import CustomerSupportAgent
+    from app.infra.llm.base import normalised_response
+    from app.memory import window
+
+    note = {"role": "assistant", "content": "[conversation memory] store: Doceria Primavera", "memory": True}
+    history = [note] + [{"role": "user", "content": f"m{i}"} for i in range(6)]
+    assert window(history, 4)[0] is note and len(window(history, 4)) == 5
+    assert window([{"role": "user", "content": "x"}], 4) == [{"role": "user", "content": "x"}]
+
+    class Model:
+        model = "scripted"
+
+        def __init__(self):
+            self.prompts = {}
+
+        def chat(self, messages, tools=None, *, purpose="chat", **kwargs):
+            self.prompts[purpose] = messages
+            calls = [{"id": "1", "function": {"name": "get_terminal_status", "arguments": {}}}] if purpose.endswith(":tool_selection") else []
+            return normalised_response(content="" if calls else "ok", tool_calls=calls, provider="t", model="t",
+                                       prompt_tokens=1, output_tokens=1, latency_ms=1, cost_usd=0)
+
+    model = Model()
+    CustomerSupportAgent(db, model).run("Qual é o nome da minha loja?", "cliente1988", "pt", history=history)
+    assert any("Doceria Primavera" in m["content"] for m in next(v for k, v in model.prompts.items() if k.endswith(":tool_selection")))
+    assert "Doceria Primavera" in next(v for k, v in model.prompts.items() if k.endswith(":answer"))[-1]["content"]
