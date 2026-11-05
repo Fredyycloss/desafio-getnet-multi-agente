@@ -28,6 +28,13 @@ STOPWORDS = set("a o os as um uma de da do das dos e ou para por com no na nos n
 TOKEN_RE = re.compile(r"[a-z0-9]+")
 # Generation budget on CPU: prompt prefill dominates, so evidence is bounded.
 RETRIEVAL_K = 4
+# hybrid_rerank's candidate pool before the LLM reorders it. Tested raising this to 20 (V8 Block 2
+# round 2) hoping to recover dev questions whose right page misses the top 10 entirely: it did not
+# -- answer_rate_in_base was identical (34/39) at 10 and 20, so those pages rank beyond 20th in the
+# fused BM25/dense score too (a first-stage recall problem, not a pool-size one), and recall@3 on
+# dev was slightly worse at 20 (0.769 vs 0.795) because the extra candidates gave the LLM more
+# plausible-but-wrong passages to rank ahead of the right one. Kept at 10.
+RERANK_POOL_K = int(os.getenv("KNOWLEDGE_RERANK_POOL_K", "10"))
 EVIDENCE_PROMPT_CHARS = 700
 # Below this hybrid relevance a chunk is not used as evidence (abstention / live read).
 # Calibrated on app/evaluation/retrieval_calibration.json (answerable >= 0.44, out-of-base <= 0.27).
@@ -217,6 +224,33 @@ class KnowledgeAgent:
             return "hybrid_rerank" if override == "true" else "hybrid"
         return "hybrid_rerank" if getattr(self.llm, "provider", None) == "anthropic" else "hybrid"
 
+    def _rewrite_query_llm(self, query: str, language: str) -> str:
+        """Adds a few search-friendly keywords to the dense query before embedding (never to the
+        BM25 token set: that would inflate _bm25_max's theoretical ceiling and crater every
+        document's calibrated relevance score -- measured answer_rate_in_base 0.87->0.41 on dev).
+        Bridges vocabulary gaps between how a customer asks and how the site is written (V8 Block 2
+        round 2: e.g. 'quando recebo o dinheiro das vendas' has no lexical or dense overlap with the
+        settlement pages at all -- best fused rank 122/332 -- because the site says 'prazo de
+        recebimento'/'antecipacao', not 'receber dinheiro').
+
+        Measured on dev (hybrid_rerank, dense-only rewrite): recall@3 unchanged (0.795), MRR
+        0.703->0.729, recall@1 0.615->0.667, at ~2x retrieval latency (1.1s->2.1s) and ~2x cost for
+        one extra cheap call. Not a clear enough win on the target metric (recall@3) to default on;
+        kept behind KNOWLEDGE_QUERY_REWRITE for further experimentation, off by default."""
+        if not self.llm or os.getenv("KNOWLEDGE_QUERY_REWRITE", "").strip().lower() != "true":
+            return query
+        system = ("A customer asked a Brazilian payments company's support assistant a question. List 3-6 "
+                  "extra search keywords or short phrases, in the SAME language as the question, that the "
+                  "company's own website might use to answer it -- the customer's words may not match the "
+                  "site's wording. Return ONLY the extra keywords separated by spaces, nothing else.")
+        try:
+            response = self.llm.chat([{"role": "system", "content": system}, {"role": "user", "content": query}],
+                                      max_tokens=40, temperature=0.0, purpose="knowledge:query_rewrite")
+            extra = (response.get("content") or "").strip()
+        except Exception:
+            return query
+        return f"{query} {extra}" if extra else query
+
     def retrieve(self, query: str, k: int = 5, language: str = "pt", *, mode: str = "hybrid") -> list[dict]:
         """mode: hybrid (default) | bm25 | dense | hybrid_rerank — hybrid_rerank fetches a larger
         pool (up to 10) and has the LLM reorder it by relevance before returning the top ``k``
@@ -224,6 +258,12 @@ class KnowledgeAgent:
         with stage("rag_retrieval", "knowledge"):
             index = self._index.get(language) or self._index["pt"]
             eligible = [self.documents[i] for i in index["idx"]]
+            # The rewrite only steers the dense query: expanding the BM25 token set would also
+            # inflate _bm25_max's theoretical ceiling (it assumes every extra term could be
+            # matched), silently cratering every document's lexical score and, with it, the
+            # MIN_RELEVANCE-calibrated abstention threshold (measured: answer_rate_in_base
+            # 0.87->0.41 on dev when the rewrite fed BM25 too).
+            search_query = self._rewrite_query_llm(query, language) if mode == "hybrid_rerank" else query
             qtokens = tokens(expand_query(query, language))
             if not eligible or (not qtokens and mode != "dense"):
                 self.last_retrieval_mode = "bm25"
@@ -231,7 +271,7 @@ class KnowledgeAgent:
             bm25 = self._bm25(qtokens, index) if mode != "dense" else [0.0] * len(eligible)
             max_bm25 = self._bm25_max(qtokens, index) if qtokens else 1.0
             dense_scores: list[float] | None = None
-            qvec = self._embedding(query) if mode != "bm25" else None
+            qvec = self._embedding(search_query) if mode != "bm25" else None
             if qvec is not None:
                 if index["matrix"] is not None:
                     q = np.asarray(qvec, dtype=np.float32)
@@ -267,9 +307,9 @@ class KnowledgeAgent:
                 if score > 0:
                     ranked.append((score, doc))
             ranked.sort(key=lambda item: item[0], reverse=True)
-            pool_k = 10 if mode == "hybrid_rerank" else k
+            pool_k = RERANK_POOL_K if mode == "hybrid_rerank" else k
             results = [{**doc, "relevance": round(min(score, 1.0), 4), "retrieval_mode": self.last_retrieval_mode}
-                       for score, doc in ranked[:max(1, min(pool_k, 10))]]
+                       for score, doc in ranked[:max(1, min(pool_k, RERANK_POOL_K))]]
             if mode == "hybrid_rerank" and self.llm is not None and len(results) > 1:
                 results = self._rerank_llm(query, results)
             return results[:max(1, min(k, 10))]

@@ -69,3 +69,23 @@ def test_rerank_llm_accepts_a_partial_or_padded_order():
     candidates = [{"url": "a", "relevance": 0.9}, {"url": "b", "relevance": 0.6}, {"url": "c", "relevance": 0.3}]
     result = agent._rerank_llm("query", candidates)
     assert [r["url"] for r in result] == ["b", "a", "c"]
+
+
+def test_query_rewrite_off_by_default():
+    agent = KnowledgeAgent(DOCS, llm=FakeLLM("extra keywords"))
+    assert agent._rewrite_query_llm("pergunta original", "pt") == "pergunta original"
+
+
+def test_query_rewrite_appends_keywords_when_enabled(monkeypatch):
+    monkeypatch.setenv("KNOWLEDGE_QUERY_REWRITE", "true")
+    agent = KnowledgeAgent(DOCS, llm=FakeLLM("prazo recebimento liquidacao"))
+    assert agent._rewrite_query_llm("quando recebo o dinheiro", "pt") == "quando recebo o dinheiro prazo recebimento liquidacao"
+
+
+def test_query_rewrite_falls_back_to_plain_query_on_failure(monkeypatch):
+    monkeypatch.setenv("KNOWLEDGE_QUERY_REWRITE", "true")
+    class Broken(FakeLLM):
+        def chat(self, messages, tools=None, **kwargs):
+            raise RuntimeError("boom")
+    agent = KnowledgeAgent(DOCS, llm=Broken(""))
+    assert agent._rewrite_query_llm("pergunta", "pt") == "pergunta"

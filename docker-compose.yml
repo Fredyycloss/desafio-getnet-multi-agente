@@ -68,6 +68,8 @@ services:
       KNOWLEDGE_CRAWL_ENABLED: "false"
       # Empty = auto (on for the cloud provider, off for local Ollama); true|false forces it.
       KNOWLEDGE_RERANK: ${KNOWLEDGE_RERANK:-}
+      # Experimental, off by default: see .env.example (V8 Block 2 round 2, not a clear win on recall@3).
+      KNOWLEDGE_QUERY_REWRITE: ${KNOWLEDGE_QUERY_REWRITE:-}
       REQUEST_TIMEOUT_SECONDS: ${REQUEST_TIMEOUT_SECONDS:-8}
       LOG_LEVEL: ${LOG_LEVEL:-INFO}
       OPERATOR_API_KEY: ${OPERATOR_API_KEY:-}
