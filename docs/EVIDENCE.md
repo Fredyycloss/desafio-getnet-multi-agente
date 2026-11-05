@@ -80,6 +80,7 @@ LLM_PROVIDER=replay DEMO_TODAY=2026-11-04 PYTHONPATH=. uvicorn app.main:app --po
 | Session memory on vs off: 4 conversations of 16 turns, recall of early facts, prompt tokens | [`eval/MEMORY_EVAL_2026-11-04.json`](eval/MEMORY_EVAL_2026-11-04.json) | `python -m app.evaluation.run_memory_eval` |
 | Quality summary (context mean ± sd, answer quality, stage contributions) | [`RELATORIO_QUALIDADE_2026-11-04.md`](RELATORIO_QUALIDADE_2026-11-04.md) | — |
 | Critic and judge vs 83 human labels (calibration / test halves, injected defects) | [`eval/CRITIC_CALIBRATION_2026-11-04.json`](eval/CRITIC_CALIBRATION_2026-11-04.json) | `python -m app.evaluation.calibrate_critic` |
+| 05/11 re-measurement (code `ecebfa7`): answer quality with judge, memory on/off with 12 conversations, Critic recalibration; summary in [`RELATORIO_QUALIDADE_2026-11-05.md`](RELATORIO_QUALIDADE_2026-11-05.md) | [`eval/ANSWER_QUALITY_cloud_2026-11-05.json`](eval/ANSWER_QUALITY_cloud_2026-11-05.json), [`eval/MEMORY_EVAL_2026-11-05.json`](eval/MEMORY_EVAL_2026-11-05.json), [`eval/CRITIC_CALIBRATION_2026-11-05.json`](eval/CRITIC_CALIBRATION_2026-11-05.json); an invalid run with a frozen date is kept in [`eval/answer_quality_runs/`](eval/answer_quality_runs/) | same commands |
 
 ## 4. Screenshots
 

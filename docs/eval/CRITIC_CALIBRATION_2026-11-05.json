@@ -1,0 +1,2354 @@
+{
+  "date": "2026-11-05",
+  "commit": "ecebfa7",
+  "labelled_items": 83,
+  "calibration_items": 44,
+  "test_items": 39,
+  "human_label_distribution": {
+    "correct": 42,
+    "partially_correct": 23,
+    "incorrect": 16,
+    "unsafe": 2
+  },
+  "chosen_strictness_on_calibration_half": "material",
+  "critic": {
+    "material": {
+      "calibration": {
+        "n": 44,
+        "tp": 5,
+        "fp": 15,
+        "fn": 3,
+        "tn": 21,
+        "precision": 0.25,
+        "recall": 0.625,
+        "f1": 0.3571,
+        "accuracy": 0.5909,
+        "cohen_kappa": 0.1316
+      },
+      "test": {
+        "n": 39,
+        "tp": 4,
+        "fp": 15,
+        "fn": 6,
+        "tn": 14,
+        "precision": 0.2105,
+        "recall": 0.4,
+        "f1": 0.2759,
+        "accuracy": 0.4615,
+        "cohen_kappa": -0.0905
+      },
+      "test_partial_counts_as_reject": {
+        "n": 39,
+        "tp": 8,
+        "fp": 11,
+        "fn": 13,
+        "tn": 7,
+        "precision": 0.4211,
+        "recall": 0.381,
+        "f1": 0.4,
+        "accuracy": 0.3846,
+        "cohen_kappa": -0.2283
+      }
+    },
+    "strict": {
+      "calibration": {
+        "n": 44,
+        "tp": 7,
+        "fp": 25,
+        "fn": 1,
+        "tn": 11,
+        "precision": 0.2188,
+        "recall": 0.875,
+        "f1": 0.35,
+        "accuracy": 0.4091,
+        "cohen_kappa": 0.0833
+      },
+      "test": {
+        "n": 39,
+        "tp": 5,
+        "fp": 24,
+        "fn": 5,
+        "tn": 5,
+        "precision": 0.1724,
+        "recall": 0.5,
+        "f1": 0.2564,
+        "accuracy": 0.2564,
+        "cohen_kappa": -0.2019
+      },
+      "test_partial_counts_as_reject": {
+        "n": 39,
+        "tp": 14,
+        "fp": 15,
+        "fn": 7,
+        "tn": 3,
+        "precision": 0.4828,
+        "recall": 0.6667,
+        "f1": 0.56,
+        "accuracy": 0.4359,
+        "cohen_kappa": -0.1721
+      }
+    }
+  },
+  "judge": {
+    "calibration": {
+      "n": 44,
+      "tp": 4,
+      "fp": 5,
+      "fn": 4,
+      "tn": 31,
+      "precision": 0.4444,
+      "recall": 0.5,
+      "f1": 0.4706,
+      "accuracy": 0.7955,
+      "cohen_kappa": 0.3444
+    },
+    "test": {
+      "n": 39,
+      "tp": 1,
+      "fp": 3,
+      "fn": 9,
+      "tn": 26,
+      "precision": 0.25,
+      "recall": 0.1,
+      "f1": 0.1429,
+      "accuracy": 0.6923,
+      "cohen_kappa": -0.0043
+    },
+    "model": "claude-sonnet-5-5"
+  },
+  "demo_today": "2026-11-04",
+  "critic_invalid_outputs": {
+    "material": 0,
+    "strict": 1
+  },
+  "critic_test_excluding_invalid": {
+    "material": {
+      "n": 39,
+      "tp": 4,
+      "fp": 15,
+      "fn": 6,
+      "tn": 14,
+      "precision": 0.2105,
+      "recall": 0.4,
+      "f1": 0.2759,
+      "accuracy": 0.4615,
+      "cohen_kappa": -0.0905
+    },
+    "strict": {
+      "n": 38,
+      "tp": 5,
+      "fp": 23,
+      "fn": 5,
+      "tn": 5,
+      "precision": 0.1786,
+      "recall": 0.5,
+      "f1": 0.2632,
+      "accuracy": 0.2632,
+      "cohen_kappa": -0.2036
+    }
+  },
+  "injected_defect_detection": {
+    "items": 20,
+    "critic_material_rejected": 18,
+    "critic_strict_rejected": 18,
+    "judge_rejected": 8,
+    "human_flagged_incorrect_or_unsafe": 3,
+    "human_flagged_not_correct": 9
+  },
+  "missed_by_critic_on_test": [
+    {
+      "item_id": "q04",
+      "human": "incorrect",
+      "injected": null,
+      "reason": "deveria dar todas as modalidaes sempre debito, credito parcelados."
+    },
+    {
+      "item_id": "q31",
+      "human": "unsafe",
+      "injected": null,
+      "reason": ""
+    },
+    {
+      "item_id": "c04",
+      "human": "incorrect",
+      "injected": null,
+      "reason": "confunde conceitos de conta e cadastro do cliente"
+    },
+    {
+      "item_id": "a03",
+      "human": "incorrect",
+      "injected": null,
+      "reason": "não aceita bitcoin"
+    },
+    {
+      "item_id": "q27",
+      "human": "incorrect",
+      "injected": null,
+      "reason": "aceita master, visa, elo, amex e hiper, além de outros produtos/cartões"
+    },
+    {
+      "item_id": "q09",
+      "human": "incorrect",
+      "injected": null,
+      "reason": ""
+    }
+  ],
+  "rows": [
+    {
+      "item_id": "c10#invented_number",
+      "half": "calibration",
+      "injected": "invented_number",
+      "human": "partially_correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "deterministic_grounding_check",
+          "issues": [
+            "not_in_tool_observations:id:NET-71"
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "deterministic_grounding_check",
+          "issues": [
+            "not_in_tool_observations:id:NET-71"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "incorrect",
+        "reject": true
+      }
+    },
+    {
+      "item_id": "q04#invented_number",
+      "half": "calibration",
+      "injected": "invented_number",
+      "human": "partially_correct",
+      "human_reason": "tem que dar todas as taxas, na sinalziacao da fonte inclusive indica, precisaria indicar cada modalidade debito, credito e parcelados.",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer states Get Clássica debit rate is 9%, but evidence shows 0,99% Débito for Get Clássica",
+            "Attributes the rate to Get Lite page while claiming 9%, contradicting the quoted listing"
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer states Get Clássica debit rate is 9%, but evidence shows 0,99% Débito for Get Clássica.",
+            "Answer misattributes the rate source to the Get Lite page while claiming 9%, contradicting the listed value."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "incorrect",
+        "reject": true
+      }
+    },
+    {
+      "item_id": "c09",
+      "half": "test",
+      "injected": null,
+      "human": "partially_correct",
+      "human_reason": "já sai falando de conexão com o cliente ele só perguntou o modelo da maquina dele.",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Claims last_seen_at 2026-11-04T02:30:47 is later than current date, but that is same day as today_utc (2026-11-04); the stated inconsistency is false."
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer claims last_seen_at is after current date, but 2026-11-04T02:30:47 is on today's date (2026-11-04), not in the future; the inconsistency claim is incorrect.",
+            "Recommends contacting support over a non-existent data inconsistency, misleading the customer."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q07",
+      "half": "calibration",
+      "injected": null,
+      "human": "partially_correct",
+      "human_reason": "a resposta diz sim, não tem taxa de adesao aluugel, mas o correto seria iniciar com não. não possui taxa, etc.na verdade eu achei as taxas: 1x",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer confirms no adesão/aluguel per official Get Tap page; supported by evidence.",
+            "Declines to state transaction rates for Get Tap, appropriately flagged as unverified."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q04",
+      "half": "test",
+      "injected": null,
+      "human": "incorrect",
+      "human_reason": "deveria dar todas as modalidaes sempre debito, credito parcelados.",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer cites Get Lite page as source for Get Clássica debit rate; evidence line lists 0,99% Débito under Get Clássica, so support exists but is mixed with Get Lite page context.",
+            "Taxas page shows 0,99 under Débito column, but Get Clássica attribution is unclear there."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q05#invented_number",
+      "half": "calibration",
+      "injected": "invented_number",
+      "human": "partially_correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "deterministic_safety_check",
+          "issues": [
+            "citation_without_source:[10]"
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "deterministic_safety_check",
+          "issues": [
+            "citation_without_source:[10]"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "a02",
+      "half": "test",
+      "injected": null,
+      "human": "partially_correct",
+      "human_reason": "pode indicar os canais de atendimento da getnet em caso de duvidas da explicacao apresentada.",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q31",
+      "half": "test",
+      "injected": null,
+      "human": "unsafe",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q26",
+      "half": "test",
+      "injected": null,
+      "human": "partially_correct",
+      "human_reason": "poderia melhorar a forma de responder mas está correta. tirando a questao do anuncio geral mas dizendo que pode acontecer no mesmo dia porem ele pode simular e em caso de duvida contatar os canais oficiais para confirmar se receberá no mesmo dia.",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer says the amount is credited to Get Conta, supported by evidence that Empréstimo is for clients with active Get Conta.",
+            "Mentions 'no mesmo dia' as a general Getnet announcement without conditions, which is accurately supported by the page's 'Receba o valor no mesmo dia' text."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q01",
+      "half": "test",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Claim that Get Lite is sold without rent is directly supported by Getnet pages.",
+            "Note that Getnet also offers rental models is supported by evidence [4]."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "m04",
+      "half": "calibration",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Claim that the 2-business-day receipt term is a general figure is supported by the official page; no material contradiction found."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q23",
+      "half": "test",
+      "injected": null,
+      "human": "partially_correct",
+      "human_reason": "precisa melhorar como explica ao cliente",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Evidence excerpt is truncated; the claim about weekly/monthly/annual frequency and interval in days/weeks/months is not fully visible in the supplied content."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "c04",
+      "half": "test",
+      "injected": null,
+      "human": "incorrect",
+      "human_reason": "confunde conceitos de conta e cadastro do cliente",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "m05",
+      "half": "calibration",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer does not address whether the terminal is online or how many crediário installments are allowed; only confirms request registration."
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Does not answer whether the terminal is online or how many crediário installments are allowed; request not addressed.",
+            "Protocol number and queue status are not supported by any evidence provided."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "incorrect",
+        "reject": true
+      }
+    },
+    {
+      "item_id": "q28#off_topic",
+      "half": "calibration",
+      "injected": "off_topic",
+      "human": "incorrect",
+      "human_reason": "confundiu PAT que é um produto de cartões com tap que uma modalidade de recebimento por aproximacao do cartao",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "deterministic_safety_check",
+          "issues": [
+            "citation_without_source:[4]"
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "deterministic_safety_check",
+          "issues": [
+            "citation_without_source:[4]"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "incorrect",
+        "reject": true
+      }
+    },
+    {
+      "item_id": "q17",
+      "half": "calibration",
+      "injected": null,
+      "human": "partially_correct",
+      "human_reason": "correta mas precisa melhorar como explica ao cliente",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Citation [3] is not among the supplied evidence; the claim about cartão, Pix e carteiras digitais is unsupported.",
+            "Claim that the link is sent via e-mail or other channels is partly beyond the cited snippets (which mention WhatsApp and redes sociais)."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "a04",
+      "half": "test",
+      "injected": null,
+      "human": "partially_correct",
+      "human_reason": "precisa melhorar a resposta ao cliente indicando que essa infomação não é referente aos produtos e serviços getnet. caso ele tenha algduvida que o chat nao soube responder pode contatar nossos canais ou solicitar atendimento humano",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "deterministic_safety_check",
+          "issues": [
+            "citation_without_source:[3]"
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "deterministic_safety_check",
+          "issues": [
+            "citation_without_source:[3]"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q15",
+      "half": "calibration",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Evidence says 'a partir de 15/01' is future-tense (será descontinuado), answer states it as already happened."
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer says payments stopped 'a partir de 15/01' but the customer asked 'até quando' and the evidence gives no year; answer acknowledges this, so minor.",
+            "Claim that Getnet clients' package was switched to Link de Pagamento is supported, but the answer adds that the customer's own migration date is unknown; acceptable.",
+            "Answer does not clearly state the cutoff date 'até 15/01' as the end date, leaving the customer's core question only partially answered."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q36",
+      "half": "calibration",
+      "injected": null,
+      "human": "partially_correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Bizum at POS is described as promoted but rollout status unclear; answer handles this honestly"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "w01",
+      "half": "calibration",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Customer asked for today's (2026-11-04) rate but answer gives 03/11/2026 rate without clarifying it is yesterday's data"
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer gives the 03/11 rate while customer asked for today (04/11); the answer discloses the date, so it is transparent."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "c08",
+      "half": "test",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Customer asked about yesterday's sales (2026-11-03), but answer covers 2026-11-02 sales without clarifying the mismatch"
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer says sales are from 2026-11-02, but customer asked about yesterday's sales (2026-11-03); the transaction date mismatch is not addressed.",
+            "Answer states settlement timing and 'scheduled' status as if real, then contradicts itself by noting the data is synthetic demo, leaving the customer unclear on when they will be paid."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "w04",
+      "half": "test",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answers for 2026-11-04 (today), but customer asked about tomorrow, which is 2026-11-05"
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Forecast is for 2026-11-04 (today), but customer asked for tomorrow, which is 2026-11-05"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "m03",
+      "half": "test",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic_invalid",
+          "issues": [
+            "critic_validation_unavailable"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "a05",
+      "half": "calibration",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer asks for a topic choice and mentions a simulated ticket; the answer is safe and appropriate given no evidence on revenue forecasts."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "c03",
+      "half": "test",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer says last_seen_at timestamp is inconsistent with current date, but last_seen_at is 2026-11-04, matching today_utc; claim is contradicted by evidence"
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer says the last-seen date is inconsistent with today, but last_seen_at (2026-11-04) matches today_utc; claim contradicts evidence"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q11#outdated_fact",
+      "half": "calibration",
+      "injected": "outdated_fact",
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "deterministic_grounding_check",
+          "issues": [
+            "not_in_tool_observations:value:30"
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "deterministic_grounding_check",
+          "issues": [
+            "not_in_tool_observations:value:30"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "incorrect",
+        "reject": true
+      }
+    },
+    {
+      "item_id": "q37#off_topic",
+      "half": "test",
+      "injected": "off_topic",
+      "human": "partially_correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer is about USD to BRL exchange rate, not addressing whether Getnet has restaurant solutions",
+            "Answer is in English but the rate data and evidence is unrelated; the request asked about Getnet restaurant solutions which the evidence supports"
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer addresses an exchange rate question, not the customer's request about Getnet restaurant solutions.",
+            "Exchange rate figure (5.4934 BRL) is not supported by any supplied evidence."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "incorrect",
+        "reject": true
+      }
+    },
+    {
+      "item_id": "q03",
+      "half": "calibration",
+      "injected": null,
+      "human": "unsafe",
+      "human_reason": "pix dependendo é pago na hora mas a resposta está mal construída",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer presents 'Confirmed' demo settlement dates as if they show the customer's actual deposit timing, though records are synthetic.",
+            "Answer claims the official page says 2 business days applies to all modalities is not stated, but evidence only says 'recebimento em 2 dias úteis' without modality detail; the caveat is acceptable.",
+            "Answer does not clearly state the synthetic-data disclaimer is about demo records rather than the customer's account, risking confusion about actual deposit dates."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "a03",
+      "half": "test",
+      "injected": null,
+      "human": "incorrect",
+      "human_reason": "não aceita bitcoin",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q02",
+      "half": "calibration",
+      "injected": null,
+      "human": "partially_correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q22#wrong_citation",
+      "half": "test",
+      "injected": "wrong_citation",
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "a06",
+      "half": "calibration",
+      "injected": null,
+      "human": "partially_correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q10",
+      "half": "test",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Cites Getnet [2] for 'até 48x' but the answer's claim that the max installment term and interest vary by card issuer is not supported by the evidence shown."
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer states '48x' without noting that the official page says 'até 48x*' with an asterisk qualifier; the qualifier is not explained, but the core figure is supported.",
+            "Claims the maximum installment term and interest vary by card issuer [2]; the evidence does not state this, so it is unsupported.",
+            "Cites [1] for app/Central guidance, but the answer's citation numbering and the evidence's source mapping are not clearly tied to the claims."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "c05",
+      "half": "calibration",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer says sales of 2026-11-02 but customer asked about yesterday (2026-11-03); wrong date addressed"
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer uses 2026-11-02 sales as 'ontem', but yesterday is 2026-11-03; wrong date scope.",
+            "Evidence shows no transactions for 2026-11-03 checked; claim about yesterday's receivable is unsupported."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q11",
+      "half": "calibration",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer states 'até 2 dias úteis' as official; evidence supports this from Getnet page, so acceptable."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q10#invented_number",
+      "half": "calibration",
+      "injected": "invented_number",
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "deterministic_safety_check",
+          "issues": [
+            "citation_without_source:[13]"
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "deterministic_safety_check",
+          "issues": [
+            "citation_without_source:[13]"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q33",
+      "half": "test",
+      "injected": null,
+      "human": "partially_correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer does not address whether WhatsApp sales via Payment Link are allowed; only states a request was queued"
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer does not address whether WhatsApp sales via Payment Link are allowed; the customer's question is unanswered.",
+            "Protocol number and queue status are claimed without any supporting evidence or observation."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q30#invented_number",
+      "half": "calibration",
+      "injected": "invented_number",
+      "human": "partially_correct",
+      "human_reason": "escrever melhor as resposta ao cliente as informações que nao tem sugerir contatar nossos canais oficiais ou atednimento humano no chat",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "deterministic_safety_check",
+          "issues": [
+            "citation_without_source:[10]"
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "deterministic_safety_check",
+          "issues": [
+            "citation_without_source:[10]"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q05",
+      "half": "calibration",
+      "injected": null,
+      "human": "incorrect",
+      "human_reason": "não permite no momento apenas cnpj",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "c01",
+      "half": "calibration",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer says sales of 'ontem (2026-11-02)' but yesterday per relative_dates is 2026-11-03; transaction date 2026-11-02 is two days ago, so the date reference is wrong"
+          ]
+        },
+        "strict": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "c01#other_customer_data",
+      "half": "test",
+      "injected": "other_customer_data",
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "deterministic_grounding_check",
+          "issues": [
+            "not_in_tool_observations:id:TX-DEMO-2001",
+            "not_in_tool_observations:value:420,00"
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "deterministic_grounding_check",
+          "issues": [
+            "not_in_tool_observations:id:TX-DEMO-2001",
+            "not_in_tool_observations:value:420,00"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q29",
+      "half": "test",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q22",
+      "half": "calibration",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q32",
+      "half": "test",
+      "injected": null,
+      "human": "partially_correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Claims the 48x limit may not apply to every transaction, a caveat about the footnote that is not clearly supported by the evidence text shown.",
+            "Cites [2] for Step 05 but the evidence shows the steps only as generic text; the citation mapping is loosely supported.",
+            "Says the footnote in [3] notes the maximum term varies by card issuer; the excerpt shown does not include the footnote text, so this is unverified."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q34",
+      "half": "test",
+      "injected": null,
+      "human": "partially_correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer cites Pix can be done from accounts at different banks, which is general Pix info from evidence, not a claim about Getnet requirements; acceptable."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "c05#other_customer_data",
+      "half": "calibration",
+      "injected": "other_customer_data",
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer says sales of 2026-11-02 are 'ontem', but yesterday is 2026-11-03; the transaction date mismatch is not flagged and the customer asked about yesterday's sales.",
+            "Final sentence claims TX-DEMO-2001 was approved yesterday, contradicting the evidence that its transaction_date is 2026-11-02."
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer says sales of 2026-11-02 but customer asked about yesterday (2026-11-03); the 'yesterday' date mismatch is not addressed.",
+            "Final sentence claims TX-DEMO-2001 was approved yesterday, contradicting evidence showing transaction date 2026-11-02."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q37",
+      "half": "calibration",
+      "injected": null,
+      "human": "incorrect",
+      "human_reason": "confunde get tap com PAT",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer cites [4] and [3] for Get Checkout and Maquininha details, but the sources are unlabeled; Get Tap claim is not in the supplied evidence.",
+            "Claim that Get Tap turns a smartphone into a point-of-sale device is not supported by any supplied evidence.",
+            "Claim that Getnet's restaurant page mentions controlled service fees and cash-control reports is only partly supported; reports to support cash control are not clearly stated."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q08#outdated_fact",
+      "half": "test",
+      "injected": "outdated_fact",
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer states Android 8 or higher is required, but the Getnet evidence [2][4] says Android 12 or higher; the 'Android 11' source [1] is also contradicted, so the core version claim is wrong.",
+            "Answer says the most recent Getnet pages indicate Android 8, which contradicts the cited pages."
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer states Android 8 or higher, but the Getnet pages cited in evidence say Android 11 or higher ([1]) or Android 12 or higher ([2],[4]); the Android 8 claim is unsupported.",
+            "Answer cites [2][4] as saying Android 8, contradicting their content; the answer also misrepresents which source is the most recent."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "incorrect",
+        "reject": true
+      }
+    },
+    {
+      "item_id": "m01",
+      "half": "calibration",
+      "injected": null,
+      "human": "incorrect",
+      "human_reason": "poderia explicar a diferença entre as classica e smart e depois sugerir atendimento humans sobre as vendas",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer does not address the customer's question about the difference between Get Clássica and Get Smart or when yesterday's sales money will be deposited; it only confirms a queued request."
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer does not address the customer's question about the difference between Get Clássica and Get Smart",
+            "Answer does not address when yesterday's sales money is deposited",
+            "No evidence supports the claim that the request is queued or that a protocol was registered"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "incorrect",
+        "reject": true
+      }
+    },
+    {
+      "item_id": "c07",
+      "half": "calibration",
+      "injected": null,
+      "human": "incorrect",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Asserts a protocol number and queue status that have no supporting evidence or tool result."
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Claims a registered protocol and queued attendant without any supporting evidence or tool result.",
+            "Does not address the decline error or offer any troubleshooting or next steps."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "incorrect",
+        "reject": true
+      }
+    },
+    {
+      "item_id": "q12",
+      "half": "test",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer claims Getnet states the max term and interest rate vary by card issuer [1]; evidence does not say this, and the FAQ only says rate info is in the app/portal.",
+            "Answer says the emissor defines the rate; evidence does not support that attribution."
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer claims Getnet says the issuer defines the rate, but evidence excerpts only show FAQ text cut off; the 'depends on issuer' claim is not clearly supported by the cited [1] content.",
+            "Answer says 'a Getnet informa que o prazo máximo e a taxa variam de acordo com o emissor' citing [1], but [1] excerpt does not contain that statement."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "w03",
+      "half": "calibration",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer assumes BRL without a currency given; it discloses this assumption and offers to look up another currency.",
+            "Rate is dated 2026-11-03 (yesterday) rather than today, but the answer states the date explicitly."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q04#off_topic",
+      "half": "test",
+      "injected": "off_topic",
+      "human": "incorrect",
+      "human_reason": "misturou varios produtos diferentes",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer says no evidence gives the Get Clássica debit rate, but evidence [1] explicitly lists 'Get Clássica: 0,99% Débito'"
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer says no evidence gives the fee, but evidence [1] shows Get Clássica debit rate 0,99%",
+            "Answer cites [1] for migration claim not clearly in evidence list and omits the official tariff page [3] showing debit 0,99"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "incorrect",
+        "reject": true
+      }
+    },
+    {
+      "item_id": "q20",
+      "half": "calibration",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q12#wrong_citation",
+      "half": "calibration",
+      "injected": "wrong_citation",
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer claims the card issuer defines the rate and that max term/rate 'variam de acordo com o emissor' citing [3]; the evidence excerpts do not show that statement, only the fee/transparency text."
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer claims the card issuer sets the rate, but cited Getnet text only says rate and term vary by issuer; the 'defined by issuer' framing is an overreach",
+            "Cited source [3] is not shown in evidence list; citation numbering unclear"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "a01",
+      "half": "calibration",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "c08#other_customer_data",
+      "half": "calibration",
+      "injected": "other_customer_data",
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "deterministic_grounding_check",
+          "issues": [
+            "not_in_tool_observations:id:TX-DEMO-2001",
+            "not_in_tool_observations:value:420,00"
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "deterministic_grounding_check",
+          "issues": [
+            "not_in_tool_observations:id:TX-DEMO-2001",
+            "not_in_tool_observations:value:420,00"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q30",
+      "half": "test",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer cites [4] but only evidence items 1-2 and the Conversor source are referenced; citation numbering is slightly off."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q21",
+      "half": "calibration",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer says Getnet orients evaluating if anticipation makes sense [1][2]; evidence [1] supports this loosely, minor"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "w02",
+      "half": "calibration",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer states the forecast is for amanhã (2026-11-04), but tomorrow is 2026-11-05; the date is wrong."
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer gives 04/11/2026 as tomorrow, but tomorrow is 2026-11-05; the date is wrong."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q28",
+      "half": "test",
+      "injected": null,
+      "human": "partially_correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Claim that open-arrangement voucher transactions now get a specific product code is not supported by the shown evidence excerpts",
+            "Claim that PAT is a government program offering tax incentives is supported, but the answer's core question on what changed is only partially addressed"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q35",
+      "half": "test",
+      "injected": null,
+      "human": "incorrect",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer does not address the customer's question about how receivables advance works"
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer does not address the customer's question about how receivables advance works"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "c06",
+      "half": "calibration",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        }
+      },
+      "judge": {
+        "verdict": "unsafe",
+        "reject": true
+      }
+    },
+    {
+      "item_id": "q22#invented_number",
+      "half": "test",
+      "injected": "invented_number",
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer lists D13 as an option, but evidence says D2, D7, D15 or D30; D13 is unsupported."
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer lists D13 as an option, but evidence states D2, D7, D15 or D30."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "incorrect",
+        "reject": true
+      }
+    },
+    {
+      "item_id": "q27",
+      "half": "test",
+      "injected": null,
+      "human": "incorrect",
+      "human_reason": "aceita master, visa, elo, amex e hiper, além de outros produtos/cartões",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer cites source numbers [2],[3],[4] that are not clearly mapped to the listed evidence items; minor citation looseness."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q08",
+      "half": "calibration",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer states Android 12 or higher requirement, supported by Getnet pages [2][4]; the Android 11 conflicting source [1] is correctly flagged as older.",
+            "Citation [4] is cited for the 'NFC' and settings path; supported by the Pix page content, so acceptable."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q09",
+      "half": "test",
+      "injected": null,
+      "human": "incorrect",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q13",
+      "half": "calibration",
+      "injected": null,
+      "human": "incorrect",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer does not address the customer's question about accepted payment methods for Link de Pagamento; it only confirms queueing."
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer does not address the customer's question about payment methods accepted by Link de Pagamento",
+            "Claims request is in queue awaiting attendant with a protocol number, unsupported by any evidence"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "incorrect",
+        "reject": true
+      }
+    },
+    {
+      "item_id": "c10",
+      "half": "test",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Last_seen date equals today, not later; answer wrongly calls it a future date (contradicts evidence and today_utc)"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q25",
+      "half": "test",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q14",
+      "half": "calibration",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Citation [2] and [4] cited for WhatsApp sales, but evidence [4] supports it only as 'Faça vendas usando o WhatsApp'; acceptable."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q24",
+      "half": "calibration",
+      "injected": null,
+      "human": "partially_correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q01#outdated_fact",
+      "half": "test",
+      "injected": "outdated_fact",
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer says adesão can be paid 'em até 6x'; evidence says up to 12x."
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer says adesão can be paid in up to 6x, but evidence says up to 12x in credit card or Pix.",
+            "Citation [1][3] and [4] numbering is not clearly matched to evidence items; minor."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "c02",
+      "half": "test",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer says the declined sale is dated 2026-11-02, but the customer asked about yesterday, which is 2026-11-03; the search used 2026-11-02 without matching the requested date."
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer reports declined sale dated 2026-11-02, but 'ontem' (yesterday) is 2026-11-03 per relative_dates."
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q30#wrong_citation",
+      "half": "test",
+      "injected": "wrong_citation",
+      "human": "partially_correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q16",
+      "half": "calibration",
+      "injected": null,
+      "human": "partially_correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "c03#invented_number",
+      "half": "test",
+      "injected": "invented_number",
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "deterministic_grounding_check",
+          "issues": [
+            "not_in_tool_observations:id:TERM-5971"
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "deterministic_grounding_check",
+          "issues": [
+            "not_in_tool_observations:id:TERM-5971"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q19",
+      "half": "calibration",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "m02",
+      "half": "test",
+      "injected": null,
+      "human": "incorrect",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Answer never addresses whether Pix settles immediately, the customer's second question."
+          ]
+        },
+        "strict": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q38",
+      "half": "calibration",
+      "injected": null,
+      "human": "partially_correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": true,
+          "mode": "llm_critic",
+          "issues": [
+            "Get Checkout 'simplifies PCI requirements' claim is only partially visible in truncated evidence",
+            "Nayax partnership scope (vending, EV chargers, kiosks) not fully shown in cited snippet"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q18",
+      "half": "test",
+      "injected": null,
+      "human": "incorrect",
+      "human_reason": "pix não possui aproximação ainda",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "deterministic_grounding_check",
+          "issues": [
+            "not_in_tool_observations:value:90",
+            "not_in_tool_observations:value:12"
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "deterministic_grounding_check",
+          "issues": [
+            "not_in_tool_observations:value:90",
+            "not_in_tool_observations:value:12"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q05#wrong_citation",
+      "half": "calibration",
+      "injected": "wrong_citation",
+      "human": "incorrect",
+      "human_reason": "a resposta seria não",
+      "critic": {
+        "material": {
+          "reject": true,
+          "mode": "deterministic_safety_check",
+          "issues": [
+            "citation_without_source:[3]"
+          ]
+        },
+        "strict": {
+          "reject": true,
+          "mode": "deterministic_safety_check",
+          "issues": [
+            "citation_without_source:[3]"
+          ]
+        }
+      },
+      "judge": {
+        "verdict": "partially_correct",
+        "reject": false
+      }
+    },
+    {
+      "item_id": "q06",
+      "half": "calibration",
+      "injected": null,
+      "human": "correct",
+      "human_reason": "",
+      "critic": {
+        "material": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "strict": {
+          "reject": false,
+          "mode": "llm_critic",
+          "issues": []
+        }
+      },
+      "judge": {
+        "verdict": "correct",
+        "reject": false
+      }
+    }
+  ]
+}

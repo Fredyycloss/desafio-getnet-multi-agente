@@ -265,12 +265,13 @@ The agents see only the last messages: Context Intelligence and Supervisor see 6
 - **Scope.** The memory belongs to the session, which belongs to one customer.
 - **Switch:** `SESSION_MEMORY=off`.
 - **Questions about earlier turns.** The Knowledge Agent can choose `recall_conversation`, which returns this session's memory and the customer's earlier messages as evidence.
-- **Measured** (4 conversations of 16 turns; the fact is said in turn 1 and asked in turn 16; cloud, [report](docs/eval/MEMORY_EVAL_2026-11-04.json)):
-  - with memory on, the early fact is recalled in **2/4** conversations; with memory off, in **0/4**.
-  - **The two misses:** one recall question went to a clarification menu, and in the other the Knowledge Agent did not pick the recall tool.
-  - **Compression:** about 8,500 characters of older messages are replaced by a note of about 930 characters.
-  - **No token saving at this length:** the history is already windowed, so the note and the recall evidence add prompt tokens (7,615 vs 5,588 on the last turn).
-  - **Earlier runs, same day:** [before the history-window fix](docs/eval/memory_runs/1_before_window_fix.json) 1/4 vs 0/4; [window fix only](docs/eval/memory_runs/2_window_fix_only.json) 1/4 vs 1/4.
+- **Before abstaining.** If the Knowledge Agent finds no evidence and a memory note exists, it reads the session memory before saying "not found".
+- **Measured** (12 conversations of 16 turns; the fact is said in turn 1 and asked in turn 16; cloud, [report](docs/eval/MEMORY_EVAL_2026-11-05.json), [details](docs/RELATORIO_QUALIDADE_2026-11-05.md#2-session-memory-12-conversations-of-16-turns)):
+  - with memory on, the early fact is recalled in **9/12** conversations (10/12 in a second run); with memory off, in 3/12. Two of those three are scorer false positives: answers that say "I don't have that" but contain the keyword.
+  - **Misses:** two answers came from the customer profile instead of memory, and one recall question went to a clarification menu.
+  - **Compression:** about 8,000 characters of older messages are replaced by a note of about 950 characters.
+  - **No token saving at this length:** the history is already windowed, so the note adds prompt tokens (7,428 vs 5,394 on the last turn).
+  - **Earlier runs:** 04/11, 4 conversations: 2/4 vs 0/4 ([`MEMORY_EVAL_2026-11-04.json`](docs/eval/MEMORY_EVAL_2026-11-04.json), [`memory_runs/`](docs/eval/memory_runs/)).
 - **Tests:** `backend/tests/test_session_memory.py` (a 30-turn conversation, redaction, isolation, the note surviving the history window, `recall_conversation`).
 
 ### How the system improves over time
@@ -359,13 +360,13 @@ Every number below comes from a committed report produced by a real run. Index: 
 | Multi-intent questions (20): every expected specialist called | 20/20; re-plan 25%, hand-off 5% | — |
 | Critic challenge (10 corrupted first drafts) | 10/10 caught, 10/10 fixed, 0 leaked | — |
 | Acceptance scenarios 1–18 | all PASS | — |
-| Answer quality (63 items): coverage / numbers in evidence / correct citations | 0.80 / 0.95 / 0.89; judge (Sonnet): 59% fully correct | — |
+| Answer quality (63 items, 05/11): coverage / numbers in evidence / correct citations | 0.83 / 0.93 / 0.84; judge (Sonnet): 71% fully correct (59% on 03/11) | — |
 | Retrieval (70 questions): hybrid recall@5 | 0.78 (legacy corpus 0.40) | same index |
 | Cost per turn | US$ 0.0008 | US$ 0 |
 
 Reports:
 - **Latency and orchestration.** [RELATORIO_LATENCIA_2026-11-04_cloud-v7.json](docs/RELATORIO_LATENCIA_2026-11-04_cloud-v7.json), recorded turn by turn in [docs/evidence/cloud_runs/2026-11-04/](docs/evidence/cloud_runs/2026-11-04/).
-- **Context and answer quality.** [docs/RELATORIO_QUALIDADE_2026-11-04.md](docs/RELATORIO_QUALIDADE_2026-11-04.md).
+- **Context and answer quality.** [docs/RELATORIO_QUALIDADE_2026-11-04.md](docs/RELATORIO_QUALIDADE_2026-11-04.md), updated by [docs/RELATORIO_QUALIDADE_2026-11-05.md](docs/RELATORIO_QUALIDADE_2026-11-05.md) (answer quality, 12-conversation memory eval, Critic recalibration).
 - **What each stage contributes.** [docs/ABLACAO_2026-11-04.md](docs/ABLACAO_2026-11-04.md), an ablation of the Critic, Context Intelligence, PolicyGate, fast path and planning:
   - without the PolicyGate, 19/19 dangerous cases are missed;
   - without Context Intelligence, 4 are missed and turns cost 50% more;
@@ -409,8 +410,9 @@ Thresholds were fixed before measuring. Each mode was measured once on the held-
 - **Model-dependent classification.** Context Intelligence accuracy depends on the model; see the held-out results. Concrete warning signs that the regex does not recognise, but the model rates "potentially dangerous", get the safety menu, not an immediate alert. The menu always offers "real physical risk".
 - **Public data providers.** The weather, FX and search providers are unauthenticated public services and can rate-limit. The agent then says the provider is unavailable and never invents a value.
 - **Open items, measured but not fixed:**
-  - in planning mode, the composed answer loses the inline `[n]` citation markers (see the ablation report);
-  - against 83 human labels, the Critic and the judge agree at chance level (kappa ≈ 0), although the Critic catches 18/20 injected defects ([details](docs/RELATORIO_QUALIDADE_2026-11-04.md#5-critic-and-judge-against-human-labels));
+  - planning-mode citations: the composer now drops a planner draft that lost the specialists' `[n]` markers (unit-tested), but live traffic had too few planning items to confirm it;
+  - against 83 human labels, the Critic and the judge agree at chance level (Critic test kappa −0.09), although the Critic catches 18/20 injected defects; invalid Critic outputs fell from 6/83 to 0/83 with one retry ([details](docs/RELATORIO_QUALIDADE_2026-11-05.md#3-critic-and-judge-against-the-83-human-labels));
+  - five product questions still miss an expected fact because the right chunk is not in the top 4 (a stemmer was tried and not adopted);
   - the replicas share one SQLite file; Postgres is not implemented;
   - the Telegram channel is tested with a simulated Bot API, and no real-bot transcript is committed.
 

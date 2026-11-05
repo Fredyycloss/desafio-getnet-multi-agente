@@ -44,7 +44,7 @@ Web providers are stubbed at HTTP level. The Anthropic adapter is tested with a 
 | `test_telemetry.py` | OpenTelemetry spans share the response `trace_id`; Prometheus metrics carry no user data |
 | `test_injection_defense.py` | per-agent tool allowlist, schema-checked arguments, output filter for other customers' identifiers, delimited retrieved content |
 
-**Count:** 357 tests pass on 04/11/2026 (`pytest -q`). The replay test also runs as its own CI step.
+**Count:** 360 tests pass on 05/11/2026 (`pytest -q`). The replay test also runs as its own CI step.
 
 ## Browser: Playwright
 
