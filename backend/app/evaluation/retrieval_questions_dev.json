@@ -1,0 +1,468 @@
+{
+  "_note": "Retrieval evaluation set, written 2026-11-03. Questions were drafted before the snapshot existed; expected official URL fragments were labelled from the crawled page inventory and by searching page text for the answer, never from retrieval output. Items with an empty expected_urls list are outside the knowledge base (should abstain). Split dev/test (V8 anti-overfitting rule), seed=20261105, stratified by category, ~35% to test. This is the dev half.",
+  "questions": [
+    {
+      "id": "o01",
+      "language": "pt",
+      "question": "Qual a previsão do tempo para amanhã em Recife?",
+      "category": "out_of_base",
+      "expected_urls": []
+    },
+    {
+      "id": "o03",
+      "language": "pt",
+      "question": "Como faço um bolo de cenoura?",
+      "category": "out_of_base",
+      "expected_urls": []
+    },
+    {
+      "id": "o06",
+      "language": "pt",
+      "question": "Como trocar o óleo do carro?",
+      "category": "out_of_base",
+      "expected_urls": []
+    },
+    {
+      "id": "o07",
+      "language": "en",
+      "question": "Explain quantum entanglement in simple terms.",
+      "category": "out_of_base",
+      "expected_urls": []
+    },
+    {
+      "id": "o09",
+      "language": "en",
+      "question": "How do I train a puppy to sit?",
+      "category": "out_of_base",
+      "expected_urls": []
+    },
+    {
+      "id": "o10",
+      "language": "pt",
+      "question": "Qual o horário de funcionamento dos Correios?",
+      "category": "out_of_base",
+      "expected_urls": []
+    },
+    {
+      "id": "r01",
+      "language": "pt",
+      "question": "Qual a diferença entre a Get Clássica e a Get Smart?",
+      "category": "products",
+      "expected_urls": [
+        "maquininha/get-classica",
+        "maquininha/get-smart",
+        "todas-as-maquininhas",
+        "melhor-maquininha",
+        "duvidas/get-smart"
+      ]
+    },
+    {
+      "id": "r02",
+      "language": "pt",
+      "question": "A Get Lite cobra aluguel mensal?",
+      "category": "products",
+      "expected_urls": [
+        "get-lite",
+        "maquininha/aluguel",
+        "duvidas/aluguel"
+      ]
+    },
+    {
+      "id": "r04",
+      "language": "pt",
+      "question": "Quais maquininhas aceitam pagamento por aproximação?",
+      "category": "products",
+      "expected_urls": [
+        "todas-as-maquininhas",
+        "maquininha/get-",
+        "maquininha-de-cartao",
+        "pagamentos-com-cartao"
+      ]
+    },
+    {
+      "id": "r07",
+      "language": "pt",
+      "question": "Onde vejo as taxas do Link de Pagamento?",
+      "category": "fees",
+      "expected_urls": [
+        "/taxas/",
+        "duvidas/link-de-pagamento",
+        "duvidas/taxas"
+      ]
+    },
+    {
+      "id": "r08",
+      "language": "pt",
+      "question": "Como funciona o Pix na Getnet?",
+      "category": "pix",
+      "expected_urls": [
+        "/pix/",
+        "duvidas/pix",
+        "pix-na-maquininha",
+        "get-ajuda-pix"
+      ]
+    },
+    {
+      "id": "r09",
+      "language": "pt",
+      "question": "Preciso ter conta em banco para receber vendas pelo Pix?",
+      "category": "pix",
+      "expected_urls": [
+        "/pix/",
+        "duvidas/pix",
+        "get-ajuda-pix"
+      ],
+      "expected_section_terms": [
+        "conta",
+        "banco",
+        "institui"
+      ]
+    },
+    {
+      "id": "r11",
+      "language": "pt",
+      "question": "Como funciona a antecipação de recebíveis?",
+      "category": "advance",
+      "expected_urls": [
+        "antecipa",
+        "duvidas/antecipacao-de-vendas"
+      ]
+    },
+    {
+      "id": "r13",
+      "language": "pt",
+      "question": "O que é o Crediário da Getnet?",
+      "category": "crediario",
+      "expected_urls": [
+        "crediario"
+      ]
+    },
+    {
+      "id": "r14",
+      "language": "pt",
+      "question": "Em quantas vezes o cliente pode parcelar no crediário?",
+      "category": "crediario",
+      "expected_urls": [
+        "crediario"
+      ],
+      "expected_section_terms": [
+        "parcel"
+      ]
+    },
+    {
+      "id": "r15",
+      "language": "pt",
+      "question": "Posso vender pelo WhatsApp usando link de pagamento?",
+      "category": "payment_link",
+      "expected_urls": [
+        "link-de-pagamento",
+        "vender-pelo-whatsapp",
+        "get-ajuda-whatsapp-business"
+      ]
+    },
+    {
+      "id": "r17",
+      "language": "pt",
+      "question": "Quais formas de pagamento o Link de Pagamento aceita?",
+      "category": "payment_link",
+      "expected_urls": [
+        "link-de-pagamento"
+      ]
+    },
+    {
+      "id": "r18",
+      "language": "pt",
+      "question": "Minha maquininha não conecta à internet. O que faço?",
+      "category": "terminal",
+      "expected_urls": [
+        "get-ajuda-maquininha",
+        "duvidas/operacional",
+        "duvidas/get-smart",
+        "get-ajuda-erros-maquininha"
+      ]
+    },
+    {
+      "id": "r20",
+      "language": "pt",
+      "question": "Onde encontro o manual da minha maquininha?",
+      "category": "terminal",
+      "expected_urls": [
+        "manual-maquinas",
+        "get-ajuda-maquininha"
+      ]
+    },
+    {
+      "id": "r22",
+      "language": "pt",
+      "question": "Onde consulto a lista de códigos de erro da maquininha?",
+      "category": "errors",
+      "expected_urls": [
+        "get-ajuda-erros-maquininha"
+      ],
+      "expected_section_terms": [
+        "erro",
+        "código",
+        "codigo"
+      ]
+    },
+    {
+      "id": "r23",
+      "language": "pt",
+      "question": "O que dá para fazer no Portal Minha Conta?",
+      "category": "app_portal",
+      "expected_urls": [
+        "get-ajuda-configuracoes",
+        "duvidas/app-getnet"
+      ]
+    },
+    {
+      "id": "r25",
+      "language": "pt",
+      "question": "Quando recebo o dinheiro das minhas vendas?",
+      "category": "settlement",
+      "expected_urls": [
+        "maquininha/aluguel",
+        "maquininha-de-cartao",
+        "melhor-maquininha",
+        "link-de-pagamento/"
+      ]
+    },
+    {
+      "id": "r29",
+      "language": "pt",
+      "question": "Como funciona o Split de pagamentos?",
+      "category": "products",
+      "expected_urls": [
+        "split"
+      ]
+    },
+    {
+      "id": "r30",
+      "language": "pt",
+      "question": "O que são pagamentos recorrentes na Getnet?",
+      "category": "products",
+      "expected_urls": [
+        "pagamentos-recorrentes"
+      ]
+    },
+    {
+      "id": "r31",
+      "language": "pt",
+      "question": "Como recebo de clientes estrangeiros em outra moeda?",
+      "category": "products",
+      "expected_urls": [
+        "conversor-de-moedas",
+        "vender-online-para-outros-paises"
+      ]
+    },
+    {
+      "id": "r32",
+      "language": "pt",
+      "question": "Qual o telefone da central de atendimento da Getnet?",
+      "category": "support",
+      "expected_urls": [
+        "produtos-digitais",
+        "ouvidoria"
+      ]
+    },
+    {
+      "id": "r34",
+      "language": "pt",
+      "question": "O que é a solução TEF da Getnet?",
+      "category": "products",
+      "expected_urls": [
+        "/tef/",
+        "ofertas-tef",
+        "duvidas/tef"
+      ]
+    },
+    {
+      "id": "r35",
+      "language": "pt",
+      "question": "Como funciona o checkout de pagamentos para loja online?",
+      "category": "products",
+      "expected_urls": [
+        "getcheckout",
+        "checkout-de-pagamento",
+        "checkout-getnet"
+      ]
+    },
+    {
+      "id": "r38",
+      "language": "pt",
+      "question": "A maquininha está sem bateria, como carregar corretamente?",
+      "category": "terminal",
+      "expected_urls": [
+        "dias-de-festival"
+      ],
+      "note": "weak label: the official sites only mention batteries in a festival tips post"
+    },
+    {
+      "id": "r39",
+      "language": "pt",
+      "question": "Como cancelar uma venda feita na maquininha?",
+      "category": "terminal",
+      "expected_urls": [
+        "5-funcionalidades-da-maquininha",
+        "get-ajuda-configuracoes"
+      ]
+    },
+    {
+      "id": "r40",
+      "language": "pt",
+      "question": "Como consultar minhas vendas pelo aplicativo?",
+      "category": "app_portal",
+      "expected_urls": [
+        "duvidas/app-getnet",
+        "get-ajuda-configuracoes",
+        "gestao-de-vendas"
+      ]
+    },
+    {
+      "id": "r41",
+      "language": "en",
+      "question": "What's the difference between the Get Clássica and the Get Smart?",
+      "category": "products",
+      "expected_urls": [
+        "maquininha/get-classica",
+        "maquininha/get-smart",
+        "todas-as-maquininhas",
+        "melhor-maquininha"
+      ]
+    },
+    {
+      "id": "r42",
+      "language": "en",
+      "question": "Do I need a bank account to receive my sales via Pix?",
+      "category": "pix",
+      "expected_urls": [
+        "/pix/",
+        "duvidas/pix",
+        "get-ajuda-pix"
+      ]
+    },
+    {
+      "id": "r43",
+      "language": "en",
+      "question": "How does receivables advance work with Getnet?",
+      "category": "advance",
+      "expected_urls": [
+        "antecipa"
+      ]
+    },
+    {
+      "id": "r45",
+      "language": "en",
+      "question": "Can I sell through WhatsApp using the Payment Link?",
+      "category": "payment_link",
+      "expected_urls": [
+        "link-de-pagamento",
+        "vender-pelo-whatsapp",
+        "get-ajuda-whatsapp-business"
+      ]
+    },
+    {
+      "id": "r46",
+      "language": "en",
+      "question": "What in-person payment solutions does Getnet offer?",
+      "category": "products",
+      "expected_urls": [
+        "en/our-solutions/in-person-payments"
+      ]
+    },
+    {
+      "id": "r48",
+      "language": "en",
+      "question": "What solutions does Getnet have for large enterprises?",
+      "category": "products",
+      "expected_urls": [
+        "en/your-business/large-enterprises"
+      ]
+    },
+    {
+      "id": "r49",
+      "language": "en",
+      "question": "How can restaurants use Getnet?",
+      "category": "industries",
+      "expected_urls": [
+        "en/your-business/industries/restaurants",
+        "partners/soft-restaurant",
+        "getnetrestaurantes"
+      ]
+    },
+    {
+      "id": "r50",
+      "language": "en",
+      "question": "Does Getnet support tap to pay on a phone?",
+      "category": "products",
+      "expected_urls": [
+        "en/our-solutions/in-person-payments",
+        "get-tap",
+        "tap-on-phone"
+      ]
+    },
+    {
+      "id": "r52",
+      "language": "en",
+      "question": "My card machine won't connect to the internet, what should I do?",
+      "category": "terminal",
+      "expected_urls": [
+        "get-ajuda-maquininha",
+        "duvidas/operacional",
+        "duvidas/get-smart",
+        "get-ajuda-erros-maquininha"
+      ]
+    },
+    {
+      "id": "r53",
+      "language": "en",
+      "question": "What fraud prevention does Getnet provide for online payments?",
+      "category": "products",
+      "expected_urls": [
+        "en/our-solutions/online-payments",
+        "antifraude",
+        "encryption-vs-tokenisation"
+      ]
+    },
+    {
+      "id": "r54",
+      "language": "en",
+      "question": "Does Getnet offer solutions for the travel industry?",
+      "category": "industries",
+      "expected_urls": [
+        "en/your-business/industries/travel",
+        "travel-and-tourism",
+        "travel-industry"
+      ]
+    },
+    {
+      "id": "r55",
+      "language": "en",
+      "question": "How do I contact Getnet?",
+      "category": "support",
+      "expected_urls": [
+        "en/contact"
+      ]
+    },
+    {
+      "id": "r59",
+      "language": "pt",
+      "question": "Qual a história da Getnet?",
+      "category": "institutional",
+      "expected_urls": [
+        "institucional"
+      ]
+    },
+    {
+      "id": "r60",
+      "language": "pt",
+      "question": "A Getnet patrocina algum evento?",
+      "category": "institutional",
+      "expected_urls": [
+        "patrocinios",
+        "comida-di-buteco",
+        "mc-dia-feliz"
+      ]
+    }
+  ]
+}

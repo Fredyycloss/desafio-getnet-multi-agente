@@ -62,8 +62,11 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     parser.add_argument("--output", default=None)
     parser.add_argument("--no-dense", action="store_true", help="skip modes that need the embedding model")
+    parser.add_argument("--dataset", default=str(QUESTIONS),
+                         help="path to a questions .json file (default: retrieval_questions.json, the dev split); "
+                              "pass retrieval_questions_test.json or retrieval_test_v2.json for the frozen splits")
     args = parser.parse_args()
-    questions = json.loads(QUESTIONS.read_text(encoding="utf-8"))["questions"]
+    questions = json.loads(Path(args.dataset).read_text(encoding="utf-8"))["questions"]
     llm = None
     if not args.no_dense:
         from app.infra.llm.ollama import OllamaProvider
@@ -79,6 +82,7 @@ def main() -> int:
         results["snapshot_hybrid"] = evaluate(new_agent, questions, "hybrid")
     commit = subprocess.run(["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True).stdout.strip()
     report = {"date": date.today().isoformat(), "commit": commit, "snapshot": snapshot.name if snapshot else None,
+              "dataset": Path(args.dataset).name,
               "questions": len(questions), "min_relevance": MIN_RELEVANCE, "embedding_model": model,
               "summary": {k: {m: v for m, v in r.items() if m != "cases"} for k, r in results.items()}, "results": results}
     out = Path(args.output or f"retrieval-eval-{date.today().isoformat()}.json")

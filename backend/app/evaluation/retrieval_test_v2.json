@@ -1,0 +1,665 @@
+{
+  "_note": "Held-out test set written 2026-11-05, never used for tuning (V8 anti-overfitting rule). 66 questions sampled with random.seed(20261105) over the 2026-11-03 snapshot's chunks (one page per URL, the longest chunk per URL, pages with >=250 chars of content), then hand-written from that page's content alone, before any V8 retrieval/generation change. expected_urls are path fragments of the source page, checked as substrings (see run_retrieval_eval.py).",
+  "questions": [
+    {
+      "id": "rv2_01",
+      "language": "pt",
+      "category": "blog",
+      "question": "Segundo o artigo da Getnet sobre checkout, o que deve ser usado para proteger os dados do cliente durante o processo?",
+      "expected_urls": [
+        "checkout-de-pagamento-o-que-e/"
+      ],
+      "source_url": "https://site.getnet.com.br/checkout-de-pagamento-o-que-e/"
+    },
+    {
+      "id": "rv2_02",
+      "language": "pt",
+      "category": "blog",
+      "question": "Quais soluções da Getnet o artigo recomenda para vender mais no verão?",
+      "expected_urls": [
+        "como-vender-mais-no-verao/"
+      ],
+      "source_url": "https://site.getnet.com.br/como-vender-mais-no-verao/"
+    },
+    {
+      "id": "rv2_03",
+      "language": "pt",
+      "category": "blog",
+      "question": "Segundo o artigo da Getnet sobre como escolher a maquininha, em quantos dias o lojista pode receber os valores das vendas?",
+      "expected_urls": [
+        "maquininha-de-cartao/"
+      ],
+      "source_url": "https://site.getnet.com.br/maquininha-de-cartao/"
+    },
+    {
+      "id": "rv2_04",
+      "language": "pt",
+      "category": "support",
+      "question": "Meu TPA Get Classic parece sem comunicação. O que devo verificar primeiro, segundo o suporte da Getnet?",
+      "expected_urls": [
+        "pt/suporte/get-classic/o-meu-tpa-nao-parece-ter-comunicacao-o-que-posso-fazer"
+      ],
+      "source_url": "https://www.getnet.net/pt/suporte/get-classic/o-meu-tpa-nao-parece-ter-comunicacao-o-que-posso-fazer"
+    },
+    {
+      "id": "rv2_05",
+      "language": "pt",
+      "category": "blog",
+      "question": "Segundo o levantamento da Getnet sobre o Carnaval de 2026, qual foi o crescimento do faturamento do comércio físico em relação a 2025?",
+      "expected_urls": [
+        "varejo-cresce-durante-carnaval-2026-e-compras-fisicas-ganham-forca/"
+      ],
+      "source_url": "https://site.getnet.com.br/varejo-cresce-durante-carnaval-2026-e-compras-fisicas-ganham-forca/"
+    },
+    {
+      "id": "rv2_06",
+      "language": "pt",
+      "category": "support",
+      "question": "O Get Tap on Phone aceita pagamento por smartwatch?",
+      "expected_urls": [
+        "pt/suporte/get-tap-on-phone/o-get-tap-on-phone-aceita-pagamentos-com-smartphone-ou-smartwatch"
+      ],
+      "source_url": "https://www.getnet.net/pt/suporte/get-tap-on-phone/o-get-tap-on-phone-aceita-pagamentos-com-smartphone-ou-smartwatch"
+    },
+    {
+      "id": "rv2_07",
+      "language": "en",
+      "category": "blog",
+      "question": "According to Getnet's blog comparing encryption and tokenisation, what does tokenisation avoid storing?",
+      "expected_urls": [
+        "en/resources/blog/encryption-vs-tokenisation"
+      ],
+      "source_url": "https://www.getnet.net/en/resources/blog/encryption-vs-tokenisation"
+    },
+    {
+      "id": "rv2_08",
+      "language": "pt",
+      "category": "blog",
+      "question": "O que é o Get Code, programa lançado pela Getnet?",
+      "expected_urls": [
+        "getnet-lanca-get-code-comunidade-global-de-desenvolvedores-para-inovacao/"
+      ],
+      "source_url": "https://site.getnet.com.br/getnet-lanca-get-code-comunidade-global-de-desenvolvedores-para-inovacao/"
+    },
+    {
+      "id": "rv2_09",
+      "language": "pt",
+      "category": "fees",
+      "question": "Quanto custa, no Get Checkout, cada transação feita por link de pagamento via Pix ou carteira digital?",
+      "expected_urls": [
+        "getcheckout/"
+      ],
+      "source_url": "https://site.getnet.com.br/getcheckout/"
+    },
+    {
+      "id": "rv2_10",
+      "language": "en",
+      "category": "blog",
+      "question": "According to Getnet's blog on optimising checkout, what percentage of shoppers abandon a transaction if the payment page takes longer than three seconds to load?",
+      "expected_urls": [
+        "en/resources/blog/optimising-your-checkout-process"
+      ],
+      "source_url": "https://www.getnet.net/en/resources/blog/optimising-your-checkout-process"
+    },
+    {
+      "id": "rv2_11",
+      "language": "pt",
+      "category": "institutional",
+      "question": "Segundo a Getnet, quantos clientes ativos a empresa tinha e qual volume de pagamentos processou em 2025?",
+      "expected_urls": [
+        "getnet-reforca-posicionamento-como-parceira-do-empreendedor/"
+      ],
+      "source_url": "https://site.getnet.com.br/getnet-reforca-posicionamento-como-parceira-do-empreendedor/"
+    },
+    {
+      "id": "rv2_12",
+      "language": "pt",
+      "category": "blog",
+      "question": "Segundo o artigo da Getnet sobre precificação, qual a diferença entre preço e valor?",
+      "expected_urls": [
+        "precificacao/"
+      ],
+      "source_url": "https://site.getnet.com.br/precificacao/"
+    },
+    {
+      "id": "rv2_13",
+      "language": "en",
+      "category": "blog",
+      "question": "In what year did Getnet Argentina launch, according to the blog celebrating its fourth anniversary?",
+      "expected_urls": [
+        "en/resources/blog/celebrating-getnet-argentina-fourth-anniversary"
+      ],
+      "source_url": "https://www.getnet.net/en/resources/blog/celebrating-getnet-argentina-fourth-anniversary"
+    },
+    {
+      "id": "rv2_14",
+      "language": "en",
+      "category": "support",
+      "question": "What is Getnet Brazil's customer service phone number, according to the Getnet contact page?",
+      "expected_urls": [
+        "en/contact"
+      ],
+      "source_url": "https://www.getnet.net/en/contact"
+    },
+    {
+      "id": "rv2_15",
+      "language": "en",
+      "category": "blog",
+      "question": "According to Getnet's blog on Open Banking, how many consumers and SMEs used Open Banking services in the UK in 2023?",
+      "expected_urls": [
+        "en/resources/blog/4-things-every-merchant-needs-to-know-about-open-banking"
+      ],
+      "source_url": "https://www.getnet.net/en/resources/blog/4-things-every-merchant-needs-to-know-about-open-banking"
+    },
+    {
+      "id": "rv2_16",
+      "language": "pt",
+      "category": "blog",
+      "question": "Que ferramentas o artigo da Getnet sugere para facilitar o acesso ao link do WhatsApp Business do negócio?",
+      "expected_urls": [
+        "vender-pelo-whatsapp/"
+      ],
+      "source_url": "https://site.getnet.com.br/vender-pelo-whatsapp/"
+    },
+    {
+      "id": "rv2_17",
+      "language": "pt",
+      "category": "institutional",
+      "question": "Como se chama o programa de Diversidade, Equidade e Inclusão da Getnet?",
+      "expected_urls": [
+        "institucional/"
+      ],
+      "source_url": "https://site.getnet.com.br/institucional/"
+    },
+    {
+      "id": "rv2_18",
+      "language": "pt",
+      "category": "blog",
+      "question": "O que é o Domicílio Eletrônico Trabalhista (DET), segundo a Getnet?",
+      "expected_urls": [
+        "domicilio-eletronico-trabalhista/"
+      ],
+      "source_url": "https://site.getnet.com.br/domicilio-eletronico-trabalhista/"
+    },
+    {
+      "id": "rv2_19",
+      "language": "pt",
+      "category": "fees",
+      "question": "A partir de qual faturamento mensal o combo POS TEF + Conciliador Getnet não cobra nada, segundo a página de ofertas?",
+      "expected_urls": [
+        "ofertas-tef-getnet/"
+      ],
+      "source_url": "https://site.getnet.com.br/ofertas-tef-getnet/"
+    },
+    {
+      "id": "rv2_20",
+      "language": "pt",
+      "category": "support",
+      "question": "Como faço uma devolução de venda no Get Smart, segundo o suporte da Getnet?",
+      "expected_urls": [
+        "pt/suporte/get-smart/devolucoes"
+      ],
+      "source_url": "https://www.getnet.net/pt/suporte/get-smart/devolucoes"
+    },
+    {
+      "id": "rv2_21",
+      "language": "pt",
+      "category": "blog",
+      "question": "Quantas moedas o Conversor de Moedas da Getnet aceita, segundo o artigo sobre as 5 funcionalidades da maquininha?",
+      "expected_urls": [
+        "5-funcionalidades-da-maquininha-getnet-para-vender-mais/"
+      ],
+      "source_url": "https://site.getnet.com.br/5-funcionalidades-da-maquininha-getnet-para-vender-mais/"
+    },
+    {
+      "id": "rv2_22",
+      "language": "pt",
+      "category": "support",
+      "question": "O Get Smart tem conectividade 4G e Wi-Fi ao mesmo tempo, segundo o suporte da Getnet?",
+      "expected_urls": [
+        "pt/suporte/get-smart/ligar-ao-wifi"
+      ],
+      "source_url": "https://www.getnet.net/pt/suporte/get-smart/ligar-ao-wifi"
+    },
+    {
+      "id": "rv2_23",
+      "language": "pt",
+      "category": "security",
+      "question": "Quais sinais indicam que um comprovante de Pix pode ser falso, segundo a Getnet?",
+      "expected_urls": [
+        "golpe-comprovante-de-pix/"
+      ],
+      "source_url": "https://site.getnet.com.br/golpe-comprovante-de-pix/"
+    },
+    {
+      "id": "rv2_24",
+      "language": "pt",
+      "category": "fees",
+      "question": "Qual a taxa única mencionada na página de Produtos Digitais da Getnet para compras com as bandeiras de cartão?",
+      "expected_urls": [
+        "produtos-digitais/"
+      ],
+      "source_url": "https://site.getnet.com.br/produtos-digitais/"
+    },
+    {
+      "id": "rv2_25",
+      "language": "en",
+      "category": "institutional",
+      "question": "In which country was Getnet and Aevi's global partnership first deployed, according to the announcement?",
+      "expected_urls": [
+        "en/partners/aevi"
+      ],
+      "source_url": "https://www.getnet.net/en/partners/aevi"
+    },
+    {
+      "id": "rv2_26",
+      "language": "pt",
+      "category": "support",
+      "question": "Como faço uma devolução no Get Checkout, segundo o suporte da Getnet?",
+      "expected_urls": [
+        "pt/suporte/get-checkout/como-e-que-posso-fazer-uma-devolucao"
+      ],
+      "source_url": "https://www.getnet.net/pt/suporte/get-checkout/como-e-que-posso-fazer-uma-devolucao"
+    },
+    {
+      "id": "rv2_27",
+      "language": "pt",
+      "category": "products",
+      "question": "O Tap on Phone da Getnet segue qual padrão internacional de certificação de segurança para pagamentos por celular?",
+      "expected_urls": [
+        "tap-on-phone-maquininha-no-celular/"
+      ],
+      "source_url": "https://site.getnet.com.br/tap-on-phone-maquininha-no-celular/"
+    },
+    {
+      "id": "rv2_28",
+      "language": "pt",
+      "category": "support",
+      "question": "Como meu cliente recebe o comprovante de uma venda feita na maquininha Getnet, segundo o suporte?",
+      "expected_urls": [
+        "get-ajuda-gestao-de-vendas/como-fazer-minha-gestao-de-venda/"
+      ],
+      "source_url": "https://site.getnet.com.br/get-ajuda-gestao-de-vendas/como-fazer-minha-gestao-de-venda/"
+    },
+    {
+      "id": "rv2_29",
+      "language": "pt",
+      "category": "institutional",
+      "question": "Qual é a cor principal de aplicação da marca Getnet, segundo o guia digital da marca?",
+      "expected_urls": [
+        "guia-digital-marca/"
+      ],
+      "source_url": "https://site.getnet.com.br/guia-digital-marca/"
+    },
+    {
+      "id": "rv2_30",
+      "language": "pt",
+      "category": "blog",
+      "question": "Qual combo a Getnet recomenda para vender mais no inverno e nas festas julinas?",
+      "expected_urls": [
+        "aumente-o-faturamento-no-inverno/"
+      ],
+      "source_url": "https://site.getnet.com.br/aumente-o-faturamento-no-inverno/"
+    },
+    {
+      "id": "rv2_31",
+      "language": "pt",
+      "category": "products",
+      "question": "Com quantos cartões de crédito, débito e vouchers a conciliação automática do POS TEF da Getnet trabalha?",
+      "expected_urls": [
+        "tef/pos-tef/"
+      ],
+      "source_url": "https://site.getnet.com.br/tef/pos-tef/"
+    },
+    {
+      "id": "rv2_32",
+      "language": "pt",
+      "category": "fees",
+      "question": "Qual a taxa de débito da oferta Get Lite anunciada na página de ofertas da Getnet?",
+      "expected_urls": [
+        "ofertas/"
+      ],
+      "source_url": "https://site.getnet.com.br/ofertas/"
+    },
+    {
+      "id": "rv2_33",
+      "language": "pt",
+      "category": "support",
+      "question": "O que é o Portal Getnet, segundo o suporte da Getnet?",
+      "expected_urls": [
+        "pt/suporte/o-que-e-o-portal-getnet"
+      ],
+      "source_url": "https://www.getnet.net/pt/suporte/o-que-e-o-portal-getnet"
+    },
+    {
+      "id": "rv2_34",
+      "language": "en",
+      "category": "blog",
+      "question": "According to Getnet's article, where is Bizum now being trialled, beyond eCommerce and government payments?",
+      "expected_urls": [
+        "en/resources/client-stories/bizum"
+      ],
+      "source_url": "https://www.getnet.net/en/resources/client-stories/bizum"
+    },
+    {
+      "id": "rv2_35",
+      "language": "pt",
+      "category": "blog",
+      "question": "Quais datas importantes do último trimestre o artigo da Getnet destaca?",
+      "expected_urls": [
+        "ultimo-trimestre-como-preparar-seu-negocio-para-vender-mais/"
+      ],
+      "source_url": "https://site.getnet.com.br/ultimo-trimestre-como-preparar-seu-negocio-para-vender-mais/"
+    },
+    {
+      "id": "rv2_36",
+      "language": "pt",
+      "category": "security",
+      "question": "O que é deepfake, segundo o artigo da Getnet que usa a história da Chapeuzinho Vermelho como exemplo?",
+      "expected_urls": [
+        "proteja-seu-negocio-de-fraudes-digitais/"
+      ],
+      "source_url": "https://site.getnet.com.br/proteja-seu-negocio-de-fraudes-digitais/"
+    },
+    {
+      "id": "rv2_37",
+      "language": "pt",
+      "category": "blog",
+      "question": "Por qual lei o Microempreendedor Individual (MEI) foi instituído no Brasil, segundo a Getnet?",
+      "expected_urls": [
+        "mei/"
+      ],
+      "source_url": "https://site.getnet.com.br/mei/"
+    },
+    {
+      "id": "rv2_38",
+      "language": "pt",
+      "category": "institutional",
+      "question": "Para ser atendido pela Ouvidoria da Getnet, há quanto tempo o protocolo precisa ter sido registrado nos canais primários?",
+      "expected_urls": [
+        "ouvidoria/"
+      ],
+      "source_url": "https://site.getnet.com.br/ouvidoria/"
+    },
+    {
+      "id": "rv2_39",
+      "language": "pt",
+      "category": "institutional",
+      "question": "Qual instituição a Getnet apoia através do McDia Feliz 2025?",
+      "expected_urls": [
+        "mc-dia-feliz-getnet/"
+      ],
+      "source_url": "https://site.getnet.com.br/mc-dia-feliz-getnet/"
+    },
+    {
+      "id": "rv2_40",
+      "language": "pt",
+      "category": "security",
+      "question": "Segundo a Getnet, do que os consumidores devem desconfiar em anúncios antes do Dia das Mães?",
+      "expected_urls": [
+        "dia-das-maes-como-empreendedores-se-protegem-de-golpes/"
+      ],
+      "source_url": "https://site.getnet.com.br/dia-das-maes-como-empreendedores-se-protegem-de-golpes/"
+    },
+    {
+      "id": "rv2_41",
+      "language": "pt",
+      "category": "institutional",
+      "question": "Desde que ano a Getnet é carbono neutro, segundo a página de ESG?",
+      "expected_urls": [
+        "esg/"
+      ],
+      "source_url": "https://site.getnet.com.br/esg/"
+    },
+    {
+      "id": "rv2_42",
+      "language": "pt",
+      "category": "blog",
+      "question": "Segundo o artigo da Getnet, em quais áreas a IA pode ajudar micro e pequenos empreendedores?",
+      "expected_urls": [
+        "ia-para-pequenos-empreendedores/"
+      ],
+      "source_url": "https://site.getnet.com.br/ia-para-pequenos-empreendedores/"
+    },
+    {
+      "id": "rv2_43",
+      "language": "pt",
+      "category": "support",
+      "question": "Qual o melhor TPA para um negócio móvel sem localização fixa, segundo o suporte da Getnet?",
+      "expected_urls": [
+        "pt/suporte/o-meu-negocio-e-movel-e-nao-tenho-uma-localizacao-fixa-qual-e-o-melhor-tpa-para-mim"
+      ],
+      "source_url": "https://www.getnet.net/pt/suporte/o-meu-negocio-e-movel-e-nao-tenho-uma-localizacao-fixa-qual-e-o-melhor-tpa-para-mim"
+    },
+    {
+      "id": "rv2_44",
+      "language": "en",
+      "category": "blog",
+      "question": "What is a Merchant Cash Advance (MCA), according to Getnet's blog on lending solutions for SMEs?",
+      "expected_urls": [
+        "en/resources/blog/evolution-of-lending-solution"
+      ],
+      "source_url": "https://www.getnet.net/en/resources/blog/evolution-of-lending-solution"
+    },
+    {
+      "id": "rv2_45",
+      "language": "pt",
+      "category": "support",
+      "question": "Além de MB, Visa e Mastercard, que outra rede de cartões o Get Classic aceita, segundo o suporte da Getnet?",
+      "expected_urls": [
+        "pt/suporte/get-classic/e-possivel-efetuar-cobrancas-com-cartoes-diferentes"
+      ],
+      "source_url": "https://www.getnet.net/pt/suporte/get-classic/e-possivel-efetuar-cobrancas-com-cartoes-diferentes"
+    },
+    {
+      "id": "rv2_46",
+      "language": "pt",
+      "category": "blog",
+      "question": "A partir de quanto patrimônio a Getnet recomenda considerar estruturar uma holding?",
+      "expected_urls": [
+        "o-que-e-holding-e-quais-os-tipos/"
+      ],
+      "source_url": "https://site.getnet.com.br/o-que-e-holding-e-quais-os-tipos/"
+    },
+    {
+      "id": "rv2_47",
+      "language": "pt",
+      "category": "blog",
+      "question": "Até quanto um empreendedor pode economizar na conta de luz com a parceria Getnet + Fit?",
+      "expected_urls": [
+        "parceria-fit-getnet-como-economizar-na-conta-de-luz/"
+      ],
+      "source_url": "https://site.getnet.com.br/parceria-fit-getnet-como-economizar-na-conta-de-luz/"
+    },
+    {
+      "id": "rv2_48",
+      "language": "pt",
+      "category": "fees",
+      "question": "Em quantos dias úteis a Getnet promete o recebimento nas ofertas de maquininhas da página 'todas as maquininhas'?",
+      "expected_urls": [
+        "todas-as-maquininhas/"
+      ],
+      "source_url": "https://site.getnet.com.br/todas-as-maquininhas/"
+    },
+    {
+      "id": "rv2_49",
+      "language": "en",
+      "category": "products",
+      "question": "How long does the battery of Getnet's Get Mini card reader last, according to the in-person payments page?",
+      "expected_urls": [
+        "en/our-solutions/in-person-payments"
+      ],
+      "source_url": "https://www.getnet.net/en/our-solutions/in-person-payments"
+    },
+    {
+      "id": "rv2_50",
+      "language": "pt",
+      "category": "security",
+      "question": "O que o sistema Antifraude da Getnet combina para calcular a probabilidade de fraude em tempo real?",
+      "expected_urls": [
+        "antifraude/"
+      ],
+      "source_url": "https://site.getnet.com.br/antifraude/"
+    },
+    {
+      "id": "rv2_51",
+      "language": "en",
+      "category": "blog",
+      "question": "According to the ACI Worldwide and Ovum survey cited in Getnet's blog, what percentage of colleges and universities are considered advanced in accepting alternative payment methods?",
+      "expected_urls": [
+        "en/resources/blog/education-in-the-digital-age-the-adoption-of-digital-payments"
+      ],
+      "source_url": "https://www.getnet.net/en/resources/blog/education-in-the-digital-age-the-adoption-of-digital-payments"
+    },
+    {
+      "id": "rv2_52",
+      "language": "en",
+      "category": "products",
+      "question": "What does Getnet SEP stand for, according to the omnichannel page?",
+      "expected_urls": [
+        "en/our-solutions/omnichannel"
+      ],
+      "source_url": "https://www.getnet.net/en/our-solutions/omnichannel"
+    },
+    {
+      "id": "rv2_53",
+      "language": "pt",
+      "category": "blog",
+      "question": "Quais datas comemorativas do segundo semestre o artigo da Getnet recomenda planejar com antecedência?",
+      "expected_urls": [
+        "dicas-segundo-semestre/"
+      ],
+      "source_url": "https://site.getnet.com.br/dicas-segundo-semestre/"
+    },
+    {
+      "id": "rv2_54",
+      "language": "pt",
+      "category": "support",
+      "question": "Como posso mudar minha senha no Get Checkout, segundo o suporte da Getnet?",
+      "expected_urls": [
+        "pt/suporte/get-checkout/como-posso-mudar-a-minha-password"
+      ],
+      "source_url": "https://www.getnet.net/pt/suporte/get-checkout/como-posso-mudar-a-minha-password"
+    },
+    {
+      "id": "rv2_55",
+      "language": "pt",
+      "category": "products",
+      "question": "O Conversor de Moedas (DCC) da Getnet reconhece automaticamente cartões internacionais de quais bandeiras?",
+      "expected_urls": [
+        "conheca-o-conversor-de-moedas/"
+      ],
+      "source_url": "https://site.getnet.com.br/conheca-o-conversor-de-moedas/"
+    },
+    {
+      "id": "rv2_56",
+      "language": "pt",
+      "category": "blog",
+      "question": "Como funciona o SEP da Getnet para vender online em outros países, segundo o artigo?",
+      "expected_urls": [
+        "como-vender-online-para-outros-paises-e-expandir-seu-negocio/"
+      ],
+      "source_url": "https://site.getnet.com.br/como-vender-online-para-outros-paises-e-expandir-seu-negocio/"
+    },
+    {
+      "id": "rv2_57",
+      "language": "pt",
+      "category": "blog",
+      "question": "Em 2014, que porcentagem das transações em lojas físicas no Brasil era feita em dinheiro, segundo o artigo da Getnet?",
+      "expected_urls": [
+        "nova-era-dos-pagamentos/"
+      ],
+      "source_url": "https://site.getnet.com.br/nova-era-dos-pagamentos/"
+    },
+    {
+      "id": "rv2_58",
+      "language": "pt",
+      "category": "blog",
+      "question": "O que são carteiras digitais, segundo o artigo da Getnet?",
+      "expected_urls": [
+        "carteiras-digitais/"
+      ],
+      "source_url": "https://site.getnet.com.br/carteiras-digitais/"
+    },
+    {
+      "id": "rv2_59",
+      "language": "pt",
+      "category": "fees",
+      "question": "Qual a taxa de débito da Get Clássica anunciada na página da Get Lite?",
+      "expected_urls": [
+        "get-lite/"
+      ],
+      "source_url": "https://site.getnet.com.br/get-lite/"
+    },
+    {
+      "id": "rv2_60",
+      "language": "pt",
+      "category": "products",
+      "question": "Quais prazos de recebimento o Split de Pagamento da Getnet permite configurar para os parceiros?",
+      "expected_urls": [
+        "split/"
+      ],
+      "source_url": "https://site.getnet.com.br/split/"
+    },
+    {
+      "id": "rv2_61",
+      "language": "en",
+      "category": "blog",
+      "question": "According to Getnet's blog on the Latin America payments ecosystem, what share of Brazil's population were mobile wallet users in 2021?",
+      "expected_urls": [
+        "en/resources/blog/what-is-next-for-the-latin-america-payments-ecosystem"
+      ],
+      "source_url": "https://www.getnet.net/en/resources/blog/what-is-next-for-the-latin-america-payments-ecosystem"
+    },
+    {
+      "id": "rv2_62",
+      "language": "pt",
+      "category": "blog",
+      "question": "Segundo a pesquisa da Getnet, que porcentagem de empreendedores viu aumento no uso do Pix à vista no último ano?",
+      "expected_urls": [
+        "pix-lidera-pagamentos-na-black-friday/"
+      ],
+      "source_url": "https://site.getnet.com.br/pix-lidera-pagamentos-na-black-friday/"
+    },
+    {
+      "id": "rv2_63",
+      "language": "en",
+      "category": "blog",
+      "question": "How does a QR code payment work for the customer, according to Getnet's blog on the mobile payment revolution in Latin America?",
+      "expected_urls": [
+        "en/resources/blog/the-mobile-payment-revolution-in-latin-america"
+      ],
+      "source_url": "https://www.getnet.net/en/resources/blog/the-mobile-payment-revolution-in-latin-america"
+    },
+    {
+      "id": "rv2_64",
+      "language": "pt",
+      "category": "blog",
+      "question": "Segundo o estudo da Bain & Company citado pela Getnet, quanto mais clientes fiéis gastam em restaurantes comparado a novos consumidores?",
+      "expected_urls": [
+        "dia-das-maes/"
+      ],
+      "source_url": "https://site.getnet.com.br/dia-das-maes/"
+    },
+    {
+      "id": "rv2_65",
+      "language": "pt",
+      "category": "blog",
+      "question": "Qual foi o crescimento no faturamento total durante a Black Week, segundo o levantamento da Getnet?",
+      "expected_urls": [
+        "vendas-crescem-na-black-week/"
+      ],
+      "source_url": "https://site.getnet.com.br/vendas-crescem-na-black-week/"
+    },
+    {
+      "id": "rv2_66",
+      "language": "en",
+      "category": "security",
+      "question": "Where did Getnet develop the first certified P2PE solution in Latin America, according to the Meliá Hotels case study?",
+      "expected_urls": [
+        "en/resources/client-stories/connects-melia"
+      ],
+      "source_url": "https://www.getnet.net/en/resources/client-stories/connects-melia"
+    }
+  ]
+}

@@ -102,10 +102,13 @@ def main() -> int:
     parser.add_argument("--labeling-items", default="")
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--pause", type=float, default=1.0)
+    parser.add_argument("--dataset", default=str(DATASET),
+                         help="path to a .jsonl dataset (default: answer_quality.jsonl, the dev split); "
+                              "pass answer_quality_test.jsonl or quality_test_v2.jsonl for the frozen splits")
     parser.add_argument("--rescore", default="", help="recompute deterministic checks of an existing report (no model calls)")
     parser.add_argument("--rejudge", default="", help="re-run only the judge on an existing report's answers, with full evidence chunks")
     args = parser.parse_args()
-    items = [json.loads(line) for line in DATASET.read_text(encoding="utf-8").splitlines() if line.strip()]
+    items = [json.loads(line) for line in Path(args.dataset).read_text(encoding="utf-8").splitlines() if line.strip()]
     if args.rescore:
         report = json.loads(Path(args.rescore).read_text(encoding="utf-8"))
         by_id = {it["id"]: it for it in items}
@@ -116,7 +119,7 @@ def main() -> int:
                                                abstained=abstained({"answer": r["answer"], "orchestration_mode": r["orchestration_mode"],
                                                                     "trace": r["trace"]}))
         records, llm, judge_llm = report["records"], None, None
-        report_meta = {k: report[k] for k in ("commit", "provider", "model", "judge_model")}
+        report_meta = {k: report.get(k) for k in ("commit", "provider", "model", "judge_model", "dataset")}
     if args.rejudge:
         records, report_meta = rejudge(Path(args.rejudge), items)
         finish(args, records, report_meta)
@@ -163,7 +166,7 @@ def rejudge(path: Path, items: list[dict]):
         except Exception as exc:  # noqa: BLE001 - a judge failure is recorded, not fatal
             r["judge"] = {"error": type(exc).__name__}
         print(f"[{r['item_id']}] judge={(r.get('judge') or {}).get('verdict')}", flush=True)
-    meta = {k: report[k] for k in ("commit", "provider", "model", "judge_model")}
+    meta = {k: report.get(k) for k in ("commit", "provider", "model", "judge_model", "dataset")}
     meta.update(rejudged_from=path.name, judge_evidence_chars=JUDGE_EVIDENCE_CHARS,
                 evidence_chunks_restored=restored, evidence_chunks_not_found=missing)
     return report["records"], meta
@@ -207,7 +210,7 @@ def run_live(args, items):
               f"cov={checks.get('coverage')} nums={checks.get('numbers_supported')} judge={(record.get('judge') or {}).get('verdict')}", flush=True)
     commit = subprocess.run(["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True).stdout.strip()
     return records, {"commit": commit, "provider": getattr(llm, "provider", None), "model": getattr(llm, "model", None),
-                     "judge_model": getattr(judge_llm, "model", None)}
+                     "judge_model": getattr(judge_llm, "model", None), "dataset": Path(args.dataset).name}
 
 
 def aggregate(rows: list[dict]) -> dict:

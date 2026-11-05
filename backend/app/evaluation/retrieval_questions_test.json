@@ -1,0 +1,250 @@
+{
+  "_note": "Retrieval evaluation set, written 2026-11-03. Questions were drafted before the snapshot existed; expected official URL fragments were labelled from the crawled page inventory and by searching page text for the answer, never from retrieval output. Items with an empty expected_urls list are outside the knowledge base (should abstain). Split dev/test (V8 anti-overfitting rule), seed=20261105, stratified by category, ~35% to test. This is the frozen test half.",
+  "questions": [
+    {
+      "id": "o02",
+      "language": "pt",
+      "question": "Quem ganhou a Copa do Mundo de 2002?",
+      "category": "out_of_base",
+      "expected_urls": []
+    },
+    {
+      "id": "o04",
+      "language": "en",
+      "question": "What is the capital of Australia?",
+      "category": "out_of_base",
+      "expected_urls": []
+    },
+    {
+      "id": "o05",
+      "language": "pt",
+      "question": "Qual o preço da ação da Petrobras hoje?",
+      "category": "out_of_base",
+      "expected_urls": []
+    },
+    {
+      "id": "o08",
+      "language": "pt",
+      "question": "Qual é a melhor série da Netflix?",
+      "category": "out_of_base",
+      "expected_urls": []
+    },
+    {
+      "id": "r03",
+      "language": "pt",
+      "question": "O que é o Get Tap e como transformo meu celular em maquininha?",
+      "category": "products",
+      "expected_urls": [
+        "get-tap",
+        "tap-on-phone"
+      ]
+    },
+    {
+      "id": "r05",
+      "language": "pt",
+      "question": "A Get Smart imprime comprovante?",
+      "category": "products",
+      "expected_urls": [
+        "maquininha/get-smart",
+        "duvidas/get-smart",
+        "solucoes-get-smart"
+      ]
+    },
+    {
+      "id": "r06",
+      "language": "pt",
+      "question": "Quais são as taxas da maquininha no débito e no crédito?",
+      "category": "fees",
+      "expected_urls": [
+        "/taxas/",
+        "duvidas/taxas"
+      ]
+    },
+    {
+      "id": "r10",
+      "language": "pt",
+      "question": "Como habilito o recebimento via Pix no aplicativo Getnet?",
+      "category": "pix",
+      "expected_urls": [
+        "get-ajuda-pix",
+        "duvidas/pix",
+        "/pix/"
+      ]
+    },
+    {
+      "id": "r12",
+      "language": "pt",
+      "question": "Como antecipo minhas vendas pelo app?",
+      "category": "advance",
+      "expected_urls": [
+        "get-ajuda-antecipacao-de-venda",
+        "duvidas/antecipacao-de-vendas"
+      ]
+    },
+    {
+      "id": "r16",
+      "language": "pt",
+      "question": "O que mudou nos pagamentos pelo WhatsApp Business?",
+      "category": "payment_link",
+      "expected_urls": [
+        "get-ajuda-whatsapp-business",
+        "vender-pelo-whatsapp"
+      ]
+    },
+    {
+      "id": "r19",
+      "language": "pt",
+      "question": "Como configurar o Wi-Fi da maquininha?",
+      "category": "terminal",
+      "expected_urls": [
+        "get-ajuda-maquininha",
+        "duvidas/get-smart",
+        "duvidas/operacional",
+        "manual-maquinas"
+      ]
+    },
+    {
+      "id": "r21",
+      "language": "pt",
+      "question": "O que significa o erro 05 na maquininha?",
+      "category": "errors",
+      "expected_urls": [
+        "get-ajuda-erros-maquininha"
+      ],
+      "expected_section_terms": [
+        "erro",
+        "código",
+        "codigo"
+      ]
+    },
+    {
+      "id": "r24",
+      "language": "pt",
+      "question": "Como baixar o aplicativo Getnet Brasil?",
+      "category": "app_portal",
+      "expected_urls": [
+        "duvidas/app-getnet",
+        "redirect-app-getnet-brasil",
+        "get-ajuda-configuracoes"
+      ]
+    },
+    {
+      "id": "r26",
+      "language": "pt",
+      "question": "Qual o prazo de recebimento das vendas no crédito?",
+      "category": "settlement",
+      "expected_urls": [
+        "maquininha/aluguel",
+        "maquininha-de-cartao",
+        "melhor-maquininha"
+      ]
+    },
+    {
+      "id": "r27",
+      "language": "pt",
+      "question": "O que é a Get Conta?",
+      "category": "products",
+      "expected_urls": [
+        "conta-digital",
+        "duvidas/get-conta"
+      ]
+    },
+    {
+      "id": "r28",
+      "language": "pt",
+      "question": "A Getnet oferece empréstimo para o meu negócio?",
+      "category": "products",
+      "expected_urls": [
+        "emprestimo"
+      ]
+    },
+    {
+      "id": "r33",
+      "language": "pt",
+      "question": "Como falar com a Getnet pelo WhatsApp?",
+      "category": "support",
+      "expected_urls": [
+        "imprensa",
+        "produtos-digitais",
+        "link-de-pagamento-getnet"
+      ]
+    },
+    {
+      "id": "r36",
+      "language": "pt",
+      "question": "Como faço para ser cliente Getnet sem ter maquininha?",
+      "category": "onboarding",
+      "expected_urls": [
+        "link-de-pagamento-getnet",
+        "como-se-tornar-mei",
+        "checkout-movel"
+      ]
+    },
+    {
+      "id": "r37",
+      "language": "pt",
+      "question": "Como trocar a bobina da maquininha?",
+      "category": "terminal",
+      "expected_urls": [
+        "maquininha/aluguel",
+        "manual-maquinas"
+      ]
+    },
+    {
+      "id": "r44",
+      "language": "en",
+      "question": "How many installments can I split a sale into with the crediário?",
+      "category": "crediario",
+      "expected_urls": [
+        "crediario"
+      ]
+    },
+    {
+      "id": "r47",
+      "language": "en",
+      "question": "Does Getnet offer e-commerce payment solutions?",
+      "category": "products",
+      "expected_urls": [
+        "en/our-solutions/online-payments",
+        "en/our-solutions/omnichannel"
+      ]
+    },
+    {
+      "id": "r51",
+      "language": "en",
+      "question": "Who is Getnet and which group does it belong to?",
+      "category": "institutional",
+      "expected_urls": [
+        "en/corporate/about-us"
+      ]
+    },
+    {
+      "id": "r56",
+      "language": "pt",
+      "question": "A Getnet tem soluções para supermercados?",
+      "category": "industries",
+      "expected_urls": [
+        "mercadinho",
+        "varejo-e-atacado"
+      ]
+    },
+    {
+      "id": "r57",
+      "language": "pt",
+      "question": "O que é Agentic Commerce na Getnet?",
+      "category": "products",
+      "expected_urls": [
+        "agentic-commerce"
+      ]
+    },
+    {
+      "id": "r58",
+      "language": "pt",
+      "question": "Como funciona a recarga de celular na maquininha?",
+      "category": "products",
+      "expected_urls": [
+        "recarga-de-celular"
+      ]
+    }
+  ]
+}

@@ -9,6 +9,51 @@
 | `retrieval_calibration.json` | 16 | Used only to calibrate the abstention thresholds. Never reported. |
 | `answer_quality.jsonl` | 63 | Answer quality: `must_include` / `must_not_include` facts written from the snapshot text, expected sources, synthetic customer cases, multi-intent, out of base. `a06` was relabelled from out-of-base to answerable after a labelling error was found: the base includes Getnet Portugal tariffs. |
 
+## V8 anti-overfitting split (2026-11-05)
+
+Before any Block-2/Block-3 change (reranker, chunking, query rewriting, prompt rewrites), `answer_quality.jsonl`
+and `retrieval_questions.json` were each split `dev` / `test`, stratified by category, `random.seed(20261105)`,
+~35% to `test`:
+
+| File | Cases | Use |
+|---|---|---|
+| `answer_quality_dev.jsonl` | 40 | Tune against this. Scores on it are optimistic. |
+| `answer_quality_test.jsonl` | 23 | Frozen. Measured once per change, after the decision is made on `dev`. |
+| `retrieval_questions_dev.json` | 45 | Tune against this. |
+| `retrieval_questions_test.json` | 25 | Frozen, measured once per change. |
+
+Two **new**, independent held-out sets were written on 2026-11-05 and never used to tune a prompt, rule or
+example — only to measure the final result once:
+
+| File | Cases | Use |
+|---|---|---|
+| `quality_test_v2.jsonl` | 66 | New answer-quality questions. |
+| `retrieval_test_v2.json` | 66 | New retrieval questions (the same 66 pages, one question each, reused for both files). |
+
+Origin: `random.seed(20261105)` over the 2026-11-03 snapshot's 332 unique pages, one representative chunk
+per page (the longest, with ≥250 chars), 75 pages sampled, 9 dropped for having no single extractable fact
+(ephemeral event pages, pages that are only a list of unanswered FAQ headers, legal boilerplate too generic
+to quote safely) or for duplicating another sampled page's fact, leaving 66. Each question and its
+`must_include`/`expected_sources`/`expected_urls` were then hand-written from that page's content alone — the
+site's actual wording, never a phrase from `answer_quality.jsonl`, `retrieval_questions.json` or any prompt.
+`source_url` on every item records which page it came from, for audit.
+
+Guards in `tests/test_dataset_splits.py`:
+
+- `answer_quality_dev.jsonl` + `answer_quality_test.jsonl` partition `answer_quality.jsonl` exactly, with no overlap.
+- Same for the retrieval dev/test split.
+- `quality_test_v2` / `retrieval_test_v2` have ≥60 items, no id collisions, and no question that is an exact
+  match (normalized) of one already in the original 63/70 sets.
+- No 4-word sequence from either v2 set appears in `knowledge_agent.py`, `specialist.py`, `critic_agent.py`
+  or `context_intelligence.py`.
+
+Run a frozen split with a live model:
+
+```bash
+python -m app.evaluation.run_retrieval_eval --dataset app/evaluation/retrieval_questions_test.json --output docs/eval/RETRIEVAL_EVAL_test_<data>.json
+python -m app.evaluation.run_answer_quality --dataset app/evaluation/quality_test_v2.jsonl --judge --output docs/eval/ANSWER_QUALITY_v2_<data>.json
+```
+
 Held-out categories: common technical, real accident, figurative, emotional, irony, human request, ambiguous, history-only risk, contradiction, possible trojan (retraction), continuation, topic change and prompt injection, in PT-BR and EN.
 
 Labels follow the PolicyGate contract:
