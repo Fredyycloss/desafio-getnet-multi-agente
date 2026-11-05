@@ -185,6 +185,29 @@ flowchart TD
    - A rejection triggers one re-plan. A second rejection hands off to a human.
 7. **Request budget.** All model calls in one request share a deadline (`REQUEST_LLM_BUDGET_SECONDS`, default from the provider profile). When the budget is spent, the answer is a labelled deterministic fallback with `degraded: true`, not a 503.
 
+### Why the chain was not simplified (V8 Block 6 ablation, 5 Nov 2026)
+
+An ablation (`docs/eval/ABLATION_v8_run1_2026-11-05.json`, full report in
+`docs/RELATORIO_ABLACAO_2026-11-05.md`) removed or forced each piece one at a time, on the frozen
+`quality_test_v2` set (66 items) and the `context_scenarios_heldout_v2` safety/routing set
+(109 cases, 19 dangerous). One round — large, one-directional effects, documented as such.
+
+| Removed / forced | Quality (`full_coverage`) | Safety (dangerous cases missed) | Cost / latency |
+|---|---|---|---|
+| nothing (current) | 0.712 | 0/19 | US$0.0011, 6.5 s |
+| PolicyGate | n/a — study-only, never deployable | **19/19** (recall 1.00→0.00) | — |
+| Context Intelligence | 0.621 (−9.1 pp) | 4/19 (recall 1.00→0.846) | **worse too**: US$0.0014, 7.9 s |
+| Critic | 0.667 (−4.5 pp) | — | US$0.0008, 5.1 s (cheaper, but loses 2/66 caught defects) |
+| force fast-path always | 0.667 (−4.5 pp) | — | US$0.0010, 6.4 s |
+| force planning loop always | 0.606 (worst of all 5) | — | US$0.0016, 9.3 s (most expensive) |
+
+Every piece earns a measurable share of quality and/or safety, and no removal saved enough to be
+worth it — removing Context Intelligence is both worse *and* slower/pricier, since every turn then
+falls through the full planning loop with none of the fast-path signal. Context Intelligence and
+PolicyGate were not merged either: they are independent safety nets with different failure modes
+(losing CI loses ~85% of critical recall; losing PolicyGate loses all of it). The chain stays a
+multi-step pipeline on purpose, with numbers behind each step now measured instead of assumed.
+
 ### Agents and tools
 
 | Agent | Responsibility | Tools / data | LLM calls |

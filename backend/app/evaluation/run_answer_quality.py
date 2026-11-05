@@ -216,7 +216,8 @@ def run_live(args, items):
               f"cov={checks.get('coverage')} nums={checks.get('numbers_supported')} judge={(record.get('judge') or {}).get('verdict')}", flush=True)
     commit = subprocess.run(["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True).stdout.strip()
     return records, {"commit": commit, "provider": getattr(llm, "provider", None), "model": getattr(llm, "model", None),
-                     "judge_model": getattr(judge_llm, "model", None), "dataset": Path(args.dataset).name}
+                     "judge_model": getattr(judge_llm, "model", None),
+                     "dataset": Path(getattr(args, "dataset", "")).name if getattr(args, "dataset", None) else None}
 
 
 def aggregate(rows: list[dict]) -> dict:

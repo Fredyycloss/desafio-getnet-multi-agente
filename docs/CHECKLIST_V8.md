@@ -69,17 +69,17 @@ calibração (mede κ humano×humano antes de seguir), depois o restante.
 
 | # | Item | Status | Evidência |
 |---|---|---|---|
-| 5.1 | Critic ligado × desligado no `quality_test_v2` + benchmark, 3 rodadas | NÃO | — |
-| 5.2 | Taxa de reprovação natural, % corrigido, variação de corretas/fundamentadas, custo extra | NÃO | — |
-| 5.3 | Conclusão documentada: o Critic se paga em respostas reais? | NÃO | — |
+| 5.1 | Critic ligado × desligado no `quality_test_v2` + benchmark, 3 rodadas | PARCIAL (1 rodada, não 3 — custo/tempo) | `docs/eval/ABLATION_v8_run1_2026-11-05.json`; `docs/RELATORIO_ABLACAO_2026-11-05.md` |
+| 5.2 | Taxa de reprovação natural, % corrigido, variação de corretas/fundamentadas, custo extra | RESOLVIDO | `critic_rejection_rate`=3,03% (2/66); `full_coverage` 0,667→0,712 com Critic (+4,5 p.p.); custo +US$0,0003/pergunta, +1,46s |
+| 5.3 | Conclusão documentada: o Critic se paga em respostas reais? | RESOLVIDO | Sim — ver `docs/RELATORIO_ABLACAO_2026-11-05.md` §"O Critic se paga" |
 
 ## Bloco 6 — Simplificar a arquitetura com dados
 
 | # | Item | Status | Evidência |
 |---|---|---|---|
-| 6.1 | Ablação no `quality_test_v2` + heldout de contexto + safety set, 3 rodadas, por componente | NÃO | — |
-| 6.2 | Decisão com números: fundir Risk+PolicyGate / CI+rota, remover o que não se paga | NÃO | — |
-| 6.3 | Diagrama simplificado no README + justificativa numérica + resposta à pergunta 4 | NÃO | — |
+| 6.1 | Ablação no `quality_test_v2` + heldout de contexto + safety set, 3 rodadas, por componente | PARCIAL (1 rodada, não 3 — custo/tempo; sinal unidirecional e grande em todas as comparações) | `docs/eval/ABLATION_v8_run1_2026-11-05.json` (5 configs de qualidade × 66 itens + 3 configs de segurança/rota × 109 casos) |
+| 6.2 | Decisão com números: fundir Risk+PolicyGate / CI+rota, remover o que não se paga | RESOLVIDO — decisão foi **não fundir nem remover nada** | `docs/RELATORIO_ABLACAO_2026-11-05.md` §"Decisão do Bloco 6": PolicyGate sem ele = 19/19 falsos negativos; CI sem ele = -9 p.p. `full_coverage` E mais lento/caro; nenhuma remoção testada compensou |
+| 6.3 | Diagrama simplificado no README + justificativa numérica + resposta à pergunta 4 | PARCIAL (sem diagrama novo — diagrama atual já é o correto; justificativa numérica adicionada) | README.md §"Por que a cadeia não foi simplificada (ablação V8)"; resposta à pergunta 4 em `docs/AUDITORIA_V4_V3.md` |
 
 ## Bloco 7 — Telegram real e HITL operacional
 

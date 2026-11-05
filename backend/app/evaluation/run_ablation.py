@@ -121,12 +121,15 @@ def main() -> int:
     parser.add_argument("--parts", default="quality,safety")
     parser.add_argument("--limit", type=int, default=0, help="smoke test: first N items/cases per part")
     parser.add_argument("--configs", default="", help="restrict to these configurations")
+    parser.add_argument("--quality-dataset", default=str(HERE / "answer_quality.jsonl"),
+                         help="e.g. quality_test_v2.jsonl for the V8 Block 6 re-run on the never-tuned set")
+    parser.add_argument("--heldout", default=str(HERE / "context_scenarios_heldout_v2.json"))
     args = parser.parse_args()
     parts = set(args.parts.split(","))
     only = set(filter(None, args.configs.split(",")))
     keep = lambda configs: [c for c in configs if not only or c in only]  # noqa: E731
-    heldout = json.loads((HERE / "context_scenarios_heldout_v2.json").read_text(encoding="utf-8"))
-    items = [json.loads(line) for line in (HERE / "answer_quality.jsonl").read_text(encoding="utf-8").splitlines() if line.strip()]
+    heldout = json.loads(Path(args.heldout).read_text(encoding="utf-8"))
+    items = [json.loads(line) for line in Path(args.quality_dataset).read_text(encoding="utf-8").splitlines() if line.strip()]
     if args.limit:
         heldout, items = heldout[:args.limit], items[:args.limit]
     report: dict = {"date": date.today().isoformat(),
@@ -137,7 +140,7 @@ def main() -> int:
         for config in keep(QUALITY_CONFIGS):
             os.environ["ABLATION"] = "" if config == "full" else config
             print(f"== quality: {config}", flush=True)
-            records, meta = quality.run_live(SimpleNamespace(judge=args.judge, pause=args.pause), items)
+            records, meta = quality.run_live(SimpleNamespace(judge=args.judge, pause=args.pause, dataset=args.quality_dataset), items)
             report["quality"][config] = quality.aggregate(records)
             report["records"][f"quality:{config}"] = [{k: r.get(k) for k in ("item_id", "category", "orchestration_mode", "latency_s",
                                                                               "llm_calls", "cost_usd", "checks", "judge", "critic", "answer")}
