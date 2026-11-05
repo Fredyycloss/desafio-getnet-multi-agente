@@ -69,7 +69,9 @@ def test_thirty_turns_keep_old_references_and_save_context(monkeypatch, tmp_path
     assert "Padaria Aurora" in joined and "TERM-1988" in joined  # turn 1 survives through the summary + facts
     assert all("número 3 " not in m["content"] for m in history[1:])  # old raw turns are not sent any more
     assert len(history) <= 6
-    assert last["memory"]["memory_used"] is True and last["memory"]["chars_replaced"] > 3 * last["memory"]["memory_chars"]
+    # The note replaces more text than it occupies. (The ratio depends on the scripted answers' length: since
+    # long sessions consult memory before abstaining, the fake's short answers replace the abstention paragraph.)
+    assert last["memory"]["memory_used"] is True and last["memory"]["chars_replaced"] > last["memory"]["memory_chars"]
     # Redaction: the summary never stores or sends the e-mail address.
     assert "joao.silva@exemplo.com" not in joined
     assert "joao.silva@exemplo.com" not in stored and "[email]" in stored
@@ -162,3 +164,29 @@ def test_knowledge_recall_tool_answers_from_the_session_memory(db):
     assert "Doceria Primavera" in result["answer"]
     assert "Doceria Primavera" in model.prompts["knowledge"][-1]["content"]
     assert KnowledgeAgent([], db=db, llm=model).run("Qual é o nome da minha loja?", "pt", history=[])["trace"][-1] == "abstention"
+
+
+def test_knowledge_consults_memory_before_abstaining_in_a_long_session(db):
+    from app.agents.knowledge_agent import KnowledgeAgent
+    from app.infra.llm.base import normalised_response
+
+    class Model:
+        model = "scripted"
+
+        def chat(self, messages, tools=None, *, purpose="chat", **kwargs):
+            if tools:  # the model picks the corpus search, not the recall tool
+                return normalised_response(content="", tool_calls=[{"id": "1", "function": {"name": "search_getnet_knowledge", "arguments": {"query": "modelo escolhido"}}}],
+                                           provider="t", model="t", prompt_tokens=1, output_tokens=1, latency_ms=1, cost_usd=0)
+            return normalised_response(content="Você disse que escolheu a Get Clássica.", tool_calls=[], provider="t",
+                                       model="t", prompt_tokens=1, output_tokens=1, latency_ms=1, cost_usd=0)
+
+        def embed(self, texts):
+            from app.infra.llm import LLMUnavailable
+            raise LLMUnavailable("no embeddings")
+
+    note = {"role": "assistant", "content": "[conversation memory] chosen model: Get Clássica", "memory": True}
+    result = KnowledgeAgent([], db=db, llm=Model()).run("Qual modelo eu disse que escolhi?", "pt", history=[note])
+    assert "no_evidence_recall_conversation" in result["trace"] and "Get Clássica" in result["answer"]
+    short = KnowledgeAgent([], db=db, llm=Model()).run("Qual modelo eu disse que escolhi?", "pt",
+                                                       history=[{"role": "user", "content": "oi"}])
+    assert short["trace"][-1] == "abstention"  # no memory note: plain abstention, as before

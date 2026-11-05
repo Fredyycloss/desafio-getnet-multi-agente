@@ -42,6 +42,23 @@ CONVERSATIONS = [
      "last": "Qual modelo eu disse que escolhi no começo da conversa?", "expect": ["Get Clássica"]},
     {"id": "shop_name_en", "language": "en", "first": "Hi! My shop is called Blue Harbor Café and most of my customers pay by Pix.",
      "last": "What is the name of my shop that I told you at the start?", "expect": ["Blue Harbor"]},
+    # Added 05/11/2026 (the first 4 were too few to conclude anything).
+    {"id": "city_pt", "language": "pt", "first": "Minha loja fica em Joinville, no centro da cidade.",
+     "last": "Em que cidade eu falei que fica a minha loja?", "expect": ["Joinville"]},
+    {"id": "owner_name_pt", "language": "pt", "first": "Aqui é a Renata, sou dona de um pet shop pequeno.",
+     "last": "Você lembra o meu nome?", "expect": ["Renata"]},
+    {"id": "business_type_en", "language": "en", "first": "I run a small bike repair shop near the river.",
+     "last": "What kind of business did I tell you I run?", "expect": ["bike"]},
+    {"id": "payment_pref_pt", "language": "pt", "first": "A maioria dos meus clientes paga no débito, quase ninguém usa crédito.",
+     "last": "Qual forma de pagamento eu disse que meus clientes mais usam?", "expect": ["débito"]},
+    {"id": "open_days_en", "language": "en", "first": "We only open on weekends, Saturday and Sunday.",
+     "last": "Which days did I say we are open?", "expect": ["Saturday"]},
+    {"id": "product_interest_en", "language": "en", "first": "I'm interested in the Payment Link for my online orders.",
+     "last": "Which Getnet product did I say I was interested in?", "expect": ["Payment Link"]},
+    {"id": "employee_pt", "language": "pt", "first": "Quem opera a maquininha é o meu funcionário Tiago.",
+     "last": "Qual é o nome do funcionário que eu disse que opera a maquininha?", "expect": ["Tiago"]},
+    {"id": "region_en", "language": "en", "first": "My café is in Curitiba and I'm thinking of opening a second one.",
+     "last": "In which city did I say my café is?", "expect": ["Curitiba"]},
 ]
 
 
