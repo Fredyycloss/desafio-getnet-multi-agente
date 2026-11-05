@@ -112,6 +112,22 @@ def main() -> int:
                         "test_partial_counts_as_reject": metrics(pairs(test, "critic", lv, True))} for lv in ("material", "strict")},
         "judge": {"calibration": metrics(pairs(calib, "judge")), "test": metrics(pairs(test, "judge")),
                   "model": getattr(judge_llm, "model", None)},
+        "demo_today": os.getenv("DEMO_TODAY"),
+        # A Critic output that fails validation is a fail-closed rejection in production; here it is a
+        # measurement failure, so it is counted and also excluded in a second view.
+        "critic_invalid_outputs": {lv: sum(1 for r in rows if str(r["critic"][lv]["mode"]).startswith("llm_critic_invalid")
+                                           or str(r["critic"][lv]["mode"]).startswith("llm_critic_unavailable")) for lv in ("material", "strict")},
+        "critic_test_excluding_invalid": {lv: metrics(pairs([r for r in test if not str(r["critic"][lv]["mode"]).startswith(("llm_critic_invalid", "llm_critic_unavailable"))], "critic", lv))
+                                          for lv in ("material", "strict")},
+        # Injected bad answers have a known defect, independent of any label: detection by each reviewer.
+        "injected_defect_detection": {
+            "items": sum(1 for r in rows if r["injected"]),
+            "critic_material_rejected": sum(1 for r in rows if r["injected"] and r["critic"]["material"]["reject"]),
+            "critic_strict_rejected": sum(1 for r in rows if r["injected"] and r["critic"]["strict"]["reject"]),
+            "judge_rejected": sum(1 for r in rows if r["injected"] and (r.get("judge") or {}).get("reject")),
+            "human_flagged_incorrect_or_unsafe": sum(1 for r in rows if r["injected"] and r["human"] in REJECT_LABELS),
+            "human_flagged_not_correct": sum(1 for r in rows if r["injected"] and r["human"] != "correct"),
+        },
         "missed_by_critic_on_test": [{"item_id": r["item_id"], "human": r["human"], "injected": r["injected"], "reason": r["human_reason"]}
                                      for r in test if r["human"] in REJECT_LABELS and not r["critic"][chosen]["reject"]],
         "rows": rows,
