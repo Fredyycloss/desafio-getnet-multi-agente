@@ -44,8 +44,11 @@ Web providers are stubbed at HTTP level. The Anthropic adapter is tested with a 
 | `test_improvement_loop.py` | feedback, validated answers invalidated by corpus version, knowledge-gap promotion only by an operator, overlap with evaluation sets refused |
 | `test_telemetry.py` | OpenTelemetry spans share the response `trace_id`; Prometheus metrics carry no user data |
 | `test_injection_defense.py` | per-agent tool allowlist, schema-checked arguments, output filter for other customers' identifiers, delimited retrieved content |
+| `test_dataset_splits.py` | dev/test splits partition the original sets with no overlap; `*_test_v2` sets are new, large enough and share no 4-gram with the agents' prompts (anti-overfitting rule, V8) |
+| `test_knowledge_rerank.py` | `hybrid_rerank` mode selection by provider and `KNOWLEDGE_RERANK` override, LLM reorder with score redistribution, fallback on a bad/unparseable response |
+| `test_calibrate_critic.py` | human-human Cohen's kappa (perfect/chance-level/shared-items-only/needs-2-labelers), the two-dimension (grounded/complete) verdict mapping used by `label_cli.py` |
 
-**Count:** 367 tests pass on 05/11/2026 (`pytest -q`). The replay test also runs as its own CI step.
+**Count:** 385 tests pass on 05/11/2026 (`pytest -q`). The replay test also runs as its own CI step.
 
 ## Browser: Playwright
 

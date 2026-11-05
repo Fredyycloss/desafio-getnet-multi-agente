@@ -113,12 +113,12 @@ calibração (mede κ humano×humano antes de seguir), depois o restante.
 
 | # | Item | Status | Evidência |
 |---|---|---|---|
-| 10.1 | `docs/AUDITORIA_V4_V3.md`: cada gap/desconto v3 → status + evidência | NÃO | — |
-| 10.2 | `docs/RESPOSTAS_ENTREVISTA_V3.md` fora do Git | NÃO | — |
-| 10.3 | README atualizado (arquitetura simplificada, números dev/test, links de evidência) | NÃO | — |
-| 10.4 | `TESTING.md` atualizado; gravações novas para replay do CI; CI local verde; clone limpo | NÃO | — |
-| 10.5 | Simulação de avaliação no formato do feedback v3, mesmos pesos | NÃO | — |
-| 10.6 | Resumo final + comandos de push; aguardar autorização | NÃO | — |
+| 10.1 | `docs/AUDITORIA_V4_V3.md`: cada gap/desconto v3 → status + evidência | RESOLVIDO | `docs/AUDITORIA_V4_V3.md`, com números finais dos Blocos 1–3, 5, 6, 9; Blocos 4/7/8 marcados honestamente como bloqueados/não iniciados |
+| 10.2 | `docs/RESPOSTAS_ENTREVISTA_V3.md` fora do Git | RESOLVIDO | `docs/RESPOSTAS_ENTREVISTA_V3.md` (confirmado gitignorado por `docs/RESPOSTAS_ENTREVISTA*.md`); perguntas 1/3/4 respondidas com números, 2/5 honestamente pendentes |
+| 10.3 | README atualizado (arquitetura simplificada, números dev/test, links de evidência) | RESOLVIDO (arquitetura não simplificada — decisão com dados, não diagrama novo) | README.md §"Why the chain was not simplified" + §"Long conversations: session memory" atualizados com os números do V8 |
+| 10.4 | `TESTING.md` atualizado; gravações novas para replay do CI; CI local verde; clone limpo | PARCIAL | `TESTING.md`: contagem 367→385, 3 arquivos de teste novos listados; CI local verde (385/385, abaixo); clone limpo verificado; **gravações do cassette NÃO foram refeitas** (ainda são de 04/11, antes dos Blocos 2/3/9 — o replay continua passando porque tolera divergência de texto, mas não reflete o prompt atual) |
+| 10.5 | Simulação de avaliação no formato do feedback v3, mesmos pesos | RESOLVIDO | `docs/SIMULACAO_AVALIACAO_V8_2026-11-05.md` (gitignorado por `docs/SIMULACAO_*`, mesmo padrão das simulações anteriores): 8,2→~8,36 (pesos iguais, 11 critérios); faixa provável 8,3–8,8 |
+| 10.6 | Resumo final + comandos de push; aguardar autorização | RESOLVIDO (resumo e comandos entregues; push não executado, aguardando autorização explícita) | ver mensagem final desta sessão |
 
 ## Outros gaps identificados por mim (fora da lista explícita da v3)
 
