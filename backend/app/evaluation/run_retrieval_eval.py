@@ -17,18 +17,24 @@ import time
 from datetime import date
 from pathlib import Path
 
+from uuid import uuid4
+
 from app.agents.knowledge_agent import MIN_RELEVANCE, KnowledgeAgent, relevant
 from app.knowledge.ingest import latest_snapshot, load_documents, load_legacy_curated, load_snapshot_vectors
+from app.observability import current_timeline, finish_timeline, start_timeline
 
 QUESTIONS = Path(__file__).with_name("retrieval_questions.json")
 
 
 def evaluate(agent: KnowledgeAgent, questions: list[dict], mode: str) -> dict:
-    rows, latencies = [], []
+    rows, latencies, costs = [], [], []
     for q in questions:
+        token = start_timeline(uuid4().hex)
         t0 = time.perf_counter()
         hits = agent.retrieve(q["question"], k=5, language=q["language"], mode=mode)
         latencies.append((time.perf_counter() - t0) * 1000)
+        costs.append(current_timeline().model_usage()["cost_usd"])
+        finish_timeline(token)
         urls = [h["url"] for h in hits]
         expected = q.get("expected_urls") or []
         rank = next((i + 1 for i, h in enumerate(hits) if any(frag in h["url"] for frag in expected)), None) if expected else None
@@ -54,7 +60,9 @@ def evaluate(agent: KnowledgeAgent, questions: list[dict], mode: str) -> dict:
         "section_hit_rate_when_url_found": round(sum(sections) / len(sections), 4) if sections else None,
         "abstention_accuracy_out_of_base": round(sum(1 for r in oob if r["abstain_correct"]) / max(len(oob), 1), 4),
         "answer_rate_in_base": round(sum(1 for r in ans if r["answered_when_answerable"]) / max(len(ans), 1), 4),
-        "mean_latency_ms": round(statistics.mean(latencies), 2), "cases": rows,
+        "mean_latency_ms": round(statistics.mean(latencies), 2),
+        "total_cost_usd": round(sum(costs), 6), "mean_cost_usd": round(statistics.mean(costs), 6) if costs else None,
+        "cases": rows,
     }
 
 
@@ -65,12 +73,23 @@ def main() -> int:
     parser.add_argument("--dataset", default=str(QUESTIONS),
                          help="path to a questions .json file (default: retrieval_questions.json, the dev split); "
                               "pass retrieval_questions_test.json or retrieval_test_v2.json for the frozen splits")
+    parser.add_argument("--rerank", action="store_true",
+                         help="also evaluate hybrid_rerank (one LLM call reorders the top-10 pool); "
+                              "uses the same LLM as --llm, so cloud mode measures the real Haiku cost")
+    parser.add_argument("--llm", choices=["ollama", "anthropic"], default="ollama",
+                         help="provider for query embedding and (with --rerank) reranking")
     args = parser.parse_args()
     questions = json.loads(Path(args.dataset).read_text(encoding="utf-8"))["questions"]
     llm = None
     if not args.no_dense:
-        from app.infra.llm.ollama import OllamaProvider
-        llm = OllamaProvider()
+        if args.llm == "anthropic":
+            from app.infra.llm.anthropic_provider import AnthropicProvider
+            llm = AnthropicProvider()
+            llm.model = "claude-haiku-5-5"
+            llm.thinking = "omit"
+        else:
+            from app.infra.llm.ollama import OllamaProvider
+            llm = OllamaProvider()
     snapshot = latest_snapshot()
     model, _, vectors = load_snapshot_vectors(snapshot)
     new_agent = KnowledgeAgent(load_documents(), llm=llm, vectors=vectors, vector_model=model)
@@ -80,6 +99,8 @@ def main() -> int:
     if llm is not None:
         results["snapshot_dense"] = evaluate(new_agent, questions, "dense")
         results["snapshot_hybrid"] = evaluate(new_agent, questions, "hybrid")
+        if args.rerank:
+            results["snapshot_hybrid_rerank"] = evaluate(new_agent, questions, "hybrid_rerank")
     commit = subprocess.run(["git", "rev-parse", "--short", "HEAD"], capture_output=True, text=True).stdout.strip()
     report = {"date": date.today().isoformat(), "commit": commit, "snapshot": snapshot.name if snapshot else None,
               "dataset": Path(args.dataset).name,

@@ -1,0 +1,4758 @@
+{
+  "date": "2026-11-05",
+  "commit": "5c5d324",
+  "snapshot": "2026-11-03",
+  "dataset": "retrieval_test_v2.json",
+  "questions": 66,
+  "min_relevance": 0.35,
+  "embedding_model": "nomic-embed-text",
+  "summary": {
+    "legacy_curated_bm25": {
+      "mode": "bm25",
+      "answerable": 66,
+      "out_of_base": 0,
+      "recall@1": 0.0152,
+      "recall@3": 0.0152,
+      "recall@5": 0.0152,
+      "mrr": 0.0152,
+      "section_hit_rate_when_url_found": null,
+      "abstention_accuracy_out_of_base": 0.0,
+      "answer_rate_in_base": 0.0,
+      "mean_latency_ms": 0.71,
+      "total_cost_usd": 0,
+      "mean_cost_usd": 0
+    },
+    "snapshot_bm25": {
+      "mode": "bm25",
+      "answerable": 66,
+      "out_of_base": 0,
+      "recall@1": 0.8485,
+      "recall@3": 0.9394,
+      "recall@5": 0.9697,
+      "mrr": 0.8965,
+      "section_hit_rate_when_url_found": null,
+      "abstention_accuracy_out_of_base": 0.0,
+      "answer_rate_in_base": 0.7879,
+      "mean_latency_ms": 3.25,
+      "total_cost_usd": 0,
+      "mean_cost_usd": 0
+    },
+    "snapshot_dense": {
+      "mode": "dense",
+      "answerable": 66,
+      "out_of_base": 0,
+      "recall@1": 0.5152,
+      "recall@3": 0.5909,
+      "recall@5": 0.697,
+      "mrr": 0.5722,
+      "section_hit_rate_when_url_found": null,
+      "abstention_accuracy_out_of_base": 0.0,
+      "answer_rate_in_base": 0.0,
+      "mean_latency_ms": 1.05,
+      "total_cost_usd": 0,
+      "mean_cost_usd": 0
+    },
+    "snapshot_hybrid": {
+      "mode": "hybrid",
+      "answerable": 66,
+      "out_of_base": 0,
+      "recall@1": 0.8485,
+      "recall@3": 0.9394,
+      "recall@5": 0.9697,
+      "mrr": 0.8965,
+      "section_hit_rate_when_url_found": null,
+      "abstention_accuracy_out_of_base": 0.0,
+      "answer_rate_in_base": 0.7879,
+      "mean_latency_ms": 3.43,
+      "total_cost_usd": 0,
+      "mean_cost_usd": 0
+    },
+    "snapshot_hybrid_rerank": {
+      "mode": "hybrid_rerank",
+      "answerable": 66,
+      "out_of_base": 0,
+      "recall@1": 0.7879,
+      "recall@3": 0.9394,
+      "recall@5": 0.9697,
+      "mrr": 0.8687,
+      "section_hit_rate_when_url_found": null,
+      "abstention_accuracy_out_of_base": 0.0,
+      "answer_rate_in_base": 0.7879,
+      "mean_latency_ms": 1324.68,
+      "total_cost_usd": 0.013358,
+      "mean_cost_usd": 0.000202
+    }
+  },
+  "results": {
+    "legacy_curated_bm25": {
+      "mode": "bm25",
+      "answerable": 66,
+      "out_of_base": 0,
+      "recall@1": 0.0152,
+      "recall@3": 0.0152,
+      "recall@5": 0.0152,
+      "mrr": 0.0152,
+      "section_hit_rate_when_url_found": null,
+      "abstention_accuracy_out_of_base": 0.0,
+      "answer_rate_in_base": 0.0,
+      "mean_latency_ms": 0.71,
+      "total_cost_usd": 0,
+      "mean_cost_usd": 0,
+      "cases": [
+        {
+          "id": "rv2_01",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0524,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_02",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0432,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-lite/"
+          ]
+        },
+        {
+          "id": "rv2_03",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.1035,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/crediario/",
+            "https://site.getnet.com.br/pix/",
+            "https://site.getnet.com.br/get-ajuda-erros-maquininha/"
+          ]
+        },
+        {
+          "id": "rv2_04",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.1195,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-erros-maquininha/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/get-ajuda-maquininha/"
+          ]
+        },
+        {
+          "id": "rv2_05",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0295,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/"
+          ]
+        },
+        {
+          "id": "rv2_06",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.1642,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/get-lite/"
+          ]
+        },
+        {
+          "id": "rv2_07",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.03,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_08",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.1258,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_09",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.1203,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/",
+            "https://site.getnet.com.br/link-de-pagamento/",
+            "https://site.getnet.com.br/get-lite/"
+          ]
+        },
+        {
+          "id": "rv2_10",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0413,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/link-de-pagamento/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/"
+          ]
+        },
+        {
+          "id": "rv2_11",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0897,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_12",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.1683,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/get-ajuda-antecipacao-de-venda/como-antecipar-sua-vendas-pelo-app/",
+            "https://site.getnet.com.br/get-ajuda-erros-maquininha/"
+          ]
+        },
+        {
+          "id": "rv2_13",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0265,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_14",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.1676,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-maquininha/",
+            "https://site.getnet.com.br/get-ajuda-configuracoes/funcionalidades-portal-minha-conta-e-app-getnet-brasil/",
+            "https://site.getnet.com.br/pix/"
+          ]
+        },
+        {
+          "id": "rv2_15",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0623,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-antecipacao-de-venda/como-antecipar-sua-vendas-pelo-app/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_16",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.2005,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/",
+            "https://site.getnet.com.br/link-de-pagamento/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_17",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": []
+        },
+        {
+          "id": "rv2_18",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0544,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_19",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0336,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/get-lite/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_20",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.226,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/get-ajuda-maquininha/"
+          ]
+        },
+        {
+          "id": "rv2_21",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0807,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-lite/",
+            "https://site.getnet.com.br/get-ajuda-erros-maquininha/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_22",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.3385,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_23",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.1011,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/pix/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_24",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.1143,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-lite/",
+            "https://site.getnet.com.br/crediario/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_25",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0314,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/pix/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_26",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.1186,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/get-ajuda-maquininha/",
+            "https://site.getnet.com.br/get-ajuda-erros-maquininha/"
+          ]
+        },
+        {
+          "id": "rv2_27",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0674,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_28",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.1259,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-erros-maquininha/",
+            "https://site.getnet.com.br/get-ajuda-maquininha/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_29",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0346,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/get-lite/"
+          ]
+        },
+        {
+          "id": "rv2_30",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0367,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-lite/"
+          ]
+        },
+        {
+          "id": "rv2_31",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.041,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/link-de-pagamento/",
+            "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/",
+            "https://site.getnet.com.br/get-ajuda-configuracoes/funcionalidades-portal-minha-conta-e-app-getnet-brasil/"
+          ]
+        },
+        {
+          "id": "rv2_32",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.3402,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-lite/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_33",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.2626,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-maquininha/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/get-ajuda-configuracoes/funcionalidades-portal-minha-conta-e-app-getnet-brasil/"
+          ]
+        },
+        {
+          "id": "rv2_34",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0515,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/pix/"
+          ]
+        },
+        {
+          "id": "rv2_35",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": []
+        },
+        {
+          "id": "rv2_36",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0331,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_37",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0455,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/get-ajuda-maquininha/"
+          ]
+        },
+        {
+          "id": "rv2_38",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0415,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-maquininha/",
+            "https://site.getnet.com.br/pix/",
+            "https://site.getnet.com.br/crediario/"
+          ]
+        },
+        {
+          "id": "rv2_39",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0751,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/pix/"
+          ]
+        },
+        {
+          "id": "rv2_40",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0748,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/get-ajuda-maquininha/",
+            "https://site.getnet.com.br/get-ajuda-antecipacao-de-venda/como-antecipar-sua-vendas-pelo-app/"
+          ]
+        },
+        {
+          "id": "rv2_41",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0454,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/get-lite/",
+            "https://site.getnet.com.br/get-ajuda-maquininha/"
+          ]
+        },
+        {
+          "id": "rv2_42",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0331,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_43",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0762,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-maquininha/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_44",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0653,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/get-ajuda-antecipacao-de-venda/como-antecipar-sua-vendas-pelo-app/",
+            "https://site.getnet.com.br/get-ajuda-configuracoes/funcionalidades-portal-minha-conta-e-app-getnet-brasil/"
+          ]
+        },
+        {
+          "id": "rv2_45",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.066,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/get-ajuda-maquininha/"
+          ]
+        },
+        {
+          "id": "rv2_46",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": []
+        },
+        {
+          "id": "rv2_47",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0825,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-configuracoes/funcionalidades-portal-minha-conta-e-app-getnet-brasil/",
+            "https://site.getnet.com.br/pix/",
+            "https://site.getnet.com.br/get-ajuda-antecipacao-de-venda/como-antecipar-sua-vendas-pelo-app/"
+          ]
+        },
+        {
+          "id": "rv2_48",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0842,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/crediario/",
+            "https://site.getnet.com.br/get-ajuda-configuracoes/funcionalidades-portal-minha-conta-e-app-getnet-brasil/"
+          ]
+        },
+        {
+          "id": "rv2_49",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.1211,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/get-lite/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_50",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0292,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-configuracoes/funcionalidades-portal-minha-conta-e-app-getnet-brasil/",
+            "https://site.getnet.com.br/get-ajuda-maquininha/"
+          ]
+        },
+        {
+          "id": "rv2_51",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0592,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/link-de-pagamento/",
+            "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_52",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0694,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/get-lite/"
+          ]
+        },
+        {
+          "id": "rv2_53",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0331,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_54",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.1689,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-maquininha/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/get-ajuda-erros-maquininha/"
+          ]
+        },
+        {
+          "id": "rv2_55",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0355,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-antecipacao-de-venda/como-antecipar-sua-vendas-pelo-app/"
+          ]
+        },
+        {
+          "id": "rv2_56",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0792,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/link-de-pagamento/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_57",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0338,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-maquininha/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/get-ajuda-configuracoes/funcionalidades-portal-minha-conta-e-app-getnet-brasil/"
+          ]
+        },
+        {
+          "id": "rv2_58",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.1294,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/link-de-pagamento/",
+            "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/",
+            "https://site.getnet.com.br/crediario/"
+          ]
+        },
+        {
+          "id": "rv2_59",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3235,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-lite/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_60",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.1091,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/link-de-pagamento/",
+            "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_61",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0743,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/get-ajuda-maquininha/"
+          ]
+        },
+        {
+          "id": "rv2_62",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0634,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/pix/",
+            "https://site.getnet.com.br/link-de-pagamento/"
+          ]
+        },
+        {
+          "id": "rv2_63",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0844,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/link-de-pagamento/",
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_64",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0371,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/",
+            "https://site.getnet.com.br/pix/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_65",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0354,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/taxas/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_66",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.0242,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-maquininha/",
+            "https://site.getnet.com.br/pix/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        }
+      ]
+    },
+    "snapshot_bm25": {
+      "mode": "bm25",
+      "answerable": 66,
+      "out_of_base": 0,
+      "recall@1": 0.8485,
+      "recall@3": 0.9394,
+      "recall@5": 0.9697,
+      "mrr": 0.8965,
+      "section_hit_rate_when_url_found": null,
+      "abstention_accuracy_out_of_base": 0.0,
+      "answer_rate_in_base": 0.7879,
+      "mean_latency_ms": 3.25,
+      "total_cost_usd": 0,
+      "mean_cost_usd": 0,
+      "cases": [
+        {
+          "id": "rv2_01",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3593,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/checkout-de-pagamento-o-que-e/",
+            "https://site.getnet.com.br/checkout-de-pagamento-o-que-e/",
+            "https://site.getnet.com.br/o-que-e-checkout-movel-e-como-transformar-a-experiencia-de-pagamento/"
+          ]
+        },
+        {
+          "id": "rv2_02",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4199,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/como-vender-mais-no-verao/",
+            "https://site.getnet.com.br/como-vender-mais-no-verao/",
+            "https://site.getnet.com.br/como-vender-mais-no-verao/"
+          ]
+        },
+        {
+          "id": "rv2_03",
+          "answerable": true,
+          "rank": 4,
+          "top_relevance": 0.319,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/melhor-maquininha-para-o-seu-negocio/",
+            "https://site.getnet.com.br/simulador-de-vendas-da-maquininha-saiba-quanto-voce-ira-faturar/",
+            "https://site.getnet.com.br/simulador-de-vendas-da-maquininha-saiba-quanto-voce-ira-faturar/"
+          ]
+        },
+        {
+          "id": "rv2_04",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4849,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/suporte/get-classic/o-meu-tpa-nao-parece-ter-comunicacao-o-que-posso-fazer",
+            "https://www.getnet.net/pt/suporte/get-classic",
+            "https://www.getnet.net/pt/suporte/get-classic/estou-a-experienciar-falhas-de-ligacao-ou-cobertura-no-meu-tpa-o-que-posso-fazer"
+          ]
+        },
+        {
+          "id": "rv2_05",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4082,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/varejo-cresce-durante-carnaval-2026-e-compras-fisicas-ganham-forca/",
+            "https://site.getnet.com.br/carnaval-2026-5-dicas-de-seguranca-para-evitar-golpes-durante-a-folia/",
+            "https://site.getnet.com.br/crescimento-vendas-online/"
+          ]
+        },
+        {
+          "id": "rv2_06",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5329,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/suporte/get-tap-on-phone/o-get-tap-on-phone-aceita-pagamentos-com-smartphone-ou-smartwatch",
+            "https://www.getnet.net/pt/suporte/get-tap-on-phone",
+            "https://site.getnet.com.br/tap-on-phone-maquininha-no-celular/"
+          ]
+        },
+        {
+          "id": "rv2_07",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3316,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/encryption-vs-tokenisation",
+            "https://www.getnet.net/en/resources/blog/encryption-vs-tokenisation",
+            "https://www.getnet.net/en/resources/blog/encryption-vs-tokenisation"
+          ]
+        },
+        {
+          "id": "rv2_08",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3776,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/getnet-lanca-get-code-comunidade-global-de-desenvolvedores-para-inovacao/",
+            "https://site.getnet.com.br/get-code-promove-meetup-sobre-oportunidades-de-negocio/",
+            "https://site.getnet.com.br/get-code-promove-meetup-sobre-oportunidades-de-negocio/"
+          ]
+        },
+        {
+          "id": "rv2_09",
+          "answerable": true,
+          "rank": 3,
+          "top_relevance": 0.3849,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/pix-no-get-tap-mais-agilidade-e-eficiencia-das-vendas/",
+            "https://site.getnet.com.br/pix/",
+            "https://site.getnet.com.br/getcheckout/"
+          ]
+        },
+        {
+          "id": "rv2_10",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3859,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/optimising-your-checkout-process",
+            "https://www.getnet.net/en/resources/blog/optimising-your-checkout-process",
+            "https://www.getnet.net/en/resources/blog/how-merchants-should-prepare-for-the-next-generation-of-shoppers"
+          ]
+        },
+        {
+          "id": "rv2_11",
+          "answerable": true,
+          "rank": 3,
+          "top_relevance": 0.2042,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-lite/",
+            "https://site.getnet.com.br/pix-lidera-pagamentos-na-black-friday/",
+            "https://site.getnet.com.br/getnet-reforca-posicionamento-como-parceira-do-empreendedor/"
+          ]
+        },
+        {
+          "id": "rv2_12",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5781,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/precificacao/",
+            "https://site.getnet.com.br/precificacao/",
+            "https://site.getnet.com.br/como-definir-precos-justos-e-competitivos-para-produtos-e-servicos/"
+          ]
+        },
+        {
+          "id": "rv2_13",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4526,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/celebrating-getnet-argentina-fourth-anniversary",
+            "https://www.getnet.net/en/resources/blog/celebrating-getnet-argentina-fourth-anniversary",
+            "https://www.getnet.net/en/resources/blog/celebrating-getnet-argentina-fourth-anniversary"
+          ]
+        },
+        {
+          "id": "rv2_14",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.2768,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/contact",
+            "https://www.getnet.net/en/legal/privacy-policy",
+            "https://www.getnet.net/en/resources/blog/retail"
+          ]
+        },
+        {
+          "id": "rv2_15",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5802,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/4-things-every-merchant-needs-to-know-about-open-banking",
+            "https://www.getnet.net/en/resources/blog/4-things-every-merchant-needs-to-know-about-open-banking",
+            "https://www.getnet.net/en/resources/blog/the-key-fintech-developments-that-shaped-2024"
+          ]
+        },
+        {
+          "id": "rv2_16",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3955,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/vender-pelo-whatsapp/",
+            "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/",
+            "https://site.getnet.com.br/vender-pelo-whatsapp/"
+          ]
+        },
+        {
+          "id": "rv2_17",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4234,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/institucional/",
+            "https://site.getnet.com.br/carreiras/",
+            "https://site.getnet.com.br/esg/"
+          ]
+        },
+        {
+          "id": "rv2_18",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.7737,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/domicilio-eletronico-trabalhista/",
+            "https://site.getnet.com.br/domicilio-eletronico-trabalhista/",
+            "https://site.getnet.com.br/dicas-para-vender-mais-ecommerce/"
+          ]
+        },
+        {
+          "id": "rv2_19",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.382,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/ofertas-tef-getnet/",
+            "https://site.getnet.com.br/tef/pos-tef/",
+            "https://site.getnet.com.br/turismo-de-inverno/"
+          ]
+        },
+        {
+          "id": "rv2_20",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.2303,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/maquininha/get-smart/",
+            "https://site.getnet.com.br/get-ajuda-gestao-de-vendas/como-fazer-minha-gestao-de-venda/",
+            "https://site.getnet.com.br/parcerias/pos-digital/"
+          ]
+        },
+        {
+          "id": "rv2_21",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4425,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/5-funcionalidades-da-maquininha-getnet-para-vender-mais/",
+            "https://site.getnet.com.br/conversor-de-moedas-getnet/",
+            "https://site.getnet.com.br/conversor-de-moedas-getnet-disponivel-agora-no-tef/"
+          ]
+        },
+        {
+          "id": "rv2_22",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3644,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/suporte/get-smart/ligar-ao-wifi",
+            "https://site.getnet.com.br/maquininha/aluguel/",
+            "https://site.getnet.com.br/boas-vindas/manual-maquinas/"
+          ]
+        },
+        {
+          "id": "rv2_23",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5625,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/golpe-comprovante-de-pix/",
+            "https://site.getnet.com.br/golpe-comprovante-de-pix/",
+            "https://site.getnet.com.br/novas-regras-do-pix-contra-fraudes-como-proteger-seu-negocio/"
+          ]
+        },
+        {
+          "id": "rv2_24",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3713,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/produtos-digitais/",
+            "https://site.getnet.com.br/maquininha/aluguel/",
+            "https://site.getnet.com.br/crediario/"
+          ]
+        },
+        {
+          "id": "rv2_25",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.38,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/partners/aevi",
+            "https://www.getnet.net/en/partners/nayax",
+            "https://www.getnet.net/en/resources/whats-new"
+          ]
+        },
+        {
+          "id": "rv2_26",
+          "answerable": true,
+          "rank": 2,
+          "top_relevance": 0.2885,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/suporte/get-checkout",
+            "https://www.getnet.net/pt/suporte/get-checkout/como-e-que-posso-fazer-uma-devolucao",
+            "https://site.getnet.com.br/checkout-de-pagamento-o-que-e/"
+          ]
+        },
+        {
+          "id": "rv2_27",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3883,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/tap-on-phone-maquininha-no-celular/",
+            "https://site.getnet.com.br/tap-on-phone-maquininha-no-celular/",
+            "https://site.getnet.com.br/get-tap-maquininha-de-cartao/"
+          ]
+        },
+        {
+          "id": "rv2_28",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3824,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-gestao-de-vendas/como-fazer-minha-gestao-de-venda/",
+            "https://site.getnet.com.br/ofertas/",
+            "https://site.getnet.com.br/maquininha/aluguel/"
+          ]
+        },
+        {
+          "id": "rv2_29",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5742,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/guia-digital-marca/",
+            "https://site.getnet.com.br/guia-digital-marca/",
+            "https://site.getnet.com.br/imprensa/"
+          ]
+        },
+        {
+          "id": "rv2_30",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.6384,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/aumente-o-faturamento-no-inverno/",
+            "https://site.getnet.com.br/aumente-o-faturamento-no-inverno/",
+            "https://site.getnet.com.br/turismo-de-inverno/"
+          ]
+        },
+        {
+          "id": "rv2_31",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5293,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/tef/pos-tef/",
+            "https://site.getnet.com.br/tef/solucao-tef/",
+            "https://site.getnet.com.br/ofertas-tef-getnet/"
+          ]
+        },
+        {
+          "id": "rv2_32",
+          "answerable": true,
+          "rank": 2,
+          "top_relevance": 0.3664,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-lite/",
+            "https://site.getnet.com.br/ofertas/",
+            "https://site.getnet.com.br/maquininha/get-smart/"
+          ]
+        },
+        {
+          "id": "rv2_33",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.3804,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/pagamentos-recorrentes/",
+            "https://site.getnet.com.br/parcerias/pos-digital/",
+            "https://site.getnet.com.br/crediario/"
+          ]
+        },
+        {
+          "id": "rv2_34",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3326,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/client-stories/bizum",
+            "https://www.getnet.net/en/resources/blog/instant-payments-from-local-adoption-to-cross-border-growth",
+            "https://www.getnet.net/en/resources/blog/instant-payments-from-local-adoption-to-cross-border-growth"
+          ]
+        },
+        {
+          "id": "rv2_35",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5311,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/ultimo-trimestre-como-preparar-seu-negocio-para-vender-mais/",
+            "https://site.getnet.com.br/ultimo-trimestre-como-preparar-seu-negocio-para-vender-mais/",
+            "https://site.getnet.com.br/vendas-do-ultimo-semestre/"
+          ]
+        },
+        {
+          "id": "rv2_36",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4691,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/proteja-seu-negocio-de-fraudes-digitais/",
+            "https://site.getnet.com.br/proteja-seu-negocio-de-fraudes-digitais/",
+            "https://site.getnet.com.br/guia-digital-marca/"
+          ]
+        },
+        {
+          "id": "rv2_37",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4432,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/mei/",
+            "https://site.getnet.com.br/mei-ou-me/",
+            "https://site.getnet.com.br/como-se-tornar-mei-comecando-com-as-ferramentas-certas/"
+          ]
+        },
+        {
+          "id": "rv2_38",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5254,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/ouvidoria/",
+            "https://site.getnet.com.br/downloads/documentos-ouvidoria/",
+            "https://site.getnet.com.br/produtos-digitais/"
+          ]
+        },
+        {
+          "id": "rv2_39",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5196,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/mc-dia-feliz-getnet/",
+            "https://site.getnet.com.br/mc-dia-feliz-getnet/",
+            "https://site.getnet.com.br/mc-dia-feliz-getnet/"
+          ]
+        },
+        {
+          "id": "rv2_40",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3787,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/dia-das-maes-como-empreendedores-se-protegem-de-golpes/",
+            "https://site.getnet.com.br/dia-das-maes-como-empreendedores-se-protegem-de-golpes/",
+            "https://site.getnet.com.br/dia-das-maes-como-empreendedores-se-protegem-de-golpes/"
+          ]
+        },
+        {
+          "id": "rv2_41",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4214,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/esg/",
+            "https://site.getnet.com.br/institucional/",
+            "https://site.getnet.com.br/imprensa/"
+          ]
+        },
+        {
+          "id": "rv2_42",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5553,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/ia-para-pequenos-empreendedores/",
+            "https://site.getnet.com.br/ia-para-pequenos-empreendedores/",
+            "https://site.getnet.com.br/parceria-fit-getnet-como-economizar-na-conta-de-luz/"
+          ]
+        },
+        {
+          "id": "rv2_43",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.7493,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/suporte/o-meu-negocio-e-movel-e-nao-tenho-uma-localizacao-fixa-qual-e-o-melhor-tpa-para-mim",
+            "https://www.getnet.net/pt/suporte/get-classic",
+            "https://www.getnet.net/pt/suporte"
+          ]
+        },
+        {
+          "id": "rv2_44",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3703,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/evolution-of-lending-solution",
+            "https://www.getnet.net/en/resources/blog/evolution-of-lending-solution",
+            "https://www.getnet.net/en/resources/blog/evolution-of-lending-solution"
+          ]
+        },
+        {
+          "id": "rv2_45",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.2204,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/suporte/get-classic/e-possivel-efetuar-cobrancas-com-cartoes-diferentes",
+            "https://www.getnet.net/pt/suporte/get-tap-on-phone",
+            "https://www.getnet.net/pt/suporte/get-smart/posso-fazer-cobrancas-com-diferentes-cartoes"
+          ]
+        },
+        {
+          "id": "rv2_46",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4353,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/o-que-e-holding-e-quais-os-tipos/",
+            "https://site.getnet.com.br/o-que-e-holding-e-quais-os-tipos/",
+            "https://site.getnet.com.br/o-que-e-holding-e-quais-os-tipos/"
+          ]
+        },
+        {
+          "id": "rv2_47",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.7648,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/parceria-fit-getnet-como-economizar-na-conta-de-luz/",
+            "https://site.getnet.com.br/parceria-fit-getnet-como-economizar-na-conta-de-luz/",
+            "https://site.getnet.com.br/parceria-fit-getnet-como-economizar-na-conta-de-luz/"
+          ]
+        },
+        {
+          "id": "rv2_48",
+          "answerable": true,
+          "rank": 2,
+          "top_relevance": 0.2644,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/ofertas/",
+            "https://site.getnet.com.br/todas-as-maquininhas/",
+            "https://site.getnet.com.br/maquininha/aluguel/"
+          ]
+        },
+        {
+          "id": "rv2_49",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3583,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/our-solutions/in-person-payments",
+            "https://www.getnet.net/en/our-solutions/online-payments",
+            "https://www.getnet.net/en/resources/client-stories/bizum"
+          ]
+        },
+        {
+          "id": "rv2_50",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4576,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/antifraude/",
+            "https://site.getnet.com.br/vendas-final-de-ano/",
+            "https://site.getnet.com.br/novas-regras-do-pix-contra-fraudes-como-proteger-seu-negocio/"
+          ]
+        },
+        {
+          "id": "rv2_51",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.2896,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/education-in-the-digital-age-the-adoption-of-digital-payments",
+            "https://www.getnet.net/en/resources/blog/what-is-next-for-the-latin-america-payments-ecosystem",
+            "https://www.getnet.net/en/resources/blog/what-is-next-for-the-latin-america-payments-ecosystem"
+          ]
+        },
+        {
+          "id": "rv2_52",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.1922,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/our-solutions/omnichannel",
+            "https://www.getnet.net/en/our-solutions/online-payments",
+            "https://www.getnet.net/en/legal/privacy-policy"
+          ]
+        },
+        {
+          "id": "rv2_53",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4086,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/dicas-segundo-semestre/",
+            "https://site.getnet.com.br/outono-2026-estacao-promete-ser-quente-para-o-varejo/",
+            "https://site.getnet.com.br/vendas-do-ultimo-semestre/"
+          ]
+        },
+        {
+          "id": "rv2_54",
+          "answerable": true,
+          "rank": 4,
+          "top_relevance": 0.3087,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/suporte/get-checkout",
+            "https://site.getnet.com.br/dicas-de-senhas/",
+            "https://site.getnet.com.br/parcerias/pos-digital/"
+          ]
+        },
+        {
+          "id": "rv2_55",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4745,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/conheca-o-conversor-de-moedas/",
+            "https://site.getnet.com.br/conversor-de-moedas-getnet-disponivel-agora-no-tef/",
+            "https://site.getnet.com.br/conversor-de-moedas-getnet-disponivel-agora-no-tef/"
+          ]
+        },
+        {
+          "id": "rv2_56",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4852,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/como-vender-online-para-outros-paises-e-expandir-seu-negocio/",
+            "https://site.getnet.com.br/como-vender-online-para-outros-paises-e-expandir-seu-negocio/",
+            "https://site.getnet.com.br/como-vender-online-para-outros-paises-e-expandir-seu-negocio/"
+          ]
+        },
+        {
+          "id": "rv2_57",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.2578,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/nova-era-dos-pagamentos/",
+            "https://site.getnet.com.br/conta-digital/",
+            "https://site.getnet.com.br/getnet-lanca-get-code-comunidade-global-de-desenvolvedores-para-inovacao/"
+          ]
+        },
+        {
+          "id": "rv2_58",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5851,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/carteiras-digitais/",
+            "https://site.getnet.com.br/carteiras-digitais/",
+            "https://site.getnet.com.br/pix-lidera-pagamentos-na-black-friday/"
+          ]
+        },
+        {
+          "id": "rv2_59",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4203,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-lite/",
+            "https://site.getnet.com.br/ofertas/",
+            "https://site.getnet.com.br/boas-vindas/manual-maquinas/"
+          ]
+        },
+        {
+          "id": "rv2_60",
+          "answerable": true,
+          "rank": 2,
+          "top_relevance": 0.5062,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/split-de-pagamento-veja-como-dividir-recebimentos-com-parceiros/",
+            "https://site.getnet.com.br/split/",
+            "https://site.getnet.com.br/split-de-pagamento-veja-como-dividir-recebimentos-com-parceiros/"
+          ]
+        },
+        {
+          "id": "rv2_61",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4286,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/what-is-next-for-the-latin-america-payments-ecosystem",
+            "https://www.getnet.net/en/resources/blog/the-mobile-payment-revolution-in-latin-america",
+            "https://www.getnet.net/en/resources/blog/what-is-next-for-the-latin-america-payments-ecosystem"
+          ]
+        },
+        {
+          "id": "rv2_62",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.372,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/pix-lidera-pagamentos-na-black-friday/",
+            "https://site.getnet.com.br/vendas-do-ultimo-semestre/",
+            "https://site.getnet.com.br/vendas-do-ultimo-semestre/"
+          ]
+        },
+        {
+          "id": "rv2_63",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.479,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/the-mobile-payment-revolution-in-latin-america",
+            "https://www.getnet.net/en/resources/blog/the-mobile-payment-revolution-in-latin-america",
+            "https://www.getnet.net/en/resources/blog/the-mobile-payment-revolution-in-latin-america"
+          ]
+        },
+        {
+          "id": "rv2_64",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3134,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/dia-das-maes/",
+            "https://site.getnet.com.br/5-dicas-para-bares-e-restaurantes-se-prepararem-aos-jogos/",
+            "https://site.getnet.com.br/dicas-para-vender-mais-ecommerce/"
+          ]
+        },
+        {
+          "id": "rv2_65",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5573,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/vendas-crescem-na-black-week/",
+            "https://site.getnet.com.br/crescimento-vendas-online/",
+            "https://site.getnet.com.br/venda-mais-na-black-friday/"
+          ]
+        },
+        {
+          "id": "rv2_66",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4965,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/client-stories/connects-melia",
+            "https://www.getnet.net/en/resources/client-stories/connects-melia",
+            "https://www.getnet.net/en/partners/soft-restaurant"
+          ]
+        }
+      ]
+    },
+    "snapshot_dense": {
+      "mode": "dense",
+      "answerable": 66,
+      "out_of_base": 0,
+      "recall@1": 0.5152,
+      "recall@3": 0.5909,
+      "recall@5": 0.697,
+      "mrr": 0.5722,
+      "section_hit_rate_when_url_found": null,
+      "abstention_accuracy_out_of_base": 0.0,
+      "answer_rate_in_base": 0.0,
+      "mean_latency_ms": 1.05,
+      "total_cost_usd": 0,
+      "mean_cost_usd": 0,
+      "cases": [
+        {
+          "id": "rv2_01",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/checkout-de-pagamento-o-que-e/",
+            "https://site.getnet.com.br/checkout-de-pagamento-o-que-e/",
+            "https://site.getnet.com.br/checkout-de-pagamento-o-que-e/"
+          ]
+        },
+        {
+          "id": "rv2_02",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.08,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/como-vender-mais-no-verao/",
+            "https://site.getnet.com.br/carnaval-2026-veja-3-solucoes-para-vender-mais-neste-periodo/",
+            "https://site.getnet.com.br/carnaval-2026-veja-3-solucoes-para-vender-mais-neste-periodo/"
+          ]
+        },
+        {
+          "id": "rv2_03",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/maquininha-de-cartao/",
+            "https://site.getnet.com.br/melhor-maquininha-para-o-seu-negocio/",
+            "https://site.getnet.com.br/melhor-maquininha-para-o-seu-negocio/"
+          ]
+        },
+        {
+          "id": "rv2_04",
+          "answerable": true,
+          "rank": 3,
+          "top_relevance": 0.075,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/as-nossas-solucoes/pagamentos-presenciais/tpa-pagamento",
+            "https://www.getnet.net/pt/suporte/get-classic",
+            "https://www.getnet.net/pt/suporte/get-classic/o-meu-tpa-nao-parece-ter-comunicacao-o-que-posso-fazer"
+          ]
+        },
+        {
+          "id": "rv2_05",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/prepare-seu-comercio-para-2026/",
+            "https://site.getnet.com.br/prepare-seu-comercio-para-2026/",
+            "https://site.getnet.com.br/carnaval-2026-veja-3-solucoes-para-vender-mais-neste-periodo/"
+          ]
+        },
+        {
+          "id": "rv2_06",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/getnet-e-comida-di-buteco/",
+            "https://site.getnet.com.br/tap-on-phone-maquininha-no-celular/",
+            "https://site.getnet.com.br/tap-on-phone-maquininha-no-celular/"
+          ]
+        },
+        {
+          "id": "rv2_07",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/encryption-vs-tokenisation",
+            "https://www.getnet.net/en/resources/blog/encryption-vs-tokenisation",
+            "https://www.getnet.net/en/resources/blog/encryption-vs-tokenisation"
+          ]
+        },
+        {
+          "id": "rv2_08",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/getnet-lanca-get-code-comunidade-global-de-desenvolvedores-para-inovacao/",
+            "https://site.getnet.com.br/getnet-lanca-get-code-comunidade-global-de-desenvolvedores-para-inovacao/",
+            "https://site.getnet.com.br/get-code-promove-meetup-sobre-oportunidades-de-negocio/"
+          ]
+        },
+        {
+          "id": "rv2_09",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.075,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/pix-no-get-tap-mais-agilidade-e-eficiencia-das-vendas/",
+            "https://site.getnet.com.br/link-de-pagamento-vendas/",
+            "https://site.getnet.com.br/link-de-pagamento-vendas/"
+          ]
+        },
+        {
+          "id": "rv2_10",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.075,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/optimising-your-checkout-process",
+            "https://www.getnet.net/en/resources/blog/the-mobile-payment-revolution-in-latin-america",
+            "https://www.getnet.net/en/resources/blog/optimising-your-checkout-process"
+          ]
+        },
+        {
+          "id": "rv2_11",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/pix-lidera-pagamentos-na-black-friday/",
+            "https://site.getnet.com.br/pix-lidera-pagamentos-na-black-friday/",
+            "https://site.getnet.com.br/vtex-day-2025/"
+          ]
+        },
+        {
+          "id": "rv2_12",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.025,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/precificacao/",
+            "https://site.getnet.com.br/precificacao/",
+            "https://site.getnet.com.br/mei/"
+          ]
+        },
+        {
+          "id": "rv2_13",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.08,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/celebrating-getnet-argentina-fourth-anniversary",
+            "https://www.getnet.net/en/resources/blog/celebrating-getnet-argentina-fourth-anniversary",
+            "https://www.getnet.net/en/resources/blog/celebrating-getnet-argentina-fourth-anniversary"
+          ]
+        },
+        {
+          "id": "rv2_14",
+          "answerable": true,
+          "rank": 3,
+          "top_relevance": 0.0425,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/tap-on-phone-maquininha-no-celular/",
+            "https://site.getnet.com.br/tap-on-phone-maquininha-no-celular/",
+            "https://www.getnet.net/en/contact"
+          ]
+        },
+        {
+          "id": "rv2_15",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/4-things-every-merchant-needs-to-know-about-open-banking",
+            "https://www.getnet.net/en/resources/blog/4-things-every-merchant-needs-to-know-about-open-banking",
+            "https://www.getnet.net/en/our-solutions/value-added-solutions"
+          ]
+        },
+        {
+          "id": "rv2_16",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/vender-pelo-whatsapp/",
+            "https://site.getnet.com.br/como-inovar-seu-negocio/",
+            "https://site.getnet.com.br/pagamentos-digitais/"
+          ]
+        },
+        {
+          "id": "rv2_17",
+          "answerable": true,
+          "rank": 5,
+          "top_relevance": 0.025,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/getnet-connects-novo-programa-de-parcerias/",
+            "https://site.getnet.com.br/getnet-connects-novo-programa-de-parcerias/",
+            "https://site.getnet.com.br/getnet-connects-novo-programa-de-parcerias/"
+          ]
+        },
+        {
+          "id": "rv2_18",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.08,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/domicilio-eletronico-trabalhista/",
+            "https://site.getnet.com.br/domicilio-eletronico-trabalhista/",
+            "https://site.getnet.com.br/dicas-segundo-semestre/"
+          ]
+        },
+        {
+          "id": "rv2_19",
+          "answerable": true,
+          "rank": 2,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/tef/pos-tef/",
+            "https://site.getnet.com.br/ofertas-tef-getnet/",
+            "https://site.getnet.com.br/parcerias/pos-digital/"
+          ]
+        },
+        {
+          "id": "rv2_20",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-gestao-de-vendas/como-fazer-minha-gestao-de-venda/",
+            "https://site.getnet.com.br/get-ajuda-maquininha/solucoes-get-smart/",
+            "https://site.getnet.com.br/parcerias/pos-digital/"
+          ]
+        },
+        {
+          "id": "rv2_21",
+          "answerable": true,
+          "rank": 5,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/conheca-o-conversor-de-moedas/",
+            "https://site.getnet.com.br/conversor-de-moedas-getnet/",
+            "https://site.getnet.com.br/conversor-de-moedas-getnet/"
+          ]
+        },
+        {
+          "id": "rv2_22",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/maquininha/get-smart/",
+            "https://site.getnet.com.br/maquininha/get-smart/",
+            "https://site.getnet.com.br/maquininha/get-smart/"
+          ]
+        },
+        {
+          "id": "rv2_23",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.075,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/golpe-comprovante-de-pix/",
+            "https://site.getnet.com.br/golpe-comprovante-de-pix/",
+            "https://site.getnet.com.br/dicas-de-senhas/"
+          ]
+        },
+        {
+          "id": "rv2_24",
+          "answerable": true,
+          "rank": 4,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/ofertas/",
+            "https://site.getnet.com.br/ofertas/",
+            "https://site.getnet.com.br/ofertas/"
+          ]
+        },
+        {
+          "id": "rv2_25",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.075,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/partners/aevi",
+            "https://www.getnet.net/en/partners/nayax",
+            "https://www.getnet.net/en/legal/privacy-policy"
+          ]
+        },
+        {
+          "id": "rv2_26",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/5-dicas-para-bares-e-restaurantes-se-prepararem-aos-jogos/",
+            "https://site.getnet.com.br/getcheckout/",
+            "https://www.getnet.net/pt/suporte/get-checkout"
+          ]
+        },
+        {
+          "id": "rv2_27",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.075,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/tap-on-phone-maquininha-no-celular/",
+            "https://site.getnet.com.br/tap-on-phone-maquininha-no-celular/",
+            "https://site.getnet.com.br/pagamentos-digitais/"
+          ]
+        },
+        {
+          "id": "rv2_28",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.025,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/automacao-atendimento-ao-cliente/",
+            "https://site.getnet.com.br/automacao-atendimento-ao-cliente/",
+            "https://site.getnet.com.br/ponto-de-venda-como-funciona/"
+          ]
+        },
+        {
+          "id": "rv2_29",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.075,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/guia-digital-marca/",
+            "https://site.getnet.com.br/guia-digital-marca/",
+            "https://site.getnet.com.br/mercadinho/"
+          ]
+        },
+        {
+          "id": "rv2_30",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.08,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/aumente-o-faturamento-no-inverno/",
+            "https://site.getnet.com.br/aumente-o-faturamento-no-inverno/",
+            "https://site.getnet.com.br/turismo-de-inverno/"
+          ]
+        },
+        {
+          "id": "rv2_31",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.08,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/tef/pos-tef/",
+            "https://site.getnet.com.br/parcerias/pos-digital/",
+            "https://site.getnet.com.br/emprestimo-getnet/"
+          ]
+        },
+        {
+          "id": "rv2_32",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/ofertas/",
+            "https://site.getnet.com.br/get-lite/",
+            "https://site.getnet.com.br/getnet-e-comida-di-buteco/"
+          ]
+        },
+        {
+          "id": "rv2_33",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.025,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/dicas-segundo-semestre/",
+            "https://site.getnet.com.br/dicas-segundo-semestre/",
+            "https://site.getnet.com.br/get-ajuda-configuracoes/funcionalidades-portal-minha-conta-e-app-getnet-brasil/"
+          ]
+        },
+        {
+          "id": "rv2_34",
+          "answerable": true,
+          "rank": 4,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/agentic-payments",
+            "https://www.getnet.net/en/resources/blog/agentic-payments",
+            "https://www.getnet.net/en/resources/blog/the-future-of-cross-border-payments-in-latin-america"
+          ]
+        },
+        {
+          "id": "rv2_35",
+          "answerable": true,
+          "rank": 2,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/outono-2026-estacao-promete-ser-quente-para-o-varejo/",
+            "https://site.getnet.com.br/ultimo-trimestre-como-preparar-seu-negocio-para-vender-mais/",
+            "https://site.getnet.com.br/ultimo-trimestre-como-preparar-seu-negocio-para-vender-mais/"
+          ]
+        },
+        {
+          "id": "rv2_36",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.075,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/proteja-seu-negocio-de-fraudes-digitais/",
+            "https://site.getnet.com.br/proteja-seu-negocio-de-fraudes-digitais/",
+            "https://site.getnet.com.br/dicas-segundo-semestre/"
+          ]
+        },
+        {
+          "id": "rv2_37",
+          "answerable": true,
+          "rank": 4,
+          "top_relevance": 0.025,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/mei-ou-me/",
+            "https://site.getnet.com.br/mei-ou-me/",
+            "https://site.getnet.com.br/mei-ou-me/"
+          ]
+        },
+        {
+          "id": "rv2_38",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.025,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/dicas-de-senhas/",
+            "https://site.getnet.com.br/outono-2026-estacao-promete-ser-quente-para-o-varejo/",
+            "https://site.getnet.com.br/outono-2026-estacao-promete-ser-quente-para-o-varejo/"
+          ]
+        },
+        {
+          "id": "rv2_39",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.075,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/mc-dia-feliz-getnet/",
+            "https://site.getnet.com.br/mc-dia-feliz-getnet/",
+            "https://site.getnet.com.br/mc-dia-feliz-getnet/"
+          ]
+        },
+        {
+          "id": "rv2_40",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/dia-das-maes-como-empreendedores-se-protegem-de-golpes/",
+            "https://site.getnet.com.br/dicas-segundo-semestre/",
+            "https://site.getnet.com.br/dicas-segundo-semestre/"
+          ]
+        },
+        {
+          "id": "rv2_41",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.025,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/dicas-segundo-semestre/",
+            "https://site.getnet.com.br/dicas-segundo-semestre/",
+            "https://site.getnet.com.br/vendas-do-ultimo-semestre/"
+          ]
+        },
+        {
+          "id": "rv2_42",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.075,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/ia-para-pequenos-empreendedores/",
+            "https://site.getnet.com.br/ia-para-pequenos-empreendedores/",
+            "https://site.getnet.com.br/parceria-fit-getnet-como-economizar-na-conta-de-luz/"
+          ]
+        },
+        {
+          "id": "rv2_43",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.08,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/suporte/o-meu-negocio-e-movel-e-nao-tenho-uma-localizacao-fixa-qual-e-o-melhor-tpa-para-mim",
+            "https://site.getnet.com.br/mei-ou-me/",
+            "https://site.getnet.com.br/mei-ou-me/"
+          ]
+        },
+        {
+          "id": "rv2_44",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.08,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/evolution-of-lending-solution",
+            "https://www.getnet.net/en/resources/blog/evolution-of-lending-solution",
+            "https://www.getnet.net/en/resources/blog/evolution-of-lending-solution"
+          ]
+        },
+        {
+          "id": "rv2_45",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/5-dicas-para-bares-e-restaurantes-se-prepararem-aos-jogos/",
+            "https://www.getnet.net/pt/suporte/get-classic",
+            "https://www.getnet.net/pt/as-nossas-solucoes/pagamentos-presenciais/tpa-pagamento"
+          ]
+        },
+        {
+          "id": "rv2_46",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.025,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/o-que-e-holding-e-quais-os-tipos/",
+            "https://site.getnet.com.br/o-que-e-holding-e-quais-os-tipos/",
+            "https://site.getnet.com.br/o-que-e-holding-e-quais-os-tipos/"
+          ]
+        },
+        {
+          "id": "rv2_47",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.08,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/parceria-fit-getnet-como-economizar-na-conta-de-luz/",
+            "https://site.getnet.com.br/parceria-fit-getnet-como-economizar-na-conta-de-luz/",
+            "https://site.getnet.com.br/parceria-fit-getnet-como-economizar-na-conta-de-luz/"
+          ]
+        },
+        {
+          "id": "rv2_48",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.08,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/ofertas/",
+            "https://site.getnet.com.br/ofertas/",
+            "https://site.getnet.com.br/ofertas/"
+          ]
+        },
+        {
+          "id": "rv2_49",
+          "answerable": true,
+          "rank": 5,
+          "top_relevance": 0.0638,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-tap-maquininha-de-cartao/",
+            "https://site.getnet.com.br/get-tap-maquininha-de-cartao/",
+            "https://site.getnet.com.br/get-tap-maquininha-de-cartao/"
+          ]
+        },
+        {
+          "id": "rv2_50",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.025,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/payback/",
+            "https://site.getnet.com.br/faturamento/",
+            "https://site.getnet.com.br/faturamento/"
+          ]
+        },
+        {
+          "id": "rv2_51",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/payment-trends-in-mexico",
+            "https://www.getnet.net/en/resources/blog/what-is-next-for-the-latin-america-payments-ecosystem",
+            "https://www.getnet.net/en/resources/blog/why-retailers-must-treat-payments-as-a-core-strategy"
+          ]
+        },
+        {
+          "id": "rv2_52",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.025,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/our-solutions/omnichannel",
+            "https://www.getnet.net/en/resources/blog/the-future-of-cross-border-payments-in-latin-america",
+            "https://site.getnet.com.br/o-salto-das-micro-e-pequenas-empresas-do-balcao-a-omnichannel/"
+          ]
+        },
+        {
+          "id": "rv2_53",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/dicas-segundo-semestre/",
+            "https://site.getnet.com.br/dicas-segundo-semestre/",
+            "https://site.getnet.com.br/vendas-do-ultimo-semestre/"
+          ]
+        },
+        {
+          "id": "rv2_54",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/5-dicas-para-bares-e-restaurantes-se-prepararem-aos-jogos/",
+            "https://site.getnet.com.br/getcheckout/",
+            "https://www.getnet.net/pt/suporte/get-checkout"
+          ]
+        },
+        {
+          "id": "rv2_55",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/conheca-o-conversor-de-moedas/",
+            "https://site.getnet.com.br/conversor-de-moedas-getnet/",
+            "https://site.getnet.com.br/conversor-de-moedas-getnet/"
+          ]
+        },
+        {
+          "id": "rv2_56",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.08,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/como-vender-online-para-outros-paises-e-expandir-seu-negocio/",
+            "https://site.getnet.com.br/como-vender-online-para-outros-paises-e-expandir-seu-negocio/",
+            "https://site.getnet.com.br/como-vender-online-para-outros-paises-e-expandir-seu-negocio/"
+          ]
+        },
+        {
+          "id": "rv2_57",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/a-era-do-dinheiro-inteligente/",
+            "https://site.getnet.com.br/o-que-e-holding-e-quais-os-tipos/",
+            "https://site.getnet.com.br/o-que-e-holding-e-quais-os-tipos/"
+          ]
+        },
+        {
+          "id": "rv2_58",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.075,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/carteiras-digitais/",
+            "https://site.getnet.com.br/carteiras-digitais/",
+            "https://site.getnet.com.br/pagamentos-no-centro-da-estrategia-a-disrupcao-do-varejo/"
+          ]
+        },
+        {
+          "id": "rv2_59",
+          "answerable": true,
+          "rank": 2,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/ofertas/",
+            "https://site.getnet.com.br/get-lite/",
+            "https://site.getnet.com.br/getnet-e-comida-di-buteco/"
+          ]
+        },
+        {
+          "id": "rv2_60",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.075,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/split-de-pagamento-veja-como-dividir-recebimentos-com-parceiros/",
+            "https://site.getnet.com.br/split-de-pagamento-veja-como-dividir-recebimentos-com-parceiros/",
+            "https://site.getnet.com.br/split-de-pagamento-veja-como-dividir-recebimentos-com-parceiros/"
+          ]
+        },
+        {
+          "id": "rv2_61",
+          "answerable": true,
+          "rank": 4,
+          "top_relevance": 0.08,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/the-mobile-payment-revolution-in-latin-america",
+            "https://www.getnet.net/en/resources/blog/the-mobile-payment-revolution-in-latin-america",
+            "https://www.getnet.net/en/resources/blog/the-future-of-cross-border-payments-in-latin-america"
+          ]
+        },
+        {
+          "id": "rv2_62",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/vendas-do-ultimo-semestre/",
+            "https://site.getnet.com.br/vendas-do-ultimo-semestre/",
+            "https://site.getnet.com.br/empreendedores-e-pmes/"
+          ]
+        },
+        {
+          "id": "rv2_63",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.08,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/the-mobile-payment-revolution-in-latin-america",
+            "https://www.getnet.net/en/resources/blog/the-mobile-payment-revolution-in-latin-america",
+            "https://www.getnet.net/en/resources/blog/the-mobile-payment-revolution-in-latin-america"
+          ]
+        },
+        {
+          "id": "rv2_64",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/5-dicas-para-bares-e-restaurantes-se-prepararem-aos-jogos/",
+            "https://site.getnet.com.br/5-dicas-para-bares-e-restaurantes-se-prepararem-aos-jogos/",
+            "https://site.getnet.com.br/dicas-para-vender-mais-ecommerce/"
+          ]
+        },
+        {
+          "id": "rv2_65",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.05,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/vendas-crescem-na-black-week/",
+            "https://site.getnet.com.br/faturamento/",
+            "https://site.getnet.com.br/faturamento/"
+          ]
+        },
+        {
+          "id": "rv2_66",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.08,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/client-stories/connects-melia",
+            "https://www.getnet.net/en/resources/client-stories/connects-melia",
+            "https://www.getnet.net/en/resources/blog/the-mobile-payment-revolution-in-latin-america"
+          ]
+        }
+      ]
+    },
+    "snapshot_hybrid": {
+      "mode": "hybrid",
+      "answerable": 66,
+      "out_of_base": 0,
+      "recall@1": 0.8485,
+      "recall@3": 0.9394,
+      "recall@5": 0.9697,
+      "mrr": 0.8965,
+      "section_hit_rate_when_url_found": null,
+      "abstention_accuracy_out_of_base": 0.0,
+      "answer_rate_in_base": 0.7879,
+      "mean_latency_ms": 3.43,
+      "total_cost_usd": 0,
+      "mean_cost_usd": 0,
+      "cases": [
+        {
+          "id": "rv2_01",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3593,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/checkout-de-pagamento-o-que-e/",
+            "https://site.getnet.com.br/checkout-de-pagamento-o-que-e/",
+            "https://site.getnet.com.br/o-que-e-checkout-movel-e-como-transformar-a-experiencia-de-pagamento/"
+          ]
+        },
+        {
+          "id": "rv2_02",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4199,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/como-vender-mais-no-verao/",
+            "https://site.getnet.com.br/como-vender-mais-no-verao/",
+            "https://site.getnet.com.br/como-vender-mais-no-verao/"
+          ]
+        },
+        {
+          "id": "rv2_03",
+          "answerable": true,
+          "rank": 4,
+          "top_relevance": 0.319,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/melhor-maquininha-para-o-seu-negocio/",
+            "https://site.getnet.com.br/simulador-de-vendas-da-maquininha-saiba-quanto-voce-ira-faturar/",
+            "https://site.getnet.com.br/simulador-de-vendas-da-maquininha-saiba-quanto-voce-ira-faturar/"
+          ]
+        },
+        {
+          "id": "rv2_04",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4849,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/suporte/get-classic/o-meu-tpa-nao-parece-ter-comunicacao-o-que-posso-fazer",
+            "https://www.getnet.net/pt/suporte/get-classic",
+            "https://www.getnet.net/pt/suporte/get-classic/estou-a-experienciar-falhas-de-ligacao-ou-cobertura-no-meu-tpa-o-que-posso-fazer"
+          ]
+        },
+        {
+          "id": "rv2_05",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4082,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/varejo-cresce-durante-carnaval-2026-e-compras-fisicas-ganham-forca/",
+            "https://site.getnet.com.br/carnaval-2026-5-dicas-de-seguranca-para-evitar-golpes-durante-a-folia/",
+            "https://site.getnet.com.br/crescimento-vendas-online/"
+          ]
+        },
+        {
+          "id": "rv2_06",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5329,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/suporte/get-tap-on-phone/o-get-tap-on-phone-aceita-pagamentos-com-smartphone-ou-smartwatch",
+            "https://www.getnet.net/pt/suporte/get-tap-on-phone",
+            "https://site.getnet.com.br/tap-on-phone-maquininha-no-celular/"
+          ]
+        },
+        {
+          "id": "rv2_07",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3316,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/encryption-vs-tokenisation",
+            "https://www.getnet.net/en/resources/blog/encryption-vs-tokenisation",
+            "https://www.getnet.net/en/resources/blog/encryption-vs-tokenisation"
+          ]
+        },
+        {
+          "id": "rv2_08",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3776,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/getnet-lanca-get-code-comunidade-global-de-desenvolvedores-para-inovacao/",
+            "https://site.getnet.com.br/get-code-promove-meetup-sobre-oportunidades-de-negocio/",
+            "https://site.getnet.com.br/get-code-promove-meetup-sobre-oportunidades-de-negocio/"
+          ]
+        },
+        {
+          "id": "rv2_09",
+          "answerable": true,
+          "rank": 3,
+          "top_relevance": 0.3849,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/pix-no-get-tap-mais-agilidade-e-eficiencia-das-vendas/",
+            "https://site.getnet.com.br/pix/",
+            "https://site.getnet.com.br/getcheckout/"
+          ]
+        },
+        {
+          "id": "rv2_10",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3859,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/optimising-your-checkout-process",
+            "https://www.getnet.net/en/resources/blog/optimising-your-checkout-process",
+            "https://www.getnet.net/en/resources/blog/how-merchants-should-prepare-for-the-next-generation-of-shoppers"
+          ]
+        },
+        {
+          "id": "rv2_11",
+          "answerable": true,
+          "rank": 3,
+          "top_relevance": 0.2042,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-lite/",
+            "https://site.getnet.com.br/pix-lidera-pagamentos-na-black-friday/",
+            "https://site.getnet.com.br/getnet-reforca-posicionamento-como-parceira-do-empreendedor/"
+          ]
+        },
+        {
+          "id": "rv2_12",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5781,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/precificacao/",
+            "https://site.getnet.com.br/precificacao/",
+            "https://site.getnet.com.br/como-definir-precos-justos-e-competitivos-para-produtos-e-servicos/"
+          ]
+        },
+        {
+          "id": "rv2_13",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4526,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/celebrating-getnet-argentina-fourth-anniversary",
+            "https://www.getnet.net/en/resources/blog/celebrating-getnet-argentina-fourth-anniversary",
+            "https://www.getnet.net/en/resources/blog/celebrating-getnet-argentina-fourth-anniversary"
+          ]
+        },
+        {
+          "id": "rv2_14",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.2768,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/contact",
+            "https://www.getnet.net/en/legal/privacy-policy",
+            "https://www.getnet.net/en/resources/blog/retail"
+          ]
+        },
+        {
+          "id": "rv2_15",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5802,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/4-things-every-merchant-needs-to-know-about-open-banking",
+            "https://www.getnet.net/en/resources/blog/4-things-every-merchant-needs-to-know-about-open-banking",
+            "https://www.getnet.net/en/resources/blog/the-key-fintech-developments-that-shaped-2024"
+          ]
+        },
+        {
+          "id": "rv2_16",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3955,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/vender-pelo-whatsapp/",
+            "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/",
+            "https://site.getnet.com.br/vender-pelo-whatsapp/"
+          ]
+        },
+        {
+          "id": "rv2_17",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4234,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/institucional/",
+            "https://site.getnet.com.br/carreiras/",
+            "https://site.getnet.com.br/esg/"
+          ]
+        },
+        {
+          "id": "rv2_18",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.7737,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/domicilio-eletronico-trabalhista/",
+            "https://site.getnet.com.br/domicilio-eletronico-trabalhista/",
+            "https://site.getnet.com.br/dicas-para-vender-mais-ecommerce/"
+          ]
+        },
+        {
+          "id": "rv2_19",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.382,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/ofertas-tef-getnet/",
+            "https://site.getnet.com.br/tef/pos-tef/",
+            "https://site.getnet.com.br/turismo-de-inverno/"
+          ]
+        },
+        {
+          "id": "rv2_20",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.2303,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/maquininha/get-smart/",
+            "https://site.getnet.com.br/get-ajuda-gestao-de-vendas/como-fazer-minha-gestao-de-venda/",
+            "https://site.getnet.com.br/parcerias/pos-digital/"
+          ]
+        },
+        {
+          "id": "rv2_21",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4425,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/5-funcionalidades-da-maquininha-getnet-para-vender-mais/",
+            "https://site.getnet.com.br/conversor-de-moedas-getnet/",
+            "https://site.getnet.com.br/conversor-de-moedas-getnet-disponivel-agora-no-tef/"
+          ]
+        },
+        {
+          "id": "rv2_22",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3644,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/suporte/get-smart/ligar-ao-wifi",
+            "https://site.getnet.com.br/maquininha/aluguel/",
+            "https://site.getnet.com.br/boas-vindas/manual-maquinas/"
+          ]
+        },
+        {
+          "id": "rv2_23",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5625,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/golpe-comprovante-de-pix/",
+            "https://site.getnet.com.br/golpe-comprovante-de-pix/",
+            "https://site.getnet.com.br/novas-regras-do-pix-contra-fraudes-como-proteger-seu-negocio/"
+          ]
+        },
+        {
+          "id": "rv2_24",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3713,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/produtos-digitais/",
+            "https://site.getnet.com.br/maquininha/aluguel/",
+            "https://site.getnet.com.br/crediario/"
+          ]
+        },
+        {
+          "id": "rv2_25",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.38,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/partners/aevi",
+            "https://www.getnet.net/en/partners/nayax",
+            "https://www.getnet.net/en/resources/whats-new"
+          ]
+        },
+        {
+          "id": "rv2_26",
+          "answerable": true,
+          "rank": 2,
+          "top_relevance": 0.2885,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/suporte/get-checkout",
+            "https://www.getnet.net/pt/suporte/get-checkout/como-e-que-posso-fazer-uma-devolucao",
+            "https://site.getnet.com.br/checkout-de-pagamento-o-que-e/"
+          ]
+        },
+        {
+          "id": "rv2_27",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3883,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/tap-on-phone-maquininha-no-celular/",
+            "https://site.getnet.com.br/tap-on-phone-maquininha-no-celular/",
+            "https://site.getnet.com.br/get-tap-maquininha-de-cartao/"
+          ]
+        },
+        {
+          "id": "rv2_28",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3824,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-gestao-de-vendas/como-fazer-minha-gestao-de-venda/",
+            "https://site.getnet.com.br/ofertas/",
+            "https://site.getnet.com.br/maquininha/aluguel/"
+          ]
+        },
+        {
+          "id": "rv2_29",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5742,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/guia-digital-marca/",
+            "https://site.getnet.com.br/guia-digital-marca/",
+            "https://site.getnet.com.br/imprensa/"
+          ]
+        },
+        {
+          "id": "rv2_30",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.6384,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/aumente-o-faturamento-no-inverno/",
+            "https://site.getnet.com.br/aumente-o-faturamento-no-inverno/",
+            "https://site.getnet.com.br/turismo-de-inverno/"
+          ]
+        },
+        {
+          "id": "rv2_31",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5293,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/tef/pos-tef/",
+            "https://site.getnet.com.br/tef/solucao-tef/",
+            "https://site.getnet.com.br/ofertas-tef-getnet/"
+          ]
+        },
+        {
+          "id": "rv2_32",
+          "answerable": true,
+          "rank": 2,
+          "top_relevance": 0.3664,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-lite/",
+            "https://site.getnet.com.br/ofertas/",
+            "https://site.getnet.com.br/maquininha/get-smart/"
+          ]
+        },
+        {
+          "id": "rv2_33",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.3804,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/pagamentos-recorrentes/",
+            "https://site.getnet.com.br/parcerias/pos-digital/",
+            "https://site.getnet.com.br/crediario/"
+          ]
+        },
+        {
+          "id": "rv2_34",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3326,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/client-stories/bizum",
+            "https://www.getnet.net/en/resources/blog/instant-payments-from-local-adoption-to-cross-border-growth",
+            "https://www.getnet.net/en/resources/blog/instant-payments-from-local-adoption-to-cross-border-growth"
+          ]
+        },
+        {
+          "id": "rv2_35",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5311,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/ultimo-trimestre-como-preparar-seu-negocio-para-vender-mais/",
+            "https://site.getnet.com.br/ultimo-trimestre-como-preparar-seu-negocio-para-vender-mais/",
+            "https://site.getnet.com.br/vendas-do-ultimo-semestre/"
+          ]
+        },
+        {
+          "id": "rv2_36",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4691,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/proteja-seu-negocio-de-fraudes-digitais/",
+            "https://site.getnet.com.br/proteja-seu-negocio-de-fraudes-digitais/",
+            "https://site.getnet.com.br/guia-digital-marca/"
+          ]
+        },
+        {
+          "id": "rv2_37",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4432,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/mei/",
+            "https://site.getnet.com.br/mei-ou-me/",
+            "https://site.getnet.com.br/como-se-tornar-mei-comecando-com-as-ferramentas-certas/"
+          ]
+        },
+        {
+          "id": "rv2_38",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5254,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/ouvidoria/",
+            "https://site.getnet.com.br/downloads/documentos-ouvidoria/",
+            "https://site.getnet.com.br/produtos-digitais/"
+          ]
+        },
+        {
+          "id": "rv2_39",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5196,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/mc-dia-feliz-getnet/",
+            "https://site.getnet.com.br/mc-dia-feliz-getnet/",
+            "https://site.getnet.com.br/mc-dia-feliz-getnet/"
+          ]
+        },
+        {
+          "id": "rv2_40",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3787,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/dia-das-maes-como-empreendedores-se-protegem-de-golpes/",
+            "https://site.getnet.com.br/dia-das-maes-como-empreendedores-se-protegem-de-golpes/",
+            "https://site.getnet.com.br/dia-das-maes-como-empreendedores-se-protegem-de-golpes/"
+          ]
+        },
+        {
+          "id": "rv2_41",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4214,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/esg/",
+            "https://site.getnet.com.br/institucional/",
+            "https://site.getnet.com.br/imprensa/"
+          ]
+        },
+        {
+          "id": "rv2_42",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5553,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/ia-para-pequenos-empreendedores/",
+            "https://site.getnet.com.br/ia-para-pequenos-empreendedores/",
+            "https://site.getnet.com.br/parceria-fit-getnet-como-economizar-na-conta-de-luz/"
+          ]
+        },
+        {
+          "id": "rv2_43",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.7493,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/suporte/o-meu-negocio-e-movel-e-nao-tenho-uma-localizacao-fixa-qual-e-o-melhor-tpa-para-mim",
+            "https://www.getnet.net/pt/suporte/get-classic",
+            "https://www.getnet.net/pt/suporte"
+          ]
+        },
+        {
+          "id": "rv2_44",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3703,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/evolution-of-lending-solution",
+            "https://www.getnet.net/en/resources/blog/evolution-of-lending-solution",
+            "https://www.getnet.net/en/resources/blog/evolution-of-lending-solution"
+          ]
+        },
+        {
+          "id": "rv2_45",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.2204,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/suporte/get-classic/e-possivel-efetuar-cobrancas-com-cartoes-diferentes",
+            "https://www.getnet.net/pt/suporte/get-tap-on-phone",
+            "https://www.getnet.net/pt/suporte/get-smart/posso-fazer-cobrancas-com-diferentes-cartoes"
+          ]
+        },
+        {
+          "id": "rv2_46",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4353,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/o-que-e-holding-e-quais-os-tipos/",
+            "https://site.getnet.com.br/o-que-e-holding-e-quais-os-tipos/",
+            "https://site.getnet.com.br/o-que-e-holding-e-quais-os-tipos/"
+          ]
+        },
+        {
+          "id": "rv2_47",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.7648,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/parceria-fit-getnet-como-economizar-na-conta-de-luz/",
+            "https://site.getnet.com.br/parceria-fit-getnet-como-economizar-na-conta-de-luz/",
+            "https://site.getnet.com.br/parceria-fit-getnet-como-economizar-na-conta-de-luz/"
+          ]
+        },
+        {
+          "id": "rv2_48",
+          "answerable": true,
+          "rank": 2,
+          "top_relevance": 0.2644,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/ofertas/",
+            "https://site.getnet.com.br/todas-as-maquininhas/",
+            "https://site.getnet.com.br/maquininha/aluguel/"
+          ]
+        },
+        {
+          "id": "rv2_49",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3583,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/our-solutions/in-person-payments",
+            "https://www.getnet.net/en/our-solutions/online-payments",
+            "https://www.getnet.net/en/resources/client-stories/bizum"
+          ]
+        },
+        {
+          "id": "rv2_50",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4576,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/antifraude/",
+            "https://site.getnet.com.br/vendas-final-de-ano/",
+            "https://site.getnet.com.br/novas-regras-do-pix-contra-fraudes-como-proteger-seu-negocio/"
+          ]
+        },
+        {
+          "id": "rv2_51",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.2896,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/education-in-the-digital-age-the-adoption-of-digital-payments",
+            "https://www.getnet.net/en/resources/blog/what-is-next-for-the-latin-america-payments-ecosystem",
+            "https://www.getnet.net/en/resources/blog/what-is-next-for-the-latin-america-payments-ecosystem"
+          ]
+        },
+        {
+          "id": "rv2_52",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.1922,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/our-solutions/omnichannel",
+            "https://www.getnet.net/en/our-solutions/online-payments",
+            "https://www.getnet.net/en/legal/privacy-policy"
+          ]
+        },
+        {
+          "id": "rv2_53",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4086,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/dicas-segundo-semestre/",
+            "https://site.getnet.com.br/outono-2026-estacao-promete-ser-quente-para-o-varejo/",
+            "https://site.getnet.com.br/vendas-do-ultimo-semestre/"
+          ]
+        },
+        {
+          "id": "rv2_54",
+          "answerable": true,
+          "rank": 4,
+          "top_relevance": 0.3087,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/suporte/get-checkout",
+            "https://site.getnet.com.br/dicas-de-senhas/",
+            "https://site.getnet.com.br/parcerias/pos-digital/"
+          ]
+        },
+        {
+          "id": "rv2_55",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4745,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/conheca-o-conversor-de-moedas/",
+            "https://site.getnet.com.br/conversor-de-moedas-getnet-disponivel-agora-no-tef/",
+            "https://site.getnet.com.br/conversor-de-moedas-getnet-disponivel-agora-no-tef/"
+          ]
+        },
+        {
+          "id": "rv2_56",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4852,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/como-vender-online-para-outros-paises-e-expandir-seu-negocio/",
+            "https://site.getnet.com.br/como-vender-online-para-outros-paises-e-expandir-seu-negocio/",
+            "https://site.getnet.com.br/como-vender-online-para-outros-paises-e-expandir-seu-negocio/"
+          ]
+        },
+        {
+          "id": "rv2_57",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.2578,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/nova-era-dos-pagamentos/",
+            "https://site.getnet.com.br/conta-digital/",
+            "https://site.getnet.com.br/getnet-lanca-get-code-comunidade-global-de-desenvolvedores-para-inovacao/"
+          ]
+        },
+        {
+          "id": "rv2_58",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5851,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/carteiras-digitais/",
+            "https://site.getnet.com.br/carteiras-digitais/",
+            "https://site.getnet.com.br/pix-lidera-pagamentos-na-black-friday/"
+          ]
+        },
+        {
+          "id": "rv2_59",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4203,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-lite/",
+            "https://site.getnet.com.br/ofertas/",
+            "https://site.getnet.com.br/boas-vindas/manual-maquinas/"
+          ]
+        },
+        {
+          "id": "rv2_60",
+          "answerable": true,
+          "rank": 2,
+          "top_relevance": 0.5062,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/split-de-pagamento-veja-como-dividir-recebimentos-com-parceiros/",
+            "https://site.getnet.com.br/split/",
+            "https://site.getnet.com.br/split-de-pagamento-veja-como-dividir-recebimentos-com-parceiros/"
+          ]
+        },
+        {
+          "id": "rv2_61",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4286,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/what-is-next-for-the-latin-america-payments-ecosystem",
+            "https://www.getnet.net/en/resources/blog/the-mobile-payment-revolution-in-latin-america",
+            "https://www.getnet.net/en/resources/blog/what-is-next-for-the-latin-america-payments-ecosystem"
+          ]
+        },
+        {
+          "id": "rv2_62",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.372,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/pix-lidera-pagamentos-na-black-friday/",
+            "https://site.getnet.com.br/vendas-do-ultimo-semestre/",
+            "https://site.getnet.com.br/vendas-do-ultimo-semestre/"
+          ]
+        },
+        {
+          "id": "rv2_63",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.479,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/the-mobile-payment-revolution-in-latin-america",
+            "https://www.getnet.net/en/resources/blog/the-mobile-payment-revolution-in-latin-america",
+            "https://www.getnet.net/en/resources/blog/the-mobile-payment-revolution-in-latin-america"
+          ]
+        },
+        {
+          "id": "rv2_64",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3134,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/dia-das-maes/",
+            "https://site.getnet.com.br/5-dicas-para-bares-e-restaurantes-se-prepararem-aos-jogos/",
+            "https://site.getnet.com.br/dicas-para-vender-mais-ecommerce/"
+          ]
+        },
+        {
+          "id": "rv2_65",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5573,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/vendas-crescem-na-black-week/",
+            "https://site.getnet.com.br/crescimento-vendas-online/",
+            "https://site.getnet.com.br/venda-mais-na-black-friday/"
+          ]
+        },
+        {
+          "id": "rv2_66",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4965,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/client-stories/connects-melia",
+            "https://www.getnet.net/en/resources/client-stories/connects-melia",
+            "https://www.getnet.net/en/partners/soft-restaurant"
+          ]
+        }
+      ]
+    },
+    "snapshot_hybrid_rerank": {
+      "mode": "hybrid_rerank",
+      "answerable": 66,
+      "out_of_base": 0,
+      "recall@1": 0.7879,
+      "recall@3": 0.9394,
+      "recall@5": 0.9697,
+      "mrr": 0.8687,
+      "section_hit_rate_when_url_found": null,
+      "abstention_accuracy_out_of_base": 0.0,
+      "answer_rate_in_base": 0.7879,
+      "mean_latency_ms": 1324.68,
+      "total_cost_usd": 0.013358,
+      "mean_cost_usd": 0.000202,
+      "cases": [
+        {
+          "id": "rv2_01",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3593,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/checkout-de-pagamento-o-que-e/",
+            "https://site.getnet.com.br/checkout-de-pagamento-o-que-e/",
+            "https://site.getnet.com.br/checkout-de-pagamento-o-que-e/"
+          ]
+        },
+        {
+          "id": "rv2_02",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4199,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/como-vender-mais-no-verao/",
+            "https://site.getnet.com.br/como-vender-mais-no-verao/",
+            "https://site.getnet.com.br/como-vender-mais-no-verao/"
+          ]
+        },
+        {
+          "id": "rv2_03",
+          "answerable": true,
+          "rank": 2,
+          "top_relevance": 0.319,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/melhor-maquininha-para-o-seu-negocio/",
+            "https://site.getnet.com.br/maquininha-de-cartao/",
+            "https://site.getnet.com.br/quando-vale-a-pena-antecipar-as-suas-vendas-no-cartao/"
+          ]
+        },
+        {
+          "id": "rv2_04",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4849,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/suporte/get-classic/o-meu-tpa-nao-parece-ter-comunicacao-o-que-posso-fazer",
+            "https://www.getnet.net/pt/suporte/get-classic/estou-a-experienciar-falhas-de-ligacao-ou-cobertura-no-meu-tpa-o-que-posso-fazer",
+            "https://www.getnet.net/pt/suporte/get-classic/como-ligar-e-desligar-o-meu-tpa"
+          ]
+        },
+        {
+          "id": "rv2_05",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4082,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/varejo-cresce-durante-carnaval-2026-e-compras-fisicas-ganham-forca/",
+            "https://site.getnet.com.br/carnaval-2026-veja-3-solucoes-para-vender-mais-neste-periodo/",
+            "https://site.getnet.com.br/carnaval-2026-veja-3-solucoes-para-vender-mais-neste-periodo/"
+          ]
+        },
+        {
+          "id": "rv2_06",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5329,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/suporte/get-tap-on-phone/o-get-tap-on-phone-aceita-pagamentos-com-smartphone-ou-smartwatch",
+            "https://www.getnet.net/pt/suporte/get-tap-on-phone",
+            "https://site.getnet.com.br/tap-on-phone-maquininha-no-celular/"
+          ]
+        },
+        {
+          "id": "rv2_07",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3316,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/encryption-vs-tokenisation",
+            "https://www.getnet.net/en/resources/blog/encryption-vs-tokenisation",
+            "https://www.getnet.net/en/resources/blog/encryption-vs-tokenisation"
+          ]
+        },
+        {
+          "id": "rv2_08",
+          "answerable": true,
+          "rank": 2,
+          "top_relevance": 0.3776,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-code/",
+            "https://site.getnet.com.br/getnet-lanca-get-code-comunidade-global-de-desenvolvedores-para-inovacao/",
+            "https://site.getnet.com.br/get-code-promove-meetup-sobre-oportunidades-de-negocio/"
+          ]
+        },
+        {
+          "id": "rv2_09",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3849,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/getcheckout/",
+            "https://site.getnet.com.br/pix/",
+            "https://site.getnet.com.br/pix-no-get-tap-mais-agilidade-e-eficiencia-das-vendas/"
+          ]
+        },
+        {
+          "id": "rv2_10",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3859,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/optimising-your-checkout-process",
+            "https://www.getnet.net/en/resources/blog/optimising-your-checkout-process",
+            "https://www.getnet.net/en/resources/blog/the-role-payments-play-in-elevating-travel-and-tourism"
+          ]
+        },
+        {
+          "id": "rv2_11",
+          "answerable": true,
+          "rank": 2,
+          "top_relevance": 0.2042,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/getnet-lanca-get-code-comunidade-global-de-desenvolvedores-para-inovacao/",
+            "https://site.getnet.com.br/getnet-reforca-posicionamento-como-parceira-do-empreendedor/",
+            "https://site.getnet.com.br/institucional/"
+          ]
+        },
+        {
+          "id": "rv2_12",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5781,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/precificacao/",
+            "https://site.getnet.com.br/como-definir-precos-justos-e-competitivos-para-produtos-e-servicos/",
+            "https://site.getnet.com.br/como-definir-precos-justos-e-competitivos-para-produtos-e-servicos/"
+          ]
+        },
+        {
+          "id": "rv2_13",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4526,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/celebrating-getnet-argentina-fourth-anniversary",
+            "https://www.getnet.net/en/resources/blog/celebrating-getnet-argentina-fourth-anniversary",
+            "https://www.getnet.net/en/resources/blog/celebrating-getnet-argentina-fourth-anniversary"
+          ]
+        },
+        {
+          "id": "rv2_14",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.2768,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/contact",
+            "https://www.getnet.net/en/our-solutions/online-payments",
+            "https://site.getnet.com.br/tap-on-phone-maquininha-no-celular/"
+          ]
+        },
+        {
+          "id": "rv2_15",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5802,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/4-things-every-merchant-needs-to-know-about-open-banking",
+            "https://www.getnet.net/en/resources/blog/4-things-every-merchant-needs-to-know-about-open-banking",
+            "https://www.getnet.net/en/resources/blog/the-key-fintech-developments-that-shaped-2024"
+          ]
+        },
+        {
+          "id": "rv2_16",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3955,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/vender-pelo-whatsapp/",
+            "https://site.getnet.com.br/vender-pelo-whatsapp/",
+            "https://site.getnet.com.br/vender-pelo-whatsapp/"
+          ]
+        },
+        {
+          "id": "rv2_17",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4234,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/institucional/",
+            "https://site.getnet.com.br/esg/",
+            "https://site.getnet.com.br/carreiras/"
+          ]
+        },
+        {
+          "id": "rv2_18",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.7737,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/domicilio-eletronico-trabalhista/",
+            "https://site.getnet.com.br/domicilio-eletronico-trabalhista/",
+            "https://site.getnet.com.br/get-ajuda/"
+          ]
+        },
+        {
+          "id": "rv2_19",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.382,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/ofertas-tef-getnet/",
+            "https://site.getnet.com.br/turismo-de-inverno/",
+            "https://site.getnet.com.br/tef/pos-tef/"
+          ]
+        },
+        {
+          "id": "rv2_20",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.2303,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/suporte/get-smart/devolucoes",
+            "https://site.getnet.com.br/get-ajuda-gestao-de-vendas/como-fazer-minha-gestao-de-venda/",
+            "https://site.getnet.com.br/get-ajuda-maquininha/solucoes-get-smart/"
+          ]
+        },
+        {
+          "id": "rv2_21",
+          "answerable": true,
+          "rank": 2,
+          "top_relevance": 0.4425,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/conversor-de-moedas-getnet-disponivel-agora-no-tef/",
+            "https://site.getnet.com.br/5-funcionalidades-da-maquininha-getnet-para-vender-mais/",
+            "https://site.getnet.com.br/conversor-de-moedas-getnet/"
+          ]
+        },
+        {
+          "id": "rv2_22",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3644,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/suporte/get-smart/ligar-ao-wifi",
+            "https://site.getnet.com.br/maquininha/aluguel/",
+            "https://site.getnet.com.br/boas-vindas/manual-maquinas/"
+          ]
+        },
+        {
+          "id": "rv2_23",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5625,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/golpe-comprovante-de-pix/",
+            "https://site.getnet.com.br/golpe-comprovante-de-pix/",
+            "https://site.getnet.com.br/novas-regras-do-pix-contra-fraudes-como-proteger-seu-negocio/"
+          ]
+        },
+        {
+          "id": "rv2_24",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3713,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/produtos-digitais/",
+            "https://site.getnet.com.br/get-lite/",
+            "https://site.getnet.com.br/ofertas/"
+          ]
+        },
+        {
+          "id": "rv2_25",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.38,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/partners/aevi",
+            "https://www.getnet.net/en/partners/nayax",
+            "https://www.getnet.net/en/partners/upi"
+          ]
+        },
+        {
+          "id": "rv2_26",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.2885,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/suporte/get-checkout/como-e-que-posso-fazer-uma-devolucao",
+            "https://www.getnet.net/pt/suporte/get-checkout",
+            "https://site.getnet.com.br/checkout-de-pagamento-o-que-e/"
+          ]
+        },
+        {
+          "id": "rv2_27",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.3883,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-tap/",
+            "https://site.getnet.com.br/get-tap-maquininha-de-cartao/",
+            "https://site.getnet.com.br/get-tap-maquininha-de-cartao/"
+          ]
+        },
+        {
+          "id": "rv2_28",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3824,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-gestao-de-vendas/como-fazer-minha-gestao-de-venda/",
+            "https://site.getnet.com.br/",
+            "https://site.getnet.com.br/ofertas/"
+          ]
+        },
+        {
+          "id": "rv2_29",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5742,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/guia-digital-marca/",
+            "https://site.getnet.com.br/guia-digital-marca/",
+            "https://site.getnet.com.br/getnet-reforca-posicionamento-como-parceira-do-empreendedor/"
+          ]
+        },
+        {
+          "id": "rv2_30",
+          "answerable": true,
+          "rank": 2,
+          "top_relevance": 0.6384,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/turismo-de-inverno/",
+            "https://site.getnet.com.br/aumente-o-faturamento-no-inverno/",
+            "https://site.getnet.com.br/aumente-o-faturamento-no-inverno/"
+          ]
+        },
+        {
+          "id": "rv2_31",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5293,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/tef/pos-tef/",
+            "https://site.getnet.com.br/ofertas-tef-getnet/",
+            "https://site.getnet.com.br/tef/solucao-tef/"
+          ]
+        },
+        {
+          "id": "rv2_32",
+          "answerable": true,
+          "rank": 2,
+          "top_relevance": 0.3664,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-lite/",
+            "https://site.getnet.com.br/ofertas/",
+            "https://site.getnet.com.br/maquininha/get-smart/"
+          ]
+        },
+        {
+          "id": "rv2_33",
+          "answerable": true,
+          "rank": null,
+          "top_relevance": 0.3804,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-ajuda-configuracoes/funcionalidades-portal-minha-conta-e-app-getnet-brasil/",
+            "https://www.getnet.net/pt/suporte/get-checkout",
+            "https://www.getnet.net/pt/suporte"
+          ]
+        },
+        {
+          "id": "rv2_34",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3326,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/client-stories/bizum",
+            "https://www.getnet.net/en/resources/client-stories/bizum",
+            "https://www.getnet.net/en/resources/blog/instant-payments-from-local-adoption-to-cross-border-growth"
+          ]
+        },
+        {
+          "id": "rv2_35",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5311,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/ultimo-trimestre-como-preparar-seu-negocio-para-vender-mais/",
+            "https://site.getnet.com.br/ultimo-trimestre-como-preparar-seu-negocio-para-vender-mais/",
+            "https://site.getnet.com.br/vendas-do-ultimo-semestre/"
+          ]
+        },
+        {
+          "id": "rv2_36",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4691,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/proteja-seu-negocio-de-fraudes-digitais/",
+            "https://site.getnet.com.br/proteja-seu-negocio-de-fraudes-digitais/",
+            "https://site.getnet.com.br/dicas-de-senhas/"
+          ]
+        },
+        {
+          "id": "rv2_37",
+          "answerable": true,
+          "rank": 2,
+          "top_relevance": 0.4432,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/como-se-tornar-mei-comecando-com-as-ferramentas-certas/",
+            "https://site.getnet.com.br/mei/",
+            "https://site.getnet.com.br/como-se-tornar-mei-comecando-com-as-ferramentas-certas/"
+          ]
+        },
+        {
+          "id": "rv2_38",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5254,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/ouvidoria/",
+            "https://site.getnet.com.br/downloads/documentos-ouvidoria/",
+            "https://site.getnet.com.br/produtos-digitais/"
+          ]
+        },
+        {
+          "id": "rv2_39",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5196,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/mc-dia-feliz-getnet/",
+            "https://site.getnet.com.br/mc-dia-feliz-getnet/",
+            "https://site.getnet.com.br/mc-dia-feliz-getnet/"
+          ]
+        },
+        {
+          "id": "rv2_40",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3787,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/dia-das-maes-como-empreendedores-se-protegem-de-golpes/",
+            "https://site.getnet.com.br/dia-das-maes-como-empreendedores-se-protegem-de-golpes/",
+            "https://site.getnet.com.br/dia-das-maes-como-empreendedores-se-protegem-de-golpes/"
+          ]
+        },
+        {
+          "id": "rv2_41",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4214,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/esg/",
+            "https://site.getnet.com.br/esg/",
+            "https://site.getnet.com.br/institucional/"
+          ]
+        },
+        {
+          "id": "rv2_42",
+          "answerable": true,
+          "rank": 2,
+          "top_relevance": 0.5553,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/",
+            "https://site.getnet.com.br/ia-para-pequenos-empreendedores/",
+            "https://site.getnet.com.br/ia-para-pequenos-empreendedores/"
+          ]
+        },
+        {
+          "id": "rv2_43",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.7493,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/suporte/o-meu-negocio-e-movel-e-nao-tenho-uma-localizacao-fixa-qual-e-o-melhor-tpa-para-mim",
+            "https://site.getnet.com.br/o-que-e-checkout-movel-e-como-transformar-a-experiencia-de-pagamento/",
+            "https://site.getnet.com.br/o-que-e-checkout-movel-e-como-transformar-a-experiencia-de-pagamento/"
+          ]
+        },
+        {
+          "id": "rv2_44",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3703,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/evolution-of-lending-solution",
+            "https://www.getnet.net/en/resources/blog/evolution-of-lending-solution",
+            "https://www.getnet.net/en/resources/blog/evolution-of-lending-solution"
+          ]
+        },
+        {
+          "id": "rv2_45",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.2204,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/suporte/get-classic/e-possivel-efetuar-cobrancas-com-cartoes-diferentes",
+            "https://www.getnet.net/pt/suporte/get-smart/posso-fazer-cobrancas-com-diferentes-cartoes",
+            "https://www.getnet.net/pt/suporte/get-classic"
+          ]
+        },
+        {
+          "id": "rv2_46",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4353,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/o-que-e-holding-e-quais-os-tipos/",
+            "https://site.getnet.com.br/o-que-e-holding-e-quais-os-tipos/",
+            "https://site.getnet.com.br/o-que-e-holding-e-quais-os-tipos/"
+          ]
+        },
+        {
+          "id": "rv2_47",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.7648,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/parceria-fit-getnet-como-economizar-na-conta-de-luz/",
+            "https://site.getnet.com.br/parceria-fit-getnet-como-economizar-na-conta-de-luz/",
+            "https://site.getnet.com.br/parceria-fit-getnet-como-economizar-na-conta-de-luz/"
+          ]
+        },
+        {
+          "id": "rv2_48",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.2644,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/todas-as-maquininhas/",
+            "https://site.getnet.com.br/maquininha/get-smart/",
+            "https://site.getnet.com.br/ofertas/"
+          ]
+        },
+        {
+          "id": "rv2_49",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3583,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/our-solutions/in-person-payments",
+            "https://www.getnet.net/en/resources/client-stories/bizum",
+            "https://site.getnet.com.br/get-tap-maquininha-de-cartao/"
+          ]
+        },
+        {
+          "id": "rv2_50",
+          "answerable": true,
+          "rank": 3,
+          "top_relevance": 0.4576,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/novas-regras-do-pix-contra-fraudes-como-proteger-seu-negocio/",
+            "https://site.getnet.com.br/dia-das-maes-como-empreendedores-se-protegem-de-golpes/",
+            "https://site.getnet.com.br/antifraude/"
+          ]
+        },
+        {
+          "id": "rv2_51",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.2896,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/education-in-the-digital-age-the-adoption-of-digital-payments",
+            "https://www.getnet.net/en/resources/blog/what-is-next-for-the-latin-america-payments-ecosystem",
+            "https://www.getnet.net/en/resources/blog/understanding-generational-shopping-preferences"
+          ]
+        },
+        {
+          "id": "rv2_52",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.1922,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/our-solutions/omnichannel",
+            "https://site.getnet.com.br/como-vender-online-para-outros-paises-e-expandir-seu-negocio/",
+            "https://www.getnet.net/en/resources/blog/how-apac-merchants-can-crack-the-latam-opportunity"
+          ]
+        },
+        {
+          "id": "rv2_53",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4086,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/dicas-segundo-semestre/",
+            "https://site.getnet.com.br/outono-2026-estacao-promete-ser-quente-para-o-varejo/",
+            "https://site.getnet.com.br/vendas-do-ultimo-semestre/"
+          ]
+        },
+        {
+          "id": "rv2_54",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3087,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/pt/suporte/get-checkout/como-posso-mudar-a-minha-password",
+            "https://www.getnet.net/pt/suporte/get-checkout",
+            "https://site.getnet.com.br/getcheckout/"
+          ]
+        },
+        {
+          "id": "rv2_55",
+          "answerable": true,
+          "rank": 4,
+          "top_relevance": 0.4745,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/conversor-de-moedas/",
+            "https://site.getnet.com.br/conversor-de-moedas-getnet-disponivel-agora-no-tef/",
+            "https://site.getnet.com.br/conversor-de-moedas-getnet-disponivel-agora-no-tef/"
+          ]
+        },
+        {
+          "id": "rv2_56",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4852,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/como-vender-online-para-outros-paises-e-expandir-seu-negocio/",
+            "https://site.getnet.com.br/como-vender-online-para-outros-paises-e-expandir-seu-negocio/",
+            "https://site.getnet.com.br/como-vender-online-para-outros-paises-e-expandir-seu-negocio/"
+          ]
+        },
+        {
+          "id": "rv2_57",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.2578,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/nova-era-dos-pagamentos/",
+            "https://site.getnet.com.br/a-era-do-dinheiro-inteligente/",
+            "https://site.getnet.com.br/pagamentos-digitais/"
+          ]
+        },
+        {
+          "id": "rv2_58",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5851,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/carteiras-digitais/",
+            "https://site.getnet.com.br/carteiras-digitais/",
+            "https://site.getnet.com.br/pix-lidera-pagamentos-na-black-friday/"
+          ]
+        },
+        {
+          "id": "rv2_59",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4203,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/get-lite/",
+            "https://site.getnet.com.br/ofertas/",
+            "https://site.getnet.com.br/taxas/"
+          ]
+        },
+        {
+          "id": "rv2_60",
+          "answerable": true,
+          "rank": 4,
+          "top_relevance": 0.5062,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/split-de-pagamento-veja-como-dividir-recebimentos-com-parceiros/",
+            "https://site.getnet.com.br/split-de-pagamento-veja-como-dividir-recebimentos-com-parceiros/",
+            "https://site.getnet.com.br/split-de-pagamento-veja-como-dividir-recebimentos-com-parceiros/"
+          ]
+        },
+        {
+          "id": "rv2_61",
+          "answerable": true,
+          "rank": 2,
+          "top_relevance": 0.4286,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/the-mobile-payment-revolution-in-latin-america",
+            "https://www.getnet.net/en/resources/blog/what-is-next-for-the-latin-america-payments-ecosystem",
+            "https://www.getnet.net/en/resources/blog/the-mobile-payment-revolution-in-latin-america"
+          ]
+        },
+        {
+          "id": "rv2_62",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.372,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/pix-lidera-pagamentos-na-black-friday/",
+            "https://site.getnet.com.br/pix-lidera-pagamentos-na-black-friday/",
+            "https://site.getnet.com.br/pagamentos-digitais/"
+          ]
+        },
+        {
+          "id": "rv2_63",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.479,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/blog/the-mobile-payment-revolution-in-latin-america",
+            "https://www.getnet.net/en/resources/blog/the-mobile-payment-revolution-in-latin-america",
+            "https://www.getnet.net/en/resources/blog/the-mobile-payment-revolution-in-latin-america"
+          ]
+        },
+        {
+          "id": "rv2_64",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.3134,
+          "abstain_correct": null,
+          "answered_when_answerable": false,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/dia-das-maes/",
+            "https://site.getnet.com.br/5-dicas-para-bares-e-restaurantes-se-prepararem-aos-jogos/",
+            "https://site.getnet.com.br/5-dicas-para-bares-e-restaurantes-se-prepararem-aos-jogos/"
+          ]
+        },
+        {
+          "id": "rv2_65",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.5573,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://site.getnet.com.br/vendas-crescem-na-black-week/",
+            "https://site.getnet.com.br/crescimento-vendas-online/",
+            "https://site.getnet.com.br/pix-lidera-pagamentos-na-black-friday/"
+          ]
+        },
+        {
+          "id": "rv2_66",
+          "answerable": true,
+          "rank": 1,
+          "top_relevance": 0.4965,
+          "abstain_correct": null,
+          "answered_when_answerable": true,
+          "section_hit": null,
+          "top_urls": [
+            "https://www.getnet.net/en/resources/client-stories/connects-melia",
+            "https://www.getnet.net/en/resources/client-stories/connects-melia",
+            "https://www.getnet.net/en/partners/soft-restaurant"
+          ]
+        }
+      ]
+    }
+  }
+}

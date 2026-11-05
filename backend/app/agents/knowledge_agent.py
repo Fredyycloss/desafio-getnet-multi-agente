@@ -200,8 +200,20 @@ class KnowledgeAgent:
                     self.db.save_embedding(key, self.llm.embedding_model, vector)
         return vectors
 
+    def _default_retrieval_mode(self) -> str:
+        """hybrid_rerank is measured only with a fast/cheap chat model (claude-haiku-5-5): on dev,
+        +0.05 recall@3, +0.09 MRR for ~$0.0002/query (see docs/ANALISE_ERROS_2026-11-05.md / V8
+        Block 2). The local Ollama model is both slower and unverified as a reranker, so it stays
+        off there unless KNOWLEDGE_RERANK explicitly forces it either way."""
+        override = os.getenv("KNOWLEDGE_RERANK", "").strip().lower()
+        if override in {"true", "false"}:
+            return "hybrid_rerank" if override == "true" else "hybrid"
+        return "hybrid_rerank" if getattr(self.llm, "provider", None) == "anthropic" else "hybrid"
+
     def retrieve(self, query: str, k: int = 5, language: str = "pt", *, mode: str = "hybrid") -> list[dict]:
-        """mode: hybrid (default) | bm25 | dense — the last two exist for the retrieval evaluation."""
+        """mode: hybrid (default) | bm25 | dense | hybrid_rerank — hybrid_rerank fetches a larger
+        pool (up to 10) and has the LLM reorder it by relevance before returning the top ``k``
+        (V8 Block 2: measured +0.08 recall@3 / +0.14 MRR on the retrieval dev split for ~$0.0015/call)."""
         with stage("rag_retrieval", "knowledge"):
             index = self._index.get(language) or self._index["pt"]
             eligible = [self.documents[i] for i in index["idx"]]
@@ -248,8 +260,39 @@ class KnowledgeAgent:
                 if score > 0:
                     ranked.append((score, doc))
             ranked.sort(key=lambda item: item[0], reverse=True)
-            return [{**doc, "relevance": round(min(score, 1.0), 4), "retrieval_mode": self.last_retrieval_mode}
-                    for score, doc in ranked[:max(1, min(k, 10))]]
+            pool_k = 10 if mode == "hybrid_rerank" else k
+            results = [{**doc, "relevance": round(min(score, 1.0), 4), "retrieval_mode": self.last_retrieval_mode}
+                       for score, doc in ranked[:max(1, min(pool_k, 10))]]
+            if mode == "hybrid_rerank" and self.llm is not None and len(results) > 1:
+                results = self._rerank_llm(query, results)
+            return results[:max(1, min(k, 10))]
+
+    def _rerank_llm(self, query: str, candidates: list[dict]) -> list[dict]:
+        """Reorder candidates by relevance with one LLM call; falls back to the original order
+        (BM25/dense score) on any failure, so a flaky call never loses evidence.
+
+        The pool's own relevance scores (BM25/dense) are redistributed onto the new order rather
+        than kept per-document: the LLM read the full text and is judging genuine relevance, so the
+        document it puts first deserves the pool's top confidence, not whatever lexical/dense score
+        that document happened to score before reordering. Without this, promoting a weakly-scored
+        but correct document to rank 1 could put it under MIN_RELEVANCE and cause a wrong abstention."""
+        lines = [f"[{i}] title={c.get('title', '')!r} section={c.get('section', '')!r} "
+                 f"text={(c.get('content', '') or '')[:220]!r}" for i, c in enumerate(candidates)]
+        system = ("You rerank search results for a customer-support knowledge base. Given the customer's "
+                  "question and the candidate passages, return ONLY a JSON array of their indices ordered "
+                  "from most to least relevant to answering the question. Include every index exactly once.")
+        messages = [{"role": "system", "content": system},
+                    {"role": "user", "content": f"Question: {query}\n\nCandidates:\n" + "\n".join(lines)}]
+        try:
+            response = self.llm.chat(messages, max_tokens=120, purpose="knowledge:rerank")
+            text = response.get("content", "")
+            start, end = text.index("["), text.rindex("]") + 1
+            order = [i for i in json.loads(text[start:end]) if isinstance(i, int) and 0 <= i < len(candidates)]
+        except Exception:
+            return candidates
+        order += [i for i in range(len(candidates)) if i not in order]
+        scores = sorted((c["relevance"] for c in candidates), reverse=True)
+        return [{**candidates[i], "relevance": score} for i, score in zip(order, scores)]
 
     # -- tools ------------------------------------------------------------------------
     def _select_tools(self, query: str, history: list[dict]) -> list[tuple[str, dict]]:
@@ -274,7 +317,8 @@ class KnowledgeAgent:
         from .knowledge_tools import site_live_search
         with stage(f"knowledge_tool:{name}", "tool"):
             if name == "search_getnet_knowledge":
-                context = self.retrieve(str(args.get("query") or query), k=RETRIEVAL_K, language=language)
+                context = self.retrieve(str(args.get("query") or query), k=RETRIEVAL_K, language=language,
+                                        mode=self._default_retrieval_mode())
                 good = [d for d in context if relevant(d, language)]
                 return {"tool": name, "ok": bool(good), "evidence": good, "best_relevance": context[0]["relevance"] if context else 0.0}
             if name == "search_getnet_site_live":

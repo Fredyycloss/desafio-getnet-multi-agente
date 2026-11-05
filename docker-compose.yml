@@ -66,6 +66,8 @@ services:
       OLLAMA_NUM_THREAD: ${OLLAMA_NUM_THREAD:-}
       SUPERVISOR_FAST_PATH_MIN_CONFIDENCE: ${SUPERVISOR_FAST_PATH_MIN_CONFIDENCE:-0.75}
       KNOWLEDGE_CRAWL_ENABLED: "false"
+      # Empty = auto (on for the cloud provider, off for local Ollama); true|false forces it.
+      KNOWLEDGE_RERANK: ${KNOWLEDGE_RERANK:-}
       REQUEST_TIMEOUT_SECONDS: ${REQUEST_TIMEOUT_SECONDS:-8}
       LOG_LEVEL: ${LOG_LEVEL:-INFO}
       OPERATOR_API_KEY: ${OPERATOR_API_KEY:-}

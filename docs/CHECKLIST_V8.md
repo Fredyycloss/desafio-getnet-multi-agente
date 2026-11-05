@@ -29,13 +29,13 @@ Commit por bloco, sem alterar expectativas de teste/eval para passar.
 
 | # | Item | Status | Evidência |
 |---|---|---|---|
-| 2.1 | Medir baseline no `retrieval_questions_dev.json` (recall@3, MRR, abstenção) | NÃO | — |
-| 2.2 | Reranker cross-encoder (ou LLM) sobre top-20 do híbrido — medir qualidade/latência/custo | NÃO | — |
-| 2.3 | Chunking: tamanho/overlap, chunk por seção com breadcrumb, parent document | NÃO | — |
-| 2.4 | Expansão/reescrita de consulta (multi-query, sinônimos pt/en do vocabulário do site) | NÃO | — |
-| 2.5 | Ajustes de fusão BM25/denso (RRF), filtros por idioma/seção, boost de título | NÃO | — |
-| 2.6 | Diagnosticar os itens "sem o fato por falha de busca" e abstenções do modo denso | NÃO | — |
-| 2.7 | Meta no `test`: recall@3≥0,90, MRR≥0,80, abstenção correta 100%, latência reportada | NÃO | — |
+| 2.1 | Medir baseline no `retrieval_questions_dev.json` (recall@3, MRR, abstenção) | RESOLVIDO | `docs/RELATORIO_BUSCA_2026-11-05.md`: recall@3=0,744, MRR=0,612; achado: hybrid==bm25 exato (denso não agrega nesta amostra) |
+| 2.2 | Reranker cross-encoder (ou LLM) sobre top-10 do híbrido — medir qualidade/latência/custo | RESOLVIDO (LLM, não cross-encoder local) | `KnowledgeAgent.retrieve(mode="hybrid_rerank")`; test recall@3 0,619→0,762, MRR 0,599→0,675, US$0,0002/pergunta; cross-encoder local descartado por risco de RAM (~1,2GB livre) |
+| 2.3 | Chunking: tamanho/overlap, chunk por seção com breadcrumb, parent document | PARCIAL (testado, não adotado) | Parent document por seção: recall@3 0,744→0,769; por página: recall@1 0,487→0,590; não supera o reranker isolado nem combina melhor — não adotado nesta rodada |
+| 2.4 | Expansão/reescrita de consulta (multi-query, sinônimos pt/en do vocabulário do site) | PARCIAL (testado, rejeitado) | Sinônimos de domínio pioraram recall@3 (0,744→0,692); revertido antes do commit, negativo documentado |
+| 2.5 | Ajustes de fusão BM25/denso (RRF), filtros por idioma/seção, boost de título | NÃO | título/idioma já existiam antes da V8; RRF não testado por tempo |
+| 2.6 | Diagnosticar os itens "sem o fato por falha de busca" e abstenções do modo denso | RESOLVIDO | 5/39 perguntas respondíveis do dev (r04,r25,r38,r40,r59) não têm a URL certa nem no pool de 10 — precisa de pool maior ou melhor recall de 1ª linha, não de reranking |
+| 2.7 | Meta no `test`: recall@3≥0,90, MRR≥0,80, abstenção correta 100%, latência reportada | PARCIAL — não atingida | test: recall@3=0,762 (meta 0,90), MRR=0,675 (meta 0,80); abstenção fora-da-base=100% nos 3 splits; latência extra ~1,5s/pergunta, tudo documentado em `docs/RELATORIO_BUSCA_2026-11-05.md` |
 
 ## Bloco 3 — Geração: corretas ≥90%, fundamentadas ≥95%
 
