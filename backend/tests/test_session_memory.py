@@ -131,7 +131,10 @@ def test_memory_note_survives_the_history_window_and_reaches_the_answer_writer(d
     model = Model()
     CustomerSupportAgent(db, model).run("Qual é o nome da minha loja?", "cliente1988", "pt", history=history)
     assert any("Doceria Primavera" in m["content"] for m in next(v for k, v in model.prompts.items() if k.endswith(":tool_selection")))
-    assert "Doceria Primavera" in next(v for k, v in model.prompts.items() if k.endswith(":answer"))[-1]["content"]
+    answer_prompt = next(v for k, v in model.prompts.items() if k.endswith(":answer"))
+    assert "Doceria Primavera" in answer_prompt[-1]["content"]
+    # Records belong to the signed-in customer and must never be attributed to another one named in the request.
+    assert "signed-in customer's own" in answer_prompt[0]["content"]
 
 
 def test_knowledge_recall_tool_answers_from_the_session_memory(db):

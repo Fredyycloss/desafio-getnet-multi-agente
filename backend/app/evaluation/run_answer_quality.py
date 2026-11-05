@@ -25,7 +25,7 @@ from datetime import date
 from pathlib import Path
 from uuid import uuid4
 
-from app.evaluation.answer_quality import deterministic_checks, judge
+from app.evaluation.answer_quality import JUDGE_EVIDENCE_CHARS, deterministic_checks, judge
 from app.infra.database import Database
 from app.infra.llm import create_llm
 from app.knowledge.ingest import load_documents, load_snapshot_vectors
@@ -103,6 +103,7 @@ def main() -> int:
     parser.add_argument("--limit", type=int, default=0)
     parser.add_argument("--pause", type=float, default=1.0)
     parser.add_argument("--rescore", default="", help="recompute deterministic checks of an existing report (no model calls)")
+    parser.add_argument("--rejudge", default="", help="re-run only the judge on an existing report's answers, with full evidence chunks")
     args = parser.parse_args()
     items = [json.loads(line) for line in DATASET.read_text(encoding="utf-8").splitlines() if line.strip()]
     if args.rescore:
@@ -116,6 +117,10 @@ def main() -> int:
                                                                     "trace": r["trace"]}))
         records, llm, judge_llm = report["records"], None, None
         report_meta = {k: report[k] for k in ("commit", "provider", "model", "judge_model")}
+    if args.rejudge:
+        records, report_meta = rejudge(Path(args.rejudge), items)
+        finish(args, records, report_meta)
+        return 0
     if args.limit:
         items = items[:args.limit]
     if not args.rescore:
@@ -124,19 +129,52 @@ def main() -> int:
     return 0
 
 
+def judge_provider():
+    from app.infra.llm.anthropic_provider import AnthropicProvider
+    os.environ.setdefault("JUDGE_MODEL", "claude-sonnet-5-5")
+    judge_llm = AnthropicProvider()
+    judge_llm.model = os.environ["JUDGE_MODEL"]
+    judge_llm.thinking = "omit"  # Sonnet 5.5 rejects thinking=disabled; adaptive with low effort
+    judge_llm.input_usd_per_mtok, judge_llm.output_usd_per_mtok = 2.0, 10.0  # claude-sonnet-5-5 list price
+    return judge_llm
+
+
+def rejudge(path: Path, items: list[dict]):
+    """Judge again the recorded answers of a report. Stored evidence was cut at 900 chars, so each
+    chunk is restored whole from the snapshot (matched by URL, section and the stored prefix)."""
+    report = json.loads(path.read_text(encoding="utf-8"))
+    by_id = {it["id"]: it for it in items}
+    full = {}
+    for doc in load_documents():
+        full.setdefault((doc.get("url"), doc.get("section")), []).append(doc.get("content", ""))
+    judge_llm = judge_provider()
+    restored = missing = 0
+    for r in report["records"]:
+        for e in r["evidence"]:
+            stored = e.get("content", "")
+            match = next((c for c in full.get((e.get("url"), e.get("section")), []) if c.startswith(stored[:200])), None)
+            if match is not None:
+                e["content"] = match[:JUDGE_EVIDENCE_CHARS]
+                restored += 1
+            else:
+                missing += 1
+        try:
+            r["judge"] = judge(judge_llm, by_id[r["item_id"]], r["answer"], r["evidence"], r["tool_data"])
+        except Exception as exc:  # noqa: BLE001 - a judge failure is recorded, not fatal
+            r["judge"] = {"error": type(exc).__name__}
+        print(f"[{r['item_id']}] judge={(r.get('judge') or {}).get('verdict')}", flush=True)
+    meta = {k: report[k] for k in ("commit", "provider", "model", "judge_model")}
+    meta.update(rejudged_from=path.name, judge_evidence_chars=JUDGE_EVIDENCE_CHARS,
+                evidence_chunks_restored=restored, evidence_chunks_not_found=missing)
+    return report["records"], meta
+
+
 def run_live(args, items):
     llm = create_llm()
     model, _, vectors = load_snapshot_vectors()
     db = Database(str(Path(tempfile.mkdtemp()) / "quality.sqlite3"))
     service = ChatService(load_documents(), db, llm, vectors=vectors, vector_model=model)
-    judge_llm = None
-    if args.judge:
-        from app.infra.llm.anthropic_provider import AnthropicProvider
-        os.environ.setdefault("JUDGE_MODEL", "claude-sonnet-5-5")
-        judge_llm = AnthropicProvider()
-        judge_llm.model = os.environ["JUDGE_MODEL"]
-        judge_llm.thinking = "omit"  # Sonnet 5.5 rejects thinking=disabled; adaptive with low effort
-        judge_llm.input_usd_per_mtok, judge_llm.output_usd_per_mtok = 2.0, 10.0  # claude-sonnet-5-5 list price
+    judge_llm = judge_provider() if args.judge else None
     records = []
     for item in items:
         time.sleep(args.pause)
@@ -155,7 +193,7 @@ def run_live(args, items):
                   "answer": result["answer"], "orchestration_mode": result.get("orchestration_mode"), "trace": result.get("trace"),
                   "degraded": result.get("degraded"), "critic": result.get("critic"), "latency_s": round(latency, 2),
                   "sources": [{"title": s.get("title"), "url": s.get("url")} for s in result.get("sources") or []][:6],
-                  "evidence": [{"title": e.get("title"), "url": e.get("url"), "section": e.get("section"), "content": e.get("content", "")[:900]}
+                  "evidence": [{"title": e.get("title"), "url": e.get("url"), "section": e.get("section"), "content": e.get("content", "")[:JUDGE_EVIDENCE_CHARS]}
                                for e in evidence[:6]],
                   "tool_data": tools[:6], "checks": checks,
                   "llm_calls": usage.get("llm_calls"), "cost_usd": usage.get("cost_usd", 0.0)}

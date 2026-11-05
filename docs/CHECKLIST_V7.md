@@ -134,11 +134,11 @@ Starting point: commit `ee74988` (published, CI green, feedback v2 = 7.3/10).
 
 | # | Item | Source | Block | Status | Evidence |
 |---|---|---|---|---|---|
-| F1 | Offline: 2/12 routes, 41% action; Qwen sends everything to the menu | SELF, FB2 | 12 | NÃO | Measured again: offline (Qwen3 1.7B, LLM mode) route 0.184±0.033 and action 0.462 on heldout_v2 (3 runs); not fixed in this round |
-| F2 | Hybrid rejected by a safety false negative → kNN decides route only, never safety; fix the cause, not the case | V6 9, SELF | 12 | NÃO | Not done in this round |
+| F1 | Offline: 2/12 routes, 41% action; Qwen sends everything to the menu | SELF, FB2 | 12 | PARCIAL | Measured again: offline (Qwen3 1.7B, LLM mode) route 0.184±0.033 and action 0.462 on heldout_v2 (3 runs). 05/11: llm_knn_route raises route to 0.275 and action to 0.505 (1 run) with no safety loss; still weak |
+| F2 | Hybrid rejected by a safety false negative → kNN decides route only, never safety; fix the cause, not the case | V6 9, SELF | 12 | RESOLVIDO | CONTEXT_MODE=llm_knn_route (aad1fec, a12bdea): Qwen rates risk every turn, kNN only re-routes safe untriggered turns. heldout_v2, 1 run: route 0.275 (vs 0.184±0.033), safety FN 0, critical recall 1.0. Opt-in; default unchanged |
 | F3 | Unstable Qwen routing depending on prompt wording | SELF | 12 | NÃO | Not done in this round |
 | F4 | False risk alert for a vague message and for "transaction decline error" (regression tests in both modes) | SELF | 12 | NÃO | Not done in this round |
-| F5 | Try `qwen3:4b` within 8 GB (measure memory) | V6 9 | 12 | NÃO | qwen3:4b not tried in this round |
+| F5 | Try `qwen3:4b` within 8 GB (measure memory) | V6 9 | 12 | NÃO | not tried: ~1 GB free with the stack running on this 11 GB machine |
 
 ## Closing (block 13)
 

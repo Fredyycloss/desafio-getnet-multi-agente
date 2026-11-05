@@ -79,11 +79,16 @@ JUDGE_SYSTEM = (
 )
 
 
+# The judge sees each evidence chunk whole (chunks are ~1,700 chars, p90 ~2,800). It used to see
+# the first 900, which marked facts quoted from later in a chunk as unsupported.
+JUDGE_EVIDENCE_CHARS = 4000
+
+
 def judge(llm, item: dict, answer: str, evidence: list[dict], tool_data: list) -> dict:
     payload = {
         "question": item["question"],
         "customer_tool_data": tool_data[:6],
-        "evidence": [{"n": i + 1, "url": e.get("url"), "section": e.get("section"), "excerpt": str(e.get("content", ""))[:900]}
+        "evidence": [{"n": i + 1, "url": e.get("url"), "section": e.get("section"), "excerpt": str(e.get("content", ""))[:JUDGE_EVIDENCE_CHARS]}
                      for i, e in enumerate(evidence[:6])],
         "answer": answer[:3000],
     }

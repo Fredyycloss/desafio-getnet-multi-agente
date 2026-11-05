@@ -360,7 +360,7 @@ Every number below comes from a committed report produced by a real run. Index: 
 | Multi-intent questions (20): every expected specialist called | 20/20; re-plan 25%, hand-off 5% | — |
 | Critic challenge (10 corrupted first drafts) | 10/10 caught, 10/10 fixed, 0 leaked | — |
 | Acceptance scenarios 1–18 | all PASS | — |
-| Answer quality (63 items, 05/11): coverage / numbers in evidence / correct citations | 0.83 / 0.93 / 0.84; judge (Sonnet): 71% fully correct (59% on 03/11) | — |
+| Answer quality (63 items, 05/11, focused excerpts): coverage / numbers in evidence / correct citations | 0.80 / 0.93 / 0.84; judge (Sonnet, whole chunks): 70% fully correct, 81% grounded (59% / 73% before the change, same judge) | — |
 | Retrieval (70 questions): hybrid recall@5 | 0.78 (legacy corpus 0.40) | same index |
 | Cost per turn | US$ 0.0008 | US$ 0 |
 
@@ -401,6 +401,27 @@ Thresholds were fixed before measuring. Each mode was measured once on the held-
 - **Embeddings only (A):** rejected.
 - **No post-hoc tuning:** adding trigger words for this case after seeing it would be tuning on the held-out set.
 
+**D: route-only kNN (`CONTEXT_MODE=llm_knn_route`, 5 Nov, heldout_v2, 109 cases).** This mode fixes the cause of C's miss.
+- **Risk.** Qwen still rates risk on every turn.
+- **Route.** The kNN may only replace the specialist choice, on turns that Qwen rated safe and where no mandatory trigger fired.
+- **Never safety.** The kNN never touches risk.
+
+| `qwen3:1.7b` on heldout_v2 | B, `llm` (3 runs, 4 Nov) | **D, `llm_knn_route` (1 run, 5 Nov)** |
+|---|---|---|
+| Route accuracy | 0.184 ± 0.033 | **0.275** |
+| Action accuracy | 0.462 ± 0.058 | 0.505 |
+| Risk accuracy | 0.856 ± 0.021 | 0.844 |
+| Safety false negatives | 0 | **0** |
+| Critical hand-off recall | 0.949 ± 0.089 | 1.000 |
+| Safety false-positive rate | 0.133 ± 0.039 | 0.156 |
+| kNN route overrides | — | 10 of 109 turns |
+
+- **Result.** Routing improves and safety holds.
+- **Still weak.** Offline routing remains weak: Qwen 1.7B sends most clear requests to the clarification menu, and the kNN takes over only when it is confident.
+- **Default not changed.** One run, and `CONTEXT_MODE` is shared with the cloud mode, so the default stays `llm`.
+- **Report:** [`CONTEXT_EVAL_heldout_v2_ollama-llm_knn_route_run1_2026-11-05.json`](docs/eval/CONTEXT_EVAL_heldout_v2_ollama-llm_knn_route_run1_2026-11-05.json).
+- **Not tried.** `qwen3:4b` (F5) was not tried: with the stack running, this 11 GB machine has about 1 GB free.
+
 ## Limitations
 
 - **Synthetic data.** The customer records are fixtures. Human operators are real people using the console or Telegram. `real_agent_connected` is `true` only while a channel is live, so with nobody online the customer is told the request is waiting. See [docs/HITL.md](docs/HITL.md).
@@ -410,9 +431,8 @@ Thresholds were fixed before measuring. Each mode was measured once on the held-
 - **Model-dependent classification.** Context Intelligence accuracy depends on the model; see the held-out results. Concrete warning signs that the regex does not recognise, but the model rates "potentially dangerous", get the safety menu, not an immediate alert. The menu always offers "real physical risk".
 - **Public data providers.** The weather, FX and search providers are unauthenticated public services and can rate-limit. The agent then says the provider is unavailable and never invents a value.
 - **Open items, measured but not fixed:**
-  - planning-mode citations: the composer now drops a planner draft that lost the specialists' `[n]` markers (unit-tested), but live traffic had too few planning items to confirm it;
   - against 83 human labels, the Critic and the judge agree at chance level (Critic test kappa −0.09), although the Critic catches 18/20 injected defects; invalid Critic outputs fell from 6/83 to 0/83 with one retry ([details](docs/RELATORIO_QUALIDADE_2026-11-05.md#3-critic-and-judge-against-the-83-human-labels));
-  - five product questions still miss an expected fact because the right chunk is not in the top 4 (a stemmer was tried and not adopted);
+  - five product questions still miss an expected fact: three are literal-match misses of the scorer on correct answers, one is a misroute and one is a knowledge-base gap ([details](docs/RELATORIO_QUALIDADE_2026-11-05.md));
   - the replicas share one SQLite file; Postgres is not implemented;
   - the Telegram channel is tested with a simulated Bot API, and no real-bot transcript is committed.
 

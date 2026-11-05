@@ -26,7 +26,7 @@ Web providers are stubbed at HTTP level. The Anthropic adapter is tested with a 
 | `test_auth_and_isolation.py` | demo login/token, 401/403/404 boundaries, A × B isolation, prompt injection in the message and in a RAG document |
 | `test_llm_providers.py`, `test_llm_ollama_adapter.py` | provider contracts, selection, budget, key never leaked, no direct provider imports in agents |
 | `test_cloud_key_failures.py` | real Anthropic SDK over a simulated HTTP transport: 401/403/no credit → health message, `degraded_reason`, optional offline fallback in the trace; the key never shows |
-| `test_intent_classifier.py` | hybrid Context Intelligence: kNN decides clear turns without the LLM; mandatory triggers call it; intent examples share no phrase with datasets or benchmark |
+| `test_intent_classifier.py` | hybrid Context Intelligence: kNN decides clear turns without the LLM; mandatory triggers call it; intent examples share no phrase with datasets or benchmark; `llm_knn_route` re-routes only safe untriggered turns and keeps multi-agent plans |
 | `test_set_api_key_script.py` | `scripts/set-api-key.sh` in temporary directories only: creates `.env` from the example, replaces only the key line, rejects invalid prefixes, never prints the key |
 | `test_critic_agent.py`, `test_grounding.py` | Critic approves grounded answers and rejects invented values, missing citations and secret requests |
 | `test_context_intelligence.py`, `test_risk_assessment_context.py`, `test_clarification.py`, `test_human_request_guardrail.py` | schema validation, deterministic hazards, menus, human priority |
@@ -40,11 +40,12 @@ Web providers are stubbed at HTTP level. The Anthropic adapter is tested with a 
 | `test_anonymous_and_topics.py` | literal payload without a token; customer tools answer `login_required`; home suggestions route by topic |
 | `test_ablation.py` | each `ABLATION` value switches off exactly one stage |
 | `test_session_memory.py` | summary and facts after a long session, redaction, isolation; the memory note survives the history window and reaches the answer writer; `recall_conversation` answers from it |
+| `test_excerpt.py` | evidence excerpts focus on the part of a chunk the question (Knowledge) or the answer (Critic) talks about |
 | `test_improvement_loop.py` | feedback, validated answers invalidated by corpus version, knowledge-gap promotion only by an operator, overlap with evaluation sets refused |
 | `test_telemetry.py` | OpenTelemetry spans share the response `trace_id`; Prometheus metrics carry no user data |
 | `test_injection_defense.py` | per-agent tool allowlist, schema-checked arguments, output filter for other customers' identifiers, delimited retrieved content |
 
-**Count:** 360 tests pass on 05/11/2026 (`pytest -q`). The replay test also runs as its own CI step.
+**Count:** 367 tests pass on 05/11/2026 (`pytest -q`). The replay test also runs as its own CI step.
 
 ## Browser: Playwright
 

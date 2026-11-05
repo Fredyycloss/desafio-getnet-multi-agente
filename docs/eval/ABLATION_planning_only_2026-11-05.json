@@ -1,0 +1,1737 @@
+{
+  "date": "2026-11-05",
+  "commit": "c287c00",
+  "provider": "anthropic",
+  "model": "claude-haiku-5-5",
+  "quality": {
+    "planning_only": {
+      "n": 63,
+      "coverage_mean": 0.8772,
+      "full_coverage_rate": 0.8596,
+      "forbidden_absent_rate": 1.0,
+      "numbers_supported_rate": 0.931,
+      "citation_correct_rate": 0.9189,
+      "language_ok_rate": 1.0,
+      "abstention_correct_rate": 0.4,
+      "degraded_rate": 0.0,
+      "critic_rejection_rate": 0.0159,
+      "judge_correct_rate": null,
+      "judge_grounded_rate": null,
+      "judge_usefulness_mean": null,
+      "latency_mean_s": 10.2165,
+      "latency_p95_s": 17.0,
+      "llm_calls_mean": 6.4127,
+      "cost_mean_usd": 0.0018
+    }
+  },
+  "safety": {},
+  "route": {},
+  "records": {
+    "quality:planning_only": [
+      {
+        "item_id": "q01",
+        "category": "products",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 10.02,
+        "llm_calls": 6,
+        "cost_usd": 0.001506,
+        "checks": {
+          "kind": "answer",
+          "coverage": 0.0,
+          "missing_facts": [
+            "sem aluguel"
+          ],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": true
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "A Get Lite não tem cobrança de aluguel mensal, segundo as informações disponíveis. O cliente paga apenas a taxa de adesão, que pode ser parcelada em até 12x no cartão de crédito ou paga via Pix, e pode devolver a maquininha quando não precisar mais dela [1][3].\n\nNão encontrei o valor da taxa de adesão em reais nas fontes consultadas, nem informações sobre eventuais encargos adicionais. Para confirmar valores atualizados e condições, consulte o site oficial da Getnet ou a central de atendimento.\n\nFontes:\n[1] Getnet | Maquininha de Aluguel Getnet - Garanta Aluguel ZERO\n[3] Getnet | Maquinha de cartão com recebimento em 2 dias úteis e taxas única"
+      },
+      {
+        "item_id": "q02",
+        "category": "products",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 7.49,
+        "llm_calls": 6,
+        "cost_usd": 0.0013854,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "Você pode pagar a adesão da Get Lite em até 12 vezes, no cartão de crédito ou no Pix, sem cobrança adicional pelo uso da maquininha depois do pagamento [1][3]. A oferta é válida para novos clientes [1][2].\n\nObservação: a confiança da consulta foi moderada, então recomendo confirmar as condições atuais nos canais oficiais da Getnet antes de contratar.\n\n[1] Getnet | Getnet, uma empresa do grupo Santander\n[2] Getnet | Maquinha de cartão com recebimento em 2 dias úteis e taxas única\n[3] Crediário - Getnet"
+      },
+      {
+        "item_id": "q03",
+        "category": "products",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 19.4,
+        "llm_calls": 8,
+        "cost_usd": 0.0026403,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": true
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "grounding_check": "passed"
+        },
+        "answer": "As vendas feitas na Get Lite são recebidas em **2 dias úteis**, segundo a própria Getnet, que divulga a maquininha como \"recebimento em 2 dias úteis\" [1][2][5][6].\n\nSobre a sua conta: não consegui confirmar um prazo específico para as suas vendas da Get Lite. Os registros que consultei são de demonstração (sintéticos) e só trazem vendas de crédito e débito, com liquidação em 1 e 2 dias após a venda. Para confirmar o prazo real da sua conta, consulte o Aplicativo Getnet Brasil ou o Portal Minha Conta. Também não há informação oficial sobre se o prazo de 2 dias úteis vale para todas as modalidades, como o Pix.\n\nFontes:\n[1] https://site.getnet.com.br/get-lite/\n[2] https://site.getnet.com.br/ofertas/\n[5] https://site.getnet.com.br/ofertas/\n[6] https://site.getnet.com.br/get-lite/"
+      },
+      {
+        "item_id": "q04",
+        "category": "fees",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 10.19,
+        "llm_calls": 6,
+        "cost_usd": 0.0014199,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "A taxa de débito da Getnet Clássica é de **0,99%**, segundo a página da Getnet [1]. A tabela de taxas da Getnet também informa 0,99% para o débito [3].\n\nObservações:\n- Essa taxa aparece na oferta para a Get Clássica, ao lado de 2,89% no crédito [1], e a oferta da página é válida para novos clientes [1].\n- As taxas estão sujeitas a alteração conforme as condições dos produtos e serviços contratados [3].\n- Para confirmar os valores atuais e as condições do seu caso, consulte a Getnet diretamente."
+      },
+      {
+        "item_id": "q05",
+        "category": "products",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 11.49,
+        "llm_calls": 6,
+        "cost_usd": 0.0018959,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "Não foi possível confirmar com segurança se a Get Smart pode ser contratada por CPF (pessoa física).\n\nAs informações disponíveis não trazem uma indicação explícita sobre a elegibilidade de pessoa física para a Get Smart. Há referências gerais de que a maquininha é \"Válida para CPF e CNPJ\" [6] e de que a Conta Digital atende \"pessoa física e jurídica\" [2], mas nenhuma delas se refere especificamente à Get Smart. A página da Get Smart [8] também não especifica requisitos de CPF ou CNPJ.\n\nRecomendo confirmar na página oficial da Get Smart ou com a central de vendas da Getnet, que podem informar os requisitos de contratação por CPF.\n\nFontes citadas pelo especialista: [2] Getnet | Maquininha + Conta Digital; [6] POS Digital; [8] Soluções Get Smart."
+      },
+      {
+        "item_id": "q06",
+        "category": "products",
+        "orchestration_mode": "grounded_knowledge_abstention",
+        "latency_s": 5.82,
+        "llm_calls": 4,
+        "cost_usd": 0.0008577,
+        "checks": {
+          "kind": "answer",
+          "coverage": 0.0,
+          "missing_facts": [
+            "2.000"
+          ],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": null,
+          "language_ok": true,
+          "abstained": true
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "evidence_policy"
+        },
+        "answer": "Não encontrei informação suficiente na base para responder com segurança. Qual assunto você quer que eu verifique?\n\nEscolha uma opção:\n1. Maquininha, conexão ou falha\n2. Vendas, pagamentos ou recebimentos\n3. Produtos, taxas ou serviços Getnet\n4. Falar com atendente humano\n\nResponda com o nome ou número da opção. A escolha por atendimento humano abre um protocolo na fila de atendentes."
+      },
+      {
+        "item_id": "q07",
+        "category": "products",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 13.4,
+        "llm_calls": 7,
+        "cost_usd": 0.0019592,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "minor_issues": [
+            "Taxas page column ambiguity acknowledged; answer is cautious and sourced"
+          ]
+        },
+        "answer": "Segundo a página oficial do Get Tap, o produto não tem taxa de adesão, manutenção ou aluguel [1].\n\nPorém, a página de taxas da Getnet lista uma coluna de adesão e aluguel para o Get Tap, mas os valores não estão claramente associados ao produto e podem mudar [3]. Por isso, não consigo confirmar as taxas de cada modalidade de débito e crédito só com essas informações. Recomendo consultar a página oficial de taxas ou um consultor Getnet para os valores atuais.\n\nFontes:\n[1] Getnet | Maquininha no celular: Receba pelo celular - Getnet\n[3] Getnet | Taxas - Getnet"
+      },
+      {
+        "item_id": "q08",
+        "category": "products",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 8.57,
+        "llm_calls": 6,
+        "cost_usd": 0.0014752,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "O Get Tap exige **Android 12 ou superior**, segundo as páginas mais recentes da Getnet [2][3]. Além disso, o aparelho precisa ter **NFC** [1][2][3].\n\nObservação: um guia da Getnet ainda indica Android 11 ou superior [1]. Como há essa divergência, recomendo confirmar o requisito atual diretamente com a Getnet antes de usar o aplicativo.\n\nFontes:\n[1] Como utilizar o Get Tap? - Getnet\n[2] Pix no Get Tap: mais agilidade e eficiência no dia a dia das vendas - Getnet\n[3] Getnet | Maquininha no celular: Receba pelo celular - Getnet"
+      },
+      {
+        "item_id": "q09",
+        "category": "products",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 10.43,
+        "llm_calls": 6,
+        "cost_usd": 0.0016366,
+        "checks": {
+          "kind": "answer",
+          "coverage": 0.0,
+          "missing_facts": [
+            "12"
+          ],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": true
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "minor_issues": [
+            "Answer says Crediário max term and rate vary by issuer, which is not clearly stated in the excerpts but is a minor caveat"
+          ]
+        },
+        "answer": "Não encontrei nas informações disponíveis um limite de parcelas para o Get Tap, e não posso afirmar que a modalidade aceita parcelamento.\n\nO que consegui confirmar:\n- O Get Tap tem limite de R$200,00 por transação e exige aparelho com NFC e Android 11 ou superior [2].\n- O parcelamento de até 48x mencionado nas fontes se refere ao **Crediário**, um produto diferente, com prazo máximo e taxa que variam conforme o emissor do cartão [3]. Essas condições não podem ser transferidas para o Get Tap sem evidência específica.\n\nPara confirmar se o Get Tap aceita parcelamento e qual o limite, recomendo consultar a documentação oficial da Getnet ou o suporte Getnet.\n\nFontes: [2] Como utilizar o Get Tap? - Getnet; [3] Crediário - Getnet."
+      },
+      {
+        "item_id": "q10",
+        "category": "crediario",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 8.75,
+        "llm_calls": 6,
+        "cost_usd": 0.0013707,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "Segundo as informações da Getnet, o Crediário permite parcelar em **até 48 vezes** [1][3][4].\n\nObservações importantes:\n- O prazo máximo e a taxa de juros podem variar conforme o emissor do cartão [1].\n- Não encontrei o número exato de parcelas disponível para o seu estabelecimento específico. Recomendo confirmar pelo aplicativo Getnet ou pela Central de Atendimento [2]."
+      },
+      {
+        "item_id": "q11",
+        "category": "crediario",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 9.03,
+        "llm_calls": 6,
+        "cost_usd": 0.0016517,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "Segundo a página oficial do Crediário da Getnet, o lojista recebe o valor total das vendas **em até 2 dias úteis, com taxa única e sem custo de antecipação** [1].\n\nOutros pontos importantes:\n- **Taxa única**: o recebimento é feito com taxa única [1]. Os percentuais exatos não constam nas informações disponíveis.\n- **Parcelamento**: o Crediário pode ser oferecido em até 48x ao cliente, mas o prazo máximo e a taxa de juros variam conforme o emissor do cartão [1].\n- **Habilitação**: a modalidade pode ser contratada pelo aplicativo Getnet (Android e iOS) ou pela central. Você pode verificar a habilitação em \"Meu negócio > Taxas e modalidades > Cartões\" ou no Portal do Cliente [2].\n\nPara valores específicos e condições do seu estabelecimento, consulte a Central de Atendimento Getnet [2]."
+      },
+      {
+        "item_id": "q12",
+        "category": "crediario",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 8.11,
+        "llm_calls": 6,
+        "cost_usd": 0.0013353,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "Segundo a Getnet, a taxa de juros e o prazo máximo do parcelamento no Crediário variam de acordo com o emissor do cartão do cliente [1]. Ou seja, a taxa não é fixa nem definida pela Getnet de forma genérica.\n\nAs evidências disponíveis não detalham quem, dentro do emissor, estabelece a taxa em cada caso, nem os valores atuais. Para essas informações, consulte a Central de Atendimento da Getnet ou o aplicativo Getnet [2]."
+      },
+      {
+        "item_id": "q13",
+        "category": "payment_link",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 13.25,
+        "llm_calls": 8,
+        "cost_usd": 0.0019395,
+        "checks": {
+          "kind": "answer",
+          "coverage": 0.0,
+          "missing_facts": [
+            "débito",
+            "crédito",
+            "Pix"
+          ],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": null,
+          "language_ok": true,
+          "abstained": true
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "Não consigo confirmar, com base nas informações disponíveis, a lista completa de formas de pagamento aceitas pelo Link de Pagamento da Getnet. As evidências que tenho indicam que o cliente pode escolher o método de pagamento na página segura para onde é direcionado ao clicar no link, mas não detalham quais métodos estão disponíveis, nem informações sobre bandeiras ou eventuais restrições.\n\nPara saber exatamente quais formas de pagamento são aceitas, recomendo consultar a Getnet diretamente pelos canais oficiais."
+      },
+      {
+        "item_id": "q14",
+        "category": "payment_link",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 11.69,
+        "llm_calls": 6,
+        "cost_usd": 0.0019316,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": false,
+          "unsupported_values": [
+            "date:15/01"
+          ],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": true
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "minor_issues": [
+            "Claim that the app and Portal generate the link and that no store or card reader is needed is only partly shown in evidence excerpts",
+            "Claim about 'carteira digital' and antifraud and personalization details cite source [1] whose excerpt is brief but mentions Wallet, antifraud and personalizable link"
+          ]
+        },
+        "answer": "Sim, dá para vender pelo WhatsApp usando o Link de Pagamento da Getnet.\n\nO lojista gera o link pelo app Getnet Brasil ou pelo Portal do Cliente e envia ao cliente pelo WhatsApp, e-mail ou redes sociais, sem precisar de loja virtual ou maquininha [2][3][4]. Ao clicar, o cliente acessa uma página segura e pode pagar com cartão de crédito ou débito, Pix, carteira digital ou boleto [1][2]. Também é possível personalizar o link com imagem do produto e incluir vários itens no mesmo carrinho, além de contar com o Antifraude da Getnet [1].\n\nImportante: a Meta descontinuou os pagamentos nativos via WhatsApp Business a partir de 15/01. Clientes que tinham o pacote do WhatsApp Business foram migrados para o pacote de Link de Pagamento, então a venda continua, mas a cobrança passa a ser feita pelo envio do link [4].\n\nNão encontrei nas fontes informações sobre taxas, prazos de recebimento ou requisitos de elegibilidade. Para isso, consulte a Getnet diretamente ou o seu contrato/Portal do Cliente.\n\nFontes:\n[1] Getnet | Link de Pagamento: venda mais online\n[2] Link de Pagamento, uma alternativa prática e segura - Getnet\n[3] Link de pagamento: a chave para ampliar suas vendas!\n[4] Descontinuação dos pagamentos via WhatsApp Business - Getnet"
+      },
+      {
+        "item_id": "q15",
+        "category": "payment_link",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 8.05,
+        "llm_calls": 6,
+        "cost_usd": 0.0015239,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": false,
+          "unsupported_values": [
+            "date:15/01"
+          ],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "Segundo a Central de Ajuda da Getnet, os pagamentos pelo WhatsApp Business foram descontinuados a partir de 15/01, por decisão da Meta, empresa responsável pelo WhatsApp [1].\n\nAs fontes não informam o ano exato nem a data final de funcionamento, então não é possível confirmar o período completo de disponibilidade com as informações disponíveis.\n\nPara clientes que tinham o pacote de WhatsApp Business, a Getnet informa que a cobrança passou a ser feita pelo envio de um Link de Pagamento; as vendas pelo WhatsApp continuam, porém com esse novo formato [1].\n\nFontes: [1] Descontinuação dos pagamentos via WhatsApp Business - Getnet"
+      },
+      {
+        "item_id": "q16",
+        "category": "payment_link",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 9.62,
+        "llm_calls": 6,
+        "cost_usd": 0.0017357,
+        "checks": {
+          "kind": "answer",
+          "coverage": 0.0,
+          "missing_facts": [
+            "R$1,00"
+          ],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": true
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "Não encontrei nas fontes disponíveis o preço por link pago do pacote de Link de Pagamento da Getnet que substituiu o WhatsApp Pay. Nenhuma fonte informa valor fixo por link, percentual de taxa por método (crédito, débito, Pix ou boleto) nem eventuais tarifas contratuais.\n\nO que as fontes confirmam:\n- Clientes com pacote de WhatsApp Business da Getnet foram migrados para o pacote de Link de Pagamento após a descontinuação dos pagamentos via WhatsApp Business [1].\n- O link pode ser criado pelo app Getnet Brasil ou pelo Portal do Cliente Getnet [1], aceita débito, crédito, Pix, Wallet e boleto [4] e pode ser enviado pelo WhatsApp ou redes sociais [3][4].\n\nPara saber o preço vigente, consulte a tabela de tarifas no Portal do Cliente Getnet ou fale com o atendimento da Getnet, pois as condições podem variar conforme o contrato.\n\nFontes: [1] Descontinuação dos pagamentos via WhatsApp Business - Getnet; [3] Link de Pagamento, uma alternativa prática e segura - Getnet; [4] Getnet | Link de Pagamento: venda mais online | Getnet."
+      },
+      {
+        "item_id": "q17",
+        "category": "payment_link",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 7.5,
+        "llm_calls": 6,
+        "cost_usd": 0.0014535,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "Não é necessário ter site nem maquininha para usar o link de pagamento. Basta gerar um link personalizado e enviá-lo por WhatsApp, e-mail ou redes sociais [1]. O cliente é direcionado a uma página segura para pagar com cartão de crédito ou débito, Pix ou carteiras digitais [3]. A Getnet também indica o Link de Pagamentos GetPay como uma forma de vender online sem precisar de site [4].\n\nFontes:\n[1] Link de pagamento: a chave para ampliar suas vendas! - Getnet\n[3] Link de Pagamento, uma alternativa prática e segura - Getnet\n[4] Como se tornar MEI e começar com as ferramentas certas - Getnet"
+      },
+      {
+        "item_id": "q18",
+        "category": "pix",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 18.11,
+        "llm_calls": 9,
+        "cost_usd": 0.003169,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "minor_issues": [
+            "Claims 'Serviços' then 'Ativações' or 'Pix' menu paths; cited sources only mention 'Serviços' and 'Pix'.",
+            "Advises #90 update; evidence supports it only for Pix-por-aproximação unavailability.",
+            "Terminal offline status is synthetic demo data, presented as relevant troubleshooting; reasonable caveat given."
+          ],
+          "model_verdict_overridden": true,
+          "grounding_check": "passed"
+        },
+        "answer": "Com base nas informações disponíveis, veja o que fazer:\n\n**1. Habilite o Pix no aplicativo Getnet Brasil**\n- Acesse o app com CPF/e-mail e senha [2].\n- Vá em \"Serviços\" e depois em \"Ativações\" ou \"Pix\" [2][3].\n- Clique em \"Habilitar\", escolha a instituição financeira vinculada à sua chave Pix e selecione a chave (CPF, e-mail, telefone ou chave aleatória) [2].\n- Pré-requisitos: uma chave Pix vinculada a uma instituição financeira [2].\n\n**2. Atualize a maquininha**\n- Na tela inicial, digite **#90** e pressione Enter [1].\n- Se usar sistema de PDV, atualize-o também, pois ele precisa suportar o pagamento por aproximação [2].\n\n**3. Verifique a conectividade**\n- Na consulta de demonstração, o terminal aparece offline com erro de perda de conectividade (NET-001). Confirme se ele está ligado e dentro do alcance do Wi-Fi [dados sintéticos de demonstração, não de uma conta real].\n\n**Limitações:** as fontes não informam quais modelos de maquininha são compatíveis nem prazos de habilitação. Para confirmar a elegibilidade do seu equipamento, entre em contato com a Getnet. Se o problema persistir após esses passos, posso abrir um chamado para atendimento humano.\n\nReferências: [1] Pix por Aproximação na maquininha: Como funciona! – Getnet; [2] Como habilitar o recebimento de vendas via Pix no aplicativo Getnet Brasil – Getnet; [3] Pix – Getnet."
+      },
+      {
+        "item_id": "q19",
+        "category": "pix",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 10.54,
+        "llm_calls": 6,
+        "cost_usd": 0.0018767,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": true
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "Não encontrei nas fontes oficiais disponíveis uma confirmação de que o dinheiro das vendas no Pix caia \"na hora\" na sua conta Getnet.\n\nO que as fontes mostram:\n- A Getnet diz que o Pix na maquininha permite receber pagamentos \"em tempo real, sem espera\" [4]. Esse texto é promocional e não detalha o prazo de crédito na conta.\n- A Conta Digital Getnet oferece Pix para enviar e receber dinheiro a qualquer hora e dia [2], o que trata de transferências pela conta, não especificamente do crédito das vendas feitas na maquininha.\n\nNão há, nas fontes consultadas, o prazo de liquidação das vendas Pix por tipo de conta, nem informações sobre taxas ou antecipação desses valores.\n\nPara confirmar o prazo na sua conta, consulte sua proposta/contrato com a Getnet, o aplicativo Getnet Brasil (há um passo a passo para habilitar o recebimento de vendas via Pix [4]) ou o atendimento da Getnet.\n\nFontes:\n[1] Faça como a Dona Jura e use o Pix na maquininha da Getnet - Getnet\n[2] Getnet | Maquininha + Conta Digital - Getnet\n[3] Getnet | Maquininha + Conta Digital - Getnet\n[4] Como habilitar o recebimento de vendas via pix no aplicativo Getnet Brasil - Getnet"
+      },
+      {
+        "item_id": "q20",
+        "category": "advance",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 12.43,
+        "llm_calls": 6,
+        "cost_usd": 0.0020976,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "Para antecipar suas vendas pelo aplicativo Getnet Brasil:\n\n1. Acesse o app com seu login e senha.\n2. Clique no menu **Serviços**.\n3. Selecione **Antecipação de Vendas**.\n4. Veja o valor disponível para antecipar e escolha a conta bancária cadastrada que receberá o valor.\n5. Leia e aceite os termos.\n6. Faça a simulação, conferindo valores, bandeiras e taxas, e clique em **confirmar**.\n7. Verifique o valor final e clique em **Antecipar**.\n8. Insira sua senha. Pronto, a solicitação estará concluída.\n\n**Requisitos:** app Getnet Brasil instalado (Android ou iOS), login e senha, conta bancária cadastrada e valor disponível para antecipação exibido no app. A antecipação vale para vendas no crédito, à vista ou parceladas [1][5].\n\n**Taxas:** a simulação no app mostra valores e taxas antes da confirmação [1][5]. As evidências não trazem percentuais atuais, então consulte a simulação para o custo exato. Os critérios de elegibilidade para o seu caso também não constam nas evidências.\n\nFontes: [1] Como antecipar suas vendas pelo app - Getnet; [5] Antecipação de venda - Getnet."
+      },
+      {
+        "item_id": "q21",
+        "category": "advance",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 11.32,
+        "llm_calls": 7,
+        "cost_usd": 0.0021004,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": null,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "Sim, é possível antecipar vendas parceladas no crédito na Getnet. A antecipação pode ser feita para vendas no crédito, à vista ou parceladas, diretamente pelo aplicativo Getnet Brasil (disponível para Android e iOS).\n\nComo solicitar pelo app:\n1. Acesse o aplicativo com seu login e senha.\n2. Clique no menu Serviços.\n3. Selecione Antecipação de Vendas.\n4. Escolha a conta bancária que receberá o valor antecipado.\n5. Leia e aceite os termos.\n6. Faça a simulação, conferindo valores, bandeiras e taxas, e clique em confirmar.\n7. Verifique o valor final e clique em Antecipar.\n8. Confirme a operação na tela do aplicativo.\n\nAs taxas, prazos e limites não constam nas informações que consultei. A simulação no app mostra os valores e taxas antes de você confirmar. Para mais detalhes, recomendo falar com a Central de Atendimento da Getnet."
+      },
+      {
+        "item_id": "q22",
+        "category": "products",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 7.7,
+        "llm_calls": 6,
+        "cost_usd": 0.0014341,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "Segundo a página oficial do Split de Pagamento da Getnet, é possível definir os prazos de recebimento para cada parceiro: **D2, D7, D15 ou D30** [2]. Esses prazos são definidos junto com as comissões de cada parceiro [2].\n\nAs informações disponíveis não detalham como essa configuração é feita na prática, nem se há condições ou taxas específicas para cada prazo. Para confirmar quais prazos estão disponíveis para a sua operação, consulte a Getnet diretamente.\n\nFontes:\n[2] Getnet | Split de Pagamento Getnet | Divisão Automática de Recebimentos"
+      },
+      {
+        "item_id": "q23",
+        "category": "products",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 10.23,
+        "llm_calls": 8,
+        "cost_usd": 0.0016297,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": null,
+          "language_ok": true,
+          "abstained": true
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "Não consigo confirmar a frequência exata das cobranças recorrentes com a evidência disponível no momento. A página consultada sobre Recorrência da Getnet indica que as periodicidades informadas são semanal, mensal e anual, mas o trecho obtido está incompleto e não permite validar esse detalhe com segurança.\n\nTambém não encontrei informações sobre um limite máximo de quantidade de cobranças. Para confirmar as regras de periodicidade e de intervalos, recomendo consultar a Getnet diretamente."
+      },
+      {
+        "item_id": "q24",
+        "category": "products",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 10.42,
+        "llm_calls": 6,
+        "cost_usd": 0.0021354,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "O Conversor de Moedas da Getnet (DCC – Dynamic Currency Conversion) está disponível nas seguintes maquininhas:\n\n- **POS Smart (Get Smart)**\n- **POS Clássica (Get Clássica)**\n- **TEF**, por meio de provedores homologados de integração de pagamentos [1][2][8]\n\n**Como funciona:**\n- O terminal reconhece automaticamente cartões internacionais Visa e Mastercard [1][4].\n- Vale para transações de crédito à vista e débito [2][4].\n- O cliente vê o valor na moeda de origem (mais de 30 moedas, como dólar, euro e libra), e o câmbio é fixado no momento da compra [1][4].\n- O lojista recebe o valor em reais, sem custo adicional, e ganha cashback sobre as vendas convertidas [3][4]. O material cita 1% [3], mas essa taxa deve ser confirmada com a Getnet.\n\nAs evidências não trazem versões de software necessárias nem uma lista completa de modelos além dessas linhas. Para confirmar se o seu equipamento é compatível, consulte a Getnet diretamente.\n\nFontes: [1] Conversor de Moedas: Conheça essa funcionalidade - Getnet; [2] Getnet | Conversor de Moedas - Getnet; [3] Conversor de Moedas: Conheça os benefícios para seu negócio - Getnet; [4] Conversor de Moedas Getnet, disponível agora no TEF - Getnet."
+      },
+      {
+        "item_id": "q25",
+        "category": "products",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 9.87,
+        "llm_calls": 6,
+        "cost_usd": 0.0020509,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "Com base nas informações disponíveis:\n\n**Quem pode contratar**\n- O Empréstimo Getnet é exclusivo para clientes que já possuem Get Conta ativa [3].\n- A oferta é pré-aprovada: a Getnet analisa o perfil do titular e o histórico de vendas, a partir de 3 meses com a Getnet [2].\n- As ofertas ficam disponíveis por tempo determinado, de acordo com os pré-requisitos de contratação [2].\n\n**Critérios de elegibilidade**\n- Ter Get Conta ativa e estar sujeito à análise de crédito [3].\n- Histórico de vendas de pelo menos 3 meses com a Getnet e análise do perfil do titular [2].\n- Outros critérios (como faturamento mínimo, tempo de CNPJ ou score) não constam nas fontes consultadas.\n\n**Como verificar a oferta**\n- A oferta pode chegar por WhatsApp, e-mail, aplicativo ou pelo menu \"Empréstimo\" no Aplicativo Getnet Brasil, onde é possível simular valor, prazo, taxas e condições [2].\n\nPara confirmar sua elegibilidade e as taxas, consulte o app ou a Central de Atendimento da Getnet.\n\nFontes: [2] Empréstimo: como Funciona o Crédito com Garantia de Recebíveis - Getnet; [3] Emprestimo - Getnet."
+      },
+      {
+        "item_id": "q26",
+        "category": "products",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 10.34,
+        "llm_calls": 6,
+        "cost_usd": 0.0020092,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "minor_issues": [
+            "Citation [3][5] labeling of 'Receba o valor no mesmo dia' is accurate to the evidence and caveated as promotional."
+          ]
+        },
+        "answer": "Não encontrei um prazo oficial confirmado para o recebimento do empréstimo Getnet após a aprovação. Isso significa que não consigo informar um número de dias com segurança.\n\nO que as fontes informam:\n- A oferta é pré-aprovada, com análise de perfil e histórico de vendas a partir de 3 meses na Getnet, e fica disponível por tempo determinado [1].\n- O valor é creditado na sua Get Conta [1].\n- O site menciona \"Receba o valor no mesmo dia\", mas sujeito à análise de crédito e exclusivo para clientes com Get Conta ativa [3][5]. Trata-se de uma afirmação promocional, sem detalhes sobre exceções.\n\nPara confirmar o prazo no seu caso, consulte a página oficial (site.getnet.com.br/emprestimo) ou o menu \"Empréstimo\" no Aplicativo Getnet Brasil, onde é possível simular e ver as condições do contrato.\n\nFontes: [1] Emprestimo - Getnet; [3] e [5] Empréstimo: como Funciona o Crédito com Garantia de Recebíveis - Getnet."
+      },
+      {
+        "item_id": "q27",
+        "category": "products",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 8.56,
+        "llm_calls": 6,
+        "cost_usd": 0.0015509,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": false,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "A documentação consultada não traz a lista completa de bandeiras aceitas pela maquininha Getnet. O que foi encontrado:\n\n- As maquininhas aceitam pagamentos de débito, crédito, parcelado em até 12x e Pix [2].\n- A Getnet menciona aceitar \"cartões em moedas estrangeiras\" [4], sem detalhar quais bandeiras.\n- A página \"Todas as maquininhas\" cita \"taxas especiais para todas as bandeiras de cartões\", sem listá-las [4].\n\nPara saber exatamente quais bandeiras o seu modelo aceita, consulte o manual do modelo no site da Getnet ou entre em contato com o suporte Getnet.\n\nFontes: [2] Getnet | Máquinas de cartão e soluções financeiras para o seu negócio; [4] Getnet | Maquininha de cartão: Melhores taxas e opções grátis."
+      },
+      {
+        "item_id": "q28",
+        "category": "products",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 11.3,
+        "llm_calls": 6,
+        "cost_usd": 0.00214,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": true
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "Não encontrei um histórico de alterações do PAT para vale-refeição nas fontes disponíveis, então não consigo afirmar o que mudou nem quando.\n\n**O que está confirmado nas fontes:**\n- **Arranjo aberto (com bandeira):** pode ser usado em qualquer loja que aceite a bandeira (Visa, Mastercard ou Elo) [1][2].\n- **Arranjo fechado (sem bandeira):** só pode ser usado na rede de aceitação da emissora do cartão [1].\n- **Cartões de benefício flexível:** continuam sendo utilizados na função crédito [2].\n- **Extrato:** vouchers de arranjo fechado continuam aparecendo apenas como captura no Portal Minha Conta, pois a liquidação é feita pela própria administradora. Transações de arranjo aberto passam a ter um código de produto específico para identificar transações e pagamentos relacionados ao PAT [2].\n\n**Sobre mudanças recentes:** a página da Getnet menciona \"novas regras para recebimento das suas vendas com voucher\" [3], mas o conteúdo disponível não detalha essas regras nem a data de vigência.\n\n**Recomendação:** consulte a página oficial da Getnet sobre vouchers ou fale com o time comercial para obter o detalhamento das novas regras de recebimento e as datas de vigência.\n\nFontes: [1] O Programa de Alimentação do Trabalhador (PAT); [2] Getnet | Cartões - Getnet; [3] Getnet | Cartões - Getnet."
+      },
+      {
+        "item_id": "q29",
+        "category": "products",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 9.12,
+        "llm_calls": 6,
+        "cost_usd": 0.0017227,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": true
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "Sim, a Get Conta oferece cartão virtual.\n\n- **Tipo e bandeira:** cartão pré-pago com bandeira Elo, nas versões física e virtual [1].\n- **Uso:** fica atrelado ao saldo da conta e pode ser usado em compras online, presenciais e internacionais [1].\n- **Custo:** o cartão virtual é descrito como gratuito. A taxa de R$ 12,00 da página de tarifas refere-se à 2ª via do cartão físico, não ao virtual [2].\n\nNão encontrei nas fontes informações sobre limite, regras de bloqueio ou cancelamento, prazo de emissão e tarifas de uso internacional. Para esses pontos, consulte os canais oficiais da Getnet ou o app Getnet Brasil.\n\nFontes:\n[1] https://site.getnet.com.br/conta-digital-getnet/\n[2] https://site.getnet.com.br/conta-digital/"
+      },
+      {
+        "item_id": "q30",
+        "category": "products",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 9.23,
+        "llm_calls": 6,
+        "cost_usd": 0.0016722,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": true
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "Sim, segundo as informações disponíveis, o Link de Pagamento da Getnet permite vender para estrangeiros, com a seguinte condição: o comprador estrangeiro precisa informar seu documento de identificação (RNE) no momento do pagamento [1].\n\nAlém disso:\n- **Formas de pagamento:** débito, crédito, Pix, Wallet e boleto [1]. Não há informação sobre quais dessas opções estão disponíveis para compradores estrangeiros.\n- **Outras funções:** o link pode ser personalizado, inclui antifraude e pode ser usado com carrinho de vários produtos [1].\n\nNão encontrei nas fontes informações sobre taxas, prazos de recebimento, moedas aceitas, países permitidos ou limites de valor. Recomendo consultar a Getnet diretamente ou as condições contratuais do produto para esses pontos.\n\nFontes: [1] Getnet | Link de Pagamento: venda mais online; Faça como a Dona Jura e use o Link de pagamento da Getnet; Como vender online para outros países e expandir seu negócio; Link de Pagamento, uma alternativa prática e segura (Getnet)."
+      },
+      {
+        "item_id": "q31",
+        "category": "products",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 16.87,
+        "llm_calls": 8,
+        "cost_usd": 0.0031824,
+        "checks": {
+          "kind": "answer",
+          "coverage": 0.5,
+          "missing_facts": [
+            "CNPJ"
+          ],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": null,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "minor_issues": [
+            "Get Smart described as adesão-only; evidence refers to 'Get Lite' adesão text, minor mismatch"
+          ]
+        },
+        "answer": "I don't have a reliable side-by-side comparison of the Get Clássica and the Get Smart. The information I found is fragmentary and doesn't include full fee tables or plan-specific terms for either product, so I can't attribute specific rates or fees to either one.\n\nWhat I can confirm:\n\n- **Get Smart** is a POS terminal (model SP630, with 3G and Wi-Fi) offered on a one-time setup fee (adesão) model. The adesão can be paid in up to 12 installments by credit card or Pix, and there is no rental charge afterward. Getnet also lists a \"Get Smart aluguel\" option, but its terms weren't shown.\n- **Get Clássica** is one of Getnet's card machines and is described as made from recycled material. A promotion mentions it, but the discount conditions weren't stated.\n- With Getnet's card machines, Link de Pagamento, and Get Tap, receipts go to the Get Conta without extra charge. Fees can change depending on the contracted products and conditions.\n\nWhat I couldn't find: the setup and rental amounts for each plan, per-transaction rates (debit, credit in one installment, and installment credit), eligibility conditions, and contract terms for each machine.\n\nFor exact and current figures, please check the full fee tables at https://site.getnet.com.br/taxas/ or contact Getnet directly, since rates may depend on your contract."
+      },
+      {
+        "item_id": "q32",
+        "category": "crediario",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 7.1,
+        "llm_calls": 6,
+        "cost_usd": 0.0013591,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "Getnet's Crediário allows installment sales of up to 48x [1][4]. The maximum term and interest rate can vary by card issuer and by merchant, so the limit that applies to your business may be lower. You can check the installment options enabled for your account in the Getnet app (Meu negócio > Taxas e modalidades > Cartões) or in the Portal do Cliente [2].\n\nSources:\n[1] Crediário - Getnet\n[2] Crediário - Getnet\n[4] 5 funcionalidades da maquininha Get para vender mais - Getnet"
+      },
+      {
+        "item_id": "q33",
+        "category": "payment_link",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 8.55,
+        "llm_calls": 6,
+        "cost_usd": 0.0016798,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": false,
+          "unsupported_values": [
+            "date:15/01"
+          ],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "Yes. You can sell through WhatsApp using a Getnet Payment Link. Create the link in the Getnet Brasil app or the Portal do Cliente Getnet, then send it to your customer via WhatsApp, social networks, SMS, or email. The customer pays through the link and can choose debit or credit, with card data handled on the Getnet platform. You don't need a website, online store, or physical card terminal [1][3][4].\n\nNote that Meta discontinued payments within WhatsApp Business as of 15/01. Customers with a WhatsApp Business services package were moved to the Payment Link package, so you still sell on WhatsApp but charge by sending a payment link [4].\n\nThe sources don't cover eligibility criteria, fees, settlement timelines, or any per-transaction or link-count limits, so please confirm those with Getnet directly [1][3][4].\n\nSources:\n[1] Getnet - Online Payments\n[3] Faça como a Dona Jura e use o Link de pagamento da Getnet - Getnet\n[4] Descontinuação dos pagamentos via WhatsApp Business - Getnet"
+      },
+      {
+        "item_id": "q34",
+        "category": "pix",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 10.34,
+        "llm_calls": 7,
+        "cost_usd": 0.0019074,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "minor_issues": [
+            "Cites [1] and [3] but evidence labels are unnumbered; citations unverifiable",
+            "Claims Get Conta includes Pix; evidence supports Pix but not 'all payments same account' linkage fully"
+          ],
+          "model_verdict_overridden": true
+        },
+        "answer": "The Knowledge specialist could not confirm the answer, so I'm not able to say definitively whether you need a bank account.\n\nWhat the sources show:\n- Getnet offers a \"Conta Digital\" (Get Conta) where you can receive all payments in the same account, and it includes Pix [3].\n- A Pix key identifies a bank account, and Pix can be made from a current account, savings account, or prepaid payment account [1].\n- Getnet's page on accepting Pix on its card machine describes the feature but, in the excerpt reviewed, doesn't state the account requirement [4].\n\nTo get a definitive answer, check Getnet's Pix-on-machine page [4] or contact Getnet directly to confirm whether you need a Getnet Conta Digital or can link another bank account."
+      },
+      {
+        "item_id": "q35",
+        "category": "advance",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 11.4,
+        "llm_calls": 6,
+        "cost_usd": 0.0020307,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "Getnet offers receivables-backed credit and card-sales advances. Here is what the available information supports, with the gaps noted.\n\n**Receivables-backed loan (\"Empréstimo Getnet\")**\n- It is a credit product secured by receivables (Crédito com Garantia de Recebíveis), so no other assets are needed as collateral. It is contracted fully digitally. [1]\n- Stated benefits include fast credit, centralized management in Get Conta, and the option to pay early or renegotiate. [1]\n- Early repayment: you can generate a boleto in the app and pay installments before their due date. [1][5]\n- Late payment: an unpaid installment leads to default, and renegotiation is possible after 25 days of delinquency, handled through a partner collection agency. [1][5]\n\n**Receivables advance (antecipação) on card sales**\n- You can advance installment card sales in the Getnet Brasil app (Android and iOS), check available amounts, and simulate the cost before deciding. [4]\n- Automatic advance can be enabled via the Portal or App. [3]\n\n**Not covered by the sources I found**\n- The step-by-step application and disbursement process\n- Eligibility requirements\n- Interest rates, fees, IOF, and contract charges\n- Installment terms and how repayments are calculated\n\nFor those details, check the Getnet loan page directly or contact the Central de Atendimento, SAC, or Ouvidoria.\n\nSources:\n[1] Empréstimo: como Funciona o Crédito com Garantia de Recebíveis - Getnet\n[3] Get Ajuda - Getnet\n[4] Quando vale a pena antecipar as suas vendas no cartão? - Getnet\n[5] Empréstimo: como Funciona o Crédito com Garantia de Recebíveis - Getnet"
+      },
+      {
+        "item_id": "q36",
+        "category": "products",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 16.11,
+        "llm_calls": 9,
+        "cost_usd": 0.0031246,
+        "checks": {
+          "kind": "answer",
+          "coverage": 0.0,
+          "missing_facts": [
+            "POS"
+          ],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": null,
+          "language_ok": true,
+          "abstained": true
+        },
+        "judge": null,
+        "critic": {
+          "approved": false,
+          "mode": "llm_critic",
+          "issues": [
+            "Claims Get Smart accepts Pix and digital wallets; evidence only mentions Maquininha Get Smart in a list, details not shown"
+          ],
+          "minor_issues": [
+            "Claims Get Tap is listed alongside Link de Pagamento on fee page; fee page supports this, so acceptable"
+          ]
+        },
+        "answer": "Your request is registered and waiting for an attendant. Protocol: GET-20261105-497533.\n\nNo attendant is online right now; the request stays in the queue and you will see the reply here. This is a demonstration environment with synthetic data, not an official Getnet case."
+      },
+      {
+        "item_id": "q37",
+        "category": "products",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 17.0,
+        "llm_calls": 8,
+        "cost_usd": 0.0034146,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": false,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "Yes, Getnet offers solutions for bars and restaurants, including:\n\n- **Getnet para Bares e Restaurantes:** a payment solution for restaurants that accepts Pix, debit, credit, voucher and digital wallets, lets you apply discounts or service charges, and offers mobile terminals so payment can be taken anywhere in the venue. [2]\n- **Maquininha Getnet (POS card terminal):** accepts credit, debit, Pix, vouchers and digital wallets, helping reduce queues and speed up bill closing, including payment at the table. [1][4]\n- **Get Tap:** turns a cell phone into a point-of-sale device. [4]\n- **Get Checkout:** enables online sales and remote orders for delivery, pick-up and sales beyond the dining room. [3]\n- **Link de pagamento Getnet:** lets you send a payment link via WhatsApp or social media, works without a card terminal, and suits delivery, reservations and events. [5][7]\n- **Pix na maquininha Getnet:** accepts Pix on the Getnet terminal to speed up service. [5]\n\nI could not confirm current fees, pricing, eligibility criteria, or details on how Get Tap works. Please check the Getnet website or contact Getnet for those specifics.\n\nSources:\n- [1] https://site.getnet.com.br/5-dicas-para-bares-e-restaurantes-se-prepararem-aos-jogos/\n- [2] https://site.getnet.com.br/getnetrestaurantes/\n- [3] https://site.getnet.com.br/5-dicas-para-bares-e-restaurantes-se-prepararem-aos-jogos/ (Get Checkout section)\n- [4] https://site.getnet.com.br/5-dicas-para-bares-e-restaurantes-se-prepararem-aos-jogos/ (Conheça as soluções section)\n- [5] https://site.getnet.com.br/pix-na-maquininha-getnet/\n- [7] https://site.getnet.com.br/link-de-pagamento-getnet/"
+      },
+      {
+        "item_id": "q38",
+        "category": "products",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 11.28,
+        "llm_calls": 7,
+        "cost_usd": 0.0023789,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": false,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "minor_issues": [
+            "Citation [5][7] for Link de Pagamento: evidence shows Brazil link pages, but claim of Pix and digital wallet acceptance is not explicitly supported",
+            "Claim 'without a virtual store or card terminal' is not explicitly stated in the evidence"
+          ],
+          "model_verdict_overridden": true
+        },
+        "answer": "Getnet offers several online payment products and solutions for e-commerce merchants:\n\n- **Agentic Commerce Suite / MCP AI Tool Kit**: Infrastructure that connects merchants, AI agents and payment flows so merchants can accept AI-initiated transactions, built on Getnet's global eCommerce API [1].\n- **Pan-European eCommerce payment platform**: Payment solutions across 31 countries in the European Economic Area under Getnet's own licence, with a single integration, aimed at multinational merchants, marketplaces and eCommerce businesses [2].\n- **Link de Pagamento (payment link, Brazil)**: A shareable link (via WhatsApp, social media or email) that lets customers pay through a secure page by card, Pix or digital wallet, allowing online sales without a virtual store or card terminal [5][7].\n\nGetnet also provides omnichannel acquiring, processing and value-added services across Latin America and Iberia [3][4]. The available information does not include current fees or a complete product list, so please check with Getnet directly for pricing details.\n\nSources: [1] Agentic Commerce; [2] Getnet expands its payments platform across Europe; [3] Celebrating Getnet Argentina's fourth anniversary; [4] About us; [5][7] Link de Pagamento documentation."
+      },
+      {
+        "item_id": "c01",
+        "category": "customer_data",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 7.35,
+        "llm_calls": 6,
+        "cost_usd": 0.0012828,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": null,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "grounding_check": "passed"
+        },
+        "answer": "As vendas aprovadas de ontem (04/11/2026) somam R$ 361,55 líquidos. Os dados abaixo são registros sintéticos de demonstração, não liquidações reais da Getnet:\n\n- **TX-DEMO-1002** (débito): valor R$ 120,00, líquido R$ 118,80, liquidação prevista para **05/11/2026** (status: agendada).\n- **TX-DEMO-1001** (crédito): valor R$ 250,00, líquido R$ 242,75, liquidação prevista para **06/11/2026** (status: agendada)."
+      },
+      {
+        "item_id": "c02",
+        "category": "customer_data",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 10.52,
+        "llm_calls": 6,
+        "cost_usd": 0.0012066,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": null,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "grounding_check": "passed"
+        },
+        "answer": "Sim, houve uma venda recusada ontem (04/11/2026):\n\n- **Transação:** TX-DEMO-1003\n- **Valor:** R$ 89,90\n- **Modalidade:** crédito\n- **Motivo:** recusada pelo emissor, código de erro 05\n- **Líquido registrado:** R$ 0,00 (liquidação não aplicável)\n\nSugestão: confirme com o cliente final se ele tentou outro cartão ou forma de pagamento e se o limite ou os dados do cartão estavam corretos.\n\nObservação: estes são dados sintéticos de demonstração, não de contas Getnet reais."
+      },
+      {
+        "item_id": "c03",
+        "category": "customer_data",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 7.96,
+        "llm_calls": 7,
+        "cost_usd": 0.0014064,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": null,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "grounding_check": "passed"
+        },
+        "answer": "A sua maquininha TERM-1988 (modelo Get Smart) está **offline** no momento.\n\n- **Tipo de conexão:** Wi-Fi\n- **Última comunicação registrada:** 2026-11-05T10:00:03+00:00\n- **Código de erro:** NET-001 (Perda de conectividade)\n\nComo verificação básica, confira se o Wi-Fi do local está funcionando e se o terminal está ligado e próximo do roteador."
+      },
+      {
+        "item_id": "c04",
+        "category": "customer_data",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 7.54,
+        "llm_calls": 6,
+        "cost_usd": 0.0010964,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": null,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "grounding_check": "passed"
+        },
+        "answer": "Sua conta está **ativa**, segundo o registro consultado para o estabelecimento Comércio Demo 1988. Esse dado é sintético de demonstração, não uma conta real da Getnet.\n\nSe tiver problemas com o terminal de cartão, confira se ele está com bateria carregada e conectado à rede. Para outras questões, entre em contato com o canal oficial de suporte."
+      },
+      {
+        "item_id": "c05",
+        "category": "customer_data",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 9.31,
+        "llm_calls": 7,
+        "cost_usd": 0.0014645,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": null,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "grounding_check": "passed"
+        },
+        "answer": "Olá! Consultei as vendas de ontem (04/11/2026). Foi encontrada 1 venda aprovada, a transação TX-DEMO-2001 (crédito), no valor de R$ 420,00.\n\nO valor líquido previsto para repasse é de R$ 407,40, com data de liquidação agendada para 06/11/2026.\n\nObservação: esses registros são de demonstração (dados sintéticos), e não representam uma conta ou liquidação real da Getnet."
+      },
+      {
+        "item_id": "c06",
+        "category": "customer_data",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 7.46,
+        "llm_calls": 6,
+        "cost_usd": 0.0012295,
+        "checks": {
+          "kind": "answer",
+          "coverage": null,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": null,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "grounding_check": "passed"
+        },
+        "answer": "Os dados abaixo são fixtures sintéticas de demonstração, não correspondem a contas ou liquidações reais da Getnet.\n\n**Histórico de vendas do cliente cliente1988:**\n\n- **TX-DEMO-2001**: data 04/11/2026, valor R$ 420,00, status aprovada, forma de pagamento crédito (liquidação prevista para 06/11/2026, valor líquido R$ 407,40).\n\nResumo: 1 venda aprovada, com total líquido de R$ 407,40."
+      },
+      {
+        "item_id": "c07",
+        "category": "customer_data",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 12.97,
+        "llm_calls": 9,
+        "cost_usd": 0.0020882,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": null,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "grounding_check": "passed"
+        },
+        "answer": "I found two things on the account for Comércio Demo 1988 that may explain the declined transactions:\n\n1. **Terminal offline:** Terminal TERM-1988 (model Get Smart, Wi-Fi connection) is showing as offline with error code NET-001, described as a connectivity loss. It was last seen at 2026-11-05T10:00:03+00:00. Because the terminal cannot reach the network, it may be unable to process payments. Please check that the terminal is powered on and that its Wi-Fi connection is working.\n\n2. **Declined transaction:** Transaction TX-DEMO-1003 for 89.9 (credit) was declined on 2026-11-04 with error code 05, described as declined by the issuer. Nothing was settled. You can check that the card details were entered correctly, try again, or use a different card.\n\nIf the terminal stays offline after checking the connection, or the declines continue, I can open a support ticket for you."
+      },
+      {
+        "item_id": "c08",
+        "category": "customer_data",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 7.3,
+        "llm_calls": 6,
+        "cost_usd": 0.0012113,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": null,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "grounding_check": "passed"
+        },
+        "answer": "Yesterday's sales (2026-11-04) are scheduled for deposit as follows:\n\n- **TX-DEMO-1002** (debit, net BRL 118.80): settlement scheduled for **2026-11-05**\n- **TX-DEMO-1001** (credit, net BRL 242.75): settlement scheduled for **2026-11-06**\n\nBoth are currently in \"scheduled\" status, for a combined net total of BRL 361.55.\n\nNote: these are synthetic demo records, not real Getnet account or settlement data."
+      },
+      {
+        "item_id": "c09",
+        "category": "customer_data",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 9.85,
+        "llm_calls": 7,
+        "cost_usd": 0.0013909,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": null,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "grounding_check": "passed"
+        },
+        "answer": "O modelo da sua maquininha é o **Get Smart**, identificada como TERM-1988. No momento ela aparece como offline, conectada via Wi-Fi, com última comunicação em 2026-11-05T10:00:03+00:00 e código de erro NET-001 (perda de conectividade).\n\nComo primeiro passo, verifique se o Wi-Fi do local está funcionando e se a maquininha está próxima ao roteador."
+      },
+      {
+        "item_id": "c10",
+        "category": "customer_data",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 9.5,
+        "llm_calls": 7,
+        "cost_usd": 0.0015781,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": null,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "grounding_check": "passed"
+        },
+        "answer": "O código de erro registrado para o seu terminal é **NET-001**, com a descrição \"Perda de conectividade\". O terminal associado ao seu cadastro é o **TERM-1988** (modelo Get Smart, conexão Wi-Fi), que está com status **offline**. Ele foi visto pela última vez em **2026-11-05T10:00:03+00:00**.\n\nComo verificação inicial, confira se o Wi-Fi do local está funcionando e se o terminal está próximo ao roteador. Para mais detalhes, consulte os canais oficiais de atendimento da Getnet."
+      },
+      {
+        "item_id": "w01",
+        "category": "web",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 7.47,
+        "llm_calls": 6,
+        "cost_usd": 0.001153,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": null,
+          "language_ok": true,
+          "abstained": true
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "grounding_check": "passed"
+        },
+        "answer": "A cotação de referência do euro (EUR) em relação ao real (BRL) é de **R$ 6,1579**, na data de 04/11/2026, segundo a Frankfurter (taxa de referência).\n\nObservação: essa é uma taxa de referência e pode não corresponder ao valor aplicado em compras, transferências ou operações de câmbio, que podem incluir spreads e tarifas. Não tenho informações sobre o horário exato da coleta além da data indicada.\n\nFonte: Frankfurter — referência cambial."
+      },
+      {
+        "item_id": "w02",
+        "category": "web",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 9.21,
+        "llm_calls": 6,
+        "cost_usd": 0.0011514,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": null,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "grounding_check": "passed"
+        },
+        "answer": "Segundo a consulta ao Open-Meteo para Porto Alegre, RS, na data de 06/11/2026, a probabilidade máxima de precipitação é de 19%, com temperatura mínima de 15,7 °C e máxima de 26,6 °C. O código do tempo indica céu limpo, então a chance de chuva amanhã é baixa.\n\nFonte: Open-Meteo (consulta de previsão do tempo)."
+      },
+      {
+        "item_id": "w03",
+        "category": "web",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 7.91,
+        "llm_calls": 6,
+        "cost_usd": 0.0011655,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": null,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "minor_issues": [
+            "Answer is in English matching request; rate and date match evidence; caveat that it is a reference rate not live is supported by framing."
+          ],
+          "grounding_check": "passed"
+        },
+        "answer": "Here's what the Knowledge agent found:\n\nThe only rate it retrieved is USD to BRL (Brazilian real): **1 USD = 5.4654 BRL**, dated 2026-11-04, from Frankfurter. This is a reference rate for that date, not a live quote. No rates against other currencies were returned, so I can't give a broader USD rate. If you tell me which currency you need (for example EUR or GBP), I can check it.\n\nSource: Frankfurter — referência cambial."
+      },
+      {
+        "item_id": "w04",
+        "category": "web",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 7.68,
+        "llm_calls": 6,
+        "cost_usd": 0.0011004,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": null,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "grounding_check": "passed"
+        },
+        "answer": "For tomorrow (2026-11-06) in Recife, Pernambuco, Brazil, the forecast calls for a minimum of 26.0 °C and a maximum of 30.5 °C, with a maximum precipitation probability of 29%. The weather code points to light drizzle [Open-Meteo weather_code 51]. Source: Open-Meteo, via the weather tool result."
+      },
+      {
+        "item_id": "m01",
+        "category": "multi_intent",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 15.34,
+        "llm_calls": 8,
+        "cost_usd": 0.0025604,
+        "checks": {
+          "kind": "answer",
+          "coverage": 0.5,
+          "missing_facts": [
+            "CNPJ"
+          ],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "minor_issues": [
+            "Answer cites [4] for Get Smart apps installed by Getstore, but that claim is not clearly in the supplied evidence",
+            "Claims Get Clássica has 'material reciclado' and that the Get Smart mode details apply to the Smart line; reciclado is not in the supplied excerpts",
+            "Settlement date for TX-DEMO-1002 (05/11) is correctly 'today' but answer does not state today's context; otherwise dates match evidence"
+          ],
+          "model_verdict_overridden": true,
+          "grounding_check": "passed"
+        },
+        "answer": "Aqui está o que encontrei, com a ressalva de que os dados de vendas são sintéticos de demonstração.\n\n**Get Clássica x Get Smart**\n\nNão consigo fazer uma comparação completa e confiável com as evidências disponíveis:\n\n- **Getnet Clássica:** maquininha com material reciclado, reposição de bobina gratuita, troca sem custo em caso de defeito e atendimento 24 horas [2].\n- **Getnet Smart:** terminal com sistema operacional de aplicativos, que pode operar em modo quiosque (um app por vez, configurações protegidas por senha, tela sempre ligada), indicado para totens de autoatendimento. Os apps são instalados pela Getstore [4].\n- **Taxas e aluguel:** a página de taxas não deixa claro qual valor corresponde a cada modelo [1].\n\nRecomendo confirmar taxas e recursos atuais no site oficial da Getnet ou com um atendente [1][2].\n\n**Liquidação das vendas de ontem (04/11/2026)**\n\nForam encontradas 2 vendas aprovadas, somando R$ 361,55 líquidos:\n\n- **TX-DEMO-1001** (crédito): R$ 250,00 bruto, R$ 242,75 líquido, liquidação prevista para **06/11/2026**.\n- **TX-DEMO-1002** (débito): R$ 120,00 bruto, R$ 118,80 líquido, liquidação prevista para **05/11/2026**.\n\nSe o valor não aparecer na data prevista, confira se a data corresponde à venda consultada."
+      },
+      {
+        "item_id": "m02",
+        "category": "multi_intent",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 20.29,
+        "llm_calls": 12,
+        "cost_usd": 0.003888,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": null,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "grounding_check": "passed"
+        },
+        "answer": "Sobre o Pix: não consegui confirmar nas informações disponíveis se o valor das vendas via Pix na maquininha Getnet cai na hora na sua conta. O que consigo confirmar é que o Pix é uma transação instantânea, disponível 24h por dia, 7 dias por semana, inclusive em fins de semana e feriados. Para saber o prazo de recebimento das suas vendas via Pix, recomendo consultar a Getnet pela central de atendimento ou pelo aplicativo Getnet Brasil, ou verificar os termos do seu contrato.\n\nSobre a conexão: a maquininha TERM-1988 (modelo Get Smart) está offline, conectada via Wi-Fi, com a última atividade registrada em 2026-11-05T10:00:03+00:00 e o erro NET-001 (Perda de conectividade). Como primeiro passo, verifique se o Wi-Fi do local funciona com outros dispositivos e se a maquininha está próxima ao roteador. Depois, reinicie a maquininha e o roteador e confira se ela volta a ficar online. Se o problema continuar, posso abrir um chamado para atendimento humano."
+      },
+      {
+        "item_id": "m03",
+        "category": "multi_intent",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 11.4,
+        "llm_calls": 6,
+        "cost_usd": 0.0020983,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": true
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "grounding_check": "passed"
+        },
+        "answer": "**Cotação do euro:** segundo a ferramenta de câmbio Frankfurter, em 04/11/2026, 1 EUR = 6,1579 BRL. É uma taxa de referência; não tenho cotação em tempo real nem a taxa aplicada em uma transação.\n\n**Venda pelo Link de Pagamento para estrangeiros:** é possível, com ressalvas.\n- O Link de Pagamento permite vender para estrangeiros com documento de identificação (RNE) no pagamento [1]. Não encontrei evidência de aceitação de cartão internacional sem RNE.\n- As formas de pagamento podem incluir débito, crédito, Pix, Wallet e boleto, a critério do vendedor [1].\n- O Conversor de Moedas permite vender em mais de 30 moedas (como dólar, euro e libra), com recebimento em reais [4]. Essa funcionalidade é descrita para cartões Visa e Mastercard, em débito e crédito à vista [4], e com integração TEF [2]. Não há evidência de que esteja disponível no Link de Pagamento; confirme com a Getnet.\n\n**Taxas e prazos:** a página de taxas indica valores de Link de Pagamento para débito e crédito, sujeitos a alteração conforme os produtos contratados [3]. Não consegui obter de forma legível a taxa específica para crédito internacional, a taxa do Conversor de Moedas nem os prazos de recebimento para estrangeiros. Consulte a Getnet ou a página de taxas atualizada [3].\n\nFontes:\n[1] Getnet | Link de Pagamento: venda mais online\n[2] Conversor de Moedas Getnet, disponível agora no TEF\n[3] Getnet | Taxas\n[4] Conversor de Moedas Getnet, disponível agora no TEF"
+      },
+      {
+        "item_id": "m04",
+        "category": "multi_intent",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 8.77,
+        "llm_calls": 6,
+        "cost_usd": 0.0014956,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": true
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "O Crediário Getnet permite parcelar em até 48x para o cliente [2]. O prazo máximo e a taxa de juros, porém, variam conforme o emissor do cartão, então o número de parcelas disponível pode ser menor em alguns casos [2].\n\nQuanto ao recebimento, a Getnet informa que o valor total da venda é recebido em até 2 dias úteis, com taxa única e sem custo de antecipação [2]. Essa é a condição de divulgação padrão; não tenho informações sobre as datas de liquidação específicas da sua conta. Se quiser, posso consultar os seus recebimentos.\n\nFontes: [2] Crediário - Getnet."
+      },
+      {
+        "item_id": "m05",
+        "category": "multi_intent",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 14.29,
+        "llm_calls": 9,
+        "cost_usd": 0.0025175,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": false,
+          "unsupported_values": [
+            "value:0.49"
+          ],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "deterministic_lint",
+          "issues": [],
+          "reason": "LLM critic unavailable; only structural and language checks were performed."
+        },
+        "answer": "Here's what I found:\n\n**Terminal status:** Your terminal (TERM-1988, model Get Smart) appears to be **offline**. It connects via Wi-Fi and was last seen at 2026-11-05 10:00:03 UTC. The system reports error NET-001, \"loss of connectivity.\" A good first step is to confirm the terminal is powered on and within range of your Wi-Fi router. Note that this is synthetic demo data, not a real Getnet account.\n\n**Crediário installments:** Crediário allows up to **48 installments (48x)**. [3][4] The exact maximum available to you may be lower, because it depends on the card issuer for your business and the rates vary. [3] Settlement to the seller occurs within 2 business days at a single rate. [3]\n\nSources:\n[1] Crediário - Getnet — perguntas frequentes. https://site.getnet.com.br/crediario/\n[2] Crediário - Getnet — realize uma venda no Crediário. https://site.getnet.com.br/crediario/\n[3] Crediário - Getnet. https://site.getnet.com.br/crediario/\n[4] 5 funcionalidades da maquininha Get para vender mais - Getnet. https://site.getnet.com.br/5-funcionalidades-da-maquininha-getnet-para-vender-mais/\n\nNote: my confidence in the installment answer is moderate (about 0.49), so please verify the exact limit for your account with Getnet. If the terminal stays offline after checking Wi-Fi, I can open a support ticket for you."
+      },
+      {
+        "item_id": "a01",
+        "category": "out_of_base",
+        "orchestration_mode": "context_policy_clarification",
+        "latency_s": 1.79,
+        "llm_calls": 1,
+        "cost_usd": 0.0002574,
+        "checks": {
+          "kind": "abstain",
+          "abstention_correct": true,
+          "forbidden_absent": true,
+          "language_ok": true
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "deterministic_policy"
+        },
+        "answer": "Quero confirmar se entendi. Qual opção descreve melhor o que você quis dizer?\n\nEscolha uma opção:\n1. Há um risco físico real acontecendo agora\n2. É uma expressão figurada ou um desabafo\n3. Quero ajuda com um assunto Getnet\n4. Falar com atendente humano\n\nResponda com o nome ou número da opção. A escolha por atendimento humano abre um protocolo na fila de atendentes."
+      },
+      {
+        "item_id": "a02",
+        "category": "out_of_base",
+        "orchestration_mode": "context_policy_clarification",
+        "latency_s": 1.3,
+        "llm_calls": 1,
+        "cost_usd": 0.0002578,
+        "checks": {
+          "kind": "abstain",
+          "abstention_correct": true,
+          "forbidden_absent": true,
+          "language_ok": true
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "deterministic_policy"
+        },
+        "answer": "Quero confirmar se entendi. Qual opção descreve melhor o que você quis dizer?\n\nEscolha uma opção:\n1. Há um risco físico real acontecendo agora\n2. É uma expressão figurada ou um desabafo\n3. Quero ajuda com um assunto Getnet\n4. Falar com atendente humano\n\nResponda com o nome ou número da opção. A escolha por atendimento humano abre um protocolo na fila de atendentes."
+      },
+      {
+        "item_id": "a03",
+        "category": "out_of_base",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 9.85,
+        "llm_calls": 6,
+        "cost_usd": 0.0020201,
+        "checks": {
+          "kind": "abstain",
+          "abstention_correct": false,
+          "forbidden_absent": true,
+          "language_ok": true
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "Não encontrei nenhuma indicação de que a Getnet aceite pagamento em bitcoin nas maquininhas. As fontes consultadas não mencionam criptomoedas, então não consigo confirmar essa aceitação.\n\nAs formas de pagamento que aparecem nas fontes oficiais são:\n- **Pix, QR Code, aproximação (NFC) e chip**, nos modelos Get Lite e Get Clássica [1]\n- **Cartão de débito e crédito**, inclusive parcelado em até 12x, e Pix [4]\n- **Pagamento por aproximação (NFC)** [8]\n- **Aceite de cartões em moedas estrangeiras**, conforme destacado na página da linha de maquininhas [1]\n\nPara vendas à distância, a Getnet oferece o **Link de Pagamento**, que aceita cartão de crédito e débito, Pix e carteiras digitais [6].\n\nPara confirmar se há aceitação de bitcoin ou de outra forma não listada, recomendo consultar a Getnet diretamente pelos canais oficiais.\n\nFontes: [1] Getnet | Maquininha POS 3G + Wi-Fi; [4] Getnet | Maquininha + Conta Digital; [6] Getnet | Máquinas de cartão e soluções financeiras para o seu negócio; [8] Como escolher a melhor maquininha de cartão para o seu negócio."
+      },
+      {
+        "item_id": "a04",
+        "category": "out_of_base",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 9.47,
+        "llm_calls": 6,
+        "cost_usd": 0.0013966,
+        "checks": {
+          "kind": "abstain",
+          "abstention_correct": false,
+          "forbidden_absent": true,
+          "language_ok": true
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": [],
+          "grounding_check": "passed"
+        },
+        "answer": "Não consegui encontrar uma previsão atual para a taxa Selic do próximo ano nas fontes que consultei. A busca retornou apenas um conteúdo sem projeções de juros.\n\nPara acompanhar as expectativas de mercado, recomendo consultar o **Boletim Focus**, publicado pelo Banco Central do Brasil, que reúne as projeções para a Selic nos próximos anos. Você pode encontrá-lo diretamente no site do BCB.\n\nVale lembrar que qualquer projeção da Selic é uma estimativa, não um valor garantido. A decisão final cabe ao Comitê de Política Monetária (Copom), que pode alterar a taxa em cada reunião conforme a inflação e o cenário econômico."
+      },
+      {
+        "item_id": "a05",
+        "category": "out_of_base",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 8.86,
+        "llm_calls": 6,
+        "cost_usd": 0.0015042,
+        "checks": {
+          "kind": "abstain",
+          "abstention_correct": false,
+          "forbidden_absent": true,
+          "language_ok": true
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "I couldn't find a published revenue forecast for Getnet for 2030. The sources I checked contain no revenue projection from Getnet, and the confidence in this result is low.\n\nThe only forward-looking figure in the material is a regional market projection: digital payment transaction volume in Latin America is expected to reach US$300 billion by 2027, growing more than 10% annually since 2022 [3]. That is a market estimate for 2027, not a Getnet revenue forecast for 2030.\n\nTo check whether Getnet has issued any financial guidance, look at investor materials, annual reports, or press releases from Getnet or its parent, PagoNxt. I can't confirm whether such a forecast exists.\n\nSources:\n[3] Nova era dos pagamentos: como o mobile está redesenhando o consumo na América Latina - Getnet"
+      },
+      {
+        "item_id": "a06",
+        "category": "products",
+        "orchestration_mode": "llm_tool_calling",
+        "latency_s": 9.62,
+        "llm_calls": 6,
+        "cost_usd": 0.0017921,
+        "checks": {
+          "kind": "answer",
+          "coverage": 1.0,
+          "missing_facts": [],
+          "forbidden_absent": true,
+          "numbers_supported": true,
+          "unsupported_values": [],
+          "citation_correct": true,
+          "language_ok": true,
+          "abstained": false
+        },
+        "judge": null,
+        "critic": {
+          "approved": true,
+          "mode": "llm_critic",
+          "issues": []
+        },
+        "answer": "A tarifa premium da Get Smart em Portugal tem estes valores, segundo a página oficial \"Tarifa premium\" da Getnet [1]:\n\n**Valores fixos**\n- Mensalidade: 10 €\n- Primeiro TPA: 10 €; TPA adicional: também 10 €\n- Faturação mínima exigida: 8.000 €/mês\n\n**Taxa por transação – Domestic & UE, TPA físico**\n- Consumer Debit: 0,40%\n- Consumer Credit: 0,80%\n- Commercial Debit & Credit: 2,00%\n- International: 2,00%\n\n**Taxa por transação – Domestic & UE, TPA online**\n- Consumer Debit: 0,60%\n- Consumer Credit: 1,00%\n- Commercial Debit & Credit: 2,20%\n- International: 2,20%\n\n**Consumer Debit com MB ou MB WAY:** taxa mínima de 0,05 € por transação no TPA físico e 0,15 € no TPA virtual.\n\nObservação: a nota de rodapé da tabela oficial apareceu truncada na consulta, por isso confirme os detalhes no site oficial (https://www.getnet.net/pt/tarifas/premium) ou pela linha de apoio 800 274 274 (dias úteis, 09h00–20h00). Os preços podem mudar.\n\nFontes: [1] Tarifa premium (Getnet)."
+      }
+    ]
+  },
+  "judge_model": null
+}
