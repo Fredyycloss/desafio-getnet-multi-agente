@@ -73,9 +73,12 @@ LLM_PROVIDER=replay DEMO_TODAY=2026-11-04 PYTHONPATH=. uvicorn app.main:app --po
 | Evidence | File | Produced by |
 |---|---|---|
 | Context Intelligence on heldout_v2 (109 cases with recorded origin, never used for tuning), cloud, 3 runs | [`eval/CONTEXT_EVAL_heldout_v2_anthropic_run1_2026-11-04.json`](eval/CONTEXT_EVAL_heldout_v2_anthropic_run1_2026-11-04.json), [run2](eval/CONTEXT_EVAL_heldout_v2_anthropic_run2_2026-11-04.json), [run3](eval/CONTEXT_EVAL_heldout_v2_anthropic_run3_2026-11-04.json) | `python -m app.evaluation.run_context_eval --split heldout_v2 --run N` |
-| Same, offline Qwen3 1.7B, run 1 | [`eval/CONTEXT_EVAL_heldout_v2_ollama_run1_2026-11-04.json`](eval/CONTEXT_EVAL_heldout_v2_ollama_run1_2026-11-04.json) | same command, `LLM_PROVIDER=ollama` |
+| Same, offline Qwen3 1.7B, 3 runs | [`run1`](eval/CONTEXT_EVAL_heldout_v2_ollama_run1_2026-11-04.json), [run2](eval/CONTEXT_EVAL_heldout_v2_ollama_run2_2026-11-04.json), [run3](eval/CONTEXT_EVAL_heldout_v2_ollama_run3_2026-11-04.json) | same command, `LLM_PROVIDER=ollama` |
 | Retrieval: 70 questions, hybrid vs BM25 vs dense vs legacy corpus | [`eval/RETRIEVAL_EVAL_2026-11-03.json`](eval/RETRIEVAL_EVAL_2026-11-03.json) | `python -m app.evaluation.run_retrieval_eval` |
 | Answer quality, cloud: 63 questions + LLM judge | [`eval/ANSWER_QUALITY_cloud_run1_2026-11-03.json`](eval/ANSWER_QUALITY_cloud_run1_2026-11-03.json) | `python -m app.evaluation.run_answer_quality` |
+| Ablation: quality, safety and routing with the Critic, Context Intelligence, PolicyGate, fast path or planning switched off (cloud, commit `861ada7`) | [`eval/ABLATION_2026-11-04.json`](eval/ABLATION_2026-11-04.json), decisions in [`ABLACAO_2026-11-04.md`](ABLACAO_2026-11-04.md) | `python -m app.evaluation.run_ablation` |
+| Session memory on vs off: 4 conversations of 16 turns, recall of early facts, prompt tokens | [`eval/MEMORY_EVAL_2026-11-04.json`](eval/MEMORY_EVAL_2026-11-04.json) | `python -m app.evaluation.run_memory_eval` |
+| Quality summary (context mean ± sd, answer quality, stage contributions) | [`RELATORIO_QUALIDADE_2026-11-04.md`](RELATORIO_QUALIDADE_2026-11-04.md) | — |
 
 ## 4. Screenshots
 

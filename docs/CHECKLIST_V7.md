@@ -115,7 +115,7 @@ Starting point: commit `ee74988` (published, CI green, feedback v2 = 7.3/10).
 
 | # | Item | Source | Block | Status | Evidence |
 |---|---|---|---|---|---|
-| M1 | No long-conversation summary → incremental summary + structured session memory; 30-turn test; tokens saved | FB2, V7-H, SELF | 10 | RESOLVIDO | app/memory.py; 30-turn test; on/off measurement docs/eval/MEMORY_EVAL_2026-11-04.json |
+| M1 | No long-conversation summary → incremental summary + structured session memory; 30-turn test; tokens saved | FB2, V7-H, SELF | 10 | PARCIAL | app/memory.py + recall_conversation tool; 30-turn test; measured on/off (docs/eval/MEMORY_EVAL_2026-11-04.json, 1caa3cd): early-fact recall 2/4 on vs 0/4 off; no token saving at 16 turns; 2 misses open |
 | M2 | Improvement loop: refresh, 👍/👎 feedback, validated answers (invalidated by corpus version), knowledge-gap queue promoted only by an operator | V6 6, SELF | 10 | RESOLVIDO | app/improvement.py: feedback, validated answers by corpus version, gap queue promoted only by a supervisor; tests/test_improvement_loop.py |
 
 ## Observability and production (block 11)
@@ -126,7 +126,7 @@ Starting point: commit `ee74988` (published, CI green, feedback v2 = 7.3/10).
 | P2 | `/metrics` in Prometheus format | V6 10 | 11 | RESOLVIDO | GET /metrics; tests/test_telemetry.py |
 | P3 | No replica strategy → stateless API, optional Postgres with migrations, `--scale api=2`, single Telegram worker | FB2, V7-I | 11 | PARCIAL | --scale api=2 over the shared SQLite volume (DB state, DB-shared signing secret, single Telegram worker); Postgres with migrations NOT delivered (docs/OBSERVABILITY.md) |
 | P4 | Two compose files → one file with profiles (cloud, offline, test, observability, tools) | V6 10, SELF | 11 | RESOLVIDO | Single docker-compose.yml with profiles offline/test/observability/tools; docker-compose.ai.yml removed |
-| P5 | Ollama always starts in cloud mode → evaluate a light embedding inside the API | V6 10, SELF | 11 | ABERTO | Not evaluated in this round; Ollama still serves nomic embeddings in cloud mode |
+| P5 | Ollama always starts in cloud mode → evaluate a light embedding inside the API | V6 10, SELF | 11 | NÃO | Not evaluated in this round; Ollama still serves nomic embeddings in cloud mode |
 | P6 | Historical reports in `docs/` that do not reflect the code → `docs/history/` + index | V6 10, SELF | 11 | RESOLVIDO | docs/history/ (header 'Histórico — não reflete o código atual') + docs/README.md |
 | P7 | One cloud tool case above the latency target (15.3 s) → measure and optimise | SELF | 11 | RESOLVIDO | Cloud run 2026-11-04: tools 8/8 within 15 s in both rounds (p95 13.89 s warm) |
 
@@ -134,18 +134,18 @@ Starting point: commit `ee74988` (published, CI green, feedback v2 = 7.3/10).
 
 | # | Item | Source | Block | Status | Evidence |
 |---|---|---|---|---|---|
-| F1 | Offline: 2/12 routes, 41% action; Qwen sends everything to the menu | SELF, FB2 | 12 | ABERTO | Measured again: offline (Qwen3 1.7B, LLM mode) route 0.184±0.033 and action 0.462 on heldout_v2 (3 runs); not fixed in this round |
-| F2 | Hybrid rejected by a safety false negative → kNN decides route only, never safety; fix the cause, not the case | V6 9, SELF | 12 | ABERTO | Not done in this round |
-| F3 | Unstable Qwen routing depending on prompt wording | SELF | 12 | ABERTO | Not done in this round |
-| F4 | False risk alert for a vague message and for "transaction decline error" (regression tests in both modes) | SELF | 12 | ABERTO | Not done in this round |
-| F5 | Try `qwen3:4b` within 8 GB (measure memory) | V6 9 | 12 | ABERTO | qwen3:4b not tried in this round |
+| F1 | Offline: 2/12 routes, 41% action; Qwen sends everything to the menu | SELF, FB2 | 12 | NÃO | Measured again: offline (Qwen3 1.7B, LLM mode) route 0.184±0.033 and action 0.462 on heldout_v2 (3 runs); not fixed in this round |
+| F2 | Hybrid rejected by a safety false negative → kNN decides route only, never safety; fix the cause, not the case | V6 9, SELF | 12 | NÃO | Not done in this round |
+| F3 | Unstable Qwen routing depending on prompt wording | SELF | 12 | NÃO | Not done in this round |
+| F4 | False risk alert for a vague message and for "transaction decline error" (regression tests in both modes) | SELF | 12 | NÃO | Not done in this round |
+| F5 | Try `qwen3:4b` within 8 GB (measure memory) | V6 9 | 12 | NÃO | qwen3:4b not tried in this round |
 
 ## Closing (block 13)
 
 | # | Item | Source | Block | Status | Evidence |
 |---|---|---|---|---|---|
-| Z1 | `docs/AUDITORIA_V4_V2.md` (every v2 gap and discount) | V7-J | 13 | ABERTO | |
-| Z2 | `docs/RESPOSTAS_ENTREVISTA.md` outside Git | V7-J | 13 | ABERTO | |
+| Z1 | `docs/AUDITORIA_V4_V2.md` (every v2 gap and discount) | V7-J | 13 | RESOLVIDO | docs/AUDITORIA_V4_V2.md |
+| Z2 | `docs/RESPOSTAS_ENTREVISTA.md` outside Git | V7-J | 13 | RESOLVIDO | written; listed in .gitignore |
 | Z3 | README / TESTING / final report updated; clean clone; local CI | V6 11, V7-J | 13 | ABERTO | |
 | Z4 | New simulation in the feedback v2 format + push commands (wait for authorization) | V7-J | 13 | ABERTO | |
 | Z5 | Video not recorded (outside scope, recorded here as a risk) | FB2, SELF | — | NÃO (fora do escopo) | |

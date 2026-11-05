@@ -51,13 +51,22 @@ See [`ABLACAO_2026-11-04.md`](ABLACAO_2026-11-04.md):
 
 ## 4. Session memory
 
-See `eval/MEMORY_EVAL_2026-11-04.json` and the "Session memory" section of the README.
+**Set.** 4 conversations of 16 turns, cloud. The fact is said in turn 1 and asked in turn 16. Files: `eval/MEMORY_EVAL_2026-11-04.json` and `eval/memory_runs/`.
 
-- **Bug found by the first run.** The memory note was cut by the history window before it reached the specialists.
-- **Fixed and re-measured.** The README reports the re-measured numbers.
+| Code | Memory on | Memory off |
+|---|---|---|
+| Before the fix (`861ada7`) | 1/4 | 0/4 |
+| History-window fix | 1/4 | 1/4 |
+| + `recall_conversation` (`1caa3cd`) | **2/4** | 0/4 |
+
+- **Window fix.** The memory note was cut by the history window before it reached the specialists. The Support/Payments writer received no history at all.
+- **Recall tool.** Questions about the conversation itself had no route and ended in a Knowledge abstention.
+- **Off column is noise.** The single "off" recall in the middle run came from a terminal tool lookup, not from memory.
+- **Still open.** Two of the four recall questions still miss: one goes to a clarification menu, and in the other the recall tool is not chosen.
 
 ## Known gaps
 
 - Inline citations are lost in planning mode (see the ablation report).
+- Memory recall is 2/4 on the long-conversation set.
 - The judge is not calibrated against humans.
 - Offline routing is weak.

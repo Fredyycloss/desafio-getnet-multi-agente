@@ -48,9 +48,9 @@ Cloud mode with your own key:
    If the key is refused (401/403) or the account has no credit, `cloud_status` says so, without showing the key. Answers are then marked `degraded: true` with `degraded_reason` = `llm_key_rejected`, `llm_key_forbidden` or `llm_no_credit`. To fall back to the local model instead, uncomment `LLM_FALLBACK_PROVIDER=ollama` in `.env`; see `.env.example`.
 5. Open <http://localhost:8080> and sign in with a listed demo user: `cliente1988` / `1988`, `demo-user-001` / `0001` or `demo-merchant-001` / `0002`.
 
-**Without a key**, the same code runs in offline mode with `bash scripts/start-ai.sh -d` (local Qwen3 1.7B, no cost). Measured results for both modes are in [docs/history/RELATORIO_FINAL_2026-11-02.md](docs/history/RELATORIO_FINAL_2026-11-02.md) and in [Measured results](#measured-results-2-nov-2026) below.
+**Without a key**, the same code runs in offline mode with `bash scripts/start-ai.sh -d` (local Qwen3 1.7B, no cost). Measured results for both modes are in [Measured results](#measured-results-4-nov-2026) below and in [docs/EVIDENCE.md](docs/EVIDENCE.md).
 
-**Measured cost:** about **US$ 0.0007 per question** in cloud mode, averaged over the 17 benchmark questions (`mean_cost_usd_per_turn` = 0.000711). That is about 1,400 questions per US$ 1.
+**Measured cost:** about **US$ 0.0008 per question** in cloud mode, from the 17-question warm round of 04/11/2026 (`mean_cost_usd_per_turn` = 0.000822, [report](docs/RELATORIO_LATENCIA_2026-11-04_cloud-v7.json)). That is about 1,200 questions per US$ 1.
 
 ---
 
@@ -192,7 +192,7 @@ flowchart TD
 | Context Intelligence | Interpret the turn with history (6 messages × 400 chars) | — | 1 (JSON schema) |
 | RiskAssessment | Concrete physical hazards, also from history | regex over message and history | 0 |
 | Supervisor | Fast path or planning loop; one re-plan after a Critic rejection | specialists exposed as tools | 0 on the fast path, 1–3 when planning |
-| Knowledge | Getnet products, fees, Pix, receivables advance, crediário, Payment Link, and public questions | tools chosen by the LLM: `search_getnet_knowledge` (hybrid RAG over the site snapshot), `search_getnet_site_live`, `web_search` (Wikipedia/DDG Instant Answer, optional Brave key), `get_weather_forecast` (Open-Meteo), `get_exchange_rate` (Frankfurter) | 2: choose tools, then write |
+| Knowledge | Getnet products, fees, Pix, receivables advance, crediário, Payment Link, and public questions | tools chosen by the LLM: `search_getnet_knowledge` (hybrid RAG over the site snapshot), `search_getnet_site_live`, `web_search` (Wikipedia/DDG Instant Answer, optional Brave key), `get_weather_forecast` (Open-Meteo), `get_exchange_rate` (Frankfurter), `recall_conversation` (this session's memory and the customer's earlier messages) | 2: choose tools, then write |
 | Customer Support | Account profile and terminal status | `get_customer_profile`, `get_terminal_status` (SQLite) | 2: choose tools, then write |
 | Payments | Settlement dates, sales, declined transactions | `lookup_payment_status`, `find_declined_transactions` (SQLite) | 2: choose tools, then write |
 | Human Handoff | Protocol, LLM summary for the operator, queue, live operator ↔ customer messages, resolution summary in history, hand-back to the AI with an instruction | SQLite tickets; web console `/operador` (individual logins); Telegram Bot API worker (buttons + replies) | 1 (operator summary) |
@@ -264,7 +264,14 @@ The agents see only the last messages: Context Intelligence and Supervisor see 6
 - **Privacy.** E-mails, card numbers and credentials are redacted from the summary's input and output.
 - **Scope.** The memory belongs to the session, which belongs to one customer.
 - **Switch:** `SESSION_MEMORY=off`.
-- **Tests:** `backend/tests/test_session_memory.py` (a 30-turn conversation, redaction, isolation).
+- **Questions about earlier turns.** The Knowledge Agent can choose `recall_conversation`, which returns this session's memory and the customer's earlier messages as evidence.
+- **Measured** (4 conversations of 16 turns; the fact is said in turn 1 and asked in turn 16; cloud, [report](docs/eval/MEMORY_EVAL_2026-11-04.json)):
+  - with memory on, the early fact is recalled in **2/4** conversations; with memory off, in **0/4**.
+  - **The two misses:** one recall question went to a clarification menu, and in the other the Knowledge Agent did not pick the recall tool.
+  - **Compression:** about 8,500 characters of older messages are replaced by a note of about 930 characters.
+  - **No token saving at this length:** the history is already windowed, so the note and the recall evidence add prompt tokens (7,615 vs 5,588 on the last turn).
+  - **Earlier runs, same day:** [before the history-window fix](docs/eval/memory_runs/1_before_window_fix.json) 1/4 vs 0/4; [window fix only](docs/eval/memory_runs/2_window_fix_only.json) 1/4 vs 1/4.
+- **Tests:** `backend/tests/test_session_memory.py` (a 30-turn conversation, redaction, isolation, the note surviving the history window, `recall_conversation`).
 
 ### How the system improves over time
 
@@ -325,8 +332,9 @@ CI (`.github/workflows/build.yml`) runs:
 
 - **Context Intelligence datasets** ([backend/app/evaluation/DATASETS.md](backend/app/evaluation/DATASETS.md)):
   - `dev` (24 cases) was used during development;
-  - `heldout` (44 new cases, including continuation, subject change, irony, prompt injection and contradiction) was written before the prompt rewrite and **never used for tuning**.
-  - Run: `docker compose exec api python -m app.evaluation.run_context_eval --split heldout`.
+  - `heldout` (44 new cases, including continuation, subject change, irony, prompt injection and contradiction) was written before the prompt rewrite and **never used for tuning**;
+  - `heldout_v2` (109 further cases with recorded origin) was written after it, also never used for tuning; it is the current reference (3 runs per mode).
+  - Run: `docker compose exec api python -m app.evaluation.run_context_eval --split heldout_v2`.
 - **End-to-end benchmark:** `python3 scripts/benchmark_latency.py --label <name> --rounds warm --warmup [--llm-down]`. It covers:
   - the 10 challenge questions, the dossier scenarios and the acceptance scenarios, with real HTTP and demo tokens;
   - each response classified as `llm_complete` or as a fallback or error;
@@ -337,35 +345,38 @@ CI (`.github/workflows/build.yml`) runs:
 
 ---
 
-## Measured results (2 Nov 2026)
+## Measured results (4 Nov 2026)
 
-Host: Intel i3 with 4 threads, 8 GB RAM and no GPU. Warm round with a pause between requests. Reports:
-- Cloud benchmark: [RELATORIO_LATENCIA_2026-11-02_anthropic.json](docs/history/RELATORIO_LATENCIA_2026-11-02_anthropic.json). The earlier run, before the Critic calibration, is [anthropic-critic-v1](docs/history/RELATORIO_LATENCIA_2026-11-02_anthropic-critic-v1.json).
-- Local benchmark: [RELATORIO_LATENCIA_2026-11-02_ollama.json](docs/history/RELATORIO_LATENCIA_2026-11-02_ollama.json).
-- Context Intelligence evaluation: [docs/eval/](docs/eval/).
-- Summary of both modes: [docs/history/RELATORIO_FINAL_2026-11-02.md](docs/history/RELATORIO_FINAL_2026-11-02.md).
+Every number below comes from a committed report produced by a real run. Index: [docs/EVIDENCE.md](docs/EVIDENCE.md). Host: Intel i3 with 4 threads, 8 GB RAM and no GPU.
 
 | | Cloud — Claude Haiku 5.5 | Offline — Qwen3 1.7B (CPU) |
 |---|---|---|
-| **Context Intelligence, held-out (44, never tuned)**: risk / action / route accuracy | 90.9% / 88.6% / 90.5% | 77.3% / 40.9% / 4.8% |
-| Held-out safety false negatives | **0** | **0** |
-| Context Intelligence latency, mean (held-out) | 1.5 s | 14.8 s |
-| **End-to-end, 17 latency requests**: complete by LLM / fallback | 17 / 0 | 16 / 1 |
-| Route correct (challenge questions + D1/D2) | 12/12 | 2/12 (most went to a clarification menu) |
-| Mean / p95 latency (complete answers) | 5.4 s / 15.3 s | 18.1 s / 65.3 s |
-| Within target (simple ≤10 s, tools ≤15 s, complex ≤25 s) | 16/17 (one tools case at 15.3 s) | 11/16 (the fast "tools" cases mostly got a menu, not the tool) |
-| Critic rejections → human escalations | 0/14 (first run before calibration: 3/14) | 0/3 |
-| Cost per turn | US$ 0.00071 | US$ 0 |
-| Acceptance scenarios run | all PASS (D9 runs in offline mode only) | FAIL: D2, A4, D4 (routing); D9 LLM down: PASS |
+| **Context Intelligence, heldout_v2** (109 cases, never tuned, 3 runs): route / action / risk | 0.932 ± 0.008 / 0.945 / 0.969 | 0.184 ± 0.033 / 0.462 / 0.856 |
+| Safety false negatives (heldout_v2, 3 runs) | **0** | **0** |
+| Critical hand-off recall | 1.00 | 0.95 |
+| **End-to-end, 17 benchmark questions** (warm round): complete by LLM, route correct | 17/17, 12/12 | not re-measured in this round |
+| Mean / p95 latency; within target (simple ≤10 s, tools ≤15 s, complex ≤25 s) | 5.5 s / 13.7 s; 17/17 | — |
+| Multi-intent questions (20): every expected specialist called | 20/20; re-plan 25%, hand-off 5% | — |
+| Critic challenge (10 corrupted first drafts) | 10/10 caught, 10/10 fixed, 0 leaked | — |
+| Acceptance scenarios 1–18 | all PASS | — |
+| Answer quality (63 items): coverage / numbers in evidence / correct citations | 0.80 / 0.95 / 0.89; judge (Sonnet): 59% fully correct | — |
+| Retrieval (70 questions): hybrid recall@5 | 0.78 (legacy corpus 0.40) | same index |
+| Cost per turn | US$ 0.0008 | US$ 0 |
+
+Reports:
+- **Latency and orchestration.** [RELATORIO_LATENCIA_2026-11-04_cloud-v7.json](docs/RELATORIO_LATENCIA_2026-11-04_cloud-v7.json), recorded turn by turn in [docs/evidence/cloud_runs/2026-11-04/](docs/evidence/cloud_runs/2026-11-04/).
+- **Context and answer quality.** [docs/RELATORIO_QUALIDADE_2026-11-04.md](docs/RELATORIO_QUALIDADE_2026-11-04.md).
+- **What each stage contributes.** [docs/ABLACAO_2026-11-04.md](docs/ABLACAO_2026-11-04.md), an ablation of the Critic, Context Intelligence, PolicyGate, fast path and planning:
+  - without the PolicyGate, 19/19 dangerous cases are missed;
+  - without Context Intelligence, 4 are missed and turns cost 50% more;
+  - without the Critic, the answers with every number in the evidence drop from 56/58 to 52/58.
 
 What these numbers mean:
-- **Cloud mode** meets the routing and latency goals in this sample of 17 requests.
-- **Offline Qwen 1.7B** is safe (no missed hazard) but over-asks for clarification. That is its real accuracy without dataset phrases in the code, and it is why the cloud mode is the demonstration mode.
-- **Details:** every scenario, failure and trace is in [RELATORIO_FINAL_2026-11-02.md](docs/history/RELATORIO_FINAL_2026-11-02.md).
+- **Cloud mode** meets the routing, safety and latency goals on these sets.
+- **Offline Qwen 1.7B** never missed a hazard, because the deterministic RiskAssessment and the PolicyGate do not depend on the model. Its routing is weak and it over-asks for clarification, which is why the cloud mode is the demonstration mode.
+- **History.** The earlier reports (2 Nov, held-out v1 with 44 cases) are in [docs/history/](docs/history/).
 
----
-
-### Offline Context Intelligence: embeddings vs Qwen vs hybrid
+### Offline Context Intelligence: embeddings vs Qwen vs hybrid (2 Nov, held-out v1)
 
 The hybrid mode (`CONTEXT_MODE=hybrid`) answers clear turns with a kNN over local `nomic-embed-text` embeddings of labelled examples (`backend/app/agents/intent_examples.json`, written from scratch). It calls Qwen on mandatory triggers:
 - danger vocabulary;
@@ -392,11 +403,16 @@ Thresholds were fixed before measuring. Each mode was measured once on the held-
 ## Limitations
 
 - **Synthetic data.** The customer records are fixtures. Human operators are real people using the console or Telegram. `real_agent_connected` is `true` only while a channel is live, so with nobody online the customer is told the request is waiting. See [docs/HITL.md](docs/HITL.md).
-- **Demo identity.** PIN login with HMAC tokens binds the identity to the token, but it is not production authentication: the PINs are public, there is no rate limiting, and an empty `AUTH_SECRET` uses a per-process secret.
+- **Demo identity.** In demo mode (`DEMO_MODE=true`), the listed PINs are public on purpose. Account lockout, per-IP and per-customer rate limits apply in both modes. With `DEMO_MODE=false`, customer credentials are scrypt-hashed, `AUTH_SECRET` (≥32 chars) is required and no user list is shown. It is still not a production identity provider. See [docs/SECURITY.md](docs/SECURITY.md).
 - **Knowledge base scope.** It covers the official sites as of the snapshot date (378 pages). The help-centre FAQ widget (`/duvidas/*`) is a JavaScript chatbot with little indexable text. Answers can be as stale as the last `knowledge-refresh`.
 - **Slow local CPU.** On this machine `qwen3:1.7b` prefills about 25 tokens/s and generates about 5 tokens/s. A full local turn takes tens of seconds, so the offline mode misses the latency targets. The cloud mode is the demonstration mode.
 - **Model-dependent classification.** Context Intelligence accuracy depends on the model; see the held-out results. Concrete warning signs that the regex does not recognise, but the model rates "potentially dangerous", get the safety menu, not an immediate alert. The menu always offers "real physical risk".
 - **Public data providers.** The weather, FX and search providers are unauthenticated public services and can rate-limit. The agent then says the provider is unavailable and never invents a value.
+- **Open items, measured but not fixed:**
+  - in planning mode, the composed answer loses the inline `[n]` citation markers (see the ablation report);
+  - the Critic and the judge are not yet calibrated against human labels;
+  - the replicas share one SQLite file; Postgres is not implemented;
+  - the Telegram channel is tested with a simulated Bot API, and no real-bot transcript is committed.
 
 ## Local vs cloud
 

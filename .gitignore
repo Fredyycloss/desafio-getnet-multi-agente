@@ -20,3 +20,7 @@ docs/DIAGNOSTICO_*
 # Browser test artifacts
 frontend/test-results/
 frontend/playwright-report/
+
+# Interview answers and self-assessment (for the author only)
+docs/RESPOSTAS_ENTREVISTA.md
+docs/SIMULACAO_*

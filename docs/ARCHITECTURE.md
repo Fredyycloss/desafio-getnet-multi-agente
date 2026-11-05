@@ -94,6 +94,7 @@ The LLM chooses the tools by function calling:
 | `web_search` | Public web through stable APIs: optional Brave key → Wikipedia REST → DuckDuckGo Instant Answer |
 | `get_weather_forecast` | Open-Meteo |
 | `get_exchange_rate` | Frankfurter |
+| `recall_conversation` | This session's memory note and the customer's recent messages, for questions about what they said earlier. Nothing to recall → abstention |
 
 - **Answer:** the LLM writes from the evidence (`[n]` citations with URL and section) and the tool results (numbers copied exactly, provider named).
 - **Provider down:** the answer says so and invents nothing (`degraded_reason=provider_unavailable`).

@@ -1,0 +1,165 @@
+{
+  "date": "2026-11-04",
+  "commit": "861ada7",
+  "turns_per_conversation": 16,
+  "settings": {
+    "SESSION_SUMMARY_AFTER_MESSAGES": null,
+    "SESSION_MEMORY_RECENT_MESSAGES": null
+  },
+  "on": {
+    "conversations": [
+      {
+        "id": "store_and_model",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Doceria Primavera",
+          "Get Mini"
+        ],
+        "answer": "Não tenho como lembrar o nome do seu estabelecimento nem qual maquininha você mencionou antes, pois não há histórico de conversa disponível para mim. A única informação que consigo consultar agora é do terminal TERM-1988, modelo Get Smart, com status offline, conexão Wi-Fi, último contato em 2026-11-04T23:50:15+00:00 e código de erro NET-001 (perda de conectividade). Esses registros são dados sint",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 6187,
+          "memory_chars": 946
+        },
+        "final_turn_prompt_tokens": 6343,
+        "final_turn_cost_usd": 0.0009663
+      },
+      {
+        "id": "terminal_problem",
+        "recalled_all": true,
+        "recalled": [
+          "TERM-1988"
+        ],
+        "expected": [
+          "TERM-1988"
+        ],
+        "answer": "Não tenho como confirmar qual terminal você mencionou antes, pois esta conversa não traz esse registro. Porém, a consulta de status retornou o terminal TERM-1988 (modelo Get Smart), com status offline, conexão Wi-Fi, último contato em 2026-11-04T23:50:15+00:00 e código de erro NET-001 (perda de conectividade). Se for esse o seu equipamento, uma verificação básica de baixo risco é conferir se o Wi-",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 8117,
+          "memory_chars": 954
+        },
+        "final_turn_prompt_tokens": 6427,
+        "final_turn_cost_usd": 0.0009652
+      },
+      {
+        "id": "chosen_product",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Get Clássica"
+        ],
+        "answer": "Não encontrei informação suficiente na base para responder com segurança. Qual assunto você quer que eu verifique?\n\nEscolha uma opção:\n1. Maquininha, conexão ou falha\n2. Vendas, pagamentos ou recebimentos\n3. Produtos, taxas ou serviços Getnet\n4. Falar com atendente humano\n\nResponda com o nome ou número da opção. A escolha por atendimento humano abre um protocolo na fila de atendentes.",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 9345,
+          "memory_chars": 867
+        },
+        "final_turn_prompt_tokens": 4148,
+        "final_turn_cost_usd": 0.0006338
+      },
+      {
+        "id": "shop_name_en",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Blue Harbor"
+        ],
+        "answer": "I don't have a record of you telling me your shop name earlier in this conversation; the only shop name I can see comes from your profile lookup. The profile shows the merchant name as \"Comércio Demo 1988\", with an account status of active and a segment of small_business. Please note that these records are synthetic demo data, not real Getnet accounts. If this doesn't match your shop, you can shar",
+        "memory": {
+          "memory_used": true,
+          "summarized_messages": 25,
+          "chars_replaced": 8846,
+          "memory_chars": 921
+        },
+        "final_turn_prompt_tokens": 5738,
+        "final_turn_cost_usd": 0.0008258
+      }
+    ],
+    "recall_rate": 0.25,
+    "mean_final_prompt_tokens": 5664.0,
+    "summary_calls": {
+      "calls": 40,
+      "prompt_tokens": 28863,
+      "output_tokens": 12153,
+      "cost_usd": 0.0089628
+    }
+  },
+  "off": {
+    "conversations": [
+      {
+        "id": "store_and_model",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Doceria Primavera",
+          "Get Mini"
+        ],
+        "answer": "Não tenho como lembrar o nome do seu estabelecimento nem qual maquininha você mencionou em conversas anteriores, pois não tenho acesso a esse histórico. Nos dados que consultei, há o terminal TERM-1988, modelo Get Smart, com status offline, conexão Wi-Fi, último contato em 2026-11-04T23:57:34+00:00 e código de erro NET-001 (perda de conectividade). Não há informação do nome do estabelecimento nos ",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 5991,
+        "final_turn_cost_usd": 0.0009351
+      },
+      {
+        "id": "terminal_problem",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "TERM-1988"
+        ],
+        "answer": "Qual assunto você gostaria de tratar?\n\nEscolha uma opção:\n1. Problemas de conexão\n2. Problemas para realizar vendas\n3. Defeito ou funcionamento da maquininha\n4. Dúvidas sobre pagamentos\n5. Quero falar com atendimento humano\n\nResponda com o nome ou número da opção. A escolha por atendimento humano abre um protocolo na fila de atendentes.",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 2434,
+        "final_turn_cost_usd": 0.0003134
+      },
+      {
+        "id": "chosen_product",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Get Clássica"
+        ],
+        "answer": "Sua solicitação foi registrada e aguarda um atendente. Protocolo: GET-20261105-A2A95B.\n\nNenhum atendente está online agora; a solicitação segue na fila e a resposta aparecerá aqui. Este é um ambiente de demonstração com dados sintéticos, não um chamado oficial da Getnet.",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 7980,
+        "final_turn_cost_usd": 0.001085
+      },
+      {
+        "id": "shop_name_en",
+        "recalled_all": false,
+        "recalled": [],
+        "expected": [
+          "Blue Harbor"
+        ],
+        "answer": "I don't have any record of you telling me your shop name earlier in this conversation; this is the start of our exchange as far as I can see. The profile lookup returned a merchant name of \"Comércio Demo 1988,\" but I can't confirm that it belongs to you, and it's worth checking that it matches your shop. Please note that these records are synthetic demo data, not real Getnet accounts. If you tell ",
+        "memory": {
+          "memory_used": false
+        },
+        "final_turn_prompt_tokens": 5384,
+        "final_turn_cost_usd": 0.0007934
+      }
+    ],
+    "recall_rate": 0.0,
+    "mean_final_prompt_tokens": 5447.2,
+    "summary_calls": {
+      "calls": 0,
+      "prompt_tokens": 0,
+      "output_tokens": 0,
+      "cost_usd": 0.0
+    }
+  },
+  "context_compression": {
+    "mean_chars_replaced": 8123.8,
+    "mean_memory_note_chars": 922.0
+  }
+}

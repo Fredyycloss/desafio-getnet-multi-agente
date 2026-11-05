@@ -9,10 +9,10 @@ Item by item, with source, status and evidence: [`CHECKLIST_V7.md`](CHECKLIST_V7
 | Fast path dominant; multi-specialist barely exercised | **Resolved.** 20/20 multi-intent cases call every expected specialist; planning in 18 of 40 orchestration requests | `RELATORIO_LATENCIA_2026-11-04_cloud-v7.json` |
 | Critic approves 100% / 21%→0% unexplained | **Resolved in practice.** Challenge mode: 10/10 bad drafts caught, 10/10 fixed by the re-plan, 0 leaked. Severity per issue decided by code. **Pending:** calibration against human labels | checklist Q5/Q6 |
 | No answer-quality measure | **Resolved.** 63-item set, deterministic checks, judge rubric; ablation per configuration | `eval/ANSWER_QUALITY_*`, `eval/ABLATION_2026-11-04.json` |
-| Heavy chain without justification | **Measured** by ablation: quality, safety false negatives, routing, latency and cost per configuration | [`ABLACAO_2026-11-04.md`](ABLACAO_2026-11-04.md) |
+| Heavy chain without justification | **Resolved.** Ablation: without the PolicyGate 19/19 dangerous cases are missed; without Context Intelligence 4 are missed and turns cost 50% more; without the Critic, grounded answers drop 56/58 → 52/58 | [`ABLACAO_2026-11-04.md`](ABLACAO_2026-11-04.md) |
 | Shared operator key, public PINs, no lockout | **Resolved.** Individual operators, `DEMO_MODE`, lockout and rate limits | `test_login_security.py` |
 | Read-only tools | **Resolved.** 4 write actions with confirmation, idempotency and audit | [`WRITE_ACTIONS.md`](WRITE_ACTIONS.md) |
-| No long-conversation summary | **Resolved.** Session memory, measured on/off | `eval/MEMORY_EVAL_2026-11-04.json` |
+| No long-conversation summary | **Partial.** Session memory + `recall_conversation`; early-fact recall 2/4 on vs 0/4 off; two misses open | `eval/MEMORY_EVAL_2026-11-04.json` |
 | No OTel, alerts, dashboards or replicas | **Resolved** except Postgres: OTel → Jaeger, Prometheus `/metrics`, Grafana, 7 alerts, `--scale api=2` on SQLite | [`OBSERVABILITY.md`](OBSERVABILITY.md) |
 | Literal payload returns 401; home suggestions fall into the menu | **Resolved.** Anonymous session (21/21 checks); suggestions 12/12 in cloud | `RELATORIO_LATENCIA_2026-11-04_cloud-v7-block8.json` |
 | Telegram not demonstrated | **Pending.** Code and tests done; the transcript needs the author's bot token | checklist H7 |

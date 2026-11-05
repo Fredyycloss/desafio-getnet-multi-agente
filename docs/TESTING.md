@@ -31,6 +31,20 @@ Web providers are stubbed at HTTP level. The Anthropic adapter is tested with a 
 | `test_critic_agent.py`, `test_grounding.py` | Critic approves grounded answers and rejects invented values, missing citations and secret requests |
 | `test_context_intelligence.py`, `test_risk_assessment_context.py`, `test_clarification.py`, `test_human_request_guardrail.py` | schema validation, deterministic hazards, menus, human priority |
 | `test_real_database_tools.py`, `test_real_knowledge_retrieval.py`, `test_web_research_tools.py`, `test_api_integration.py`, `test_security_and_memory.py` | real tools, retrieval, API wiring, memory, redaction, audit |
+| `test_hitl_api.py`, `test_hitl_telegram.py` | operator console (claim, reply, resolve, return to AI), live resumption, Telegram worker over a simulated Bot API, unauthorized operator, Telegram outage → console keeps working |
+| `test_knowledge_crawler.py`, `test_knowledge_snapshot.py`, `test_knowledge_tools.py` | crawler discovery and extraction, snapshot loading offline, Knowledge Agent tool selection |
+| `test_critic_challenge.py` | challenge mode corrupts the first draft; the Critic catches it and the re-plan fixes it |
+| `test_replay_cassette.py` | the committed cloud recording replayed without a key: same outcome per turn, misses reported |
+| `test_login_security.py` | account lockout, per-IP ceiling, chat rate limit, non-demo mode (scrypt credentials, required `AUTH_SECRET`) |
+| `test_write_actions.py` | write tools only propose; confirmation, expiry, idempotency, audit |
+| `test_anonymous_and_topics.py` | literal payload without a token; customer tools answer `login_required`; home suggestions route by topic |
+| `test_ablation.py` | each `ABLATION` value switches off exactly one stage |
+| `test_session_memory.py` | summary and facts after a long session, redaction, isolation; the memory note survives the history window and reaches the answer writer; `recall_conversation` answers from it |
+| `test_improvement_loop.py` | feedback, validated answers invalidated by corpus version, knowledge-gap promotion only by an operator, overlap with evaluation sets refused |
+| `test_telemetry.py` | OpenTelemetry spans share the response `trace_id`; Prometheus metrics carry no user data |
+| `test_injection_defense.py` | per-agent tool allowlist, schema-checked arguments, output filter for other customers' identifiers, delimited retrieved content |
+
+**Count:** 357 tests pass on 04/11/2026 (`pytest -q`). The replay test also runs as its own CI step.
 
 ## Browser: Playwright
 
