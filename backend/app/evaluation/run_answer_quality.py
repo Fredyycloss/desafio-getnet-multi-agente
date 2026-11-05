@@ -51,7 +51,8 @@ def evidence_of(result: dict) -> tuple[list[dict], list]:
 
 
 ABSTAIN_TEXT = re.compile(
-    r"n[aã]o (tenho|encontrei|h[aá]|consta|consigo confirmar|posso informar)\b.{0,60}(informa|evid[eê]nci|dado|registro|fonte|base)"
+    r"n[aã]o (tenho|encontrei|h[aá]|consta|consigo confirmar|posso informar|[eé] poss[ií]vel (informar|confirmar|responder|determinar))"
+    r"\b.{0,60}(informa|evid[eê]nci|dado|registro|fonte|base)"
     r"|could not find|no evidence|does not (state|contain|mention)|not (in|available in) the (evidence|sources)",
     re.IGNORECASE)
 
@@ -196,9 +197,14 @@ def run_live(args, items):
                   "answer": result["answer"], "orchestration_mode": result.get("orchestration_mode"), "trace": result.get("trace"),
                   "degraded": result.get("degraded"), "critic": result.get("critic"), "latency_s": round(latency, 2),
                   "sources": [{"title": s.get("title"), "url": s.get("url")} for s in result.get("sources") or []][:6],
+                  # Stores every evidence item the model actually saw (not capped at 6): checks
+                  # above were computed against the same full list, so a citation like [7] from a
+                  # multi-specialist answer (e.g. Knowledge + Payments, >6 items combined) can be
+                  # verified against stored evidence instead of silently reading as out-of-range
+                  # on --rescore/--rejudge (found while measuring V8 Block 3, item m01).
                   "evidence": [{"title": e.get("title"), "url": e.get("url"), "section": e.get("section"), "content": e.get("content", "")[:JUDGE_EVIDENCE_CHARS]}
-                               for e in evidence[:6]],
-                  "tool_data": tools[:6], "checks": checks,
+                               for e in evidence],
+                  "tool_data": tools, "checks": checks,
                   "llm_calls": usage.get("llm_calls"), "cost_usd": usage.get("cost_usd", 0.0)}
         if judge_llm is not None:
             try:

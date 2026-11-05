@@ -85,11 +85,15 @@ JUDGE_EVIDENCE_CHARS = 4000
 
 
 def judge(llm, item: dict, answer: str, evidence: list[dict], tool_data: list) -> dict:
+    # 8, not 6: a multi-intent answer combines evidence from 2+ specialists (e.g. Knowledge +
+    # Payments), and the model's own [n] citations index into that full list — capping the judge's
+    # view below what the model saw made a valid [7]/[8] citation look out-of-range (found while
+    # measuring V8 Block 3, item m01). Matches critic_agent.MAX_EVIDENCE_ITEMS for the same reason.
     payload = {
         "question": item["question"],
-        "customer_tool_data": tool_data[:6],
+        "customer_tool_data": tool_data[:8],
         "evidence": [{"n": i + 1, "url": e.get("url"), "section": e.get("section"), "excerpt": str(e.get("content", ""))[:JUDGE_EVIDENCE_CHARS]}
-                     for i, e in enumerate(evidence[:6])],
+                     for i, e in enumerate(evidence[:8])],
         "answer": answer[:3000],
     }
     response = llm.chat([{"role": "system", "content": JUDGE_SYSTEM},

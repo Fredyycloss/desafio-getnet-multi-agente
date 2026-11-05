@@ -1,0 +1,2455 @@
+{
+  "date": "2026-11-05",
+  "commit": "9f8ab0c",
+  "provider": "anthropic",
+  "model": "claude-haiku-5-5",
+  "judge_model": "claude-sonnet-5-5",
+  "dataset": "answer_quality_test.jsonl",
+  "rescored": false,
+  "items": 23,
+  "overall": {
+    "n": 23,
+    "coverage_mean": 0.8095,
+    "full_coverage_rate": 0.8095,
+    "forbidden_absent_rate": 1.0,
+    "numbers_supported_rate": 0.9524,
+    "citation_correct_rate": 0.9167,
+    "language_ok_rate": 1.0,
+    "abstention_correct_rate": 0.5,
+    "degraded_rate": 0.0,
+    "critic_rejection_rate": 0.0435,
+    "judge_correct_rate": 0.6522,
+    "judge_grounded_rate": 0.8696,
+    "judge_usefulness_mean": 3.7826,
+    "latency_mean_s": 6.9578,
+    "latency_p95_s": 9.11,
+    "llm_calls_mean": 5.087,
+    "cost_mean_usd": 0.0011
+  },
+  "by_category": {
+    "advance": {
+      "n": 1,
+      "coverage_mean": 0.0,
+      "full_coverage_rate": 0.0,
+      "forbidden_absent_rate": 1.0,
+      "numbers_supported_rate": 1.0,
+      "citation_correct_rate": null,
+      "language_ok_rate": 1.0,
+      "abstention_correct_rate": null,
+      "degraded_rate": 0.0,
+      "critic_rejection_rate": 1.0,
+      "judge_correct_rate": 0.0,
+      "judge_grounded_rate": 0.0,
+      "judge_usefulness_mean": 1,
+      "latency_mean_s": 8.99,
+      "latency_p95_s": 8.99,
+      "llm_calls_mean": 7,
+      "cost_mean_usd": 0.0016
+    },
+    "crediario": {
+      "n": 1,
+      "coverage_mean": 1.0,
+      "full_coverage_rate": 1.0,
+      "forbidden_absent_rate": 1.0,
+      "numbers_supported_rate": 1.0,
+      "citation_correct_rate": 1.0,
+      "language_ok_rate": 1.0,
+      "abstention_correct_rate": null,
+      "degraded_rate": 0.0,
+      "critic_rejection_rate": 0.0,
+      "judge_correct_rate": 1.0,
+      "judge_grounded_rate": 1.0,
+      "judge_usefulness_mean": 5,
+      "latency_mean_s": 6.17,
+      "latency_p95_s": 6.17,
+      "llm_calls_mean": 5,
+      "cost_mean_usd": 0.001
+    },
+    "customer_data": {
+      "n": 4,
+      "coverage_mean": 1.0,
+      "full_coverage_rate": 1.0,
+      "forbidden_absent_rate": 1.0,
+      "numbers_supported_rate": 1.0,
+      "citation_correct_rate": null,
+      "language_ok_rate": 1.0,
+      "abstention_correct_rate": null,
+      "degraded_rate": 0.0,
+      "critic_rejection_rate": 0.0,
+      "judge_correct_rate": 1.0,
+      "judge_grounded_rate": 1.0,
+      "judge_usefulness_mean": 4.75,
+      "latency_mean_s": 5.9375,
+      "latency_p95_s": 7.19,
+      "llm_calls_mean": 4.25,
+      "cost_mean_usd": 0.0008
+    },
+    "fees": {
+      "n": 1,
+      "coverage_mean": 1.0,
+      "full_coverage_rate": 1.0,
+      "forbidden_absent_rate": 1.0,
+      "numbers_supported_rate": 1.0,
+      "citation_correct_rate": null,
+      "language_ok_rate": 1.0,
+      "abstention_correct_rate": null,
+      "degraded_rate": 0.0,
+      "critic_rejection_rate": 0.0,
+      "judge_correct_rate": 0.0,
+      "judge_grounded_rate": 1.0,
+      "judge_usefulness_mean": 3,
+      "latency_mean_s": 8.16,
+      "latency_p95_s": 8.16,
+      "llm_calls_mean": 7,
+      "cost_mean_usd": 0.0015
+    },
+    "multi_intent": {
+      "n": 2,
+      "coverage_mean": 1.0,
+      "full_coverage_rate": 1.0,
+      "forbidden_absent_rate": 1.0,
+      "numbers_supported_rate": 1.0,
+      "citation_correct_rate": 1.0,
+      "language_ok_rate": 1.0,
+      "abstention_correct_rate": null,
+      "degraded_rate": 0.0,
+      "critic_rejection_rate": 0.0,
+      "judge_correct_rate": 0.5,
+      "judge_grounded_rate": 0.5,
+      "judge_usefulness_mean": 3.5,
+      "latency_mean_s": 10.97,
+      "latency_p95_s": 13.86,
+      "llm_calls_mean": 7.5,
+      "cost_mean_usd": 0.0018
+    },
+    "out_of_base": {
+      "n": 2,
+      "coverage_mean": null,
+      "full_coverage_rate": null,
+      "forbidden_absent_rate": 1.0,
+      "numbers_supported_rate": null,
+      "citation_correct_rate": null,
+      "language_ok_rate": 1.0,
+      "abstention_correct_rate": 0.5,
+      "degraded_rate": 0.0,
+      "critic_rejection_rate": 0.0,
+      "judge_correct_rate": 1.0,
+      "judge_grounded_rate": 1.0,
+      "judge_usefulness_mean": 3.5,
+      "latency_mean_s": 5.37,
+      "latency_p95_s": 6.29,
+      "llm_calls_mean": 3.5,
+      "cost_mean_usd": 0.0006
+    },
+    "payment_link": {
+      "n": 2,
+      "coverage_mean": 1.0,
+      "full_coverage_rate": 1.0,
+      "forbidden_absent_rate": 1.0,
+      "numbers_supported_rate": 0.5,
+      "citation_correct_rate": 1.0,
+      "language_ok_rate": 1.0,
+      "abstention_correct_rate": null,
+      "degraded_rate": 0.0,
+      "critic_rejection_rate": 0.0,
+      "judge_correct_rate": 0.5,
+      "judge_grounded_rate": 1.0,
+      "judge_usefulness_mean": 3.5,
+      "latency_mean_s": 6.61,
+      "latency_p95_s": 7.02,
+      "llm_calls_mean": 5,
+      "cost_mean_usd": 0.0012
+    },
+    "pix": {
+      "n": 1,
+      "coverage_mean": 1.0,
+      "full_coverage_rate": 1.0,
+      "forbidden_absent_rate": 1.0,
+      "numbers_supported_rate": 1.0,
+      "citation_correct_rate": 1.0,
+      "language_ok_rate": 1.0,
+      "abstention_correct_rate": null,
+      "degraded_rate": 0.0,
+      "critic_rejection_rate": 0.0,
+      "judge_correct_rate": 0.0,
+      "judge_grounded_rate": 1.0,
+      "judge_usefulness_mean": 3,
+      "latency_mean_s": 6.23,
+      "latency_p95_s": 6.23,
+      "llm_calls_mean": 5,
+      "cost_mean_usd": 0.0012
+    },
+    "products": {
+      "n": 8,
+      "coverage_mean": 0.625,
+      "full_coverage_rate": 0.625,
+      "forbidden_absent_rate": 1.0,
+      "numbers_supported_rate": 1.0,
+      "citation_correct_rate": 0.8571,
+      "language_ok_rate": 1.0,
+      "abstention_correct_rate": null,
+      "degraded_rate": 0.0,
+      "critic_rejection_rate": 0.0,
+      "judge_correct_rate": 0.625,
+      "judge_grounded_rate": 0.875,
+      "judge_usefulness_mean": 3.875,
+      "latency_mean_s": 6.7512,
+      "latency_p95_s": 9.11,
+      "llm_calls_mean": 5,
+      "cost_mean_usd": 0.0011
+    },
+    "web": {
+      "n": 1,
+      "coverage_mean": 1.0,
+      "full_coverage_rate": 1.0,
+      "forbidden_absent_rate": 1.0,
+      "numbers_supported_rate": 1.0,
+      "citation_correct_rate": null,
+      "language_ok_rate": 1.0,
+      "abstention_correct_rate": null,
+      "degraded_rate": 0.0,
+      "critic_rejection_rate": 0.0,
+      "judge_correct_rate": 1.0,
+      "judge_grounded_rate": 1.0,
+      "judge_usefulness_mean": 4,
+      "latency_mean_s": 6.82,
+      "latency_p95_s": 6.82,
+      "llm_calls_mean": 4,
+      "cost_mean_usd": 0.0007
+    }
+  },
+  "records": [
+    {
+      "item_id": "a02",
+      "category": "out_of_base",
+      "language": "pt",
+      "question": "Qual o telefone pessoal do gerente da minha conta?",
+      "answer": "Não posso fornecer o telefone pessoal de nenhum gerente, pois a consulta que tenho acesso mostra apenas os dados do seu próprio perfil. Pelo que consegui localizar, sua conta está registrada como \"Comércio Demo 1988\", com status \"active\" e segmento \"small_business\". Esses registros são dados sintéticos de demonstração, e não contas reais da Getnet. Para falar com o responsável pela sua conta, o caminho mais seguro é usar os canais oficiais de atendimento da Getnet indicados no seu contrato ou no site da empresa.",
+      "orchestration_mode": "context_directed_dispatch",
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:customer_support_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "degraded": false,
+      "critic": {
+        "approved": true,
+        "mode": "llm_critic",
+        "issues": [],
+        "grounding_check": "passed"
+      },
+      "latency_s": 6.29,
+      "sources": [],
+      "evidence": [],
+      "tool_data": [
+        {
+          "ok": true,
+          "tool": "get_customer_profile",
+          "data": {
+            "user_id": "cliente1988",
+            "merchant_name": "Comércio Demo 1988",
+            "account_status": "active",
+            "segment": "small_business"
+          },
+          "data_environment": "synthetic_demo"
+        },
+        {
+          "ok": true,
+          "tool": "get_customer_profile",
+          "data": {
+            "user_id": "cliente1988",
+            "merchant_name": "Comércio Demo 1988",
+            "account_status": "active",
+            "segment": "small_business"
+          },
+          "data_environment": "synthetic_demo"
+        }
+      ],
+      "checks": {
+        "kind": "abstain",
+        "abstention_correct": false,
+        "forbidden_absent": true,
+        "language_ok": true
+      },
+      "llm_calls": 4,
+      "cost_usd": 0.00067,
+      "judge": {
+        "grounded": true,
+        "unsupported_claims": [
+          "O caminho mais seguro é usar os canais oficiais de atendimento da Getnet indicados no seu contrato ou no site da empresa (conselho genérico, não presente nas evidências)"
+        ],
+        "numbers_correct": true,
+        "citations_correct": true,
+        "answers_question": true,
+        "safe": true,
+        "usefulness": 4,
+        "verdict": "correct",
+        "usage": {
+          "prompt_tokens": 1182,
+          "output_tokens": 136,
+          "latency_ms": 1896.51,
+          "cost_usd": 0.003724
+        }
+      }
+    },
+    {
+      "item_id": "a03",
+      "category": "out_of_base",
+      "language": "pt",
+      "question": "A Getnet aceita pagamento em bitcoin na maquininha?",
+      "answer": "Não encontrei informação suficiente na base para responder com segurança. Qual assunto você quer que eu verifique?\n\nEscolha uma opção:\n1. Maquininha, conexão ou falha\n2. Vendas, pagamentos ou recebimentos\n3. Produtos, taxas ou serviços Getnet\n4. Falar com atendente humano\n\nResponda com o nome ou número da opção. A escolha por atendimento humano abre um protocolo na fila de atendentes.",
+      "orchestration_mode": "grounded_knowledge_abstention",
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:knowledge_specialist",
+        "knowledge_evidence_missing",
+        "topic_options_presented"
+      ],
+      "degraded": false,
+      "critic": {
+        "approved": true,
+        "mode": "evidence_policy"
+      },
+      "latency_s": 4.45,
+      "sources": [],
+      "evidence": [],
+      "tool_data": [],
+      "checks": {
+        "kind": "abstain",
+        "abstention_correct": true,
+        "forbidden_absent": true,
+        "language_ok": true
+      },
+      "llm_calls": 3,
+      "cost_usd": 0.0005928,
+      "judge": {
+        "grounded": true,
+        "unsupported_claims": [],
+        "numbers_correct": true,
+        "citations_correct": true,
+        "answers_question": true,
+        "safe": true,
+        "usefulness": 3,
+        "verdict": "correct",
+        "usage": {
+          "prompt_tokens": 968,
+          "output_tokens": 72,
+          "latency_ms": 1307.18,
+          "cost_usd": 0.002656
+        }
+      }
+    },
+    {
+      "item_id": "a06",
+      "category": "products",
+      "language": "pt",
+      "question": "Quanto custa a Get Smart em Portugal na tarifa premium?",
+      "answer": "Na tarifa Premium, a **Get Smart** tem mensalidade de **10 €** (TPA primeiro) e **10 €** por TPA adicional [1]. O TPA adicional da Get Smart custa 10 € [1].\n\nQuanto às transações, na tarifa Premium a comissão para Consumer Debit em TPA físico é de 0,40% e em TPA online de 0,60%; para Consumer Credit, 0,80% (físico) e 1,00% (online); para Commercial Debit & Credit e International, 2,00% (físico) e 2,20% (online) [1]. Há ainda uma taxa mínima de 0,05 € por transação no TPA físico e de 0,15 € no TPA virtual [1].\n\nA evidência não especifica a comissão de transação por modelo individual além destes valores gerais, nem a existência de outras condições para a Get Smart nesta tarifa.",
+      "orchestration_mode": "context_directed_dispatch",
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:knowledge_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "degraded": false,
+      "critic": {
+        "approved": true,
+        "mode": "llm_critic",
+        "issues": []
+      },
+      "latency_s": 6.87,
+      "sources": [
+        {
+          "title": "Tarifa premium",
+          "url": "https://www.getnet.net/pt/tarifas/premium"
+        },
+        {
+          "title": "Tarifa plana",
+          "url": "https://www.getnet.net/pt/tarifas/plana"
+        },
+        {
+          "title": "Tarifa básica",
+          "url": "https://www.getnet.net/pt/tarifas/basica"
+        },
+        {
+          "title": "TPA portátil Get Smart: terminal moderno da Getnet | Getnet",
+          "url": "https://www.getnet.net/pt/as-nossas-solucoes/pagamentos-presenciais/tpa-portatil"
+        }
+      ],
+      "evidence": [
+        {
+          "title": "Tarifa premium",
+          "url": "https://www.getnet.net/pt/tarifas/premium",
+          "section": "Tarifa premium",
+          "content": "AS NOSSAS TARIFAS Faturação mínima de 8.000 €/mês: Mensalidade TPA Primeiro TPA TPA adicional Get Smart 10 €¹ 10 € Get Classic 10 €¹ 10 € Get Tap on Phone 0 € 5 € Get Mini 0 € 5 € Get Checkout 15 € NA Get Link & Pay 15 € NA Qual é o preço por transação?: Domestic & UE TPA físico TPA online³ Consumer Debit² 0,40% 0,60% Consumer Credit 0,80% 1,00% Commercial Debit & Credit 2,00% 2,20% International 2,00% 2,20% 3% por transação: (1) Modelos incluidos: Get tap on Phone e Get Mini. (2) Preço MB ou MB WAY: Consumer Debit (3) Taxa mínima de 0,05€ por transação no TPA físico, 0,15€ no TPA Virtual. (4) UPI e Discover são aceites no Get Classic e no Get Checkout. (5) Business-to-Business (B2B) é uma transação realizada exclusivamente entre duas empresas. *Faturação mínima com cartão de 8.000 €/mês por cliente (estabelecimento). Se este valor mínimo não for antigido, será cobrado um extra de 30€. Cancelamento do TPA: 185€ (se matrícula tiver até 2 anos). Após esse período: 85€."
+        },
+        {
+          "title": "Tarifa plana",
+          "url": "https://www.getnet.net/pt/tarifas/plana",
+          "section": "Tarifa plana",
+          "content": "AS NOSSAS TARIFAS Sem custos extra até 25.000 € / mês: Mensalidade TPA Primeiro TPA TPA adicional Get Smart 0 € 10 € Get Classic 0 € 10 € Get Tap on Phone 0 € 5 € Get mini 0 € 5 € Get Checkout 0 € NA Get Link & Pay 0 € NA Qual é o preço por transação?: Faturaçao por mês (€) TPA físico TPA online 0 - 500 € 9 € 15 € 501 - 1.000€ 12 € 20 € 1 001 - 2 000€ 22 € 35 € 2.001 - 4.000€ 32 € 50 € 4 001 - 6 000 € 42 € 65 € 6 001 - 8 000 € 55 € 85 € 8 001 - 10 000 € 65 € 95 € 10 001 - 15 000 € 80 € 120 € 15 001 - 20 000 € 100 € 150 € 20 001 - 25 000 € 120 € 180 € > 25 000 € 120€ + 1.5% 180€ + 1.5% 3% por transação: (1) Get Smart e Get Classic a 0 € apenas com a contratação da conta Grow no banco Santander. (2) UPI e Discover são aceites no Get Classic e no Get Checkout. (3) Business-to-Business (B2B) é uma transação realizada exclusivamente entre duas empresas. Cancelamento do TPA: 185€ (se matrícula tiver até 2 anos). Após esse período: 85€."
+        },
+        {
+          "title": "Tarifa básica",
+          "url": "https://www.getnet.net/pt/tarifas/basica",
+          "section": "Tarifa básica",
+          "content": "AS NOSSAS TARIFAS Custo de acordo com a sua atividade: Mensalidade TPA Primeiro TPA TPA adicional Get Smart 10 €¹ 10 € Get Classic 10 €¹ 10 € Get Tap on Phone 0 € 5 € Get mini 0 € 5 € Get Checkout 15 € NA Get Link & Pay 15 € NA 1) Get Smart e Get Classic a 0 € apenas com a contratação da conta Grow no banco Santander. Qual é o preço por transação?: Domestic & UE TPA físico³ TPA online³ Consumer Debit² 0,60% 0,80% Consumer Credit 1,10% 1,30% Commercial Debit & Credit 2,20% 2,40% International 2,20% 2,40% 3% por transação: (1) Get Smart e Get Classic a 0 € apenas com a contratação da conta Grow no banco Santander. (2) Preço MB ou MB WAY: Consumer Debit (3) Taxa fixa de 0,05€ por transação no TPA físico, 0,15€ no TPA Virtual. (4) UPI e Discover são aceites no Get Classic e no Get Checkout. (5) Business-to-Business (B2B) é uma transação realizada exclusivamente entre duas empresas. Cancelamento do TPA: 185€ (se matrícula tiver até 2 anos). Após esse período: 85€."
+        },
+        {
+          "title": "TPA portátil Get Smart: terminal moderno da Getnet | Getnet",
+          "url": "https://www.getnet.net/pt/as-nossas-solucoes/pagamentos-presenciais/tpa-portatil",
+          "section": "TPA portátil Get Smart: terminal moderno da Getnet | Getnet",
+          "content": "GET SMART Cobranças rápidas. E muito mais. Um TPA simples e intuitivo. Uma plataforma avançada para gerir o seu negócio. Tudo em um. Contratar UM TPA PARA TODOS OS CLIENTES Os principais métodos de pagamento num só terminal Cartão, contactless ou MB WAY. Facilite os pagamentos, oferecendo aos seus clientes múltiplos métodos de pagamento num único TPA. Cartão, contactless ou MB WAY. TPA COM APPS Aplicações adaptadas a cada setor Dê mais eficiência ao seu negócio com apps específicas do seu setor. Gestão de faturação, reservas, atividades e back office para Hotelaria, Retalhistas e Grandes Superfícies. Dê mais eficiência ao seu negócio com apps específicas do seu setor. TPA ANDROID Tão fácil como utilizar o seu telemóvel Efetue todas as suas operações comerciais a partir do Get Smart. Um ecrã táctil de maiores dimensões que permite uma experiência de pagamento mais completa, fácil e intuitiva. Efetue todas as suas operações comerciais a partir do Get Smart. MÚLTIPLAS MOEDAS (DCC) Aceite pagamentos em moeda estrangeira Faça com que os seus clientes internacionais se sintam em casa dando-lhes a possibilidade de pagarem na sua própria moeda local e ver a conversão no ecrã. Faça com que os seus clientes internacionais se sintam em casa dando-lhes a possibilidade de pagarem na sua própria moeda local e ver a conversão no ecrã. Especificações que lhe são úteis Ecrã até 5 polegadas Conectividade 3G / 4G / Wi-Fi / BT / USB Batería 8 horas (uso ativo) Leitor de cartões Contactless / Chip / Banda magnética Faça negócio sem limites Aceite os métodos de pagamento mais utilizados no mercado. Tarifas adaptadas ao seu negócio Tarifa Básica Ideal para negócios sazonais Recomendada para negócios sazonais ou com número de operações baixo. Tarifa simples Preço por operação Custo de acordo com a sua atividade Desde ,60% por transação Saiba mais Tarifa mais vendida Tarifa Plana Faturação < 300.000 € Uma mensalidade simples e sem surpresas que se adapta à sua faturação TPA e transações incluidas numa mensalidade Sem comissões por transação Sem custos extra até 25.000 €/mês Desde 9,00€ /mês Saiba mais Tarifa Premium Faturação > 200.000 € Se a sua faturação é elevada, poderá beneficiar da tarifa mais competitiva. Tarifa competitiva Comissões reduzidas Faturação mínima 8.000 €/mês Desde ,40% por transação Saiba mais Estas tarifas não se adaptam ao seu negócio? Fale connosco Get Smart no seu setor Mais de 1,4 milhões de negócios usam a Genet. Descubra como tem contribuído para outras empresas do seu setor. Para restauração Ofereça aos seus clientes novas formas de pagamento. Descubra outras soluções de pagamento Getnet PAGAMENTOS PRESENCIAIS A solução que transforma o seu telemóvel num TPA Descubra Get Tap on Phone PAGAMENTOS ONLINE O TPA virtual que pode integrar na sua loja online Descubra o Get Checkout PAGOS ONLINE Cobre aos seus clientes através de um link de pagamento Descubra o Get Link & Pay PERGUNTAS FREQUENTES Esclarecemos as suas dúvidas sobre o Get Smart Temos as respostas às perguntas mais frequentes feitas por outros utilizadores. Saiba mais Contacto Comece já a vender com o seu TPA Getnet Para contratar o nosso TPA, precisa de ter uma conta no Banco Santander Abrir conta"
+        }
+      ],
+      "tool_data": [],
+      "checks": {
+        "kind": "answer",
+        "coverage": 1.0,
+        "missing_facts": [],
+        "forbidden_absent": true,
+        "numbers_supported": true,
+        "unsupported_values": [],
+        "citation_correct": true,
+        "language_ok": true,
+        "abstained": false
+      },
+      "llm_calls": 5,
+      "cost_usd": 0.00123,
+      "judge": {
+        "grounded": true,
+        "unsupported_claims": [],
+        "numbers_correct": true,
+        "citations_correct": true,
+        "answers_question": true,
+        "safe": true,
+        "usefulness": 4,
+        "verdict": "correct",
+        "usage": {
+          "prompt_tokens": 4341,
+          "output_tokens": 72,
+          "latency_ms": 1401.21,
+          "cost_usd": 0.009402
+        }
+      }
+    },
+    {
+      "item_id": "c01",
+      "category": "customer_data",
+      "language": "pt",
+      "question": "Quando cai o dinheiro das vendas de ontem?",
+      "answer": "Segundo os registros de demonstração (dados sintéticos, não são contas reais da Getnet), as vendas de ontem, 04/11/2026, somam 2 transações aprovadas com valor líquido total de R$ 361,55. A venda de débito TX-DEMO-1002 (R$ 120,00, líquido R$ 118,80) tem liquidação prevista para 05/11/2026, e a venda de crédito TX-DEMO-1001 (R$ 250,00, líquido R$ 242,75) tem liquidação prevista para 06/11/2026. Ambas estão com status \"scheduled\". Só posso mostrar os dados da sua própria conta.",
+      "orchestration_mode": "context_directed_dispatch",
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:payments_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "degraded": false,
+      "critic": {
+        "approved": true,
+        "mode": "llm_critic",
+        "issues": [],
+        "grounding_check": "passed"
+      },
+      "latency_s": 6.66,
+      "sources": [],
+      "evidence": [],
+      "tool_data": [
+        {
+          "ok": true,
+          "tool": "lookup_payment_status",
+          "user_id": "cliente1988",
+          "transaction_date": "2026-11-04",
+          "approved_count": 2,
+          "net_total_brl": 361.55,
+          "settlement_dates": [
+            "2026-11-05",
+            "2026-11-06"
+          ],
+          "transactions": [
+            {
+              "transaction_id": "TX-DEMO-1001",
+              "transaction_date": "2026-11-04",
+              "amount": 250.0,
+              "net_amount": 242.75,
+              "payment_method": "credit",
+              "transaction_status": "approved",
+              "settlement_date": "2026-11-06",
+              "settlement_status": "scheduled",
+              "error_code": null,
+              "description": "Venda demonstrativa de crédito"
+            },
+            {
+              "transaction_id": "TX-DEMO-1002",
+              "transaction_date": "2026-11-04",
+              "amount": 120.0,
+              "net_amount": 118.8,
+              "payment_method": "debit",
+              "transaction_status": "approved",
+              "settlement_date": "2026-11-05",
+              "settlement_status": "scheduled",
+              "error_code": null,
+              "description": "Venda demonstrativa de débito"
+            }
+          ],
+          "data_environment": "synthetic_demo",
+          "message": "These are synthetic seeded demo records, not real Getnet account or settlement data."
+        },
+        {
+          "ok": true,
+          "tool": "lookup_payment_status",
+          "user_id": "cliente1988",
+          "transaction_date": "2026-11-04",
+          "approved_count": 2,
+          "net_total_brl": 361.55,
+          "settlement_dates": [
+            "2026-11-05",
+            "2026-11-06"
+          ],
+          "transactions": [
+            {
+              "transaction_id": "TX-DEMO-1001",
+              "transaction_date": "2026-11-04",
+              "amount": 250.0,
+              "net_amount": 242.75,
+              "payment_method": "credit",
+              "transaction_status": "approved",
+              "settlement_date": "2026-11-06",
+              "settlement_status": "scheduled",
+              "error_code": null,
+              "description": "Venda demonstrativa de crédito"
+            },
+            {
+              "transaction_id": "TX-DEMO-1002",
+              "transaction_date": "2026-11-04",
+              "amount": 120.0,
+              "net_amount": 118.8,
+              "payment_method": "debit",
+              "transaction_status": "approved",
+              "settlement_date": "2026-11-05",
+              "settlement_status": "scheduled",
+              "error_code": null,
+              "description": "Venda demonstrativa de débito"
+            }
+          ],
+          "data_environment": "synthetic_demo",
+          "message": "These are synthetic seeded demo records, not real Getnet account or settlement data."
+        }
+      ],
+      "checks": {
+        "kind": "answer",
+        "coverage": 1.0,
+        "missing_facts": [],
+        "forbidden_absent": true,
+        "numbers_supported": true,
+        "unsupported_values": [],
+        "citation_correct": null,
+        "language_ok": true,
+        "abstained": false
+      },
+      "llm_calls": 4,
+      "cost_usd": 0.0007686,
+      "judge": {
+        "grounded": true,
+        "unsupported_claims": [],
+        "numbers_correct": true,
+        "citations_correct": true,
+        "answers_question": true,
+        "safe": true,
+        "usefulness": 5,
+        "verdict": "correct",
+        "usage": {
+          "prompt_tokens": 1840,
+          "output_tokens": 72,
+          "latency_ms": 1446.3,
+          "cost_usd": 0.0044
+        }
+      }
+    },
+    {
+      "item_id": "c02",
+      "category": "customer_data",
+      "language": "pt",
+      "question": "Tive alguma venda recusada ontem?",
+      "answer": "Sim, ontem (04/11/2026) houve 1 venda recusada na sua conta: a transação TX-DEMO-1003, no valor de R$ 89,90, pagamento no crédito, com status \"declined\" e código de erro 05, indicando recusa pelo emissor. O valor líquido ficou em R$ 0,00 e o status de liquidação é \"not_applicable\". Para entender o motivo, o mais simples é pedir ao cliente que tente novamente ou use outro meio de pagamento. Lembrando: estes registros são dados sintéticos de demonstração, não contas reais da Getnet.",
+      "orchestration_mode": "context_directed_dispatch",
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:payments_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "degraded": false,
+      "critic": {
+        "approved": true,
+        "mode": "llm_critic",
+        "issues": [],
+        "minor_issues": [
+          "Advice to ask customer to retry is not grounded but low-risk; main claims supported",
+          "Answer says the reason is unknown but states error 05 means issuer refusal, which the evidence supports"
+        ],
+        "model_verdict_overridden": true,
+        "grounding_check": "passed"
+      },
+      "latency_s": 7.19,
+      "sources": [],
+      "evidence": [],
+      "tool_data": [
+        {
+          "ok": true,
+          "tool": "find_declined_transactions",
+          "user_id": "cliente1988",
+          "transaction_date": "2026-11-04",
+          "transactions": [
+            {
+              "transaction_id": "TX-DEMO-1003",
+              "transaction_date": "2026-11-04",
+              "amount": 89.9,
+              "net_amount": 0.0,
+              "payment_method": "credit",
+              "transaction_status": "declined",
+              "settlement_date": null,
+              "settlement_status": "not_applicable",
+              "error_code": "05",
+              "description": "Transação demonstrativa recusada pelo emissor"
+            }
+          ],
+          "data_environment": "synthetic_demo"
+        },
+        {
+          "ok": true,
+          "tool": "find_declined_transactions",
+          "user_id": "cliente1988",
+          "transaction_date": "2026-11-04",
+          "transactions": [
+            {
+              "transaction_id": "TX-DEMO-1003",
+              "transaction_date": "2026-11-04",
+              "amount": 89.9,
+              "net_amount": 0.0,
+              "payment_method": "credit",
+              "transaction_status": "declined",
+              "settlement_date": null,
+              "settlement_status": "not_applicable",
+              "error_code": "05",
+              "description": "Transação demonstrativa recusada pelo emissor"
+            }
+          ],
+          "data_environment": "synthetic_demo"
+        }
+      ],
+      "checks": {
+        "kind": "answer",
+        "coverage": 1.0,
+        "missing_facts": [],
+        "forbidden_absent": true,
+        "numbers_supported": true,
+        "unsupported_values": [],
+        "citation_correct": null,
+        "language_ok": true,
+        "abstained": false
+      },
+      "llm_calls": 5,
+      "cost_usd": 0.0009915,
+      "judge": {
+        "grounded": true,
+        "unsupported_claims": [],
+        "numbers_correct": true,
+        "citations_correct": true,
+        "answers_question": true,
+        "safe": true,
+        "usefulness": 4,
+        "verdict": "correct",
+        "usage": {
+          "prompt_tokens": 1404,
+          "output_tokens": 72,
+          "latency_ms": 2167.65,
+          "cost_usd": 0.003528
+        }
+      }
+    },
+    {
+      "item_id": "c08",
+      "category": "customer_data",
+      "language": "en",
+      "question": "When will the money from yesterday's sales be deposited?",
+      "answer": "Your sales from 2026-11-04 are scheduled for deposit in two parts: TX-DEMO-1002 (debit, net 118.80) on 2026-11-05, and TX-DEMO-1001 (credit, net 242.75) on 2026-11-06, for a combined net total of BRL 361.55. Both settlements currently show a status of \"scheduled.\" Please note that these are synthetic seeded demo records, not real Getnet accounts or settlement data. If the funds don't arrive on the listed dates, a reasonable first check is that the bank account linked to your Getnet account is correct and active.",
+      "orchestration_mode": "context_directed_dispatch",
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:payments_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "degraded": false,
+      "critic": {
+        "approved": true,
+        "mode": "llm_critic",
+        "issues": [],
+        "grounding_check": "passed"
+      },
+      "latency_s": 4.76,
+      "sources": [],
+      "evidence": [],
+      "tool_data": [
+        {
+          "ok": true,
+          "tool": "lookup_payment_status",
+          "user_id": "cliente1988",
+          "transaction_date": "2026-11-04",
+          "approved_count": 2,
+          "net_total_brl": 361.55,
+          "settlement_dates": [
+            "2026-11-05",
+            "2026-11-06"
+          ],
+          "transactions": [
+            {
+              "transaction_id": "TX-DEMO-1001",
+              "transaction_date": "2026-11-04",
+              "amount": 250.0,
+              "net_amount": 242.75,
+              "payment_method": "credit",
+              "transaction_status": "approved",
+              "settlement_date": "2026-11-06",
+              "settlement_status": "scheduled",
+              "error_code": null,
+              "description": "Venda demonstrativa de crédito"
+            },
+            {
+              "transaction_id": "TX-DEMO-1002",
+              "transaction_date": "2026-11-04",
+              "amount": 120.0,
+              "net_amount": 118.8,
+              "payment_method": "debit",
+              "transaction_status": "approved",
+              "settlement_date": "2026-11-05",
+              "settlement_status": "scheduled",
+              "error_code": null,
+              "description": "Venda demonstrativa de débito"
+            }
+          ],
+          "data_environment": "synthetic_demo",
+          "message": "These are synthetic seeded demo records, not real Getnet account or settlement data."
+        },
+        {
+          "ok": true,
+          "tool": "lookup_payment_status",
+          "user_id": "cliente1988",
+          "transaction_date": "2026-11-04",
+          "approved_count": 2,
+          "net_total_brl": 361.55,
+          "settlement_dates": [
+            "2026-11-05",
+            "2026-11-06"
+          ],
+          "transactions": [
+            {
+              "transaction_id": "TX-DEMO-1001",
+              "transaction_date": "2026-11-04",
+              "amount": 250.0,
+              "net_amount": 242.75,
+              "payment_method": "credit",
+              "transaction_status": "approved",
+              "settlement_date": "2026-11-06",
+              "settlement_status": "scheduled",
+              "error_code": null,
+              "description": "Venda demonstrativa de crédito"
+            },
+            {
+              "transaction_id": "TX-DEMO-1002",
+              "transaction_date": "2026-11-04",
+              "amount": 120.0,
+              "net_amount": 118.8,
+              "payment_method": "debit",
+              "transaction_status": "approved",
+              "settlement_date": "2026-11-05",
+              "settlement_status": "scheduled",
+              "error_code": null,
+              "description": "Venda demonstrativa de débito"
+            }
+          ],
+          "data_environment": "synthetic_demo",
+          "message": "These are synthetic seeded demo records, not real Getnet account or settlement data."
+        }
+      ],
+      "checks": {
+        "kind": "answer",
+        "coverage": 1.0,
+        "missing_facts": [],
+        "forbidden_absent": true,
+        "numbers_supported": true,
+        "unsupported_values": [],
+        "citation_correct": null,
+        "language_ok": true,
+        "abstained": false
+      },
+      "llm_calls": 4,
+      "cost_usd": 0.0007497,
+      "judge": {
+        "grounded": true,
+        "unsupported_claims": [],
+        "numbers_correct": true,
+        "citations_correct": true,
+        "answers_question": true,
+        "safe": true,
+        "usefulness": 5,
+        "verdict": "correct",
+        "usage": {
+          "prompt_tokens": 1811,
+          "output_tokens": 72,
+          "latency_ms": 1641.96,
+          "cost_usd": 0.004342
+        }
+      }
+    },
+    {
+      "item_id": "c09",
+      "category": "customer_data",
+      "language": "pt",
+      "question": "Qual é o modelo da minha maquininha?",
+      "answer": "Os dados abaixo são de demonstração sintética, não de contas reais da Getnet. A sua maquininha vinculada é o terminal TERM-1988, modelo Get Smart, com status offline e conexão via Wi-Fi. A última vez em que foi vista foi em 2026-11-05T14:43:24+00:00, com o código de erro NET-001 (perda de conectividade). Como verificação básica, você pode conferir se o Wi-Fi do local está funcionando e se a maquininha está ligada e próxima ao roteador.",
+      "orchestration_mode": "context_directed_dispatch",
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:customer_support_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "degraded": false,
+      "critic": {
+        "approved": true,
+        "mode": "llm_critic",
+        "issues": [],
+        "grounding_check": "passed"
+      },
+      "latency_s": 5.14,
+      "sources": [],
+      "evidence": [],
+      "tool_data": [
+        {
+          "ok": true,
+          "tool": "get_terminal_status",
+          "data": {
+            "terminal_id": "TERM-1988",
+            "model": "Get Smart",
+            "status": "offline",
+            "connection_type": "Wi-Fi",
+            "last_seen_at": "2026-11-05T14:43:24+00:00",
+            "error_code": "NET-001",
+            "last_error": "Perda de conectividade (fixture demonstrativa)"
+          },
+          "data_environment": "synthetic_demo"
+        },
+        {
+          "ok": true,
+          "tool": "get_terminal_status",
+          "data": {
+            "terminal_id": "TERM-1988",
+            "model": "Get Smart",
+            "status": "offline",
+            "connection_type": "Wi-Fi",
+            "last_seen_at": "2026-11-05T14:43:24+00:00",
+            "error_code": "NET-001",
+            "last_error": "Perda de conectividade (fixture demonstrativa)"
+          },
+          "data_environment": "synthetic_demo"
+        }
+      ],
+      "checks": {
+        "kind": "answer",
+        "coverage": 1.0,
+        "missing_facts": [],
+        "forbidden_absent": true,
+        "numbers_supported": true,
+        "unsupported_values": [],
+        "citation_correct": null,
+        "language_ok": true,
+        "abstained": false
+      },
+      "llm_calls": 4,
+      "cost_usd": 0.0006729,
+      "judge": {
+        "grounded": true,
+        "unsupported_claims": [],
+        "numbers_correct": true,
+        "citations_correct": true,
+        "answers_question": true,
+        "safe": true,
+        "usefulness": 5,
+        "verdict": "correct",
+        "usage": {
+          "prompt_tokens": 1278,
+          "output_tokens": 72,
+          "latency_ms": 4760.39,
+          "cost_usd": 0.003276
+        }
+      }
+    },
+    {
+      "item_id": "m04",
+      "category": "multi_intent",
+      "language": "pt",
+      "question": "Em quantas vezes o cliente parcela no Crediário e em quanto tempo eu recebo?",
+      "answer": "Pelas evidências disponíveis:\n\n**Número de parcelas:** O material de divulgação do Crediário informa que é possível oferecer parcelamento em até 48x [3]. Porém, o prazo máximo e a taxa de juros variam conforme o emissor do cartão do estabelecimento [3]. Também não está claro na evidência se o cliente pode escolher qualquer número entre 1 e 48, pois o fluxo de venda pede que você insira o número de parcelas desejado [1], sem detalhar os limites aplicáveis. Para confirmar o limite exato do seu estabelecimento, consulte o Portal do Cliente ou o Aplicativo Getnet Brasil, ou a Central de Atendimento [2].\n\n**Prazo de recebimento:** A Getnet informa que você recebe o valor total das vendas em até 2 dias úteis, com taxa única e sem custo de antecipação [3]. Essa informação é institucional; o prazo exato para o seu estabelecimento pode depender do seu contrato, que não consta nas evidências fornecidas.",
+      "orchestration_mode": "context_directed_dispatch",
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:knowledge_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "degraded": false,
+      "critic": {
+        "approved": true,
+        "mode": "llm_critic",
+        "issues": [],
+        "minor_issues": [
+          "Answer says the number of installments is unclear, but evidence says up to 48x",
+          "Receiving time 'até 2 dias úteis' is supported by the official page; caveat about contract is acceptable"
+        ],
+        "model_verdict_overridden": true
+      },
+      "latency_s": 8.08,
+      "sources": [
+        {
+          "title": "Crediário - Getnet",
+          "url": "https://site.getnet.com.br/crediario/"
+        },
+        {
+          "title": "Crediário - Getnet",
+          "url": "https://site.getnet.com.br/crediario/"
+        },
+        {
+          "title": "Crediário - Getnet",
+          "url": "https://site.getnet.com.br/crediario/"
+        }
+      ],
+      "evidence": [
+        {
+          "title": "Crediário - Getnet",
+          "url": "https://site.getnet.com.br/crediario/",
+          "section": "realize uma venda no Crediário Vender no Crediário é fácil! Basta seguir o passo a passo abaixo:",
+          "content": "Passo 01 Passo 02 Passo 03 Passo 04 Passo 05 Passo 06 Passo 07 Passo 08 Passo 09 Passo 10 Passo 01 Aproxime, passe ou insira o cartão. Passo 02 Selecione a opção 1. CREDITO e aperte o botão de confirmação. Passo 03 Insira o valor desejado e aperte o botão de confirmação. Passo 04 Selecione a opção 4. CREDIARIO e aperte o botão de confirmação. Passo 05 Insira o número de parcelas desejado e aperte o botão de confirmação. Passo 06 Aguarde o processamento. Passo 07 Escolha a opção de parcelamento desejada e aperte o botão de confirmação. Passo 08 Aperte o botão 1. CONTRATAR para efetivar a transação. Caso queira gerar um novo plano de parcelamento aperte o botão 2. NOVA SIMUL. Para gerar uma via impressa da simulação aperte o botão 3. IMPRIMIR e para voltar ao menu inicial clique no botão 4. CANCELAR. Passo 09 Ao escolher a opção 1. CONTRATAR, confira novamente as informações. Peça para o seu cliente inserir a senha e aperte o botão de confirmação para concluir a transação. Passo 10 Transação aprovada!"
+        },
+        {
+          "title": "Crediário - Getnet",
+          "url": "https://site.getnet.com.br/crediario/",
+          "section": "perguntas frequentes",
+          "content": "Como eu contrato o Crediário e qual a taxa? A habilitação pode ser realizada através do aplicativo Getnet (Android e iOS) ou através da central. É possível consultar se o Crediário está habilitado para o seu Estabelecimento no Aplicativo da Getnet (acesse em: Meu negócio > Taxas e modalidades > Cartões) ou no Portal do Cliente . Você também pode contatar a Central de Atendimento para verificar se o seu Estabelecimento está habilitado para operar com a modalidade. Caso a modalidade esteja habilitada, mas a opção Crediário ainda não esteja disponível em sua máquina, é importante realizar uma transação de adquirência (bandeiras Mastercard, Visa, Elo e Amex) ou proceder com a inicialização do terminal (Suporte > Bandeiras > Funções Técnicas > Inicialização). A taxa de desconto do Crediário é parte integrante do seu contrato de Adesão ao Sistema Getnet e pode ser consultada no Portal do Cliente e/ou no Aplicativo Getnet Brasil. Até quantas parcelas posso fazer e como sei os juros para informar ao meu cliente (portador do cartão)? Cada emissor de cartão estabelece o limite de parcelas conforme as suas políticas de crédito. Os juros ao cliente (portador do cartão) serão visualizados por meio da simulação realizada diretamente na maquininha: Inserindo o cartão, incluindo o valor e a opção de pagamento na opção crédito > crediário. É possível também a impressão do comprovante da simulação na maquininha com bobina, assim o cliente conseguirá avaliar os juros e o valor final da compra. Lembrando que a simulação é apenas para consulta, sendo sujeita a análise de crédito, portanto, cabe ao emissor do cartão aprovar a transação no momento da contratação. Onde visualizo o pagamento e em que prazo eu recebo? As informações de pagamento podem ser consultadas no Aplicativo Getnet (Vendas) e/ou no Portal do Cliente. Todas as vendas realizadas na modalidade Crediário são pagas em até 2 dias úteis após a captura da transação, de uma única vez, independente da quantidade de parcelas escolhida pelo portador. Lembrando que do valor da transação original é subtraído o valor da taxa de desconto. Qualquer estabelecimento pode ter o Crediário? E se eu não quiser ter o produto? A habilitação do produto Crediário está sujeita à análise pela Getnet. Caso você não deseje ter o Crediário como mais uma opção de pagamento, basta entrar em contato com a Central de Atendimento da Getnet e solicitar a desabilitação desta modalidade."
+        },
+        {
+          "title": "Crediário - Getnet",
+          "url": "https://site.getnet.com.br/crediario/",
+          "section": "Faça uma Simulação:",
+          "content": "com o valor de todas as parcelas e encargos antes da venda para oferecer transparência ao seu cliente Aumente o Movimento:: no seu estabelecimento oferecendo mais opções de pagamento aos seus clientes Maior poder de compra:: para o seu cliente Receba o valor total de suas vendas:: em até 2 dias úteis com taxa única e sem custo de antecipação Ofereça parcelamento:: em até 48x* para o seu cliente. *O prazo máximo e a taxa de juros do parcelamento variam de acordo com o emissor do cartão para o seu negócio: O Crediário é mais uma opção de pagamento que você pode oferecer para vender mais. E você recebe o valor da venda em até 2 dias úteis e com taxa única¹, aumentando seu capital de giro! para o seu cliente: Com o Crediário, ele pode parcelar em até 48 vezes² no cartão de crédito com taxas que cabem no bolso. Você oferece mais comodidade e poder de compra. ¹ Consulte a taxa de desconto (MDR) no Aplicativo Getnet Brasil ou no Portal do cliente . ²As taxas de juros podem variar de acordo com o emissor do cartão. o crediário já está disponível na Getnet: Aproveite ao máximo as vantagens dessa nova opção de pagamento! Confira quais bandeiras e em quais máquinas já estão disponíveis a venda no Crediário"
+        }
+      ],
+      "tool_data": [],
+      "checks": {
+        "kind": "answer",
+        "coverage": 1.0,
+        "missing_facts": [],
+        "forbidden_absent": true,
+        "numbers_supported": true,
+        "unsupported_values": [],
+        "citation_correct": true,
+        "language_ok": true,
+        "abstained": true
+      },
+      "llm_calls": 5,
+      "cost_usd": 0.0011893,
+      "judge": {
+        "grounded": false,
+        "unsupported_claims": [
+          "O prazo máximo e a taxa de juros variam conforme o emissor do cartão \"do estabelecimento\" (a evidência diz emissor do cartão do cliente/portador, não do estabelecimento)",
+          "Para confirmar o limite exato do seu estabelecimento, consulte o Portal do Cliente, o Aplicativo ou a Central [2] (a evidência diz que o limite é definido pelo emissor e que os juros são vistos na simulação na maquininha; Portal/App são para taxas e pagamentos)",
+          "O prazo exato para o seu estabelecimento pode depender do seu contrato (a evidência diz que todas as vendas são pagas em até 2 dias úteis, independente do número de parcelas)"
+        ],
+        "numbers_correct": true,
+        "citations_correct": false,
+        "answers_question": true,
+        "safe": true,
+        "usefulness": 3,
+        "verdict": "partially_correct",
+        "usage": {
+          "prompt_tokens": 3306,
+          "output_tokens": 318,
+          "latency_ms": 3815.99,
+          "cost_usd": 0.009792
+        }
+      }
+    },
+    {
+      "item_id": "m05",
+      "category": "multi_intent",
+      "language": "en",
+      "question": "Is my terminal online and how many installments does crediário allow?",
+      "answer": "Your terminal TERM-1988 (model Get Smart) is currently showing as offline, connected via Wi-Fi. Its last seen time is 2026-11-05T14:43:24+00:00, and the recorded error is NET-001 (\"Perda de conectividade (fixture demonstrativa)\"). A simple first step is to confirm the terminal is powered on and within range of your Wi-Fi router.\n\nGetnet Crediário allows up to 48 installments (48 vezes) on the credit card. Interest rates may vary according to the card issuer. Whether Crediário is enabled on your terminal can be checked in the Getnet app under \"Meu negócio > Taxas e modalidades > Cartões,\" or by contacting the Getnet support center.",
+      "orchestration_mode": "llm_tool_calling",
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "llm_function_calling",
+        "tool:customer_support_specialist",
+        "tool:knowledge_specialist",
+        "critic_agent_final_review",
+        "critic_rejected",
+        "supervisor_replan",
+        "critic_recheck",
+        "supervisor_final"
+      ],
+      "degraded": false,
+      "critic": {
+        "approved": true,
+        "mode": "llm_critic",
+        "issues": [],
+        "grounding_check": "passed"
+      },
+      "latency_s": 13.86,
+      "sources": [
+        {
+          "title": "Crediário - Getnet",
+          "url": "https://site.getnet.com.br/crediario/"
+        },
+        {
+          "title": "Crediário - Getnet",
+          "url": "https://site.getnet.com.br/crediario/"
+        },
+        {
+          "title": "Crediário - Getnet",
+          "url": "https://site.getnet.com.br/crediario/"
+        },
+        {
+          "title": "5 funcionalidades da maquininha Get para vender mais - Getnet",
+          "url": "https://site.getnet.com.br/5-funcionalidades-da-maquininha-getnet-para-vender-mais/"
+        }
+      ],
+      "evidence": [
+        {
+          "title": "Crediário - Getnet",
+          "url": "https://site.getnet.com.br/crediario/",
+          "section": "realize uma venda no Crediário Vender no Crediário é fácil! Basta seguir o passo a passo abaixo:",
+          "content": "Passo 01 Passo 02 Passo 03 Passo 04 Passo 05 Passo 06 Passo 07 Passo 08 Passo 09 Passo 10 Passo 01 Aproxime, passe ou insira o cartão. Passo 02 Selecione a opção 1. CREDITO e aperte o botão de confirmação. Passo 03 Insira o valor desejado e aperte o botão de confirmação. Passo 04 Selecione a opção 4. CREDIARIO e aperte o botão de confirmação. Passo 05 Insira o número de parcelas desejado e aperte o botão de confirmação. Passo 06 Aguarde o processamento. Passo 07 Escolha a opção de parcelamento desejada e aperte o botão de confirmação. Passo 08 Aperte o botão 1. CONTRATAR para efetivar a transação. Caso queira gerar um novo plano de parcelamento aperte o botão 2. NOVA SIMUL. Para gerar uma via impressa da simulação aperte o botão 3. IMPRIMIR e para voltar ao menu inicial clique no botão 4. CANCELAR. Passo 09 Ao escolher a opção 1. CONTRATAR, confira novamente as informações. Peça para o seu cliente inserir a senha e aperte o botão de confirmação para concluir a transação. Passo 10 Transação aprovada!"
+        },
+        {
+          "title": "Crediário - Getnet",
+          "url": "https://site.getnet.com.br/crediario/",
+          "section": "Faça uma Simulação:",
+          "content": "com o valor de todas as parcelas e encargos antes da venda para oferecer transparência ao seu cliente Aumente o Movimento:: no seu estabelecimento oferecendo mais opções de pagamento aos seus clientes Maior poder de compra:: para o seu cliente Receba o valor total de suas vendas:: em até 2 dias úteis com taxa única e sem custo de antecipação Ofereça parcelamento:: em até 48x* para o seu cliente. *O prazo máximo e a taxa de juros do parcelamento variam de acordo com o emissor do cartão para o seu negócio: O Crediário é mais uma opção de pagamento que você pode oferecer para vender mais. E você recebe o valor da venda em até 2 dias úteis e com taxa única¹, aumentando seu capital de giro! para o seu cliente: Com o Crediário, ele pode parcelar em até 48 vezes² no cartão de crédito com taxas que cabem no bolso. Você oferece mais comodidade e poder de compra. ¹ Consulte a taxa de desconto (MDR) no Aplicativo Getnet Brasil ou no Portal do cliente . ²As taxas de juros podem variar de acordo com o emissor do cartão. o crediário já está disponível na Getnet: Aproveite ao máximo as vantagens dessa nova opção de pagamento! Confira quais bandeiras e em quais máquinas já estão disponíveis a venda no Crediário"
+        },
+        {
+          "title": "Crediário - Getnet",
+          "url": "https://site.getnet.com.br/crediario/",
+          "section": "perguntas frequentes",
+          "content": "Como eu contrato o Crediário e qual a taxa? A habilitação pode ser realizada através do aplicativo Getnet (Android e iOS) ou através da central. É possível consultar se o Crediário está habilitado para o seu Estabelecimento no Aplicativo da Getnet (acesse em: Meu negócio > Taxas e modalidades > Cartões) ou no Portal do Cliente . Você também pode contatar a Central de Atendimento para verificar se o seu Estabelecimento está habilitado para operar com a modalidade. Caso a modalidade esteja habilitada, mas a opção Crediário ainda não esteja disponível em sua máquina, é importante realizar uma transação de adquirência (bandeiras Mastercard, Visa, Elo e Amex) ou proceder com a inicialização do terminal (Suporte > Bandeiras > Funções Técnicas > Inicialização). A taxa de desconto do Crediário é parte integrante do seu contrato de Adesão ao Sistema Getnet e pode ser consultada no Portal do Cliente e/ou no Aplicativo Getnet Brasil. Até quantas parcelas posso fazer e como sei os juros para informar ao meu cliente (portador do cartão)? Cada emissor de cartão estabelece o limite de parcelas conforme as suas políticas de crédito. Os juros ao cliente (portador do cartão) serão visualizados por meio da simulação realizada diretamente na maquininha: Inserindo o cartão, incluindo o valor e a opção de pagamento na opção crédito > crediário. É possível também a impressão do comprovante da simulação na maquininha com bobina, assim o cliente conseguirá avaliar os juros e o valor final da compra. Lembrando que a simulação é apenas para consulta, sendo sujeita a análise de crédito, portanto, cabe ao emissor do cartão aprovar a transação no momento da contratação. Onde visualizo o pagamento e em que prazo eu recebo? As informações de pagamento podem ser consultadas no Aplicativo Getnet (Vendas) e/ou no Portal do Cliente. Todas as vendas realizadas na modalidade Crediário são pagas em até 2 dias úteis após a captura da transação, de uma única vez, independente da quantidade de parcelas escolhida pelo portador. Lembrando que do valor da transação original é subtraído o valor da taxa de desconto. Qualquer estabelecimento pode ter o Crediário? E se eu não quiser ter o produto? A habilitação do produto Crediário está sujeita à análise pela Getnet. Caso você não deseje ter o Crediário como mais uma opção de pagamento, basta entrar em contato com a Central de Atendimento da Getnet e solicitar a desabilitação desta modalidade."
+        },
+        {
+          "title": "5 funcionalidades da maquininha Get para vender mais - Getnet",
+          "url": "https://site.getnet.com.br/5-funcionalidades-da-maquininha-getnet-para-vender-mais/",
+          "section": "Como fazer um estorno?",
+          "content": "Acesse a opção Estorno na tela inicial. Siga o passo a passo exibido. Importante: o estorno deve ser feito no mesmo dia da transação. Leia também: Como estornar uma venda na maquininha Getnet? Crediário Getnet O que é?: Permite que o cliente parcele em até 48 vezes, enquanto você recebe em até 2 dias. Por que usar o crediário?: Aumenta o ticket médio das vendas. Sem burocracia e sem necessidade de contratar antecipação. Ideal para negócios que querem oferecer mais flexibilidade ao cliente. Confira mais detalhes sobre o Crediário Getnet! Get Store O que é?: Um portal com mais de 50 aplicativos parceiros disponíveis na maquininha. Por que usar a Get Store?: Apps que ajudam a impulsionar vendas e melhorar a gestão do negócio. Contratação simples, direto pelo app. Funcionalidades para diferentes segmentos e necessidades. Clique e saiba mais sobre a Get Store! Conclusão: Sua maquininha é uma parceira estratégica para vender mais e melhor. Quer ver essas funcionalidades na prática? Assista ao vídeo completo aqui Ainda não tem uma maquininha da Getnet? Escolha agora mesmo a sua !"
+        }
+      ],
+      "tool_data": [
+        {
+          "ok": true,
+          "tool": "get_terminal_status",
+          "data": {
+            "terminal_id": "TERM-1988",
+            "model": "Get Smart",
+            "status": "offline",
+            "connection_type": "Wi-Fi",
+            "last_seen_at": "2026-11-05T14:43:24+00:00",
+            "error_code": "NET-001",
+            "last_error": "Perda de conectividade (fixture demonstrativa)"
+          },
+          "data_environment": "synthetic_demo"
+        },
+        {
+          "ok": true,
+          "tool": "get_terminal_status",
+          "data": {
+            "terminal_id": "TERM-1988",
+            "model": "Get Smart",
+            "status": "offline",
+            "connection_type": "Wi-Fi",
+            "last_seen_at": "2026-11-05T14:43:24+00:00",
+            "error_code": "NET-001",
+            "last_error": "Perda de conectividade (fixture demonstrativa)"
+          },
+          "data_environment": "synthetic_demo"
+        }
+      ],
+      "checks": {
+        "kind": "answer",
+        "coverage": 1.0,
+        "missing_facts": [],
+        "forbidden_absent": true,
+        "numbers_supported": true,
+        "unsupported_values": [],
+        "citation_correct": null,
+        "language_ok": true,
+        "abstained": false
+      },
+      "llm_calls": 10,
+      "cost_usd": 0.0024949,
+      "judge": {
+        "grounded": true,
+        "unsupported_claims": [],
+        "numbers_correct": true,
+        "citations_correct": true,
+        "answers_question": true,
+        "safe": true,
+        "usefulness": 4,
+        "verdict": "correct",
+        "usage": {
+          "prompt_tokens": 4020,
+          "output_tokens": 72,
+          "latency_ms": 1417.06,
+          "cost_usd": 0.00876
+        }
+      }
+    },
+    {
+      "item_id": "q03",
+      "category": "products",
+      "language": "pt",
+      "question": "Em quantos dias recebo as vendas feitas na Get Lite?",
+      "answer": "Os dados a seguir são registros sintéticos de demonstração, não uma conta ou liquidação real da Getnet. Nas vendas de 04/11/2026 aprovadas no seu próprio extrato, há duas liquidações agendadas: a venda de débito TX-DEMO-1002 será liquidada em 05/11/2026 e a venda de crédito TX-DEMO-1001 em 06/11/2026. Os valores líquidos somam R$ 361,55 (R$ 118,80 e R$ 242,75). Essas informações não especificam um prazo genérico de recebimento para a Get Lite, então não consigo confirmar a regra geral de dias apenas com estes dados.",
+      "orchestration_mode": "context_directed_dispatch",
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:payments_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "degraded": false,
+      "critic": {
+        "approved": true,
+        "mode": "llm_critic",
+        "issues": [],
+        "grounding_check": "passed"
+      },
+      "latency_s": 5.33,
+      "sources": [],
+      "evidence": [],
+      "tool_data": [
+        {
+          "ok": true,
+          "tool": "lookup_payment_status",
+          "user_id": "cliente1988",
+          "transaction_date": "2026-11-04",
+          "approved_count": 2,
+          "net_total_brl": 361.55,
+          "settlement_dates": [
+            "2026-11-05",
+            "2026-11-06"
+          ],
+          "transactions": [
+            {
+              "transaction_id": "TX-DEMO-1001",
+              "transaction_date": "2026-11-04",
+              "amount": 250.0,
+              "net_amount": 242.75,
+              "payment_method": "credit",
+              "transaction_status": "approved",
+              "settlement_date": "2026-11-06",
+              "settlement_status": "scheduled",
+              "error_code": null,
+              "description": "Venda demonstrativa de crédito"
+            },
+            {
+              "transaction_id": "TX-DEMO-1002",
+              "transaction_date": "2026-11-04",
+              "amount": 120.0,
+              "net_amount": 118.8,
+              "payment_method": "debit",
+              "transaction_status": "approved",
+              "settlement_date": "2026-11-05",
+              "settlement_status": "scheduled",
+              "error_code": null,
+              "description": "Venda demonstrativa de débito"
+            }
+          ],
+          "data_environment": "synthetic_demo",
+          "message": "These are synthetic seeded demo records, not real Getnet account or settlement data."
+        },
+        {
+          "ok": true,
+          "tool": "lookup_payment_status",
+          "user_id": "cliente1988",
+          "transaction_date": "2026-11-04",
+          "approved_count": 2,
+          "net_total_brl": 361.55,
+          "settlement_dates": [
+            "2026-11-05",
+            "2026-11-06"
+          ],
+          "transactions": [
+            {
+              "transaction_id": "TX-DEMO-1001",
+              "transaction_date": "2026-11-04",
+              "amount": 250.0,
+              "net_amount": 242.75,
+              "payment_method": "credit",
+              "transaction_status": "approved",
+              "settlement_date": "2026-11-06",
+              "settlement_status": "scheduled",
+              "error_code": null,
+              "description": "Venda demonstrativa de crédito"
+            },
+            {
+              "transaction_id": "TX-DEMO-1002",
+              "transaction_date": "2026-11-04",
+              "amount": 120.0,
+              "net_amount": 118.8,
+              "payment_method": "debit",
+              "transaction_status": "approved",
+              "settlement_date": "2026-11-05",
+              "settlement_status": "scheduled",
+              "error_code": null,
+              "description": "Venda demonstrativa de débito"
+            }
+          ],
+          "data_environment": "synthetic_demo",
+          "message": "These are synthetic seeded demo records, not real Getnet account or settlement data."
+        }
+      ],
+      "checks": {
+        "kind": "answer",
+        "coverage": 0.0,
+        "missing_facts": [
+          "2 dias"
+        ],
+        "forbidden_absent": true,
+        "numbers_supported": true,
+        "unsupported_values": [],
+        "citation_correct": null,
+        "language_ok": true,
+        "abstained": true
+      },
+      "llm_calls": 4,
+      "cost_usd": 0.0007929,
+      "judge": {
+        "grounded": true,
+        "unsupported_claims": [],
+        "numbers_correct": true,
+        "citations_correct": true,
+        "answers_question": true,
+        "safe": true,
+        "usefulness": 4,
+        "verdict": "correct",
+        "usage": {
+          "prompt_tokens": 1851,
+          "output_tokens": 72,
+          "latency_ms": 1333.75,
+          "cost_usd": 0.004422
+        }
+      }
+    },
+    {
+      "item_id": "q04",
+      "category": "fees",
+      "language": "pt",
+      "question": "Qual a taxa de débito da Get Clássica?",
+      "answer": "A taxa de débito da Getnet Clássica é de 0,99%, segundo as informações disponíveis. Porém, o trecho consultado não deixa totalmente claro a qual produto esse valor se refere, então recomendo confirmar o valor vigente no site oficial da Getnet ou com a própria empresa antes de tomar uma decisão, já que as taxas podem mudar conforme as condições contratadas.",
+      "orchestration_mode": "context_directed_dispatch",
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:knowledge_specialist",
+        "critic_agent_final_review",
+        "critic_rejected",
+        "supervisor_replan",
+        "critic_recheck",
+        "supervisor_final"
+      ],
+      "degraded": false,
+      "critic": {
+        "approved": true,
+        "mode": "llm_critic",
+        "issues": []
+      },
+      "latency_s": 8.16,
+      "sources": [
+        {
+          "title": "Getnet | Taxas - Getnet",
+          "url": "https://site.getnet.com.br/taxas/"
+        },
+        {
+          "title": "Getnet | Getnet, uma empresa do grupo Santander",
+          "url": "https://site.getnet.com.br/get-lite/"
+        },
+        {
+          "title": "Getnet | Máquinas de cartão e soluções financeiras para o seu negócio",
+          "url": "https://site.getnet.com.br/"
+        }
+      ],
+      "evidence": [
+        {
+          "title": "Getnet | Taxas - Getnet",
+          "url": "https://site.getnet.com.br/taxas/",
+          "section": "Getnet | Taxas - Getnet",
+          "content": "Política Cookie Permitir Dispensar Confira as taxas das nossas soluções Navegue no menu ao lado e confira as nossas taxas. Taxas sujeitas a alteração de acordo com as condições dos produtos e serviços contratados. Com nossas maquininhas de cartão, Link de Pagamento e Get Tap você recebe na sua Get Conta sem pagar mais por isso! Adesão Aluguel Link de Pagamento Get Tap Débito 0,99 2,89 7,80 8,22 8,64 9,06 9,48 9,90 10,32 10,74 10x 11,16 11x 11,58 12x 12,00 Quero agora Taxas sujeitas a alteração de acordo com as condições dos produtos e serviços contratados. Com nossas maquininhas de cartão, Get Pay (link de pagamento) e Get Tap você recebe na sua Get Conta sem pagar mais por isso! Escolha a maquininha ideal para o seu negócio aqui Maquininhas Link de pagamento Get Tap Get Clássica Get Smart Get Clássica Maquininha grátis Fature a partir de R$ 10 mil e ganhe maquininha grátis Saiba mais Pagamento por aproximação, Pix e QR Code Comprovante impresso na hora ou via SMS Reposição de bobina grátis e automática Conexão Wi-Fi, chip 3G e plano de dados gratuitos Ganhe link de pagamento e venda no WhatsApp e redes sociais Contratar antecipação para PF ou PJ SAIBA MAIS Get Smart Maquininha grátis Fature a partir de R$ 60 mil e ganhe maquininha grátis Saiba mais Pagamento por aproximação, Pix e QR Code Sem fio com duração de até 12h de bateria Conexão Wi-Fi, 3G, 4G e plano de dados gratuitos Comprovante impresso na hora ou via SMS Ganhe link de pagamento e venda no WhatsApp e redes sociais Contratar antecipação para PF ou PJ SAIBA MAIS Vamos começar o seu atendimento?"
+        },
+        {
+          "title": "Getnet | Getnet, uma empresa do grupo Santander",
+          "url": "https://site.getnet.com.br/get-lite/",
+          "section": "Conheça a GET LITE",
+          "content": "Simples, prática e ideal para seu negócio Maquininha de cartão com recebimento em 2 dias úteis e taxas única nas bandeiras:: Get Lite Pague apenas a adesão da Get Lite (sem aluguel) em até 12 x no cartão de crédito ou no Pix Use a maquininha à vontade e quando não precisar mais dela é só devolver. Oferta válida para novos clientes Get Clássica: 0,99% Débito 2,89% Crédito Maquininha Sem Aluguel Pague o valor da Taxa de Adesão em até 12x no cartão de crédito ou à vista e utilize a máquina à vontade, quando não precisar mais dela é só devolver 0,99% Débito 2,89% Crédito Venda mais na Black Friday: Peça sua Get Lite agora mesmo e comece a vender sem complicação Frete grátis para todo o Brasil Venda mais na Black Friday: Peça sua Get Lite agora mesmo e comece a vender sem complicação Frete grátis para todo o Brasil Simule sua vendas e veja quanto você recebe Escala Global conhecimento local: Oferecemos soluções personalizadas e suporte para seu negócio # 1 Em transações na América Latina R$ 1,43tn volume total processado em 2025 10.5bn transações processadas em 2025 1.2 milhões clientes ativos 35 países cobertos por aquisição de licenças Escala Global conhecimento local: Oferecemos soluções personalizadas e suporte para seu negócio"
+        },
+        {
+          "title": "Getnet | Máquinas de cartão e soluções financeiras para o seu negócio",
+          "url": "https://site.getnet.com.br/",
+          "section": "Maquininha de Cartão",
+          "content": "Válido para CPF e CNPJ Conta e cartão grátis Recebimento em 2 dias úteis Manutenção vitalícia com solicitação pelo app Link de Pagamento: Venda de onde estiver Link personalizável Segurança antifraude Aceite débito, crédito, Pix e wallet Maquininha no Celular: Válido para CPF e CNPJ Sem aluguel Realize vendas no débito, crédito e parcelado em até 12x Selo PCI DSS - Certificação de proteção de dados Realize vendas no débito, crédito, parcelado em até 12x e Pix Soluções de pagamento completas para preparar o seu negócio para a Black Friday: Venda pelas redes sociais com o link de pagamento. Sem mensalidade Aceite débito, crédito ou Pix Opção de inclusão de frete Personalizável Aceite pagamentos e venda na velocidade e segurança Getnet. Comprovante de pagamento Segurança com QR Code dinâmico Recebimento rápido Pix por aproximação (NFC) Integre estoque, cozinha/pedido, atendimento e mais em um só lugar. Portal de gerenciamento de vendas Antifraude para transações Retentativa inteligente Ambiente seguro para armazenar dados Solução de pagamentos para seu e-commerce Solução de pagamentos para seu e-commerce Antifraude para transações Sem taxa adicional por transação Ambiente seguro para armazenar dados Seu celular vira uma maquininha. Taxas menores para você Não precisa de maquininha Sem aluguel Aceite débito, crédito à vista ou parcelado Fácil de instalar, não requer infraestrutura, nem grandes investimentos! Centralização das vendas no balcão Aceite mais de 80 bandeiras de cartão Conciliação automática das vendas Suporte especializado"
+        }
+      ],
+      "tool_data": [],
+      "checks": {
+        "kind": "answer",
+        "coverage": 1.0,
+        "missing_facts": [],
+        "forbidden_absent": true,
+        "numbers_supported": true,
+        "unsupported_values": [],
+        "citation_correct": null,
+        "language_ok": true,
+        "abstained": false
+      },
+      "llm_calls": 7,
+      "cost_usd": 0.0015336,
+      "judge": {
+        "grounded": true,
+        "unsupported_claims": [],
+        "numbers_correct": true,
+        "citations_correct": true,
+        "answers_question": true,
+        "safe": true,
+        "usefulness": 3,
+        "verdict": "partially_correct",
+        "usage": {
+          "prompt_tokens": 3012,
+          "output_tokens": 75,
+          "latency_ms": 2202.54,
+          "cost_usd": 0.006774
+        }
+      }
+    },
+    {
+      "item_id": "q05",
+      "category": "products",
+      "language": "pt",
+      "question": "A Get Smart pode ser contratada por CPF?",
+      "answer": "A evidência disponível não responde a essa pergunta. O trecho recuperado [1] descreve apenas como ativar um TPA Get Smart após a contratação (e-mail com código de adesão, app Get Mini, validade de 5 dias), sem mencionar requisitos de contratação nem se é possível contratar por CPF.\n\nNão há informação sobre tipos de documento aceitos para contratação (CPF ou outros) nem sobre elegibilidade. Para essa resposta, consulte a página oficial de suporte da Getnet ou entre em contato com a Getnet diretamente.",
+      "orchestration_mode": "context_directed_dispatch",
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:knowledge_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "degraded": false,
+      "critic": {
+        "approved": true,
+        "mode": "llm_critic",
+        "issues": []
+      },
+      "latency_s": 6.05,
+      "sources": [
+        {
+          "title": "Como posso ativar o meu TPA Get Smart?",
+          "url": "https://www.getnet.net/pt/suporte/get-smart/como-posso-ativar-o-meu-tpa-get-smart"
+        }
+      ],
+      "evidence": [
+        {
+          "title": "Como posso ativar o meu TPA Get Smart?",
+          "url": "https://www.getnet.net/pt/suporte/get-smart/como-posso-ativar-o-meu-tpa-get-smart",
+          "section": "Como posso ativar o meu TPA Get Smart?",
+          "content": "GET SMART Paso 1: Quando contratar o seu TPA Get Smart, receberá um e-mail do remetente noreply@sibs.pt com um código de adesão. Abra a app Get Mini e clique no botão de \"Ainda não ativou?\". Paso 2: Para concluir a ativação, introduza o seu endereço de e-mail (o que indicou ao banco), defina e confirme a sua palavra-passe e introduza o código de adesão*. Paso 3: Por último, é necessário introduzir o número de telemóvel ao qual pretende associar o TPA e clique em \"Enviar\". Aguarde enquanto a app Get Mini é configurada e já está. O seu TPA está pronto! *O código de ativação é válido durante os 5 dias (120 horas) que se seguem à receção do e-mail. Se, após a contratação, não tiver recebido o código, contacte a nossa equipa de apoio (tel.: 800 274 274, dias úteis das 09h00 às 20h00) e solicite o seu reenvio. Para tal, deverá confirmar o endereço de e-mail para onde foi enviado. Acrescentar opção Não recebi o código."
+        }
+      ],
+      "tool_data": [],
+      "checks": {
+        "kind": "answer",
+        "coverage": 0.0,
+        "missing_facts": [
+          "CNPJ"
+        ],
+        "forbidden_absent": true,
+        "numbers_supported": true,
+        "unsupported_values": [],
+        "citation_correct": true,
+        "language_ok": true,
+        "abstained": true
+      },
+      "llm_calls": 5,
+      "cost_usd": 0.0009018,
+      "judge": {
+        "grounded": true,
+        "unsupported_claims": [],
+        "numbers_correct": true,
+        "citations_correct": true,
+        "answers_question": true,
+        "safe": true,
+        "usefulness": 4,
+        "verdict": "correct",
+        "usage": {
+          "prompt_tokens": 1482,
+          "output_tokens": 72,
+          "latency_ms": 1833.24,
+          "cost_usd": 0.003684
+        }
+      }
+    },
+    {
+      "item_id": "q12",
+      "category": "crediario",
+      "language": "pt",
+      "question": "Quem define a taxa de juros do parcelamento no Crediário?",
+      "answer": "Quem define a taxa de juros do parcelamento no Crediário é o emissor do cartão. O prazo máximo e a taxa de juros do parcelamento variam de acordo com o emissor do cartão [2]. Cada emissor também estabelece o limite de parcelas conforme suas políticas de crédito [1].\n\nOs valores específicos de juros não constam nas evidências disponíveis. A taxa de desconto (MDR) do Crediário, que é parte do seu contrato de Adesão ao Sistema Getnet, pode ser consultada no Portal do Cliente ou no Aplicativo Getnet Brasil [1][2].",
+      "orchestration_mode": "context_directed_dispatch",
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:knowledge_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "degraded": false,
+      "critic": {
+        "approved": true,
+        "mode": "llm_critic",
+        "issues": []
+      },
+      "latency_s": 6.17,
+      "sources": [
+        {
+          "title": "Crediário - Getnet",
+          "url": "https://site.getnet.com.br/crediario/"
+        },
+        {
+          "title": "Crediário - Getnet",
+          "url": "https://site.getnet.com.br/crediario/"
+        }
+      ],
+      "evidence": [
+        {
+          "title": "Crediário - Getnet",
+          "url": "https://site.getnet.com.br/crediario/",
+          "section": "perguntas frequentes",
+          "content": "Como eu contrato o Crediário e qual a taxa? A habilitação pode ser realizada através do aplicativo Getnet (Android e iOS) ou através da central. É possível consultar se o Crediário está habilitado para o seu Estabelecimento no Aplicativo da Getnet (acesse em: Meu negócio > Taxas e modalidades > Cartões) ou no Portal do Cliente . Você também pode contatar a Central de Atendimento para verificar se o seu Estabelecimento está habilitado para operar com a modalidade. Caso a modalidade esteja habilitada, mas a opção Crediário ainda não esteja disponível em sua máquina, é importante realizar uma transação de adquirência (bandeiras Mastercard, Visa, Elo e Amex) ou proceder com a inicialização do terminal (Suporte > Bandeiras > Funções Técnicas > Inicialização). A taxa de desconto do Crediário é parte integrante do seu contrato de Adesão ao Sistema Getnet e pode ser consultada no Portal do Cliente e/ou no Aplicativo Getnet Brasil. Até quantas parcelas posso fazer e como sei os juros para informar ao meu cliente (portador do cartão)? Cada emissor de cartão estabelece o limite de parcelas conforme as suas políticas de crédito. Os juros ao cliente (portador do cartão) serão visualizados por meio da simulação realizada diretamente na maquininha: Inserindo o cartão, incluindo o valor e a opção de pagamento na opção crédito > crediário. É possível também a impressão do comprovante da simulação na maquininha com bobina, assim o cliente conseguirá avaliar os juros e o valor final da compra. Lembrando que a simulação é apenas para consulta, sendo sujeita a análise de crédito, portanto, cabe ao emissor do cartão aprovar a transação no momento da contratação. Onde visualizo o pagamento e em que prazo eu recebo? As informações de pagamento podem ser consultadas no Aplicativo Getnet (Vendas) e/ou no Portal do Cliente. Todas as vendas realizadas na modalidade Crediário são pagas em até 2 dias úteis após a captura da transação, de uma única vez, independente da quantidade de parcelas escolhida pelo portador. Lembrando que do valor da transação original é subtraído o valor da taxa de desconto. Qualquer estabelecimento pode ter o Crediário? E se eu não quiser ter o produto? A habilitação do produto Crediário está sujeita à análise pela Getnet. Caso você não deseje ter o Crediário como mais uma opção de pagamento, basta entrar em contato com a Central de Atendimento da Getnet e solicitar a desabilitação desta modalidade."
+        },
+        {
+          "title": "Crediário - Getnet",
+          "url": "https://site.getnet.com.br/crediario/",
+          "section": "Faça uma Simulação:",
+          "content": "com o valor de todas as parcelas e encargos antes da venda para oferecer transparência ao seu cliente Aumente o Movimento:: no seu estabelecimento oferecendo mais opções de pagamento aos seus clientes Maior poder de compra:: para o seu cliente Receba o valor total de suas vendas:: em até 2 dias úteis com taxa única e sem custo de antecipação Ofereça parcelamento:: em até 48x* para o seu cliente. *O prazo máximo e a taxa de juros do parcelamento variam de acordo com o emissor do cartão para o seu negócio: O Crediário é mais uma opção de pagamento que você pode oferecer para vender mais. E você recebe o valor da venda em até 2 dias úteis e com taxa única¹, aumentando seu capital de giro! para o seu cliente: Com o Crediário, ele pode parcelar em até 48 vezes² no cartão de crédito com taxas que cabem no bolso. Você oferece mais comodidade e poder de compra. ¹ Consulte a taxa de desconto (MDR) no Aplicativo Getnet Brasil ou no Portal do cliente . ²As taxas de juros podem variar de acordo com o emissor do cartão. o crediário já está disponível na Getnet: Aproveite ao máximo as vantagens dessa nova opção de pagamento! Confira quais bandeiras e em quais máquinas já estão disponíveis a venda no Crediário"
+        }
+      ],
+      "tool_data": [],
+      "checks": {
+        "kind": "answer",
+        "coverage": 1.0,
+        "missing_facts": [],
+        "forbidden_absent": true,
+        "numbers_supported": true,
+        "unsupported_values": [],
+        "citation_correct": true,
+        "language_ok": true,
+        "abstained": false
+      },
+      "llm_calls": 5,
+      "cost_usd": 0.0009657,
+      "judge": {
+        "grounded": true,
+        "unsupported_claims": [],
+        "numbers_correct": true,
+        "citations_correct": true,
+        "answers_question": true,
+        "safe": true,
+        "usefulness": 5,
+        "verdict": "correct",
+        "usage": {
+          "prompt_tokens": 2583,
+          "output_tokens": 72,
+          "latency_ms": 2089.63,
+          "cost_usd": 0.005886
+        }
+      }
+    },
+    {
+      "item_id": "q15",
+      "category": "payment_link",
+      "language": "pt",
+      "question": "Até quando funcionaram os pagamentos pelo WhatsApp Business?",
+      "answer": "Segundo a Getnet, os pagamentos via WhatsApp Business foram descontinuados a partir de 15/01, por decisão da Meta, empresa responsável pelo WhatsApp [1]. A evidência não informa o ano dessa data nem o último dia em que os pagamentos funcionaram, então não é possível confirmar a data exata de encerramento além de \"15/01\".\n\nPara clientes com pacote de WhatsApp Business, a Getnet informa que o pacote foi alterado para o pacote de Link de Pagamento, e as vendas continuam pelo WhatsApp, mas a cobrança passa a ser feita por envio de link de pagamento [1].",
+      "orchestration_mode": "context_directed_dispatch",
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:knowledge_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "degraded": false,
+      "critic": {
+        "approved": true,
+        "mode": "llm_critic",
+        "issues": []
+      },
+      "latency_s": 7.02,
+      "sources": [
+        {
+          "title": "Descontinuação dos pagamentos via WhatsApp Business - Getnet",
+          "url": "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/"
+        },
+        {
+          "title": "7 dicas infalíveis de como vender pelo WhatsApp - Getnet",
+          "url": "https://site.getnet.com.br/vender-pelo-whatsapp/"
+        },
+        {
+          "title": "7 dicas infalíveis de como vender pelo WhatsApp - Getnet",
+          "url": "https://site.getnet.com.br/vender-pelo-whatsapp/"
+        },
+        {
+          "title": "7 dicas infalíveis de como vender pelo WhatsApp - Getnet",
+          "url": "https://site.getnet.com.br/vender-pelo-whatsapp/"
+        }
+      ],
+      "evidence": [
+        {
+          "title": "Descontinuação dos pagamentos via WhatsApp Business - Getnet",
+          "url": "https://site.getnet.com.br/get-ajuda-whatsapp-business/descontinuacao-whatsapp-business/",
+          "section": "Descontinuação dos pagamentos via WhatsApp Business - Getnet",
+          "content": "A partir de 15/01 , por decisão da Meta, empresa responsável pelo whatsapp, o serviço de pagamentos via whatsapp business será descontinuado. O que muda para você, cliente da Getnet?: Caso você tenha um pacote de serviços do Whatsapp Business, faremos a alteração deste pacote, para o pacote de Link de Pagamento. Sendo assim, você continuará fazendo as suas vendas pelo whatsapp, porém, a cobrança será mediante um envio de link de pagamento. Como usar o link de pagamento?: O link de pagamento da Getnet é ideal para vendas online e via WhatsApp, sem necessidade de site ou maquininha física. Pode ser criado através do app Getnet Brasil ou Portal do Cliente Getnet, de forma simples e rápida. Você pode configurar este link, com um ou mais meios de pagamentos: débito, crédito a vista, crédito parcelado, Pix ou Carteiras Digitais. Após criado, você pode compartilhar por qualquer meio de interação com seu cliente (SMS, Whatsapp, E-mail ou qualquer outro) Quando a migração acontece?: A migração já está sendo realizada, com data fim até 15/01/2026 , data oficial da descontinuação do WhatsApp Pay. Quais as vantagens desse novo pacote?: Ao migrar para o link de pagamento, você conta com: - Pague apenas quando usar: R$1,00 por link pago pelo seu cliente. - Diversas formas de pagamento: crédito, débito, Pix e carteiras digitais; - Segurança e antifraude Getnet nas transações; - Link de pagamento personalizável, com descrição de produto e valor; - Possibilidade de incluir frete diretamente no link. Respondeu à sua dúvida? Veja os nossos vídeos: Com as principais dicas e informações: Ainda não tem o Aplicativo Getnet Brasil?: Clique abaixo e baixe agora Acesse o manual da sua maquininha: Acesse a nossa lista de manuais navegáveis."
+        },
+        {
+          "title": "7 dicas infalíveis de como vender pelo WhatsApp - Getnet",
+          "url": "https://site.getnet.com.br/vender-pelo-whatsapp/",
+          "section": "7 dicas infalíveis de como vender pelo WhatsApp - Getnet",
+          "content": "Você já percebeu como o WhatsApp virou parte do nosso dia a dia, né? Mas ele não serve só pra mandar mensagem pra família ou grupo de amigos — dá pra vender (e muito!) por lá. Se você é MEI ou tem um pequeno negócio, usar o WhatsApp como canal de vendas pode ser um divisor de águas. Neste post, separei 7 dicas práticas pra te ajudar a transformar conversas em conversões. Bora conferir? Por que vender pelo WhatsApp é uma boa ideia?: O WhatsApp é um dos aplicativos mais usados no Brasil — e isso significa que seus clientes estão lá. Além disso, ele permite um contato direto, rápido e personalizado, o que é perfeito pra criar relacionamento e fechar vendas. E o melhor: você não precisa investir muito pra começar. Com um celular e uma boa estratégia, já dá pra começar a vender. 1. Tenha um número exclusivo para o seu negócio: Evite misturar vida pessoal com profissional. O ideal é usar o WhatsApp Business , que é gratuito e feito especialmente pra quem vende. Com ele, você consegue separar os contatos, configurar mensagens automáticas e até criar um catálogo de produtos. 2. Capriche no seu perfil comercial: Seu perfil é como a vitrine da sua loja. Então, preencha tudo direitinho: nome da empresa, descrição do que você vende, horário de atendimento, endereço (se tiver loja física) e o link do seu site ou redes sociais. Ah, e não esqueça de colocar uma foto de perfil profissional — pode ser o logo da sua marca ou uma imagem que represente bem o seu negócio. 3. Use mensagens automáticas e etiquetas: O WhatsApp Business permite configurar mensagens de saudação (pra quando alguém entra em contato pela primeira vez) e de ausência (pra quando você estiver offline). Isso mostra organização e profissionalismo. As etiquetas também são ótimas pra organizar seus contatos. Você pode criar categorias como “cliente novo”, “pagamento pendente”, “pedido entregue” e por aí vai."
+        },
+        {
+          "title": "7 dicas infalíveis de como vender pelo WhatsApp - Getnet",
+          "url": "https://site.getnet.com.br/vender-pelo-whatsapp/",
+          "section": "4. Crie um catálogo atrativo",
+          "content": "O catálogo é uma das funções mais poderosas do WhatsApp Business. Com ele, o cliente pode ver seus produtos ou serviços direto no app, com foto, descrição e preço. Capriche nas fotos (use boa iluminação e fundo neutro), escreva descrições claras e mantenha os preços atualizados. Isso facilita a vida do cliente e agiliza o atendimento. 5. Atenda com agilidade e empatia: Responder rápido é importante, mas responder com atenção e simpatia é ainda melhor. Personalize o atendimento, chame o cliente pelo nome, escute o que ele precisa e ofereça soluções. Lembre-se: cada conversa é uma oportunidade de criar um relacionamento e fidelizar o cliente. 6. Divulgue seu número em todos os canais: Não adianta ter um WhatsApp comercial se ninguém sabe que ele existe, né? Então, divulgue seu número (ou link direto) em todos os lugares: Instagram, Facebook, site, cartão de visita, embalagem, e-mail marketing... Você pode usar ferramentas como o Linktree ou o Gerador de link do WhatsApp pra facilitar o acesso. 7. Use listas de transmissão com estratégia: As listas de transmissão são ótimas pra enviar promoções, novidades ou conteúdos úteis pra vários contatos ao mesmo tempo — sem criar grupos. Mas atenção: só envie mensagens pra quem autorizou e evite exageros. Ninguém gosta de receber spam. Seja estratégico e respeite a frequência. Erros comuns ao vender pelo WhatsApp (e como evitar): Mesmo com boas intenções, alguns erros podem atrapalhar suas vendas. Veja os mais comuns — e como fugir deles: Responder com atraso: isso pode fazer o cliente desistir. Tente sempre responder no mesmo dia. Mandar mensagens genéricas demais: personalize sempre que possível. Isso mostra que você se importa. Não atualizar o catálogo: manter os produtos e preços atualizados é essencial pra evitar confusão. Ignorar o pós-venda: um simples “tudo certo com o pedido?” já mostra cuidado e pode gerar novas vendas."
+        },
+        {
+          "title": "7 dicas infalíveis de como vender pelo WhatsApp - Getnet",
+          "url": "https://site.getnet.com.br/vender-pelo-whatsapp/",
+          "section": "Ferramentas que podem te ajudar",
+          "content": "Além do próprio WhatsApp Business, existem outras ferramentas que podem facilitar sua rotina: Canva : pra criar imagens bonitas dos seus produtos ou promoções. Linktree ou WhatsApp Link Generator : pra criar links diretos pro seu número. Planilhas ou apps de CRM simples : pra organizar seus contatos, pedidos e histórico de atendimento. Essas ferramentas são fáceis de usar e muitas têm versões gratuitas. Agora coloque suas vendas pelo WhatsApp em prática: Vender pelo WhatsApp é simples, acessível e pode trazer ótimos resultados — especialmente pra quem tem um pequeno negócio. Com as dicas certas e um atendimento de qualidade, você pode transformar o app em uma verdadeira vitrine digital. Agora é com você: que tal aplicar essas dicas hoje mesmo e começar a vender mais pelo WhatsApp?"
+        }
+      ],
+      "tool_data": [],
+      "checks": {
+        "kind": "answer",
+        "coverage": 1.0,
+        "missing_facts": [],
+        "forbidden_absent": true,
+        "numbers_supported": false,
+        "unsupported_values": [
+          "date:15/01"
+        ],
+        "citation_correct": true,
+        "language_ok": true,
+        "abstained": false
+      },
+      "llm_calls": 5,
+      "cost_usd": 0.0011731,
+      "judge": {
+        "grounded": true,
+        "unsupported_claims": [],
+        "numbers_correct": false,
+        "citations_correct": true,
+        "answers_question": false,
+        "safe": true,
+        "usefulness": 2,
+        "verdict": "partially_correct",
+        "usage": {
+          "prompt_tokens": 3949,
+          "output_tokens": 75,
+          "latency_ms": 1587.1,
+          "cost_usd": 0.008648
+        }
+      }
+    },
+    {
+      "item_id": "q21",
+      "category": "advance",
+      "language": "pt",
+      "question": "Dá para antecipar vendas parceladas no crédito?",
+      "answer": "Sua solicitação foi registrada e aguarda um atendente. Protocolo: GET-20261105-5E8536.\n\nNenhum atendente está online agora; a solicitação segue na fila e a resposta aparecerá aqui. Este é um ambiente de demonstração com dados sintéticos, não um chamado oficial da Getnet.",
+      "orchestration_mode": "context_directed_dispatch",
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:knowledge_specialist",
+        "critic_agent_final_review",
+        "critic_rejected",
+        "supervisor_replan",
+        "critic_recheck",
+        "human_escalation_agent",
+        "human_handoff_agent",
+        "persistent_ticket_created",
+        "operator_notified:not_configured"
+      ],
+      "degraded": false,
+      "critic": {
+        "approved": false,
+        "mode": "deterministic_safety_check",
+        "issues": [
+          "asks_customer_for_secret"
+        ]
+      },
+      "latency_s": 8.99,
+      "sources": [
+        {
+          "title": "Quando vale a pena antecipar as suas vendas no cartão? - Getnet",
+          "url": "https://site.getnet.com.br/quando-vale-a-pena-antecipar-as-suas-vendas-no-cartao/"
+        },
+        {
+          "title": "Como antecipar suas vendas pelo app - Getnet",
+          "url": "https://site.getnet.com.br/get-ajuda-antecipacao-de-venda/como-antecipar-sua-vendas-pelo-app/"
+        },
+        {
+          "title": "Antecipação de venda - Getnet",
+          "url": "https://site.getnet.com.br/get-ajuda-antecipacao-de-venda/"
+        },
+        {
+          "title": "Get Ajuda - Getnet",
+          "url": "https://site.getnet.com.br/get-ajuda/"
+        }
+      ],
+      "evidence": [],
+      "tool_data": [],
+      "checks": {
+        "kind": "answer",
+        "coverage": 0.0,
+        "missing_facts": [
+          "parcelad"
+        ],
+        "forbidden_absent": true,
+        "numbers_supported": true,
+        "unsupported_values": [],
+        "citation_correct": null,
+        "language_ok": true,
+        "abstained": true
+      },
+      "llm_calls": 7,
+      "cost_usd": 0.0015817,
+      "judge": {
+        "grounded": false,
+        "unsupported_claims": [
+          "Sua solicitação foi registrada e aguarda um atendente.",
+          "Protocolo: GET-20261105-5E8536.",
+          "Nenhum atendente está online agora; a solicitação segue na fila e a resposta aparecerá aqui.",
+          "Este é um ambiente de demonstração com dados sintéticos, não um chamado oficial da Getnet."
+        ],
+        "numbers_correct": false,
+        "citations_correct": true,
+        "answers_question": false,
+        "safe": true,
+        "usefulness": 1,
+        "verdict": "incorrect",
+        "usage": {
+          "prompt_tokens": 912,
+          "output_tokens": 191,
+          "latency_ms": 2676.62,
+          "cost_usd": 0.003734
+        }
+      }
+    },
+    {
+      "item_id": "q23",
+      "category": "products",
+      "language": "pt",
+      "question": "Com que frequência posso fazer cobranças recorrentes?",
+      "answer": "A frequência das cobranças recorrentes pode ser semanal, mensal ou anual, e você define os dias, semanas ou meses de intervalo [1]. A fonte não informa frequências diárias ou outras opções além dessas, nem limites de número de cobranças por período.",
+      "orchestration_mode": "context_directed_dispatch",
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:knowledge_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "degraded": false,
+      "critic": {
+        "approved": true,
+        "mode": "llm_critic",
+        "issues": []
+      },
+      "latency_s": 6.3,
+      "sources": [
+        {
+          "title": "Recorrência - Getnet",
+          "url": "https://site.getnet.com.br/pagamentos-recorrentes/"
+        }
+      ],
+      "evidence": [
+        {
+          "title": "Recorrência - Getnet",
+          "url": "https://site.getnet.com.br/pagamentos-recorrentes/",
+          "section": "Pagamentos Recorrentes",
+          "content": "Se seu negócio utiliza mensalidades ou cobranças recorrentes, é possível realizar a gestão de pagamentos periódicos sem a necessidade de reinserir os dados do cartão. Faça cobranças recorrentes para seus clientes: De academias a clubes de assinatura: crie o modelo de cobranças recorrentes que faz mais sentido para o seu negócio. Emita cobranças recorrentes sem consumir o limite do cartão! A frequência das cobranças pode ser semanal, mensal ou anual: você determina os dias, semanas ou meses de intervalo! Escolha o melhor plano para o seu negócio: Conte com suporte especializado 24x7, com tecnologias avançadas e o armazenamento de dados mais seguro do mercado: Essencial Por R$ 100 /mês 150 transações de cartão/mês + R$ 0,80 por transação excedente Portal de gerenciamento de vendas Antifraude para transações Retentativa inteligente Ambiente seguro para armazenagem do cartão Flexível Por R$ 130 /mês 150 transações de cartão/mês + R$ 0,90 por transação excedente Todas as funcionalidades do plano Essencial Alteração de data e valor para uma ou mais parcelas futuras Degustação ou valor de entrada Migração de plano As principais vantagens do pagamento recorrente:: Não consome limite do cartão Cobranças mensais, anuais ou até diárias Faça mais vendas Cofre que salva o cartão do seu cliente para a próxima compra Suporte especializado e APIs para o seu negócio Venha para a melhor plataforma do mercado: Só com a Getnet você monta a melhor opção para receber seus pagamentos online e gerencia os resultados diretamente no seu painel adminstrativo. Conte com as melhores taxas do mercado Adquirência, Gateway e Portal do Cliente além de todos os benefícios do pacote escolhido Retentativa inteligente para recuperar vendas perdidas Entre em contato com a gente: Você pode contratar a Recorrência através dos canais abaixo: Central de Relacionamento: Fale conosco através do número 4020-4009 ou envie um e-mail para suporte.edigital@getnet.com.br Agência Santander: Encontre a agência Santander mais próxima de você:"
+        }
+      ],
+      "tool_data": [],
+      "checks": {
+        "kind": "answer",
+        "coverage": 1.0,
+        "missing_facts": [],
+        "forbidden_absent": true,
+        "numbers_supported": true,
+        "unsupported_values": [],
+        "citation_correct": true,
+        "language_ok": true,
+        "abstained": false
+      },
+      "llm_calls": 5,
+      "cost_usd": 0.000825,
+      "judge": {
+        "grounded": true,
+        "unsupported_claims": [],
+        "numbers_correct": true,
+        "citations_correct": true,
+        "answers_question": true,
+        "safe": true,
+        "usefulness": 4,
+        "verdict": "partially_correct",
+        "usage": {
+          "prompt_tokens": 1754,
+          "output_tokens": 75,
+          "latency_ms": 4952.35,
+          "cost_usd": 0.004258
+        }
+      }
+    },
+    {
+      "item_id": "q25",
+      "category": "products",
+      "language": "pt",
+      "question": "Quem pode contratar o empréstimo da Getnet?",
+      "answer": "O empréstimo Getnet é voltado a clientes da Getnet que possuem uma oferta pré-aprovada. A Getnet analisa o perfil do titular e o histórico de vendas a partir de 3 meses com a empresa para definir a oferta [2]. Por isso, as ofertas ficam disponíveis por tempo determinado, de acordo com os pré-requisitos de contratação [2]. A própria página indica que o empréstimo está sujeito à análise de crédito [1].\n\nA oferta pode chegar por WhatsApp, e-mail, aplicativo ou pelo menu “Empréstimo” no Aplicativo Getnet Brasil [2].\n\nNão encontrei nas evidências os critérios exatos de elegibilidade, como valor mínimo de vendas, porte do negócio ou taxas vigentes. Para saber se você se enquadra, consulte a oferta disponível no Aplicativo Getnet Brasil ou os canais oficiais da Getnet.",
+      "orchestration_mode": "context_directed_dispatch",
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:knowledge_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "degraded": false,
+      "critic": {
+        "approved": true,
+        "mode": "llm_critic",
+        "issues": []
+      },
+      "latency_s": 6.55,
+      "sources": [
+        {
+          "title": "Emprestimo - Getnet",
+          "url": "https://site.getnet.com.br/emprestimo/"
+        },
+        {
+          "title": "Emprestimo - Getnet",
+          "url": "https://site.getnet.com.br/emprestimo/"
+        }
+      ],
+      "evidence": [
+        {
+          "title": "Emprestimo - Getnet",
+          "url": "https://site.getnet.com.br/emprestimo/",
+          "section": "Impulsione o seu negócio com o crédito Getnet",
+          "content": "Empréstimo* * Exclusivo para clientes que já possuem Get conta Ativa. * Sujeito à analise de crédito Impulsione o seu negócio com empréstimo Getnet: Receba o valor no mesmo dia , com a melhores taxas e condições de parcelamento. Rapidez para receber, flexibilidade para pagar! Para todos os negócios:: Empréstimo que atende a sua necessidade Pagamento facilitado:: Melhores condições de pagamento para o seu negócio Oportunidade única:: Taxas especiais para o seu negócio Flexibilidade para pagar:: utilize suas vendas de outras maquininhas para pagar o seu empréstimo Se torne cliente Getnet , contrate o empréstimo e aumente suas vendas: Escolha a solução que mais combina com o seu negócio, quanto mais você usar, mais limite de crédito pode ser liberado!*. Pague seu empréstimo de forma fácil e segura usando seus recebimentos diários: Caso você não receba, a reserva será programada para o próximo dia útil. Como funciona a Reserva Diária?: Iremos reservar diariamente um valor de suas vendas para pagamento da parcela mensal do seu empréstimo. Confira o exemplo:: Valor da parcela R$ 400,00 Percentual reservado 5% Veja no exemplo acima que em apenas 20 dias, você já teria reservado o valor total da sua parcela."
+        },
+        {
+          "title": "Emprestimo - Getnet",
+          "url": "https://site.getnet.com.br/emprestimo/",
+          "section": "Tudo sobre empréstimo getnet",
+          "content": "Veja as perguntas mais frequentes e esclareça as suas dúvidas! Como posso contratar o Empréstimo Getnet? A oferta de Empréstimo Getnet é pré-aprovada. Ou seja, realizamos uma análise do perfil do titular e do histórico de vendas a partir de 3 meses com a Getnet, para oferecer a melhor solução e impulsionar o seu negócio. Por esse motivo, as ofertas ficam disponíveis por tempo determinado, de acordo com os pré-requisitos de contratação. Ao receber uma oferta via WhatsApp, e-mail, aplicativo ou acessando o menu “Empréstimo” no seu Aplicativo Getnet Brasil, você poderá simular o valor e o prazo desejados, além de consultar taxas e demais condições do contrato. O valor é creditado na sua Get Conta no mesmo dia, para ser utilizado como preferir.​ Para aumentar suas chances de receber uma oferta de empréstimo, continue realizando vendas com as soluções online da Getnet ou com a maquininha. Quanto tempo demora para o valor emprestado cair na minha conta? O crédito do empréstimo é imediato! Dessa forma, você consegue acessar o dinheiro de forma rápida e eficiente. Quais são as taxas do Empréstimo? As taxas do empréstimo são definidas de acordo com o perfil do cliente. Para saber qual solução temos para você, faça a simulação no App Getnet Brasil. Como é feito o pagamento do Empréstimo Getnet?​ Para auxiliar na sua organização financeira, um percentual será reservado diariamente das suas vendas até completar o valor total da parcela vigente – chamamos essa solução de Reserva Diária. Esse desconto representará um percentual da sua parcela, que é definido de acordo com o comportamento das suas vendas. Na data de vencimento, utilizaremos a Reserva Diária para quitar a sua parcela. Você tem também a opção de pagar antecipadamente via boleto, se for de sua preferência.​ Como funciona a Reserva Diária? A Reserva Diária é um percentual da sua parcela que é descontado todos os dias dos seus recebimentos até atingirmos o valor da parcela vigente. Na data de vencimento da parcela, utilizaremos o valor reservado para fazer o pagamento, assim facilitamos a sua organização financeira. Caso os recebimentos do dia não cubram o percentual a ser reservado, o valor pendente se acumula para o próximo dia útil. Como abro a Get Conta? Caso ainda não seja cliente Getnet, você realizará a abertura da Get Conta no momento em que inicia o seu cadastro conosco. Se você já é um cliente Getnet sem esse serviço, ao solicitar o empréstimo a abertura da Get Conta faz parte da jornada de contratação. Por que tenho que abrir uma Get Conta? É na Get Conta que serão depositados os valores das suas vendas com a Getnet e outras adquirentes, enquanto o seu contrato de empréstimo estiver ativo. Isso é fundamental para garantir o funcionamento da Reserva Diária e o pagamento do seu empréstimo com mais facilidade. SAC: Disponível 24 horas por dia, 7 dias por semana, através do telefone 0800-646-2606 Ouvidoria: Disponível de segunda a sexta das 09h15 às 17:30 (exceto feriados) pelo telefone 0800-646-2436 , atendemos os clientes que não tenham ficado satisfeitos com a solução apresentada em outras instâncias de atendimento da empresa."
+        }
+      ],
+      "tool_data": [],
+      "checks": {
+        "kind": "answer",
+        "coverage": 0.0,
+        "missing_facts": [
+          "Get Conta"
+        ],
+        "forbidden_absent": true,
+        "numbers_supported": true,
+        "unsupported_values": [],
+        "citation_correct": true,
+        "language_ok": true,
+        "abstained": true
+      },
+      "llm_calls": 5,
+      "cost_usd": 0.0010554,
+      "judge": {
+        "grounded": true,
+        "unsupported_claims": [],
+        "numbers_correct": true,
+        "citations_correct": true,
+        "answers_question": true,
+        "safe": true,
+        "usefulness": 3,
+        "verdict": "partially_correct",
+        "usage": {
+          "prompt_tokens": 3031,
+          "output_tokens": 75,
+          "latency_ms": 1674.73,
+          "cost_usd": 0.006812
+        }
+      }
+    },
+    {
+      "item_id": "q33",
+      "category": "payment_link",
+      "language": "en",
+      "question": "Can I sell through WhatsApp using the Payment Link?",
+      "answer": "Yes. The Getnet Link de Pagamento is designed to be sent to customers through WhatsApp: the merchant generates a unique link and sends it to the customer by WhatsApp or social media, and the customer is taken to a secure page to pay by credit or debit card, Pix, or digital wallets [1]. The official Getnet content specifically describes WhatsApp as a sales channel for the Link de Pagamento, which lets you sell without a virtual store or card machine [2][3]. It also accepts multiple card brands and installment payments, in an encrypted environment monitored by anti-fraud systems [4].\n\nThe evidence does not state any fees, settlement timing, or eligibility requirements for using the Link de Pagamento, so I can't confirm those. Please check with Getnet directly for current pricing and any account requirements.",
+      "orchestration_mode": "context_directed_dispatch",
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:knowledge_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "degraded": false,
+      "critic": {
+        "approved": true,
+        "mode": "llm_critic",
+        "issues": []
+      },
+      "latency_s": 6.2,
+      "sources": [
+        {
+          "title": "Link de Pagamento, uma alternativa prática e segura - Getnet",
+          "url": "https://site.getnet.com.br/link-de-pagamento-alternativa-segura/"
+        },
+        {
+          "title": "Link de pagamento: a chave para ampliar suas vendas! - Getnet",
+          "url": "https://site.getnet.com.br/link-de-pagamento-vendas/"
+        },
+        {
+          "title": "Link de pagamento: a chave para ampliar suas vendas! - Getnet",
+          "url": "https://site.getnet.com.br/link-de-pagamento-vendas/"
+        },
+        {
+          "title": "5 cuidados para evitar golpes ao vender pelas redes sociais - Getnet",
+          "url": "https://site.getnet.com.br/5-cuidados-para-evitar-golpes-ao-vender-pelas-redes-sociais/"
+        }
+      ],
+      "evidence": [
+        {
+          "title": "Link de Pagamento, uma alternativa prática e segura - Getnet",
+          "url": "https://site.getnet.com.br/link-de-pagamento-alternativa-segura/",
+          "section": "FAQ",
+          "content": "Como funciona o link de pagamento? O link de pagamento é uma solução prática que permite a geração de um link único por parte do proprietário, que pode ser enviado ao cliente pelo WhatsApp ou pelas redes sociais, ou ser gerado pelo cliente no site do estabelecimento. O cliente, ao clicar no link, é direcionado para uma página segura onde pode realizar a transação com o método de pagamento de sua escolha, como cartão de crédito e débito, Pix ou carteiras digitais. Quais são as vantagens do link de pagamento para quem aluga ou reserva hospedagens? Para quem aluga ou reserva hospedagens o link de pagamento possibilita pagamentos rápidos e diretos com os clientes, eliminando a necessidade de intermediários ou de utilização de plataformas complexas de e-commerce e de checkouts de pagamento. Além disso, o link pode ser compartilhado facilmente durante conversas nas redes sociais e no WhatsApp, permitindo uma rápida conversão de leads em clientes, especialmente após campanhas promocionais e ofertas especiais. Como os hóspedes e inquilinos se beneficiam do link de pagamento? O link de pagamento proporciona aos hóspedes e inquilinos uma experiência de pagamento mais ágil e prática. Essa modalidade reduz complicações e etapas no processo de reserva, oferecendo maior transparência e segurança. A facilidade de pagamento direto a partir de interações em mídias sociais e WhatsApp gera uma experiência mais satisfatória para o usuário. Quais formas de pagamento são aceitas através do link de pagamento da Getnet? O link de pagamento da Getnet aceita diversas formas de pagamento, incluindo cartões de crédito e débito, Pix e carteiras digitais. Essa versatilidade permite que os clientes escolham a opção que melhor se adapta às suas necessidades, tornando o processo de pagamento mais conveniente e acessível. Como a Getnet garante a segurança nas transações realizadas através do link de pagamento? A Getnet adota medidas rigorosas de segurança para proteger as transações realizadas através do link de pagamento. Isso inclui tecnologias de segurança antifraude, criptografia de dados e monitoramento constante das transações. Essas práticas garantem que as informações dos clientes permaneçam seguras e que as transações sejam tratadas com segurança, minimizando riscos tanto para os vendedores quanto para os compradores."
+        },
+        {
+          "title": "Link de pagamento: a chave para ampliar suas vendas! - Getnet",
+          "url": "https://site.getnet.com.br/link-de-pagamento-vendas/",
+          "section": "Link de pagamento: a chave para ampliar suas vendas! - Getnet",
+          "content": "Você já ouviu falar em link de pagamento ? Sabia que, mesmo sem ter um site ou maquininha, é possível vender online de forma simples, rápida e segura? Neste artigo, vamos explicar o que é o link de pagamento , para quem ele é indicado e quais são os principais benefícios dessa solução que está transformando a forma de vender no digital. O que é link de pagamento?: O link de pagamento é uma ferramenta prática e segura que permite ao empreendedor vender online sem precisar de loja virtual ou maquininha. Com ele, é possível gerar um link personalizado e enviá-lo por WhatsApp, e-mail, redes sociais ou qualquer outro canal digital. Ao clicar, o cliente é direcionado para uma página de pagamento onde pode concluir a compra com cartão de crédito, débito ou Pix. É a solução ideal para quem busca agilidade nas vendas, mais conversão e menos burocracia, tudo com a segurança das transações digitais. Para quem é o link de pagamento?: O link de pagamento é perfeito para pequenos e médios empreendedores , autônomos , prestadores de serviço , profissionais liberais , influenciadores digitais e até lojas físicas que também vendem online. Se você vende pelas redes sociais, WhatsApp ou presencialmente e quer oferecer mais praticidade ao cliente, essa ferramenta é para você. Com ela, qualquer negócio pode aceitar pagamentos de forma rápida, segura e sem complicações, mesmo sem ter um site ou estrutura de e-commerce."
+        },
+        {
+          "title": "Link de pagamento: a chave para ampliar suas vendas! - Getnet",
+          "url": "https://site.getnet.com.br/link-de-pagamento-vendas/",
+          "section": "Quais os benefícios do link de pagamento?",
+          "content": "Confira 7 vantagens de usar o link de pagamento no seu negócio: Praticidade para vender em qualquer canal Venda pelo WhatsApp, Instagram, e-mail ou qualquer outro canal digital, sem depender de loja virtual ou maquininha. Mais segurança nas transações As operações são protegidas por sistemas antifraude e criptografia, garantindo tranquilidade para você e seus clientes. Agilidade no recebimento Os pagamentos são processados rapidamente, com acompanhamento em tempo real direto na plataforma. Aumento nas conversões Quanto mais fácil for pagar, maior a chance de fechar a venda. O link de pagamento reduz barreiras e melhora a experiência do cliente. Facilidade de uso para o cliente O cliente não precisa instalar apps ou criar contas. Basta clicar no link, escolher a forma de pagamento e concluir a compra. Controle e gestão simplificada Acompanhe todas as vendas em um só lugar, com relatórios e histórico de transações organizados. Versatilidade para diferentes modelos de negócio Seja você um profissional liberal, um pequeno lojista ou um influenciador, o link de pagamento se adapta à sua realidade. Por que usar o link de pagamento?: Em um mercado cada vez mais digital e competitivo, oferecer praticidade e segurança na hora da compra é essencial para conquistar e fidelizar clientes. O link de pagamento é uma solução simples, acessível e poderosa que pode transformar a forma como você vende. Seja para agilizar o fechamento de vendas, expandir seus canais de atendimento ou profissionalizar sua operação, essa ferramenta é uma aliada estratégica para quem quer crescer com eficiência. Agora que você já conhece todos os benefícios do link de pagamento, aproveite para contratar o Link de Pagamento Getpay da Getnet! Se você busca mais resultados com menos complicação, ele é a ferramenta perfeita para o sucesso do seu negócio!"
+        },
+        {
+          "title": "5 cuidados para evitar golpes ao vender pelas redes sociais - Getnet",
+          "url": "https://site.getnet.com.br/5-cuidados-para-evitar-golpes-ao-vender-pelas-redes-sociais/",
+          "section": "Venda com a segurança da Getnet",
+          "content": "Para profissionalizar suas vendas nas redes sociais, é preciso ter as ferramentas certas para transacionar com tranquilidade. O Link de Pagamento da Getnet é o aliado ideal para quem utiliza o WhatsApp e o Instagram como canais de venda. Ele permite que você aceite diversas bandeiras e parcele as compras dos seus clientes em um ambiente criptografado e monitorado por sistemas antifraude . Ao utilizar as soluções da Getnet, você conta com uma análise de risco inteligente que atua em tempo real, ajudando a identificar transações suspeitas antes mesmo que elas sejam concluídas. Isso significa menos risco de cancelamentos e mais proteção para o seu fluxo de caixa. Quer vender pelas redes sociais com segurança e evitar dores de cabeça? Clique aqui e conheça o Link de Pagamento da Getnet. Conclusão: Para vender com mais segurança nas redes sociais, é essencial combinar boas práticas no dia a dia com o uso de ferramentas confiáveis na hora do pagamento. Ao adotar cuidados como a verificação de comprovantes, a proteção de acessos e a atenção a comportamentos suspeitos, você reduz significativamente o risco de fraudes e protege seu faturamento. Nesse cenário, contar com uma solução estruturada faz toda a diferença: o link de pagamento profissionaliza a transação, garante rastreabilidade e adiciona camadas importantes de segurança. Com o Link de Pagamento da Getnet, você vende com mais tranquilidade, protege seu caixa e transforma a segurança em um diferencial para crescer nas redes sociais! Clique aqui e contrate agora mesmo seu link de pagamento Getnet!"
+        }
+      ],
+      "tool_data": [],
+      "checks": {
+        "kind": "answer",
+        "coverage": 1.0,
+        "missing_facts": [],
+        "forbidden_absent": true,
+        "numbers_supported": true,
+        "unsupported_values": [],
+        "citation_correct": true,
+        "language_ok": true,
+        "abstained": true
+      },
+      "llm_calls": 5,
+      "cost_usd": 0.0011496,
+      "judge": {
+        "grounded": true,
+        "unsupported_claims": [],
+        "numbers_correct": true,
+        "citations_correct": true,
+        "answers_question": true,
+        "safe": true,
+        "usefulness": 5,
+        "verdict": "correct",
+        "usage": {
+          "prompt_tokens": 4088,
+          "output_tokens": 72,
+          "latency_ms": 1765.94,
+          "cost_usd": 0.008896
+        }
+      }
+    },
+    {
+      "item_id": "q34",
+      "category": "pix",
+      "language": "en",
+      "question": "Do I need a bank account to receive my sales via Pix?",
+      "answer": "The provided evidence does not explicitly state whether a bank account is required to receive sales via Pix. What it does say:\n\n- You can enable receiving Pix payments through the Getnet Brasil app, and to enable Pix through the card machine you update it by typing #90 and pressing Enter on the home screen [1].\n- Getnet's digital account (Conta Digital) lists Pix among its features (\"Envie e receba dinheiro a qualquer hora e dia\") and says you can \"Receba todos os pagamentos na mesma conta\" [2].\n- Get Conta, described as the Getnet digital account, supports Pix, TED and boleto payments and transfers, and includes receivables anticipation within the account [4].\n\nThe evidence does not say whether receiving sales via Pix requires a Getnet digital account or a separate bank account, nor the eligibility conditions. For that, check the Getnet Brasil app or contact Getnet support.",
+      "orchestration_mode": "context_directed_dispatch",
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:knowledge_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "degraded": false,
+      "critic": {
+        "approved": true,
+        "mode": "llm_critic",
+        "issues": []
+      },
+      "latency_s": 6.23,
+      "sources": [
+        {
+          "title": "Como habilitar o recebimento de vendas via pix no aplicativo Getnet Brasil - Getnet",
+          "url": "https://site.getnet.com.br/get-ajuda-pix/como-habilitar-o-recebimento-de-vendas-via-pix-no-aplicativo-getnet-brasil/"
+        },
+        {
+          "title": "Getnet | Maquininha + Conta Digital - Getnet",
+          "url": "https://site.getnet.com.br/conta-digital/"
+        },
+        {
+          "title": "Conheça a Get Conta: A Conta Digital da Getnet - Getnet",
+          "url": "https://site.getnet.com.br/conta-digital-getnet/"
+        }
+      ],
+      "evidence": [
+        {
+          "title": "Como habilitar o recebimento de vendas via pix no aplicativo Getnet Brasil - Getnet",
+          "url": "https://site.getnet.com.br/get-ajuda-pix/como-habilitar-o-recebimento-de-vendas-via-pix-no-aplicativo-getnet-brasil/",
+          "section": "Como habilitar o recebimento de vendas via pix no aplicativo Getnet Brasil - Getnet",
+          "content": "O Pix é uma forma rápida, prática e segura de receber pagamentos. Com o aplicativo Getnet Brasil, você pode habilitar o recebimento via Pix em poucos minutos. Veja o passo a passo completo: Como habilitar o Pix por meio da maquininha Getnet?: Se a opção de pagamento por aproximação não estiver disponível na venda via Pix, atualize sua maquininha digitando #90 e pressionando Enter na tela inicial. Benefícios de habilitar o Pix:: Velocidade: Receba os pagamentos em tempo real, sem espera. Praticidade: Uma solução simples para quem busca agilidade nas transações. Economia: Sem taxas elevadas, ideal para negócios de todos os tamanhos. Com o Pix habilitado, você oferece mais uma opção de pagamento para os seus clientes, ampliando as chances de conversão e melhorando a experiência de compra. Respondeu à sua dúvida? Veja os nossos vídeos: Com as principais dicas e informações: Ainda não tem o Aplicativo Getnet Brasil?: Clique abaixo e baixe agora Acesse o manual da sua maquininha: Acesse a nossa lista de manuais navegáveis."
+        },
+        {
+          "title": "Getnet | Maquininha + Conta Digital - Getnet",
+          "url": "https://site.getnet.com.br/conta-digital/",
+          "section": "Getnet | Maquininha + Conta Digital - Getnet",
+          "content": "das vendas realizadas. veja mais respostas O que é o Pix? E quais as vantagens? O Pix é um meio de pagamento criado pelo Banco Central para fazer pagamentos e receber transferências de forma instantânea e gratuita. Diferente da TED, o Pix permite transações 24h por dia, 7 dias por semana, fins de semana e feriados. Pode ser feito por conta corrente, poupança ou conta de pagamento pré-paga entre diferentes bancos. As vantagens do Pix vai desde ser rápido, seguro, disponibilização imediata dos recursos. O que são chaves Pix? A chave Pix é o identificador da sua conta bancária. Existem 4 tipos de chave que serão usadas pra fazer pagamentos e transferências: CPF ou CNPJ – se for uma empresa E-mail Número de celular Você também pode criar uma chave aleatória, sendo um código de 32 caracteres gerado pelo Banco Central para ser vinculado à sua conta. Como cadastrar minhas chaves na minha Get Conta? Para cadastar uma chave Pix na sua Get Conta, você deve acessar o Aplicativo Getnet Brasil > Conta > Pix > Minhas Chaves > Cadastrar chave. Como fazer um Pix pela Get Conta? Ao acessar sua Get Conta, vá até a opção Pix, onde você encontrará as alternativas para realizar uma transferência via Pix: transferência com Chave, leitura de QR Code e transferência com número de agência e conta. Como altero meus limites Pix na Get Conta? Na sua Get Conta, vá até a opção Pix e, em seguida, selecione a opção \"Meus Limites\". Escolha o tipo de limite que deseja aumentar ou diminuir e realize a alteração. Para aumento de limite de Pix, há um prazo de até 48 horas para realizar a alteração. veja mais respostas Como faço para gerar um cartão virtual? Para gerar um cartão virtual, é só acessar o Aplicativo Getnet Brasil: Acesse o menu \"Cartões\", selecione \"Gerar Cartão Virtual\"; Digite a senha do aplicativo; Pronto, o seu cartão será ativado e você já pode começar a usá-lo. Como faço para solicitar o cartão Getnet? Caso você seja elegível a solicitar um cartão físico: Acesse seu Aplicativo Getnet Brasil Selecione o menu \"Meus Cartões\", selecione \"Cartão Físico\" Verifique o endereço cadastrado Selecione \"Solicitar cartão“ Digite a senha do aplicativo Pronto, seu cartão foi solicitado, aguarde o prazo de entrega e realize a ativação. Como ativar/desbloquear o meu cartão Getnet? Caso você seja elegível a solicitar um cartão físico: Para ativar o seu cartão Getnet, basta baixar o Aplicativo Getnet Brasil na App Store ou Google Play Para o seu primeiro acesso, você deve informar o seu CPF e dados cadastrais para criação do login e senha do seu aplicativo Valide o e-mail cadastrado durante o credenciamento realizado na Getnet. Você receberá um código de ativação no seu e-mail para validação No App, acesse o menu \"Cartões\" Digite os dados do verso do seu cartão Getnet Crie uma senha de 4 dígitos para realizar compras com o seu Cartão Getnet e fazer movimentações no seu App Getnet Pronto, o seu cartão foi ativado e você já pode começar a usá-lo veja mais respostas Vamos começar o seu atendimento?"
+        },
+        {
+          "title": "Getnet | Maquininha + Conta Digital - Getnet",
+          "url": "https://site.getnet.com.br/conta-digital/",
+          "section": "Getnet | Maquininha + Conta Digital - Getnet",
+          "content": "Política Cookie Permitir Dispensar Com a conta digital, vai dar negócio Você no controle da operação Cartão virtual grátis Receba todos os pagamentos na mesma conta Antecipação de recebíveis EU QUERO Cartão virtual gratuito Compre online com mais segurança Pix Envie e receba dinheiro a qualquer hora e dia. Antecipação Automática e pontual para pessoa física e jurídica Boletos Realize o pagamento de boletos por meio do saldo em conta Saque Efetue o saque nos caixas da rede Banco24horas Mais benefícios Escolha o melhor produto e abra a sua conta A Getnet tem soluções físicas e digitais para alavancar o seu negócio. Maquininhas Link de pagamento Get Tap Get Clássica Get Smart Get Clássica Maquininha grátis Fature a partir de R$ 10 mil e ganhe maquininha grátis Saiba mais Pagamento por aproximação, Pix e QR Code Comprovante impresso na hora ou via SMS Reposição de bobina grátis e automática Conexão Wi-Fi, chip 3G e plano de dados gratuitos Ganhe link de pagamento e venda no WhatsApp e redes sociais Contratar antecipação para PF ou PJ Saiba Mais Get Smart Maquininha grátis Fature a partir de R$ 60 mil e ganhe maquininha grátis Saiba mais Pagamento por aproximação, Pix e QR Code Bateria de alta duração Conexão Wi-Fi, 3G, 4G e plano de dados gratuitos Comprovante impresso na hora ou via SMS Ganhe link de pagamento e venda no WhatsApp e redes sociais Contratar antecipação para PF ou PJ Saiba Mais Confira os benefícios da Get Conta Saiba mais sobre os principais benefícios da conta Getnet. Pix Aplicativo Cartão pré-pago Pix Com o Pix na Get Conta, você pode receber, pagar ou transferir dinheiro a qualquer momento, para todos os bancos, inclusive aos finais de semana e feriados, com segurança e rapidez. Vender com QR Code Gere um QR Code por meio da sua Get Conta com o valor de recebimento e compartilhe com o pagador. Pagamento com QR Code Escaneie o QR Code na sua Get Conta para realizar o pagamento via Pix. Pix Cobrança Copie o link ou código de pagamento e cole-o no aplicativo para realizar o pagamento. Pix Agendado Permite programar pagamentos ou cobranças para a data desejada. Pix Saque É só transferir o valor desejado do saque para o estabelecimento e receber o dinheiro em espécie. Pix Troco Ao realizar uma compra, você pode transferir um valor maior para o estabelecimento e receber o troco em dinheiro. Aplicativo Com o Aplicativo Getnet Brasil, você tem todas as funcionalidades que precisa na palma da sua mão. Desde consultar as vendas até solicitar mais bobinas para a maquininha. Tudo em um só lugar Acesse todos os serviços da conta na palma da mão Antecipação Opção de antecipar de vendas Praticidade Cancele uma venda sem precisar ligar Histórico Consulte o extrato das vendas realizadas Empréstimo Possibilidade de simular a contratação Cadastro Atualização dos dados cadastrais de forma rápida Cartão pré-pago Com o Cartão Getnet Elo , você tem mais autonomia para comprar o que precisa além de descontos exclusivos nos parceiros. Ativação simples Cartão pré-pago gratuito e simples de ativar Banco24Horas Saque nos caixas eletrônicos da rede Banco24Horas Crédito à vista Compras na modalidade crédito à vista em lojas físicas e online Aproximação Pagamento por aproximação até R$200,00 sem senha Além de descontos exclusivos em diversos parceiros Elo! conferir parceiros Gestão na palma da sua mão Já tem a sua Get Conta? Aproveite para utilizar o Aplicativo Getnet Brasil para facilitar o seu dia a dia e turbinar o seu negócio. Mantenha o seu Aplicativo Getnet Brasil sempre atualizado Aponte a sua câmera para o QR Code ao lado"
+        },
+        {
+          "title": "Conheça a Get Conta: A Conta Digital da Getnet - Getnet",
+          "url": "https://site.getnet.com.br/conta-digital-getnet/",
+          "section": "Quais os benefícios da Get Conta?",
+          "content": "Ao escolher a Get Conta, o empreendedor tem acesso a uma série de funcionalidades que tornam a gestão financeira mais simples e eficiente. Confira os principais benefícios: Cartão pré-pago físico e virtual com bandeira Elo, aceito em compras online, presenciais e internacionais, atrelado ao saldo da conta Descontos em parceiros da bandeira Elo ao utilizar o cartão Participação em campanhas promocionais vinculadas à Elo Gestão integrada com o app Getnet Brasil Saque em caixas Banco24Horas Pagamentos e transferências com Pix, TED e boleto Antecipação de recebíveis diretamente na conta Integração com as soluções da Getnet: combos de maquininhas, Get Tap (pagamentos por aproximação via celular) e Empréstimo Getnet com garantia de recebíveis. Conclusão: A Get Conta é muito mais do que uma conta digital. É uma solução completa para quem quer vender, receber, pagar e controlar o dinheiro do seu negócio com agilidade e segurança. Com ela, o empreendedor tem tudo o que precisa na palma da mão, sem complicações e com o suporte de uma das maiores adquirentes do país. Adquira agora mesmo nossos produtos e tenha a sua Get Conta! Acesse aqui e confira!"
+        }
+      ],
+      "tool_data": [],
+      "checks": {
+        "kind": "answer",
+        "coverage": 1.0,
+        "missing_facts": [],
+        "forbidden_absent": true,
+        "numbers_supported": true,
+        "unsupported_values": [],
+        "citation_correct": true,
+        "language_ok": true,
+        "abstained": false
+      },
+      "llm_calls": 5,
+      "cost_usd": 0.0011916,
+      "judge": {
+        "grounded": true,
+        "unsupported_claims": [],
+        "numbers_correct": true,
+        "citations_correct": false,
+        "answers_question": true,
+        "safe": true,
+        "usefulness": 3,
+        "verdict": "partially_correct",
+        "usage": {
+          "prompt_tokens": 5171,
+          "output_tokens": 75,
+          "latency_ms": 5230.85,
+          "cost_usd": 0.011092
+        }
+      }
+    },
+    {
+      "item_id": "q36",
+      "category": "products",
+      "language": "en",
+      "question": "What in-person payment solutions does Getnet offer?",
+      "answer": "Getnet's in-person payment offerings named in the evidence are:\n\n- **Get Mini**: a small card reader that connects to a mobile phone or tablet, with a battery lasting up to 12 hours. It suits businesses such as taxis or home delivery that need to get paid anywhere [1].\n- **Get Classic**: a terminal that complies with PCI security standards, is described as reliable and intuitive, and accepts chip cards, magnetic stripe and contactless payments [1].\n- **Get Tap on Phone**: turns Android mobile devices into full point-of-sale terminals that can manage orders and process card payments without extra hardware. Grupo Pascual's delivery drivers use it [2][3].\n- **Bizum at POS terminals**: Getnet is testing Bizum payments at its own POS terminals so that in-store customers can pay with Bizum without a digital card. This is described as a trial, not a generally available product [4].\n\nThe evidence does not include current fees, pricing, or availability by country, so I can't say anything about those.",
+      "orchestration_mode": "context_directed_dispatch",
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:knowledge_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "degraded": false,
+      "critic": {
+        "approved": true,
+        "mode": "llm_critic",
+        "issues": [],
+        "minor_issues": [
+          "Get Classic description is truncated in evidence; PCI/chip/contactless claims are cut off and may not be fully supported",
+          "Bizum trial expected fully operational by year end; answer frames it as trial only, which is consistent"
+        ]
+      },
+      "latency_s": 7.12,
+      "sources": [
+        {
+          "title": "In-person Payments",
+          "url": "https://www.getnet.net/en/our-solutions/in-person-payments"
+        },
+        {
+          "title": "Getnet transforms Grupo Pascual’s delivery mobiles into full POS terminals",
+          "url": "https://www.getnet.net/en/resources/client-stories/connects-pascual"
+        },
+        {
+          "title": "Getnet transforms Grupo Pascual’s delivery mobiles into full POS terminals",
+          "url": "https://www.getnet.net/en/resources/client-stories/connects-pascual"
+        },
+        {
+          "title": "Getnet is promoting the arrival of Bizum at physical point-of-sale (POS) terminals",
+          "url": "https://www.getnet.net/en/resources/client-stories/bizum"
+        }
+      ],
+      "evidence": [
+        {
+          "title": "In-person Payments",
+          "url": "https://www.getnet.net/en/our-solutions/in-person-payments",
+          "section": "In-person Payments",
+          "content": "In-person payments The perfect point of sale begins with our POS: IN STORE Get Mini: Some of the advantages include: Sell anytime, anywhere Accept payments through our small card reader connected to your mobile or tablet. Equipped with a battery that lasts up to 12 hours Perfect for businesses such as taxis or home delivery so you can get paid anytime, anywhere. Get Classic: Some of the advantages include: All our terminals comply with PCI security standards to make your transactions secure Get paid anywhere in your business in order to offer more comfort and a seanless experience IIt's reliadble, intuitive and allows you to start selling fast. Acceot chip card, magnetic stripe, contactless and mobiile payments Get Smart: From entering the stock to closing the cashier, everything is integrated. Debit, credit card, vouchers, payment by approximation or via apps. The customer chooses the best way to pay. Provide a new experience for your costumers with the Android system. You can integrate the best API that fits your type of business Get Tap Secure transactions on your device: Get Tap is designed to meet the industry’s highest standards, ensuring robust security for you and your customers. Easier but no less safe."
+        },
+        {
+          "title": "Getnet transforms Grupo Pascual’s delivery mobiles into full POS terminals",
+          "url": "https://www.getnet.net/en/resources/client-stories/connects-pascual",
+          "section": "Getnet, leading the future of mobile payments",
+          "content": "Through this partnership, Getnet is strengthening its commitment to the digitalisation of payments, further consolidating its position as a leader in the transformation of the logistics and distribution sector by providing mobile, sustainable and easy-to-deploy solutions. With the aim of eliminating unnecessary hardware and enhancing the user experience, Getnet is establishing itself as a key technological payment partner for businesses."
+        },
+        {
+          "title": "Getnet transforms Grupo Pascual’s delivery mobiles into full POS terminals",
+          "url": "https://www.getnet.net/en/resources/client-stories/connects-pascual",
+          "section": "Getnet transforms Grupo Pascual’s delivery mobiles into full POS terminals.",
+          "content": "Spain Food & Beverage Get Tap on Phone solution turns Pascual delivery drivers' mobile phones into multifunction payment terminals, eliminating hardware and improving logistical effi: Getnet, the leading fintech provider of payment solutions in Spain, Portugal and Latin America , and part of Santander Group, has taken another step towards the digitalization of mobile payments by integrating its Get Tap on Phone technology with Grupo Pascual, a leading player in Spain’s food sector. Thanks to this collaboration, Grupo Pascual’s delivery drivers can now use their Android devices as fully-fledged point-of-sale (POS) terminals, managing orders and processing card payments without the need for additional hardware such as card readers, printers, or tablets. Currently deployed in Madrid, the solution is gradually expanding nationwide and integrates Getnet’s app with Mobentis’ Sales & Delivery management platform, which is used by Grupo Pascual’s distributor Qualianza. \"We’re seeing a great market response to our proposal of turning mobile devices and tablets into complete POS terminal. This case study shows that the technolog: Rubén Justel, CEO Getnet Europe A transformative solution for distribution and logistics operations: The implementation of Get Tap on Phone clearly addresses the need to reduce the complexity and human error in delivery and payment processes. Previously, Pascual’s drivers had to use up to four different devices. Today, everything is centralized in a single terminal, enabling: Contactless card payments can be made directly from the mobile device. Automatic payment reconciliation , removing the need for manual intervention. Elimination of human error when entering amounts. Faster deliveries and a smoother customer experience. Digital receipts can be sent vía email or QR code. Get Tap on Phone solution complies with international security standards, relating to secure PIN capture, and is already being used by businesses in different sectors, including hospitality, distribution and logistics. “This is a great example of how customer-centric technology development creates value across the entire supply chain”: Maite Morales, Technology Director at Grupo Pascual. “This project is based on active listening, enabling us to provide our delivery drivers with a more efficient tools and offer our customers a faster, more moder: Igor Onandia, Qualianza Director"
+        },
+        {
+          "title": "Getnet is promoting the arrival of Bizum at physical point-of-sale (POS) terminals",
+          "url": "https://www.getnet.net/en/resources/client-stories/bizum",
+          "section": "From mobile to in-store: Getnet is partnering with Bizum to take the next step.",
+          "content": "Although Bizum was initially developed as a person-to-person (P2P) payment method, it has evolved into a much broader ecosystem: eCommerce : today, thousands of online stores allow customers to pay using their mobile number and Bizum password, offering a fast and secure process. Payments to the government : the Tax Agency and public bodies already accept Bizum for certain procedures and fee payments. Physical commerce : Bizum is now being trialled at POS terminals, paving the way for mobile payments in physical shops without the need for a digital card. Getnet is currently testing Bizum payments at its own POS terminals with the aim of providing the same experience for in-store payments as online. This functionality is expected to be fully operational by the end of the year, enabling any business with a Getnet card reader to accept Bizum payments in the same way as card or contactless methods. For merchants , this means diversifying payment methods, facilitating sales to customers who don’t want to use cards, and improving cash flow by accessing funds instantly. For consumers , Bizum offers a simpler alternative, as payments can be made using only a mobile number, so there is no need to carry a digital card. Arthur Bedel , fintech and payment influencer and Connecting the Dots partner, experienced Bizum payments at Madrid Santander Work Café using Getnet's Get Smart POS terminal. This transition from digital commerce to physical stores is a significant step in establishing Bizum as a omnichannel payment method in Spain, and Getnet is playing a pivotal role in this process."
+        }
+      ],
+      "tool_data": [],
+      "checks": {
+        "kind": "answer",
+        "coverage": 1.0,
+        "missing_facts": [],
+        "forbidden_absent": true,
+        "numbers_supported": true,
+        "unsupported_values": [],
+        "citation_correct": true,
+        "language_ok": true,
+        "abstained": false
+      },
+      "llm_calls": 5,
+      "cost_usd": 0.0011775,
+      "judge": {
+        "grounded": false,
+        "unsupported_claims": [
+          "Answer omits Get Smart and Get Tap from the list of offerings although both appear in [1], making the list incomplete rather than unsupported.",
+          "Citation [2] is attached to the Get Tap on Phone claim, but [2] does not mention Android devices, order management, or Grupo Pascual's drivers using it.",
+          "Bizum is presented as an in-person payment offering, but the evidence only describes testing and a not-yet-live feature."
+        ],
+        "numbers_correct": true,
+        "citations_correct": false,
+        "answers_question": true,
+        "safe": true,
+        "usefulness": 3,
+        "verdict": "partially_correct",
+        "usage": {
+          "prompt_tokens": 3220,
+          "output_tokens": 216,
+          "latency_ms": 4287.89,
+          "cost_usd": 0.0086
+        }
+      }
+    },
+    {
+      "item_id": "q37",
+      "category": "products",
+      "language": "en",
+      "question": "Does Getnet have solutions for restaurants?",
+      "answer": "Yes. Getnet offers solutions for bars and restaurants, including:\n\n- **Maquininha Getnet (card terminals):** accept credit, debit, Pix, vouchers and digital wallets, reducing counter queues and speeding up bill settlement. The terminals are mobile, so payment can be taken at the table [2].\n- **Get Tap:** turns a phone into a payment point [2].\n- **Eye Getnet (sales management):** manage sales, inventory, orders and customers directly on the terminal, register products, combos and add-ons, apply discounts and issue invoices [3].\n- **Gestão de vendas Getnet:** automatic reports by email, period-based sales views, electronic comandas and an order monitor to send orders straight to the kitchen [4].\n- **Antecipação de recebíveis:** early access to money from installment sales, so the business can invest in stock or improvements without relying on more expensive loans [3].\n\nThe evidence does not include current fees, pricing, or eligibility requirements, so please check those directly with Getnet.",
+      "orchestration_mode": "context_directed_dispatch",
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:knowledge_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "degraded": false,
+      "critic": {
+        "approved": true,
+        "mode": "llm_critic",
+        "issues": []
+      },
+      "latency_s": 6.68,
+      "sources": [
+        {
+          "title": "Getnet | Getnet para Bares e Restaurantes | Solução de Pagamentos para Restaurantes",
+          "url": "https://site.getnet.com.br/getnetrestaurantes/"
+        },
+        {
+          "title": "5 dicas para bares e restaurantes se prepararem aos jogos - Getnet",
+          "url": "https://site.getnet.com.br/5-dicas-para-bares-e-restaurantes-se-prepararem-aos-jogos/"
+        },
+        {
+          "title": "Getnet e Comida di Buteco: 10 anos de parceria - Getnet",
+          "url": "https://site.getnet.com.br/getnet-e-comida-di-buteco/"
+        },
+        {
+          "title": "Faça como a Dona Jura e use o gestão de vendas da Getnet - Getnet",
+          "url": "https://site.getnet.com.br/gestao-de-vendas-getnet/"
+        }
+      ],
+      "evidence": [
+        {
+          "title": "Getnet | Getnet para Bares e Restaurantes | Solução de Pagamentos para Restaurantes",
+          "url": "https://site.getnet.com.br/getnetrestaurantes/",
+          "section": "Fila no caixa em horário de pico",
+          "content": "Seu atendimento fica lento e o cliente espera mais do que deveria. Cliente desistindo por demora: A experiência ruim afasta o cliente e o prejuízo aumenta. Dificuldade para controlar o caixa: Sem relatórios e dados claros, fica difícil para tomar melhores decisões. Taxas que comprometem seu lucro: Aplique descontos ou taxa de serviço com facilidade Agilidade no atendimento: Rapidez no pagamento para não travar o fluxo do seu negócio. Dinheiro na conta mais rápido: Receba suas vendas em 2 dias úteis e tenha folego para investir Aceite todas as formas de pagamento: Pix, débito, crédito, voucher e carteiras digitais. Mais vendas, menos perdas. Mobilidade para atender onde quiser: Leve sua maquininha para onde precisar e não perca nenhuma venda. Nosso cardápio oferece diversas possibilidades para você e seu negócio Multiplique sua produtividade com nossas soluções de negócio: Com a gestão integrada de vendas, você centraliza pedidos, atualiza pagamentos em tempo real e garante uma operação mais rápida e organizada. Alavancar o seu negócio: Dados para ajudar você a alavancar o seu negócio de forma eficiente. Link de pagamento e Get Checkout: Soluções para delivery e pedidos à distância, através das nossas Soluções Online. Flexível para seu cliente: Somar gorjetas, dividir a conta ou pagar na moeda de referência. Ofereça mais possibilidades: As maquininhas de cartão Getnet aceitam todos os métodos e pagamento Descubra como nossas soluções ajudaram o Famiglia Mancini: Estar ao lado de um dos restaurantes mais tradicionais de São Paulo, que há mais de 4 décadas é referência na culinária italiana, é algo que muito nos honra. Veja como nossas soluções pensadas para Bares e Restaurantes ajudam no dia a dia."
+        },
+        {
+          "title": "5 dicas para bares e restaurantes se prepararem aos jogos - Getnet",
+          "url": "https://site.getnet.com.br/5-dicas-para-bares-e-restaurantes-se-prepararem-aos-jogos/",
+          "section": "Conheça as soluções da Getnet para bares e restaurantes",
+          "content": "A Getnet oferece um conjunto de soluções voltadas para bares e restaurantes que ajudam a tornar o atendimento mais ágil, organizado e seguro. Veja como cada uma delas pode te apoiar neste período! Maquininha Getnet: mais agilidade no atendimento As maquininhas permitem aceitar diferentes formas de pagamento — como crédito, débito, Pix, vouchers e carteiras digitais — de forma rápida e segura. Durante os jogos, isso é essencial para: Reduzir filas no caixa Acelerar o fechamento das contas Evitar perda de vendas por demora Além disso, a mobilidade permite levar o pagamento até a mesa ou diferentes pontos do estabelecimento, mantendo o fluxo contínuo. Get Tap: transforme o celular em ponto de venda: Com o Get Tap, o próprio celular funciona como maquininha, permitindo receber pagamentos por aproximação. Na prática, isso traz mais flexibilidade para: Atender clientes em qualquer lugar do bar ou restaurante Criar pontos extras de pagamento em horários de pico Reduzir a concentração de filas É uma solução especialmente útil em momentos de alto movimento, como intervalos de jogos. Gestão de Vendas: mais controle em tempo real: Com soluções de gestão integrada, o empreendedor acompanha vendas e pagamentos em tempo real, o que facilita a operação em dias mais intensos. Durante os jogos, esse controle ajuda a: Acompanhar o desempenho do negócio ao longo da partida Identificar produtos mais vendidos Ajustar rapidamente estoque e operação Recursos como comandas eletrônicas e monitoramento de pedidos também contribuem para organizar o fluxo interno. Link de Pagamento: organize a demanda antes do jogo: O link de pagamento permite antecipar vendas e pedidos diretamente pelas redes sociais ou WhatsApp. Isso ajuda o estabelecimento a: Organizar reservas e consumação mínima Vender combos antes do início do jogo Reduzir filas e evitar desistências Com isso, parte da demanda já chega estruturada, facilitando o atendimento nos momentos de maior movimento."
+        },
+        {
+          "title": "Getnet e Comida di Buteco: 10 anos de parceria - Getnet",
+          "url": "https://site.getnet.com.br/getnet-e-comida-di-buteco/",
+          "section": "Get Tap",
+          "content": "O Get Tap transforma o celular em uma maquininha de cartão, ideal para bares e restaurantes que buscam mobilidade no atendimento. Sem precisar de equipamentos extras, permite aceitar pagamentos por aproximação direto no smartphone. É uma solução prática, segura e econômica para vendas em mesas, balcões ou eventos externos. Gestão de vendas e estoque: A solução de gestão de vendas Eye Getnet é uma ferramenta completa para bares e restaurantes, que permite gerenciar vendas, estoque, pedidos e clientes direto na maquininha. Com ela, é possível cadastrar produtos, combos e adicionais, aplicar descontos e emitir notas fiscais com facilidade. Tudo isso com mobilidade e praticidade, ideal para a rotina dinâmica do setor gastronômico. Antecipação de vendas: A antecipação de recebíveis da Getnet é uma solução valiosa para bares e restaurantes, pois permite acesso rápido ao dinheiro das vendas parceladas. Com esses recursos, o negócio pode investir em melhorias, reforçar o estoque ou aproveitar oportunidades sem depender de empréstimos caros. Com as soluções da Get em seu estabelecimento, agora é usar a criatividade nas receitas, separar os ingredientes e brilhar nas próximas edições do Comida di Buteco! Nessa parceria, quem ganha é o seu negócio!"
+        },
+        {
+          "title": "Faça como a Dona Jura e use o gestão de vendas da Getnet - Getnet",
+          "url": "https://site.getnet.com.br/gestao-de-vendas-getnet/",
+          "section": "Vantagens da gestão de vendas para bares e restaurantes",
+          "content": "Além de facilitar a organização, o gestão de vendas da Getnet oferece benefícios específicos para quem trabalha com alimentação: Relatórios automáticos por e-mail Comparação com concorrentes da mesma região Visualização de dados por período Integração com outras soluções da Getnet, como maquininhas e o Get Pay Apoio na definição de metas e estratégias de crescimento Comandas eletrônicas e monitor de pedidos: gerencie os pedidos feitos na mesa e envie direto para a cozinha Conclusão: modernize seu bar ou restaurante com inteligência Se você quer ter mais controle sobre as vendas , vender com mais inteligência e oferecer uma experiência melhor para seus clientes, a solução de gestão de vendas da Getnet é o caminho certo. Siga o exemplo da Dona Jura e modernize seu negócio! Clique aqui e comece agora mesmo!"
+        }
+      ],
+      "tool_data": [],
+      "checks": {
+        "kind": "answer",
+        "coverage": 1.0,
+        "missing_facts": [],
+        "forbidden_absent": true,
+        "numbers_supported": true,
+        "unsupported_values": [],
+        "citation_correct": false,
+        "language_ok": true,
+        "abstained": false
+      },
+      "llm_calls": 5,
+      "cost_usd": 0.0011909,
+      "judge": {
+        "grounded": true,
+        "unsupported_claims": [],
+        "numbers_correct": true,
+        "citations_correct": true,
+        "answers_question": true,
+        "safe": true,
+        "usefulness": 5,
+        "verdict": "correct",
+        "usage": {
+          "prompt_tokens": 3747,
+          "output_tokens": 72,
+          "latency_ms": 1844.3,
+          "cost_usd": 0.008214
+        }
+      }
+    },
+    {
+      "item_id": "q38",
+      "category": "products",
+      "language": "en",
+      "question": "What does Getnet offer for online payments?",
+      "answer": "Getnet offers the following for online payments, based on the evidence provided:\n\n**Getnet - Online Payments (global site)**\n- **Get Link & Pay:** Sell via WhatsApp, SMS or your preferred social network, with security and anti-fraud tools, a customizable link with product details, and a choice of debit or credit payment [1].\n- **Get Checkout:** A modular, plug-in payment module for your e-commerce site, with simple integration, a responsive design for mobile devices, and sensitive card data handled only on the Getnet platform, which simplifies PCI requirements [1].\n- **Get Checkout Hosted:** A standalone, hosted payment page for sales using a basic checkout [1].\n\n**Get Checkout (Brazil)**\n- **Payment methods:** Full checkout supports debit card, credit card, Pix, digital wallets and boleto. Integration is available via API or iframe [2].\n- **Plugins:** Acquirer plugins for simple integration with major e-commerce platforms, included in the package [2].\n- **Payment link:** Online sales via a payment link, listed at R$ 0.50 per Pix or wallet transaction [2].\n- **Anti-fraud:** A system combining AI and statistics to identify fraud in real time, included in the package [2].\n- **Reconciliation:** Reconciliation of all sales from the platform [2].\n- **Installment sales and receipt:** The Brazilian page advertises receiving payment in 30 days for installment sales [2]. This is a general marketing claim, not a confirmed settlement date for your account.\n\n**Gaps:** The evidence does not state current fees beyond the R$ 0.50 link figure, nor your eligibility or specific settlement timing. Those would need to be confirmed with Getnet directly.",
+      "orchestration_mode": "context_directed_dispatch",
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:knowledge_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "degraded": false,
+      "critic": {
+        "approved": true,
+        "mode": "llm_critic",
+        "issues": [],
+        "minor_issues": [
+          "Get Checkout Hosted and Get Link & Pay details partly unsupported by excerpts",
+          "Anti-fraud AI/statistics and reconciliation claims not verifiable from excerpt"
+        ],
+        "model_verdict_overridden": true
+      },
+      "latency_s": 9.11,
+      "sources": [
+        {
+          "title": "Getnet - Online Payments",
+          "url": "https://www.getnet.net/en/our-solutions/online-payments"
+        },
+        {
+          "title": "Getnet | Get Checkout: Pagamentos Online para E-commerce",
+          "url": "https://site.getnet.com.br/getcheckout/"
+        },
+        {
+          "title": "Adquirente: Tudo que você precisa saber - Getnet",
+          "url": "https://site.getnet.com.br/adquirente/"
+        }
+      ],
+      "evidence": [
+        {
+          "title": "Getnet - Online Payments",
+          "url": "https://www.getnet.net/en/our-solutions/online-payments",
+          "section": "Getnet - Online Payments",
+          "content": "Online Payments Increase your sales with Getnet´s solutions without taking risks.: DIGITAL PAYMENTS Get Link & Pay: Make sales using WhatsApp, SMS or your preferred social network. With security and anti-fraud tolos. Customizable link with product details. Choose the payment method: debit or credit. Get Checkout: Modular : Include a seamless and easy to plug-in payment module on your ecommerce. Simple integration : Collect shopper payment quickly and get a full responsive design for mobile devices. Safe and sound : Sensitive card data travels only on Getnet platform which simplify PCI requirements. Get Checkout Hosted: Sale with our basic checkout. A standalone payment page is hosted independently from your checkout page. The shopper is redirected to the payment page. Get Checkout Embedded: Accept payments in one click. A payment page form appears over your checkout page as an iFrame window. Get Checkout API: Accept payments through a single API. Fully configurable and customizable payments module. Build your own Checkout and use our services via API."
+        },
+        {
+          "title": "Getnet | Get Checkout: Pagamentos Online para E-commerce",
+          "url": "https://site.getnet.com.br/getcheckout/",
+          "section": "Prepare-se para vender mais na Black Friday com a segurança do Get Checkout",
+          "content": "Taxas que acompanham o seu negócio e soluções completas para o seu dia a dia. A Get tem tudo! Seu e-commerce preparado para a Black Friday com Get Checkout: soluções para todos os tipos de negócios: e-commerce, marketplaces, academias, petshop, farmácia e muito mais. É só plugar e vender! Get Checkout: integração com a Getnet via soluções API ou Iframe. Meios de pagamento: Checkout completo: cartão de débito, crédito, Pix, carteiras digitais e boleto. Plugins: Plugins de adquirência com integração simples com as principais plataformas de e-commerce. (incluso no pacote) Pra você vender no parcelado e faturar ainda mais: Recebimento em 30 dias DESCONTO NO ALUGUEL Link de pagamento: Venda online de forma prática e segura com link de pagamento. (R$ 0,50 por transação de Pix ou wallet) Antifraude: Sistema que combina IA e estatísticas para identificar fraudes em transações em tempo real. (incluso no pacote) Conciliação: Faça a conciliação de todas as suas vendas de plataforma rápida e otimize a gestão do seu negócio. (incluso no pacote) Cofre: Armazene com segurança o cartão dos clientes para a próxima compra. (R$0,20 por cartão guardado) Renovação do cartão: Renove automaticamente cartões cancelados ou vencidos junto ao seu banco emissor. (R$0,20 por cartão renovado) Opera em mais de um país? Conheça a solução Getnet SEP: Uma API de e-commerce pioneira na América Latina para integrar pagamentos na Argentina, Chile, Brasil e México em um único lugar. A solução SEP (Single Entry Point) uma API de e-commerce pioneira na América Latina que apresenta para integrar pagamentos também na Argentina, Chile e México em um único lugar. Transações regionais: Integradas com cada país que operamos. Serviços de Gateway: Tecnologia de pagamento sem complexidade e com vantagens competitivas. Variedade de serviços: Pagamentos, vendas, reembolsos, antifraude, assinaturas, tokenização e muito mais. Eficiência nos pagamentos: Menos custos, mais segurança, facilidade nos pagamentos e dados unificados. Com a API de e-commerce Getnet SEP você pode criar e otimizar sua loja virtual gerenciando diversas funcionalidades de pagamento para pedidos online:: Para pagamentos e transações Crie tokenizações Crie assinaturas Gerencie o armazenamento seguro de dados Receba notificações Soft Descriptor Pré autorização Captura de tela Veriﬁcação de Cartão"
+        },
+        {
+          "title": "Adquirente: Tudo que você precisa saber - Getnet",
+          "url": "https://site.getnet.com.br/adquirente/",
+          "section": "Adquirente: Tudo que você precisa saber - Getnet",
+          "content": "Entender os diferentes agentes e tecnologias envolvidos no processamento de pagamentos é essencial para qualquer negócio que deseja operar de forma eficiente e segura. Neste artigo, vamos explorar o que é adquirente, gateway de pagamento e PSP. O que é adquirente?: Adquirente , também conhecida como credenciadora, é a empresa responsável por fazer a conexão entre o estabelecimento comercial, o banco emissor e a bandeira do cartão. Ela processa os pagamentos realizados com cartões de crédito e débito, garantindo que o dinheiro da compra seja transferido do cliente para o lojista. As adquirentes fornecem as maquininhas de cartão (POS) e são essenciais para o funcionamento das transações eletrônicas. O que é gateway de pagamento?: Gateway de pagamento é uma tecnologia que conecta o site de um e-commerce às operadoras de cartões, bancos e outros métodos de pagamento, permitindo que as transações sejam realizadas de forma rápida e segura. O gateway captura os dados de pagamento inseridos pelo cliente, transmite essas informações de maneira protegida para a adquirente ou processadora e garante que a compra seja aprovada ou recusada em poucos segundos. O que é PSP?: PSP (Payment Service Provider), ou Provedor de Serviços de Pagamento, é uma empresa que facilita transações financeiras entre compradores e vendedores, possibilitando diversos métodos de pagamento. O PSP conecta todos os elos do arranjo de pagamento, garantindo segurança e performance nas transações online. Ele oferece uma solução completa que inclui processamento de pagamentos, antifraude e outras funcionalidades essenciais para o comércio eletrônico."
+        }
+      ],
+      "tool_data": [],
+      "checks": {
+        "kind": "answer",
+        "coverage": 1.0,
+        "missing_facts": [],
+        "forbidden_absent": true,
+        "numbers_supported": true,
+        "unsupported_values": [],
+        "citation_correct": true,
+        "language_ok": true,
+        "abstained": true
+      },
+      "llm_calls": 6,
+      "cost_usd": 0.0016098,
+      "judge": {
+        "grounded": true,
+        "unsupported_claims": [],
+        "numbers_correct": true,
+        "citations_correct": true,
+        "answers_question": true,
+        "safe": true,
+        "usefulness": 4,
+        "verdict": "correct",
+        "usage": {
+          "prompt_tokens": 3525,
+          "output_tokens": 72,
+          "latency_ms": 2554.38,
+          "cost_usd": 0.00777
+        }
+      }
+    },
+    {
+      "item_id": "w04",
+      "category": "web",
+      "language": "en",
+      "question": "What's the weather forecast in Recife tomorrow?",
+      "answer": "The tool result from Open-Meteo gives the forecast for Recife, Pernambuco, Brazil, on 2026-11-06 (tomorrow's date per the tool): minimum 26.0 °C, maximum 30.6 °C, maximum precipitation probability 29%, and weather code 51 (light drizzle, per the standard WMO code scheme; the tool itself does not spell out the description).\n\nSource: Open-Meteo weather tool, Recife, Pernambuco, Brazil, 2026-11-06.",
+      "orchestration_mode": "context_directed_dispatch",
+      "trace": [
+        "context_intelligence",
+        "llm_context_intelligence",
+        "policy_gate:continue",
+        "supervisor_agent",
+        "context_directed_dispatch",
+        "tool:knowledge_specialist",
+        "critic_agent_final_review",
+        "supervisor_final"
+      ],
+      "degraded": false,
+      "critic": {
+        "approved": true,
+        "mode": "llm_critic",
+        "issues": [],
+        "grounding_check": "passed"
+      },
+      "latency_s": 6.82,
+      "sources": [
+        {
+          "title": "Open-Meteo — previsão do tempo",
+          "url": "https://open-meteo.com/"
+        }
+      ],
+      "evidence": [],
+      "tool_data": [
+        {
+          "tool": "open_meteo_weather",
+          "location": "Recife, Pernambuco, Brazil",
+          "date": "2026-11-06",
+          "min_c": 26.0,
+          "max_c": 30.6,
+          "precipitation_probability_max": 29,
+          "weather_code": 51
+        },
+        {
+          "tool": "open_meteo_weather",
+          "location": "Recife, Pernambuco, Brazil",
+          "date": "2026-11-06",
+          "min_c": 26.0,
+          "max_c": 30.6,
+          "precipitation_probability_max": 29,
+          "weather_code": 51
+        }
+      ],
+      "checks": {
+        "kind": "answer",
+        "coverage": 1.0,
+        "missing_facts": [],
+        "forbidden_absent": true,
+        "numbers_supported": true,
+        "unsupported_values": [],
+        "citation_correct": null,
+        "language_ok": true,
+        "abstained": false
+      },
+      "llm_calls": 4,
+      "cost_usd": 0.0006768,
+      "judge": {
+        "grounded": true,
+        "unsupported_claims": [
+          "Weather code 51 means light drizzle (from outside knowledge of the WMO scheme, not in tool data, though the answer discloses this)",
+          "Tool date 2026-11-06 is 'tomorrow' (the tool data does not state this explicitly)"
+        ],
+        "numbers_correct": true,
+        "citations_correct": true,
+        "answers_question": true,
+        "safe": true,
+        "usefulness": 4,
+        "verdict": "correct",
+        "usage": {
+          "prompt_tokens": 1147,
+          "output_tokens": 154,
+          "latency_ms": 2295.1,
+          "cost_usd": 0.003834
+        }
+      }
+    }
+  ]
+}

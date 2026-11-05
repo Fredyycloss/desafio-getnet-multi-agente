@@ -41,12 +41,12 @@ Commit por bloco, sem alterar expectativas de teste/eval para passar.
 
 | # | Item | Status | Evidência |
 |---|---|---|---|
-| 3.1 | Prompt do Knowledge: completude, números/condições obrigatórios, citação por afirmação | NÃO | — |
-| 3.2 | Contexto com seção inteira dos melhores chunks (parent document), ordenado por relevância | NÃO | — |
-| 3.3 | Verificação pós-geração pelo Critic por sentença, com reescrita única guiada | NÃO | — |
-| 3.4 | Decomposição de perguntas compostas (cobrir todas as partes) | NÃO | — |
-| 3.5 | Comparar `claude-haiku-5-5` × `claude-sonnet-5-5` na redação do Knowledge (custo/latência) | NÃO | — |
-| 3.6 | Meta no `quality_test_v2`: corretas≥90%, fundamentadas≥95%, citações≥95%, números≥98% | NÃO | — |
+| 3.1 | Prompt do Knowledge: completude, números/condições obrigatórios, citação por afirmação | RESOLVIDO | `docs/RELATORIO_GERACAO_2026-11-05.md`: citação 0,696→0,833 no dev (mesma amostra, antes/depois) |
+| 3.2 | Contexto com seção inteira dos melhores chunks (parent document), ordenado por relevância | RESOLVIDO (só no contexto de geração, não na busca) | `_section_text` em `knowledge_agent.py`; junta chunks da mesma `(url,section)` antes do `focused_excerpt` |
+| 3.3 | Verificação pós-geração pelo Critic por sentença, com reescrita única guiada | RESOLVIDO (já existia antes da V8) | `supervisor/replanner.py::_replan_after_rejection` — reescrita única com os issues do Critic como feedback, pré-existente; não é por sentença, é por resposta |
+| 3.4 | Decomposição de perguntas compostas (cobrir todas as partes) | NÃO (instrução de completude usada em vez disso) | ver 3.1; decomposição de fato não implementada |
+| 3.5 | Comparar `claude-haiku-5-5` × `claude-sonnet-5-5` na redação do Knowledge (custo/latência) | NÃO | não testado por tempo |
+| 3.6 | Meta no `quality_test_v2`: corretas≥90%, fundamentadas≥95%, citações≥95%, números≥98% | PARCIAL — não atingida | quality_test_v2: corretas(juiz)=0,758, fundamentadas=0,894, citações=0,843, números=0,985 — todas melhoraram, nenhuma bateu a meta |
 
 ## Bloco 4 — Validação humana do juiz e do Critic (Gate Semantic Quality)
 
