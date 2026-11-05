@@ -146,7 +146,7 @@ Starting point: commit `ee74988` (published, CI green, feedback v2 = 7.3/10).
 |---|---|---|---|---|---|
 | Z1 | `docs/AUDITORIA_V4_V2.md` (every v2 gap and discount) | V7-J | 13 | RESOLVIDO | docs/AUDITORIA_V4_V2.md |
 | Z2 | `docs/RESPOSTAS_ENTREVISTA.md` outside Git | V7-J | 13 | RESOLVIDO | written; listed in .gitignore |
-| Z3 | README / TESTING / final report updated; clean clone; local CI | V6 11, V7-J | 13 | ABERTO | |
-| Z4 | New simulation in the feedback v2 format + push commands (wait for authorization) | V7-J | 13 | ABERTO | |
+| Z3 | README / TESTING / final report updated; clean clone; local CI | V6 11, V7-J | 13 | RESOLVIDO | README/TESTING/EVIDENCE refreshed (d9ce8f3); clean clone: 357 backend tests pass, frontend npm ci + build OK |
+| Z4 | New simulation in the feedback v2 format + push commands (wait for authorization) | V7-J | 13 | RESOLVIDO | simulation written outside Git (docs/SIMULACAO_*); push commands shown, awaiting authorization |
 | Z5 | Video not recorded (outside scope, recorded here as a risk) | FB2, SELF | — | NÃO (fora do escopo) | |
 | Z6 | Any new problem found during the work | SELF | nearest block | — | |
